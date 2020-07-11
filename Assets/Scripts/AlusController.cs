@@ -133,12 +133,30 @@ public class AlusController : MonoBehaviour
 
          m_Rigidbody2D.velocity = new Vector2(vauhtiOikea, vauhtiYlos);
 
+        //        m_Rigidbody2D
 
-//        m_Rigidbody2D
+        if (vauhtiYlos>0.0f)
+        {
+            m_Animator.SetBool("up", true);
 
-        Debug.Log("vauhtiOikea=" + vauhtiOikea);
-        Debug.Log("vauhtiYlos=" + vauhtiYlos);
+        }
+        else
+        {
+            m_Animator.SetBool("up", false);
+        }
+       
 
+        //Debug.Log("vauhtiOikea=" + vauhtiOikea);
+        //Debug.Log("vauhtiYlos=" + vauhtiYlos);
+      
+
+        AnimatorClipInfo[] m_CurrentClipInfo = this.m_Animator.GetCurrentAnimatorClipInfo(0);
+
+        //Access the current length of the clip
+        //m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
+        //Access the Animation clip name
+        string ff  = m_CurrentClipInfo[0].clip.name;
+        Debug.Log("ff=" + ff);
 
     }
 }
