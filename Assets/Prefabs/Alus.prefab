@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3294481396978785094}
   - component: {fileID: 3294481396978785095}
   - component: {fileID: 3362095348282915404}
+  - component: {fileID: 9174804361498641160}
   m_Layer: 9
   m_Name: Alus
   m_TagString: Untagged
@@ -96,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f905085a7c9e2e08cf1ac0c0c09213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammusPrefab: {fileID: 9057892473094562812, guid: eb03189b9a8660376b2e58982102e80b,
+    type: 3}
 --- !u!50 &3294481396978785095
 Rigidbody2D:
   serializedVersion: 4
@@ -110,13 +113,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!95 &3362095348282915404
 Animator:
   serializedVersion: 3
@@ -136,3 +139,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &9174804361498641160
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294481396978785091}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.32}
+    newSize: {x: 0.64, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.32754272, y: 0.005485859}
+      - {x: 0.14883986, y: 0.046769466}
+      - {x: 0.089999996, y: 0.08868576}
+      - {x: -0.19982871, y: 0.078914754}
+      - {x: -0.2879824, y: 0.16295612}
+      - {x: -0.32, y: 0.16}
+      - {x: -0.30654612, y: 0.08878116}
+      - {x: -0.30680004, y: -0.073542416}
+      - {x: -0.32, y: -0.16}
+      - {x: -0.27851242, y: -0.15661119}
+      - {x: -0.23565711, y: -0.12982874}
+      - {x: -0.097445324, y: -0.072796784}
+      - {x: 0.00204085, y: -0.06276216}
+      - {x: 0.0822282, y: -0.06925726}
+      - {x: 0.24491443, y: -0.035485853}
+      - {x: 0.3105715, y: -0.016800094}
