@@ -9,7 +9,9 @@ public class AlusController : MonoBehaviour {
 	//vauhti
 	private Animator m_Animator;
 
-	private float oikeaNappiPainettu = 0.0f;
+	private bool oikeaNappiPainettu = false;
+
+	private bool vasenNappiPainettu = false;
 
 	private float vauhtiOikea = 0.0f;
 	private float vauhtiOikeaMax = 4.0f;
@@ -18,14 +20,16 @@ public class AlusController : MonoBehaviour {
 	private float nopeudenMuutosKunPainettu = 1f;
 	//ylos/alla
 
-	private float ylosNappiPainettu = 0.0f;
+	private bool ylosNappiPainettu = false;
+	private bool alasNappiPainettu = false;
+
 
 	private float vauhtiYlos = 0.0f;
 	private float vauhtiYlosMax = 4.0f;
 
 	private bool spaceNappiaPainettu = false;
-	private bool spaceNappiAlhaalla = false;
-	private bool spaceNappiYlhaalla = false;
+	//private bool spaceNappiAlhaalla = false;
+	//private bool spaceNappiYlhaalla = false;
 
 
 
@@ -49,11 +53,31 @@ public class AlusController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		oikeaNappiPainettu = Input.GetAxisRaw ("Horizontal"); // > 0 for right, < 0 for left
-		ylosNappiPainettu = Input.GetAxisRaw ("Vertical"); // > 0 for right, < 0 for left
-		spaceNappiaPainettu = Input.GetButton ("Jump");
-		spaceNappiAlhaalla = Input.GetButtonDown ("Jump");
-		spaceNappiYlhaalla = Input.GetButtonUp ("Jump");
+		float nappiHorizontal = Input.GetAxisRaw ("Horizontal");
+
+		oikeaNappiPainettu = (nappiHorizontal > 0.0f); // > 0 for right, < 0 for left
+		vasenNappiPainettu = (nappiHorizontal < 0.0f);
+
+		float nappiVertical = Input.GetAxisRaw ("Vertical");
+
+
+		ylosNappiPainettu = nappiVertical > 0; // > 0 for right, < 0 for left
+		alasNappiPainettu = nappiVertical < 0;
+		//spaceNappiaPainettu = Input.GetButton ("Jump");
+		//spaceNappiAlhaalla = Input.GetButtonDown ("Jump");
+		//spaceNappiYlhaalla = Input.GetButtonUp ("Jump");
+
+		//spaceNappiaPainettu = Input.GetKeyDown (KeyCode.Space);
+		if (Input.GetKeyDown (KeyCode.Space) ) {
+			//Shoot ();
+			Debug.Log ("space painettu " );
+			spaceNappiaPainettu = true;
+
+		}
+		else {
+			Debug.Log ("space ei painettu ");
+			spaceNappiaPainettu = false;
+		}
 
 
 	}
@@ -61,25 +85,28 @@ public class AlusController : MonoBehaviour {
 	void FixedUpdate ()
 	{
 
-		if (oikeaNappiPainettu == 0.0f) {
-			//kumpaakaan ei painettu joten vaakasuunta nopeutta pitää vaan vähentä
-			if (vauhtiOikea > 0) {
+		if (oikeaNappiPainettu) {
+			vauhtiOikea = vauhtiOikea + nopeudenMuutosKunPainettu;
+		}
+		if (vasenNappiPainettu) {
+			//vasen painettu
+			vauhtiOikea = vauhtiOikea - nopeudenMuutosKunPainettu;
+		}
+		if (!oikeaNappiPainettu && !vasenNappiPainettu) {
+			if (vauhtiOikea > 0.0f) {
 				vauhtiOikea = vauhtiOikea - hidastuvuusKunMitaanEiPainettu;
-				if (vauhtiOikea < 0) {
+				if (vauhtiOikea < 0.0f) {
 					vauhtiOikea = 0.0f;
 				}
-			} else if (vauhtiOikea < 0) {
+			} else if (vauhtiOikea < 0.0f) {
 				vauhtiOikea = vauhtiOikea + hidastuvuusKunMitaanEiPainettu;
 				if (vauhtiOikea > 0.0f) {
 					vauhtiOikea = 0.0f;
 				}
 			}
-		} else if (oikeaNappiPainettu > 0) {
-			vauhtiOikea = vauhtiOikea + nopeudenMuutosKunPainettu;
-		} else {
-			//vasen painettu
-			vauhtiOikea = vauhtiOikea - nopeudenMuutosKunPainettu;
 		}
+
+
 
 		if (vauhtiOikea > 0 && vauhtiOikea > vauhtiOikeaMax) {
 			vauhtiOikea = vauhtiOikeaMax;
@@ -87,26 +114,35 @@ public class AlusController : MonoBehaviour {
 			vauhtiOikea = -(vauhtiOikeaMax);
 		}
 
+
+
+
 		//alas/ylös
-		if (ylosNappiPainettu == 0.0f) {
-			//kumpaakaan ei painettu joten vaakasuunta nopeutta pitää vaan vähentä
-			if (vauhtiYlos > 0) {
+		if (ylosNappiPainettu) {
+			vauhtiYlos = vauhtiYlos + nopeudenMuutosKunPainettu;
+		}
+		if (alasNappiPainettu) {
+			//vasen painettu
+			vauhtiYlos = vauhtiYlos - nopeudenMuutosKunPainettu;
+		}
+
+
+
+		if (!ylosNappiPainettu && !alasNappiPainettu) {
+			if (vauhtiYlos > 0.0f) {
 				vauhtiYlos = vauhtiYlos - hidastuvuusKunMitaanEiPainettu;
-				if (vauhtiYlos < 0) {
+				if (vauhtiYlos < 0.0f) {
 					vauhtiYlos = 0.0f;
 				}
-			} else if (vauhtiYlos < 0) {
+			} else if (vauhtiYlos < 0.0f) {
 				vauhtiYlos = vauhtiYlos + hidastuvuusKunMitaanEiPainettu;
 				if (vauhtiYlos > 0.0f) {
 					vauhtiYlos = 0.0f;
 				}
 			}
-		} else if (ylosNappiPainettu > 0) {
-			vauhtiYlos = vauhtiYlos + nopeudenMuutosKunPainettu;
-		} else {
-			//vasen painettu
-			vauhtiYlos = vauhtiYlos - nopeudenMuutosKunPainettu;
 		}
+
+
 
 		if (vauhtiYlos > 0 && vauhtiYlos > vauhtiYlosMax) {
 			vauhtiYlos = vauhtiYlosMax;
@@ -126,7 +162,7 @@ public class AlusController : MonoBehaviour {
 
 		//Debug.Log("vauhtiOikea=" + vauhtiOikea);
 		//Debug.Log("vauhtiYlos=" + vauhtiYlos);
-		Debug.Log ("spaceNappiYlhaalla=" + spaceNappiYlhaalla);
+//		Debug.Log ("spaceNappiYlhaalla=" + spaceNappiYlhaalla);
 
 		//m_Rigidbody2D.position.
 		bool ammusinstantioitiin = false;
