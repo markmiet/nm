@@ -70,12 +70,12 @@ public class AlusController : MonoBehaviour {
 		//spaceNappiaPainettu = Input.GetKeyDown (KeyCode.Space);
 		if (Input.GetKeyDown (KeyCode.Space) ) {
 			//Shoot ();
-			Debug.Log ("space painettu " );
+	//		Debug.Log ("space painettu " );
 			spaceNappiaPainettu = true;
 
 		}
 		else {
-			Debug.Log ("space ei painettu ");
+	//		Debug.Log ("space ei painettu ");
 			spaceNappiaPainettu = false;
 		}
 
@@ -152,6 +152,9 @@ public class AlusController : MonoBehaviour {
 
 		m_Rigidbody2D.velocity = new Vector2 (vauhtiOikea, vauhtiYlos);
 
+
+
+
 		//        m_Rigidbody2D
 		if (vauhtiYlos > 0.0f) {
 			m_Animator.SetBool ("up", true);
@@ -170,15 +173,21 @@ public class AlusController : MonoBehaviour {
 		//tai sitten rajoitettu määrä ammuksia...
 
 		if (spaceNappiaPainettu) {
-			if (!ammusInstantioitiinviimekerralla) {
+		//	if (!ammusInstantioitiinviimekerralla) {
 				GameObject instanssi = Instantiate (ammusPrefab, new Vector3 (
 				m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
 				instanssi.GetComponent<Rigidbody2D> ().velocity = new Vector2 (20, 0);
 				ammusinstantioitiin = true;
-			}
+		//	}
 		}
 		ammusInstantioitiinviimekerralla = ammusinstantioitiin;
 
+	}
+
+
+	void OnCollisionEnter2D (Collision2D col)
+	{
+		Debug.Log ("OnCollisionEnter2D");
 	}
 
 }
