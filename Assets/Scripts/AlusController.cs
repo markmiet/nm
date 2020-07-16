@@ -174,7 +174,7 @@ public class AlusController : MonoBehaviour {
 
 		if (spaceNappiaPainettu) {
 		//	if (!ammusInstantioitiinviimekerralla) {
-				GameObject instanssi = Instantiate (ammusPrefab, new Vector3 (
+				GameObject instanssi = Instantiate (ammusPrefab, new Vector3 (0.1f+
 				m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
 				instanssi.GetComponent<Rigidbody2D> ().velocity = new Vector2 (20, 0);
 				ammusinstantioitiin = true;
@@ -185,9 +185,6 @@ public class AlusController : MonoBehaviour {
 	}
 
 
-	void OnCollisionEnter2D (Collision2D col)
-	{
-		Debug.Log ("OnCollisionEnter2D");
-	}
+
 
 }
