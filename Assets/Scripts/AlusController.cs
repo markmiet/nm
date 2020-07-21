@@ -85,6 +85,8 @@ public class AlusController : MonoBehaviour {
 	void FixedUpdate ()
 	{
 
+	
+
 		if (oikeaNappiPainettu) {
 			vauhtiOikea = vauhtiOikea + nopeudenMuutosKunPainettu;
 		}
@@ -149,10 +151,11 @@ public class AlusController : MonoBehaviour {
 		} else if (vauhtiYlos < 0 && vauhtiYlos <= -(vauhtiYlosMax)) {
 			vauhtiYlos = -(vauhtiYlosMax);
 		}
+		//float perusliike = 5;
 
 		m_Rigidbody2D.velocity = new Vector2 (vauhtiOikea, vauhtiYlos);
 
-
+		//m_Rigidbody2D.position.x = 3f;
 
 
 		//        m_Rigidbody2D
