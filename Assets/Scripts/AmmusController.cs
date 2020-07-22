@@ -46,7 +46,7 @@ public class AmmusController : MonoBehaviour {
 			m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
 			//m_Rigidbody2D.rotation =45.0f;
 
-			m_Rigidbody2D.rotation = annaRandomiKulmaAmmukselleTormayksenJalkeen ();
+	//		m_Rigidbody2D.rotation = annaRandomiKulmaAmmukselleTormayksenJalkeen ();
 
 			Destroy (gameObject, 2);
 		}
