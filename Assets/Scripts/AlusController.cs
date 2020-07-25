@@ -40,6 +40,13 @@ public class AlusController : MonoBehaviour {
 	private SpriteRenderer m_SpriteRenderer;
 
 
+
+
+	private Vector2 screenBounds;
+
+	private float objectWidth;
+	private float objectHeight;
+
 	// Start is called before the first frame update
 	void Start ()
 	{
@@ -47,6 +54,16 @@ public class AlusController : MonoBehaviour {
 		m_Animator = GetComponent<Animator> ();
 
 		m_SpriteRenderer = GetComponent<SpriteRenderer> ();
+
+
+		screenBounds = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height, Camera.main.transform.position.z));
+
+		objectWidth = transform.GetComponent<SpriteRenderer> ().bounds.size.x /2;
+		objectHeight = transform.GetComponent<SpriteRenderer> ().bounds.size.y /2;
+
+
+
+		Debug.Log ("screenBounds=" + screenBounds);
 
 	}
 
@@ -185,8 +202,22 @@ public class AlusController : MonoBehaviour {
 		}
 		ammusInstantioitiinviimekerralla = ammusinstantioitiin;
 
-	}
 
+	
+
+	}
+	void LateUpdate()
+	{
+		Vector3 viewpos = transform.position;
+		viewpos.x =
+			Mathf.Clamp (viewpos.x, screenBounds.x*-1+ objectWidth, screenBounds.x- objectWidth);
+
+
+		viewpos.y = Mathf.Clamp (viewpos.y, screenBounds.y*-1+objectHeight, screenBounds.y-objectHeight);
+		transform.position = viewpos;
+	
+	
+	}
 
 
 

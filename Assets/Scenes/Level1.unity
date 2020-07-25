@@ -354,8 +354,9 @@ GameObject:
   - component: {fileID: 1040488703}
   - component: {fileID: 1040488705}
   - component: {fileID: 1040488704}
-  - component: {fileID: 1040488706}
   - component: {fileID: 1040488707}
+  - component: {fileID: 1040488709}
+  - component: {fileID: 1040488706}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: tiilitag
@@ -663,3 +664,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skrollimaara: 0.5
+--- !u!50 &1040488709
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040488702}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: 0e43cc00d109971008c2172361214ced, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
