@@ -10,26 +10,69 @@ public class AmmusController : MonoBehaviour {
 	private int tormaysmaara = 0;
 
 	private Rigidbody2D m_Rigidbody2D;
+
+
+	private Renderer m_Renderer;
+	private bool ollutnakyvissa = false;
+	private bool ollutEinakyvissa = false;
+	private bool firstime = true;
 	// Start is called before the first frame update
 	void Start ()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D> ();
 
 		m_Animator = GetComponent<Animator> ();
-
-
+		m_Renderer = GetComponent<Renderer> ();
 
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
+		/*
+	if (m_Renderer.isVisible) {
+		ollutnakyvissa = true;
 
+	}
+	if (!m_Renderer.isVisible && !firstime) {
+		ollutEinakyvissa = true;
+		Destroy (gameObject);
+	}
+
+
+	if (ollutEinakyvissa && ollutnakyvissa) {
+		Debug.Log ("ei visible destroy updatessa");
+
+		Destroy (gameObject);
+
+	}
+*/
+		firstime = false;
 	}
 
 
 	void FixedUpdate ()
 	{
+		Debug.Log ("vauhti x=" + m_Rigidbody2D.velocity.x);
+		Debug.Log ("vauhti y=" + m_Rigidbody2D.velocity.y);
+
+		if (Mathf.Abs (m_Rigidbody2D.velocity.x) <0.2 && Mathf.Abs (m_Rigidbody2D.velocity.y) < 0.2) {
+			Destroy (gameObject);
+			return;
+		}
+
+
+		/*
+		if ( !m_Renderer.isVisible) {
+				Debug.Log ("ei visible destroy");
+
+				Destroy (gameObject);
+		
+		}
+		el
+		
+		se
+	*/
 
 		if (tuhoa && !tuhoamistoimenpiteetkaynnistetty) {
 			tuhoamistoimenpiteetkaynnistetty = true;
@@ -48,13 +91,15 @@ public class AmmusController : MonoBehaviour {
 
 			//		m_Rigidbody2D.rotation = annaRandomiKulmaAmmukselleTormayksenJalkeen ();
 
-			Destroy (gameObject, 5);
+	//		Destroy (gameObject,3f);
 		} else if (tuhoaViivella && tuhoamistoimenpiteetkaynnistetty && tormaysmaara > 2) {
 			//transform.position = new Vector2 (transform.position.x - 0.01f, transform.position.y);
 
-			Debug.Log ("tormaysmaara= " + tormaysmaara);
-			Destroy (gameObject);
+	//		Debug.Log ("tormaysmaara= " + tormaysmaara);
+
+	//		Destroy (gameObject);
 		}
+
 
 	}
 
@@ -71,6 +116,15 @@ public class AmmusController : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
+
+		/*
+		if (col.collider.tag=="ammustag") {
+			Debug.Log ("ammustörmäys");
+			Destroy (gameObject);
+			Destroy (col.collider);
+		}
+	*/
+
 		Debug.Log (col.collider.tag);
 
 		//Debug.Log ("OnCollisionEnter2D");
@@ -103,7 +157,9 @@ public class AmmusController : MonoBehaviour {
 		tormaysmaara++;
 
 
-
+		if (tormaysmaara > 20) {
+			//Destroy (gameObject);
+		}
 
 	}
 
@@ -116,4 +172,12 @@ public class AmmusController : MonoBehaviour {
 		//Destroy (gameObject);
 	}
 
+
+	/*
+	bool IsVisibleFrom2 (this Renderer parent, Camera camera)
+	{
+		Plane [] planes = GeometryUtility.CalculateFrustumPlanes (camera);
+		return GeometryUtility.TestPlanesAABB (planes, parent.bounds);
+	}
+	*/
 }
