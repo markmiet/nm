@@ -91,7 +91,7 @@ public class AmmusController : MonoBehaviour {
 
 			//		m_Rigidbody2D.rotation = annaRandomiKulmaAmmukselleTormayksenJalkeen ();
 
-	//		Destroy (gameObject,3f);
+			Destroy (gameObject,5f);
 		} else if (tuhoaViivella && tuhoamistoimenpiteetkaynnistetty && tormaysmaara > 2) {
 			//transform.position = new Vector2 (transform.position.x - 0.01f, transform.position.y);
 
