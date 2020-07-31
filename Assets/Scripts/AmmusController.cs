@@ -116,6 +116,10 @@ public class AmmusController : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
+		if (col.collider.tag=="makitavihollinentag") {
+			Destroy (col.gameObject);
+		}
+
 
 		/*
 		if (col.collider.tag=="ammustag") {
@@ -125,7 +129,7 @@ public class AmmusController : MonoBehaviour {
 		}
 	*/
 
-		Debug.Log (col.collider.tag);
+		Debug.Log ("tormaystagi="+col.collider.tag);
 
 		//Debug.Log ("OnCollisionEnter2D");
 

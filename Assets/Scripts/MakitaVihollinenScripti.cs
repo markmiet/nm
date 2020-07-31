@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MakitaVihollinenScripti : MonoBehaviour
 {
+
+	private Rigidbody2D m_Rigidbody2D;
+
 	private GameObject alus;
 	private Animator m_Animator;
 	// Start is called before the first frame update
@@ -11,8 +14,11 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 	private SpriteRenderer m_SpriteRenderer;
 
+	public GameObject ammusPrefab;
 
 
+	GameObject instanssi = null;
+	//public int FixedUpdateMaaraJokaVaaditaanEttaAmmutaan;
 	void Start ()
        {
 		m_Animator = GetComponent<Animator> ();
@@ -21,6 +27,9 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 		alus = GameObject.FindGameObjectWithTag("alustag");
+
+		m_Rigidbody2D = GetComponent<Rigidbody2D> ();
+
 	}
 
 	// Update is called once per frame
@@ -76,6 +85,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 		float angle = Mathf.Atan2 (alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
 		 Mathf.Rad2Deg;
+
 /*
 		if (angle>=0 && angle<=22.5f) {
 			//oikea 
@@ -189,8 +199,39 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 
+		float angle2 = Mathf.Atan2 (alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
+			 Mathf.Rad2Deg;
 
-		Debug.Log ("angle=" + angle);
+		Debug.Log ("angle2=" + angle2);
+
+		//ampuminen eli
+		if (instanssi==null) {
+			instanssi = Instantiate (ammusPrefab, new Vector3 (
+	m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y+0.3f, 0), Quaternion.identity);
+
+
+			float pysty = alus.transform.position.y - transform.position.y;
+			float vaaka = alus.transform.position.x - transform.position.x;
+
+			float suhdeluku = pysty / vaaka;
+
+			float kokonaisvoima = 2f;
+
+			float vaakavoima = kokonaisvoima * suhdeluku;
+			float pystyvoima = kokonaisvoima - vaakavoima;
+
+			Vector2  vv=new Vector2 (alus.transform.position.x - transform.position.x,
+				alus.transform.position.y - transform.position.y);
+
+			vv.Normalize ();
+			vv.Scale(new Vector2(4.0f,4.0f));
+
+			instanssi.GetComponent<Rigidbody2D> ().velocity = vv;
+
+		}
+
+	//	transform.position = new Vector2 (transform.position.x - 0.01f, 0);
+
 
 
 	}

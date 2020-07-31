@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 7587851952522426830}
   - component: {fileID: 4372467517966353899}
   - component: {fileID: -3328583325779947177}
-  - component: {fileID: 3518124530219340833}
   - component: {fileID: 1660899705671000815}
   - component: {fileID: 1416248142987543733}
-  m_Layer: 0
+  - component: {fileID: 201616423428231147}
+  m_Layer: 10
   m_Name: MakitaVihollinen
-  m_TagString: Untagged
+  m_TagString: makitavihollinentag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,9 +105,42 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!60 &3518124530219340833
-PolygonCollider2D:
+  m_Constraints: 5
+--- !u!114 &1660899705671000815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501753412327295253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1423d377fbc129caa9175c05f5c7a0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammusPrefab: {fileID: 1985379849892578813, guid: d20a7acdf168dacf883f197695575668,
+    type: 3}
+--- !u!95 &1416248142987543733
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501753412327295253}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f9600ded180fa8fd936c1b3b6e45e5d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &201616423428231147
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,61 +162,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.19911194, y: 0.15954113}
-      - {x: -0.23593521, y: 0.12806654}
-      - {x: -0.2793579, y: 0.12894106}
-      - {x: -0.32157135, y: 0.12167263}
-      - {x: -0.3199997, y: 0.09416342}
-      - {x: -0.23136139, y: 0.09419918}
-      - {x: -0.19295883, y: 0.054173946}
-      - {x: -0.094078064, y: 0.05632782}
-      - {x: -0.108810425, y: 0.002907753}
-      - {x: -0.05739975, y: -0.032260895}
-      - {x: -0.03131485, y: -0.1400001}
-      - {x: -0.10318756, y: -0.17466736}
-      - {x: -0.17929459, y: -0.16773772}
-      - {x: -0.25862503, y: -0.22934341}
-      - {x: -0.2931099, y: -0.2815361}
-      - {x: -0.29166794, y: -0.31999993}
-      - {x: 0.24111176, y: -0.31685257}
-      - {x: 0.24740982, y: -0.2247212}
-      - {x: 0.19425583, y: -0.17603946}
-      - {x: 0.10852432, y: -0.17338157}
-      - {x: 0.1223526, y: -0.07859731}
-      - {x: 0.094120026, y: 0.023581505}
-      - {x: 0.13108063, y: 0.07272577}
-      - {x: 0.13705063, y: 0.12223005}
-      - {x: 0.08639526, y: 0.1674099}
---- !u!114 &1660899705671000815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501753412327295253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1423d377fbc129caa9175c05f5c7a0de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &1416248142987543733
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501753412327295253}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0f9600ded180fa8fd936c1b3b6e45e5d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.64}
+  m_EdgeRadius: 0

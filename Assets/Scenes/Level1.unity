@@ -121,6 +121,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &36379920
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 291360693}
+    m_Modifications:
+    - target: {fileID: 501753412327295253, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_Name
+      value: MakitaVihollinen (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db7b5613d6dd7a9258bb31e022562fa7, type: 3}
 --- !u!1 &193723532
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +264,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 712879557}
+  - {fileID: 1799822897}
   - {fileID: 1040488703}
+  - {fileID: 1589617092}
+  - {fileID: 1308957897}
   m_Father: {fileID: 193723534}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -218,6 +290,144 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 575445198}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &445364309
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 291360693}
+    m_Modifications:
+    - target: {fileID: 501753412327295253, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_Name
+      value: MakitaVihollinen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db7b5613d6dd7a9258bb31e022562fa7, type: 3}
+--- !u!1001 &490260400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 291360693}
+    m_Modifications:
+    - target: {fileID: 501753412327295253, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_Name
+      value: MakitaVihollinen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db7b5613d6dd7a9258bb31e022562fa7, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +617,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MakitaVihollinen
       objectReference: {fileID: 0}
+    - target: {fileID: 3518124530219340833, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[18].x
+      value: 1.0967178
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518124530219340833, guid: db7b5613d6dd7a9258bb31e022562fa7,
+        type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[18].y
+      value: -0.13085139
+      objectReference: {fileID: 0}
     - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -415,7 +635,7 @@ PrefabInstance:
     - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.56
+      value: -1.52
       objectReference: {fileID: 0}
     - target: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
         type: 3}
@@ -497,7 +717,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 291360693}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1040488704
 TilemapRenderer:
@@ -5360,3 +5580,90 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!4 &1308957897 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+    type: 3}
+  m_PrefabInstance: {fileID: 36379920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1589617092 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+    type: 3}
+  m_PrefabInstance: {fileID: 445364309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1799822897 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7587851952522426830, guid: db7b5613d6dd7a9258bb31e022562fa7,
+    type: 3}
+  m_PrefabInstance: {fileID: 490260400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &171823876902531631
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.35784
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.3200574
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 52996867836880282, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985379849892578813, guid: d20a7acdf168dacf883f197695575668,
+        type: 3}
+      propertyPath: m_Name
+      value: MakitaVihollinenAmmus
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d20a7acdf168dacf883f197695575668, type: 3}
