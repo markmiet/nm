@@ -37,11 +37,17 @@ public class MakitaVihollinenAmmusScripti : MonoBehaviour {
 
 
 	void OnCollisionEnter2D (Collision2D col)
-	{
+    {
+        Debug.Log("tagi=" + col.collider.tag);
 		if (col.collider.tag == "alustag") {
 			//Destroy (col.gameObject);
-			Debug.Log ("dame over");
-		}
+			Debug.Log ("game over");
+
+            Animator aa=col.gameObject.GetComponent<Animator>();
+           // aa.SetBool("explode", true);
+
+
+        }
 		else if (col.collider.tag == "makitavihollinentag" || col.collider.tag== "makitavihollinenammustag") {
 			//Destroy (col.gameObject);
 			//Debug.Log ("dame over");
