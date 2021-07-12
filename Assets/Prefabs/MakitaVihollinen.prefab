@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3328583325779947177}
   - component: {fileID: 1660899705671000815}
   - component: {fileID: 1416248142987543733}
-  - component: {fileID: 201616423428231147}
+  - component: {fileID: 1429670463726668992}
   m_Layer: 10
   m_Name: MakitaVihollinen
   m_TagString: makitavihollinentag
@@ -50,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 003cf5a2a5e24e5579193429dd04ee87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30bcd7ca826bf98d58f4ad65ba5083c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -139,8 +140,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &201616423428231147
-BoxCollider2D:
+--- !u!60 &1429670463726668992
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -162,6 +163,15 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.02, y: 0.29999998}
+      - {x: -0.12, y: 0.049999997}
+      - {x: -0.19999999, y: -0.14999999}
+      - {x: -0.29999998, y: -0.22}
+      - {x: -0.31, y: -0.28}
+      - {x: -0.31, y: -0.32}
+      - {x: 0.26, y: -0.32}
+      - {x: 0.26, y: -0.22}
+      - {x: 0.089999996, y: 0.29}
+      - {x: 0.07, y: 0.29999998}

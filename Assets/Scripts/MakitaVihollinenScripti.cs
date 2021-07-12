@@ -19,6 +19,11 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     GameObject instanssi = null;
     //public int FixedUpdateMaaraJokaVaaditaanEttaAmmutaan;
+
+
+    //  private BoxCollider2D boxCollider2D;
+    private PolygonCollider2D polygonCollider2D;
+    private Sprite sprite;
     void Start()
     {
         m_Animator = GetComponent<Animator>();
@@ -29,6 +34,20 @@ public class MakitaVihollinenScripti : MonoBehaviour
         alus = GameObject.FindGameObjectWithTag("alustag");
 
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+        //    boxCollider2D = GetComponent<BoxCollider2D>();
+
+
+        //  boxCollider2D.
+
+        //boxCollider2D.enabled = false;
+
+
+
+        polygonCollider2D = GetComponent<PolygonCollider2D>();
+
+        sprite = m_SpriteRenderer.sprite;
+
 
 
 
@@ -44,6 +63,8 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     void FixedUpdate()
     {
+        UpdatePolygonCollider2D();
+
         //vaaka,vali,ylos
         //Debug.Log ("alus x="+ alus.transform.position.x+" vihollinen x="+transform.position.x);
 
@@ -259,4 +280,24 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
     }
+
+
+    // Store these outside the method so it can reuse the Lists (free performance)
+    private List<Vector2> points = new List<Vector2>();
+    private List<Vector2> simplifiedPoints = new List<Vector2>();
+
+    public void UpdatePolygonCollider2D(float tolerance = 0.05f)
+    {
+        
+
+        polygonCollider2D.pathCount = sprite.GetPhysicsShapeCount();
+        for (int i = 0; i < polygonCollider2D.pathCount; i++)
+        {
+            sprite.GetPhysicsShape(i, points);
+            LineUtility.Simplify(points, tolerance, simplifiedPoints);
+            polygonCollider2D.SetPath(i, simplifiedPoints);
+        }
+    }
+
+
 }
