@@ -15,7 +15,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
     private SpriteRenderer m_SpriteRenderer;
 
     public GameObject ammusPrefab;
-//    int laskuri = 0;
+    //    int laskuri = 0;
 
     GameObject instanssi = null;
     //public int FixedUpdateMaaraJokaVaaditaanEttaAmmutaan;
@@ -24,14 +24,27 @@ public class MakitaVihollinenScripti : MonoBehaviour
     //  private BoxCollider2D boxCollider2D;
     private PolygonCollider2D polygonCollider2D;
     private Sprite sprite;
+
+
+    private SpriteRenderer alusSpriteRenderer;
+
+    private BoxCollider2D piipunboxit;
+
     void Start()
     {
+
+        piipunboxit = GetComponentInChildren<BoxCollider2D>();
+
         m_Animator = GetComponent<Animator>();
 
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
 
         alus = GameObject.FindGameObjectWithTag("alustag");
+
+
+        alusSpriteRenderer=alus.GetComponent<SpriteRenderer>();
+
 
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -44,7 +57,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 
-        polygonCollider2D = GetComponent<PolygonCollider2D>();
+                polygonCollider2D = GetComponent<PolygonCollider2D>();
 
         sprite = m_SpriteRenderer.sprite;
 
@@ -53,9 +66,24 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     }
 
+    bool vaihdaPolygonia = false;
+    int pollaskuri = 0;
     // Update is called once per frame
     void Update()
     {
+
+        //if (vaihdaPolygonia && pollaskuri++ >= 11)
+        //{
+
+        //    PolygonCollider2D[] old = this.gameObject.GetComponents<PolygonCollider2D>();
+        //    foreach (PolygonCollider2D o in old)
+        //    {
+        //        Destroy(o);
+        //    }
+        //    this.gameObject.AddComponent<PolygonCollider2D>();
+        //    pollaskuri = 0;
+        //    vaihdaPolygonia = false;
+        //}
 
 
 
@@ -63,18 +91,20 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     void FixedUpdate()
     {
-        UpdatePolygonCollider2D();
+
+
+        // UpdatePolygonCollider2D();
 
         //vaaka,vali,ylos
         //Debug.Log ("alus x="+ alus.transform.position.x+" vihollinen x="+transform.position.x);
 
         //vasen, vasenylä, ylä
-        Vector3 vihollinenPos = Camera.main.ScreenToWorldPoint(transform.position);
-        Vector3 alusPos = Camera.main.ScreenToWorldPoint(alus.transform.position);
+        //      Vector3 vihollinenPos = Camera.main.ScreenToWorldPoint(transform.position);
+        //     Vector3 alusPos = Camera.main.ScreenToWorldPoint(alus.transform.position);
 
         /*
 		if (alus.transform.position.y >= transform.position.y) {
-			//alus ylapuolella
+			//alus ylapuolellago.AddComponent<PolygonCollider2D>();
 			m_SpriteRenderer.flipY = false;
 
 		} else {
@@ -87,31 +117,108 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         //m_Animator.SetBool ("ylos", false);
 
-
         /*
-		if (alus.transform.position.x <= transform.position.x) {
-			m_SpriteRenderer.flipX = false;
 
-			//float angle = Vector2.Angle (alus.transform.position, transform.position);
+        if (alus.transform.position.x <= transform.position.x)
+        {
+            //m_SpriteRenderer.flipX = false;
 
-
-			//Debug.Log ("vasen");
-
-		} else if (alus.transform.position.x > transform.position.x) {
-			m_SpriteRenderer.flipX = true;
-
-			//Debug.Log ("oikea");
+            //float angle = Vector2.Angle (alus.transform.position, transform.position);
 
 
-		}
-	*/
+            //Debug.Log ("vasen");
 
-        float angle = Mathf.Atan2(alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
-         Mathf.Rad2Deg;
+            m_Animator.SetBool("left", true);
+
+
+        }
+        else if (alus.transform.position.x > transform.position.x)
+        {
+            //m_SpriteRenderer.flipX = true;
+
+            //Debug.Log ("oikea");
+
+            m_Animator.SetBool("left", false);
+
+
+        }
+
+        */
+
+
+
+        //        m_SpriteRenderer.bounds.center.x
+        //        alusSpriteRenderer.bounds.center.x
+
+        float ammusx=0f;//= m_SpriteRenderer.bounds.center.x;
+
+        if (alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
+        {
+            //m_SpriteRenderer.flipX = false;
+
+            //float angle = Vector2.Angle (alus.transform.position, transform.position);
+
+
+            //Debug.Log ("vasen");
+
+            m_Animator.SetBool("left", true);
+
+          //  ammusx= polygonCollider2D.bounds.min.x;
+        }
+        else if (alusSpriteRenderer.bounds.center.x > m_SpriteRenderer.bounds.center.x)
+        {
+            //m_SpriteRenderer.flipX = true;
+
+            //Debug.Log ("oikea");
+
+            m_Animator.SetBool("left", false);
+           // ammusx = polygonCollider2D.bounds.max.x;
+
+
+         //   piipunboxit
+
+        }
+
+
+        ammusx = piipunboxit.bounds.center.x;
+
+     //   polygonCollider2D.bounds.min.y
+
+
+        //float angle = Mathf.Atan2(alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
+        //Mathf.Rad2Deg;
+
+
+        float lisays = 0.0f;
+        float alusy = alusSpriteRenderer.bounds.center.y;
+        float alusx = alusSpriteRenderer.bounds.center.x;
+
+        //float ammusy = m_SpriteRenderer.bounds.max.y;
+
+
+       //float ammusy= polygonCollider2D.bounds.max.y;
+
+        float ammusy = piipunboxit.bounds.center.y;
+
+
+        //    float ammusx= m_SpriteRenderer.bounds.center.x;
+
+
+
+        //float angle = Mathf.Atan2(alusy -ammusy+lisays,alusx - ammusx) *
+         //Mathf.Rad2Deg;
+
+
+
+
+        float angle = Mathf.Atan2(alusy - polygonCollider2D.bounds.max.y + lisays, alusx - polygonCollider2D.bounds.center.x) *
+ Mathf.Rad2Deg;
+
+
 
         /*
                 if (angle>=0 && angle<=22.5f) {
-                    //oikea 
+                    //oikea
                     m_SpriteRenderer.flipX = true;
                     m_Animator.SetBool ("vaaka", true);
                     m_Animator.SetBool ("vali", false);
@@ -119,7 +226,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
                 } else if (angle > 22.5f && angle <= 45f) {
-                    //oikea väli 
+                    //oikea väli
                     m_SpriteRenderer.flipX = true;
                     m_Animator.SetBool ("vali", true);
                     m_Animator.SetBool ("ylos", false);
@@ -133,32 +240,32 @@ public class MakitaVihollinenScripti : MonoBehaviour
                     m_Animator.SetBool ("vali", true);
                     m_Animator.SetBool ("vaaka", false);
                 } else if (angle > 67.5f && angle <= 90f) {
-                    //ylos 
+                    //ylos
                     m_SpriteRenderer.flipX = true;
                     m_Animator.SetBool ("ylos", true);
                     m_Animator.SetBool ("vali", false);
                     m_Animator.SetBool ("vaaka", false);
                 }
                  else if (angle > 90f && angle <= 112.5f) {
-                    //ylos 
+                    //ylos
                     m_SpriteRenderer.flipX = false;
                     m_Animator.SetBool ("ylos", true);
                     m_Animator.SetBool ("vali", false);
                     m_Animator.SetBool ("vaaka", false);
                 } else if (angle > 112.5f && angle <= 135f) {
-                    //vali 
+                    //vali
                     m_SpriteRenderer.flipX = false;
                     m_Animator.SetBool ("ylos", false);
                     m_Animator.SetBool ("vali", true);
                     m_Animator.SetBool ("vaaka", false);
                 } else if (angle > 112.5f && angle <= 157.5f) {
-                    //vali 
+                    //vali
                     m_SpriteRenderer.flipX = false;
                     m_Animator.SetBool ("ylos", false);
                     m_Animator.SetBool ("vali", true);
                     m_Animator.SetBool ("vaaka", false);
                 } else if (angle > 157.5f && angle <=180f) {
-                    //vasen alakulma 
+                    //vasen alakulma
                     m_SpriteRenderer.flipX = false;
                     m_Animator.SetBool ("ylos", false);
                     m_Animator.SetBool ("vali", false);
@@ -166,10 +273,13 @@ public class MakitaVihollinenScripti : MonoBehaviour
                 }
         */
 
+        /*
         if (angle >= 0 && angle <= 10)
         {
-            //oikea 
-            m_SpriteRenderer.flipX = true;
+            //oikea
+            // m_SpriteRenderer.flipX = true;
+            m_Animator.SetBool("flipx", true);
+
             m_Animator.SetBool("vaaka", true);
             m_Animator.SetBool("vali", false);
             m_Animator.SetBool("ylos", false);
@@ -178,8 +288,10 @@ public class MakitaVihollinenScripti : MonoBehaviour
         }
         else if (angle > 10 && angle <= 45f)
         {
-            //oikea väli 
-            m_SpriteRenderer.flipX = true;
+            //oikea väli
+            //            m_SpriteRenderer.flipX = true;
+            m_Animator.SetBool("flipx", true);
+
             m_Animator.SetBool("vali", true);
             m_Animator.SetBool("ylos", false);
             m_Animator.SetBool("vaaka", false);
@@ -189,70 +301,237 @@ public class MakitaVihollinenScripti : MonoBehaviour
         else if (angle > 45f && angle <= 67.5f)
         {
             //oikea väli
-            m_SpriteRenderer.flipX = true;
+            //            m_SpriteRenderer.flipX = true;
+            m_Animator.SetBool("flipx", true);
+
             m_Animator.SetBool("ylos", false);
             m_Animator.SetBool("vali", true);
             m_Animator.SetBool("vaaka", false);
         }
         else if (angle > 67.5f && angle <= 90f)
         {
-            //ylos 
-            m_SpriteRenderer.flipX = true;
+            //ylos
+            //            m_SpriteRenderer.flipX = true;
+            m_Animator.SetBool("flipx", true);
+
             m_Animator.SetBool("ylos", true);
             m_Animator.SetBool("vali", false);
             m_Animator.SetBool("vaaka", false);
         }
         else if (angle > 90f && angle <= 112.5f)
         {
-            //ylos 
-            m_SpriteRenderer.flipX = false;
+            //ylos
+            //            m_SpriteRenderer.flipX = false;
+            m_Animator.SetBool("flipx", false);
+
             m_Animator.SetBool("ylos", true);
             m_Animator.SetBool("vali", false);
             m_Animator.SetBool("vaaka", false);
         }
         else if (angle > 112.5f && angle <= 135f)
         {
-            //vali 
-            m_SpriteRenderer.flipX = false;
+            //vali
+            // m_SpriteRenderer.flipX = false;
+            m_Animator.SetBool("flipx", false);
+
             m_Animator.SetBool("ylos", false);
             m_Animator.SetBool("vali", true);
             m_Animator.SetBool("vaaka", false);
         }
         else if (angle > 112.5f && angle <= 170)
         {
-            //vali 
-            m_SpriteRenderer.flipX = false;
+            //vali
+            //m_SpriteRenderer.flipX = false;
+            m_Animator.SetBool("flipx", false);
+
+
             m_Animator.SetBool("ylos", false);
             m_Animator.SetBool("vali", true);
             m_Animator.SetBool("vaaka", false);
         }
         else if (angle > 170 && angle <= 180f)
         {
-            //vasen alakulma 
-            m_SpriteRenderer.flipX = false;
+            //vasen alakulma
+            //m_SpriteRenderer.flipX = false;
+
+            m_Animator.SetBool("flipx", false);
+
             m_Animator.SetBool("ylos", false);
             m_Animator.SetBool("vali", false);
             m_Animator.SetBool("vaaka", true);
         }
 
+        */
+
+        //eli vaihda sitä polygoncollideria vain jos tuo angle muuttuu ja säädä noi anglet järkeviksi...
+        //        m_Animator.GetBool("1");
 
 
-        float angle2 = Mathf.Atan2(alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
-             Mathf.Rad2Deg;
+        bool animatorChanged = false;
+
+        if (angle >= 0 && angle <= 15)
+        {
+            //oikea
+            // m_SpriteRenderer.flipX = true;
+            //m_Animator.SetBool("flipx", true);
+
+            //m_Animator.SetBool("vaaka", true);
+            //m_Animator.SetBool("vali", false);
+            //m_Animator.SetBool("ylos", false);
+
+            //Debug.Log("angle=" + angle + " kohta 1");
+            //m_Animator.SetBool("1", true);
+            //m_Animator.SetBool("2", false);
+            //m_Animator.SetBool("3", false);
+            //m_Animator.SetBool("4", false);
+            //m_Animator.SetBool("5", false);
+            //m_Animator.SetBool("6", false);
+
+            animatorChanged = SetAnimatorTrueksi(1);
+
+        }
+        else if (angle > 15 && angle <= 60f)
+        {
+            //oikea väli
+            //            m_SpriteRenderer.flipX = true;
+            //m_Animator.SetBool("flipx", true);
+
+            //m_Animator.SetBool("vali", true);
+            //m_Animator.SetBool("ylos", false);
+            //m_Animator.SetBool("vaaka", false);
+            //Debug.Log("angle=" + angle + " kohta 2");
 
 
-        Debug.Log("angle2=" + angle2);
+            //m_Animator.SetBool("1", false);
+            //m_Animator.SetBool("2", true);
+            //m_Animator.SetBool("3", false);
+            //m_Animator.SetBool("4", false);
+            //m_Animator.SetBool("5", false);
+            //m_Animator.SetBool("6", false);
+
+            animatorChanged = SetAnimatorTrueksi(2);
+
+        }
+        else if (angle > 60 && angle <= 90)
+        {
+            //oikea väli
+            //            m_SpriteRenderer.flipX = true;
+            //m_Animator.SetBool("flipx", true);
+
+            //m_Animator.SetBool("ylos", true);
+            //m_Animator.SetBool("vali", false);
+            //m_Animator.SetBool("vaaka", false);
+            //Debug.Log("angle=" + angle + " kohta 3");
+
+
+            //m_Animator.SetBool("1", false);
+            //m_Animator.SetBool("2", false);
+            //m_Animator.SetBool("3", true);
+            //m_Animator.SetBool("4", false);
+            //m_Animator.SetBool("5", false);
+            //m_Animator.SetBool("6", false);
+
+            animatorChanged = SetAnimatorTrueksi(3);
+        }
+        else if (angle > 90 && angle <= 120)
+        {
+            //ylos
+            //            m_SpriteRenderer.flipX = true;
+            //m_Animator.SetBool("flipx", false);
+
+            //m_Animator.SetBool("ylos", true);
+            //m_Animator.SetBool("vali", false);
+            //m_Animator.SetBool("vaaka", false);
+            //Debug.Log("angle=" + angle + " kohta 4");
+
+            //m_Animator.SetBool("1", false);
+            //m_Animator.SetBool("2", false);
+            //m_Animator.SetBool("3", false);
+            //m_Animator.SetBool("4", true);
+            //m_Animator.SetBool("5", false);
+            //m_Animator.SetBool("6", false);
+            animatorChanged = SetAnimatorTrueksi(4);
+        }
+        else if (angle > 120 && angle <= 165)
+        {
+            //ylos
+            //            m_SpriteRenderer.flipX = false;
+            //m_Animator.SetBool("flipx", false);
+
+            //m_Animator.SetBool("ylos", false);
+            //m_Animator.SetBool("vali", true);
+            //m_Animator.SetBool("vaaka", false);
+            //Debug.Log("angle=" + angle + " kohta 5");
+
+            //m_Animator.SetBool("1", false);
+            //m_Animator.SetBool("2", false);
+            //m_Animator.SetBool("3", false);
+            //m_Animator.SetBool("4", false);
+            //m_Animator.SetBool("5", true);
+            //m_Animator.SetBool("6", false);
+
+            animatorChanged = SetAnimatorTrueksi(5);
+        }
+        else if (angle > 165 && angle <= 180)
+        {
+            //vali
+            // m_SpriteRenderer.flipX = false;
+            //m_Animator.SetBool("flipx", false);
+
+            //m_Animator.SetBool("ylos", false);
+            //m_Animator.SetBool("vali", false);
+            //m_Animator.SetBool("vaaka", true);
+
+            //Debug.Log("angle=" + angle + " kohta 6");
+
+            //m_Animator.SetBool("1", false);
+            //m_Animator.SetBool("2", false);
+            //m_Animator.SetBool("3", false);
+            //m_Animator.SetBool("4", false);
+            //m_Animator.SetBool("5", false);
+            //m_Animator.SetBool("6", true);
+
+            animatorChanged = SetAnimatorTrueksi(6);
+
+        }
+
+        m_Animator.SetFloat("angle", angle);
+
+
+        Debug.Log("angle=" + angle);
+
+
+        if (animatorChanged)
+        {
+            //laskuri = 0;
+            vaihdaPolygonia = true;
+            pollaskuri = 0;
+        }
+
+
+
+
+
+        //float angle2 = Mathf.Atan2(alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
+             //Mathf.Rad2Deg;
+
+
+
 
         //laskuri++;
 
         //ampuminen eli
-        if (instanssi == null )
+        if (instanssi == null)
         {
             //oli 0.3f
             //eli spriten asennosta on kiinni
 
+    //        instanssi = Instantiate(ammusPrefab, new Vector3(
+    //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.5f, 0), Quaternion.identity);
+
             instanssi = Instantiate(ammusPrefab, new Vector3(
-    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.5f, 0), Quaternion.identity);
+    ammusx, ammusy + lisays, 0), Quaternion.identity);
+
 
 
             float pysty = alus.transform.position.y - transform.position.y;
@@ -265,8 +544,13 @@ public class MakitaVihollinenScripti : MonoBehaviour
             float vaakavoima = kokonaisvoima * suhdeluku;
             float pystyvoima = kokonaisvoima - vaakavoima;
 
-            Vector2 vv = new Vector2(alus.transform.position.x - transform.position.x,
-                alus.transform.position.y - transform.position.y);
+
+ //           float angle = Mathf.Atan2(alusSpriteRenderer.bounds.center.y - m_SpriteRenderer.bounds.center.y, alusSpriteRenderer.bounds.center.x - m_SpriteRenderer.bounds.center.x) *
+ //Mathf.Rad2Deg;
+
+
+            Vector2 vv = new Vector2(alusx - ammusx,
+               alusy- ammusy+lisays);
 
             vv.Normalize();
             vv.Scale(new Vector2(4.0f, 4.0f));
@@ -279,6 +563,13 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 
+        //laskuri++;
+
+
+
+        //}
+
+
     }
 
 
@@ -288,7 +579,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     public void UpdatePolygonCollider2D(float tolerance = 0.05f)
     {
-        
+        /*
 
         polygonCollider2D.pathCount = sprite.GetPhysicsShapeCount();
         for (int i = 0; i < polygonCollider2D.pathCount; i++)
@@ -297,7 +588,41 @@ public class MakitaVihollinenScripti : MonoBehaviour
             LineUtility.Simplify(points, tolerance, simplifiedPoints);
             polygonCollider2D.SetPath(i, simplifiedPoints);
         }
+        */
+    }
+
+    private int laskuri = 0;
+
+    private int lastAnimator = 0;
+
+    private bool SetAnimatorTrueksi(int anim)
+    {
+        bool changed = lastAnimator != anim;
+        if (changed)
+        {
+            //            Debug.Log("animaattori=" + anim);
+
+            for (int i = 1; i <= 6; i++)
+            {
+                if (i == anim)
+                {
+                    // m_Animator.SetBool("" + i, true);
+                }
+                else
+                {
+                    //    m_Animator.SetBool("" + i, false);
+                }
+
+            }
+        }
+        lastAnimator = anim;
+        return changed;
     }
 
 
+
+    void LateUpdate()
+    {
+
+    }
 }

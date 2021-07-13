@@ -53,8 +53,8 @@ public class AmmusController : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
-		Debug.Log ("vauhti x=" + m_Rigidbody2D.velocity.x);
-		Debug.Log ("vauhti y=" + m_Rigidbody2D.velocity.y);
+		//Debug.Log ("vauhti x=" + m_Rigidbody2D.velocity.x);
+		//Debug.Log ("vauhti y=" + m_Rigidbody2D.velocity.y);
 
 		if (Mathf.Abs (m_Rigidbody2D.velocity.x) <0.2 && Mathf.Abs (m_Rigidbody2D.velocity.y) < 0.2) {
 			Destroy (gameObject);
@@ -107,7 +107,7 @@ public class AmmusController : MonoBehaviour {
 	private float annaRandomiKulmaAmmukselleTormayksenJalkeen ()
 	{
 		float f = Random.Range (0f, 360f);
-		Debug.Log ("f=" + f);
+		//Debug.Log ("f=" + f);
 		return f;
 
 
@@ -129,7 +129,7 @@ public class AmmusController : MonoBehaviour {
 		}
 	*/
 
-		Debug.Log ("tormaystagi="+col.collider.tag);
+		//Debug.Log ("tormaystagi="+col.collider.tag);
 
 		//Debug.Log ("OnCollisionEnter2D");
 
@@ -169,7 +169,7 @@ public class AmmusController : MonoBehaviour {
 
 	void OnBecameInvisible ()
 	{
-		Debug.Log ("OnBecameInvisible");
+		//Debug.Log ("OnBecameInvisible");
 		// Destroy the enemy
 		tuhoa = true;
 
