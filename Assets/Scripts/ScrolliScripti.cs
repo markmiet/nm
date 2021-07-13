@@ -19,7 +19,7 @@ public class ScrolliScripti : MonoBehaviour
 	{
 		//transform.position.x = transform.position.x - skrollimaara;
 
-		transform.position = new Vector2 (transform.position.x - 0.01f, 0);
+	//	transform.position = new Vector2 (transform.position.x - 0.01f, 0);
 
 	}
 }

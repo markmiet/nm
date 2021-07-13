@@ -30,6 +30,8 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     private BoxCollider2D piipunboxit;
 
+    float previousAngle = 0.0f;
+
     void Start()
     {
 
@@ -43,7 +45,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         alus = GameObject.FindGameObjectWithTag("alustag");
 
 
-        alusSpriteRenderer=alus.GetComponent<SpriteRenderer>();
+        alusSpriteRenderer = alus.GetComponent<SpriteRenderer>();
 
 
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -57,7 +59,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 
-                polygonCollider2D = GetComponent<PolygonCollider2D>();
+        polygonCollider2D = GetComponent<PolygonCollider2D>();
 
         sprite = m_SpriteRenderer.sprite;
 
@@ -89,6 +91,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     }
 
+    bool firstime = true;
     void FixedUpdate()
     {
 
@@ -150,7 +153,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         //        m_SpriteRenderer.bounds.center.x
         //        alusSpriteRenderer.bounds.center.x
 
-        float ammusx=0f;//= m_SpriteRenderer.bounds.center.x;
+        float ammusx = 0f;//= m_SpriteRenderer.bounds.center.x;
 
         if (alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
         {
@@ -163,7 +166,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
             m_Animator.SetBool("left", true);
 
-          //  ammusx= polygonCollider2D.bounds.min.x;
+            //  ammusx= polygonCollider2D.bounds.min.x;
         }
         else if (alusSpriteRenderer.bounds.center.x > m_SpriteRenderer.bounds.center.x)
         {
@@ -172,17 +175,22 @@ public class MakitaVihollinenScripti : MonoBehaviour
             //Debug.Log ("oikea");
 
             m_Animator.SetBool("left", false);
-           // ammusx = polygonCollider2D.bounds.max.x;
+            // ammusx = polygonCollider2D.bounds.max.x;
 
 
-         //   piipunboxit
+            //   piipunboxit
 
         }
 
 
+
+
+
+
+
         ammusx = piipunboxit.bounds.center.x;
 
-     //   polygonCollider2D.bounds.min.y
+        //   polygonCollider2D.bounds.min.y
 
 
         //float angle = Mathf.Atan2(alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
@@ -196,9 +204,21 @@ public class MakitaVihollinenScripti : MonoBehaviour
         //float ammusy = m_SpriteRenderer.bounds.max.y;
 
 
-       //float ammusy= polygonCollider2D.bounds.max.y;
+        //float ammusy= polygonCollider2D.bounds.max.y;
 
         float ammusy = piipunboxit.bounds.center.y;
+
+        if (alusSpriteRenderer.bounds.max.y< m_SpriteRenderer.bounds.min.y)
+        {
+            m_Animator.SetBool("animchangeallowed", false);
+        }
+        else
+        {
+            m_Animator.SetBool("animchangeallowed", true);
+        }
+
+
+        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
 
 
         //    float ammusx= m_SpriteRenderer.bounds.center.x;
@@ -206,7 +226,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
         //float angle = Mathf.Atan2(alusy -ammusy+lisays,alusx - ammusx) *
-         //Mathf.Rad2Deg;
+        //Mathf.Rad2Deg;
 
 
 
@@ -215,6 +235,12 @@ public class MakitaVihollinenScripti : MonoBehaviour
  Mathf.Rad2Deg;
 
 
+        if (m_Animator.GetBool("left"))
+        {
+            angle = Mathf.Abs(angle);
+        }
+
+        //    angle = Mathf.Abs(angle);
 
         /*
                 if (angle>=0 && angle<=22.5f) {
@@ -509,11 +535,25 @@ public class MakitaVihollinenScripti : MonoBehaviour
         }
 
 
+        /*
+        if (angle < -30)
+        {
+            m_Animator.SetBool("animchangeallowed", false);
+
+
+        }
+        else
+        {
+            m_Animator.SetBool("animchangeallowed", true);
+        }
+
+
+*/
 
 
 
         //float angle2 = Mathf.Atan2(alus.transform.position.y - transform.position.y, alus.transform.position.x - transform.position.x) *
-             //Mathf.Rad2Deg;
+        //Mathf.Rad2Deg;
 
 
 
@@ -521,13 +561,13 @@ public class MakitaVihollinenScripti : MonoBehaviour
         //laskuri++;
 
         //ampuminen eli
-        if (instanssi == null)
+        if (instanssi == null && !firstime && m_Animator.GetBool("animchangeallowed"))
         {
             //oli 0.3f
             //eli spriten asennosta on kiinni
 
-    //        instanssi = Instantiate(ammusPrefab, new Vector3(
-    //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.5f, 0), Quaternion.identity);
+            //        instanssi = Instantiate(ammusPrefab, new Vector3(
+            //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.5f, 0), Quaternion.identity);
 
             instanssi = Instantiate(ammusPrefab, new Vector3(
     ammusx, ammusy + lisays, 0), Quaternion.identity);
@@ -545,12 +585,12 @@ public class MakitaVihollinenScripti : MonoBehaviour
             float pystyvoima = kokonaisvoima - vaakavoima;
 
 
- //           float angle = Mathf.Atan2(alusSpriteRenderer.bounds.center.y - m_SpriteRenderer.bounds.center.y, alusSpriteRenderer.bounds.center.x - m_SpriteRenderer.bounds.center.x) *
- //Mathf.Rad2Deg;
+            //           float angle = Mathf.Atan2(alusSpriteRenderer.bounds.center.y - m_SpriteRenderer.bounds.center.y, alusSpriteRenderer.bounds.center.x - m_SpriteRenderer.bounds.center.x) *
+            //Mathf.Rad2Deg;
 
 
             Vector2 vv = new Vector2(alusx - ammusx,
-               alusy- ammusy+lisays);
+               alusy - ammusy + lisays);
 
             vv.Normalize();
             vv.Scale(new Vector2(4.0f, 4.0f));
@@ -569,6 +609,8 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         //}
 
+
+        firstime = false;
 
     }
 
