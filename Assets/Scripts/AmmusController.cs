@@ -117,8 +117,12 @@ public class AmmusController : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D col)
 	{
 		if (col.collider.tag=="makitavihollinentag") {
-			Destroy (col.gameObject);
-		}
+			
+            col.gameObject.SendMessage("Explode");
+
+            //Destroy (col.gameObject);
+
+        }
 
 
 		/*

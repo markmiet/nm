@@ -6,6 +6,8 @@ public class MakitaVihollinenAmmusScripti : MonoBehaviour {
 
 	private bool tuhoa = false;
 
+
+
 	// Start is called before the first frame update
 	void Start ()
 	{
@@ -44,9 +46,13 @@ public class MakitaVihollinenAmmusScripti : MonoBehaviour {
 			Debug.Log ("game over");
 
             Animator aa=col.gameObject.GetComponent<Animator>();
-           // aa.SetBool("explode", true);
+            // aa.SetBool("explode", true);
+            //  tuhoa = true;
+            //Destroy(gameObject, 0.2f);
 
+            // Destroy(gameObject,2f);
 
+            col.gameObject.SendMessage("Explode");
         }
 		else if (col.collider.tag == "makitavihollinentag" || col.collider.tag== "makitavihollinenammustag") {
 			//Destroy (col.gameObject);

@@ -32,6 +32,8 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
     float previousAngle = 0.0f;
 
+    public GameObject explosion;
+
     void Start()
     {
 
@@ -96,6 +98,11 @@ public class MakitaVihollinenScripti : MonoBehaviour
     {
 
 
+        if (alusSpriteRenderer==null)
+        {
+            return;
+        }
+
         // UpdatePolygonCollider2D();
 
         //vaaka,vali,ylos
@@ -155,7 +162,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         float ammusx = 0f;//= m_SpriteRenderer.bounds.center.x;
 
-        if (alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
+        if (alusSpriteRenderer!=null & alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
         {
             //m_SpriteRenderer.flipX = false;
 
@@ -208,13 +215,46 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         float ammusy = piipunboxit.bounds.center.y;
 
-        if (alusSpriteRenderer.bounds.max.y< m_SpriteRenderer.bounds.min.y)
+
+        if (alusSpriteRenderer.bounds.max.y < m_SpriteRenderer.bounds.min.y)
         {
             m_Animator.SetBool("animchangeallowed", false);
         }
         else
         {
             m_Animator.SetBool("animchangeallowed", true);
+        }
+
+        bool fireallowed;
+        m_Animator.SetBool("animchangeallowed", true);
+
+
+        //ei sallittua jos alus on ammuksen alapuolella
+        /*
+        if (alusSpriteRenderer.bounds.max.y < m_SpriteRenderer.bounds.min.y- )
+        {
+            fireallowed = false;
+
+        }
+        else
+        {
+
+            fireallowed = true;
+
+        }
+        */
+
+        //sallittua jos alus on vähintään vihollisen alatasolla
+        if (alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
+        {
+            fireallowed = true;
+
+        }
+        else
+        {
+
+            fireallowed = false;
+
         }
 
 
@@ -235,12 +275,12 @@ public class MakitaVihollinenScripti : MonoBehaviour
  Mathf.Rad2Deg;
 
 
-        if (m_Animator.GetBool("left"))
-        {
-            angle = Mathf.Abs(angle);
-        }
-
+        //if (m_Animator.GetBool("left"))
+        //{
         //    angle = Mathf.Abs(angle);
+        //}
+
+        angle = Mathf.Abs(angle);
 
         /*
                 if (angle>=0 && angle<=22.5f) {
@@ -395,6 +435,8 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         bool animatorChanged = false;
 
+
+        m_Animator.SetBool("left", false);
         if (angle >= 0 && angle <= 15)
         {
             //oikea
@@ -412,6 +454,9 @@ public class MakitaVihollinenScripti : MonoBehaviour
             //m_Animator.SetBool("4", false);
             //m_Animator.SetBool("5", false);
             //m_Animator.SetBool("6", false);
+
+
+            //m_Animator.SetBool("left", true);
 
             animatorChanged = SetAnimatorTrueksi(1);
 
@@ -498,7 +543,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
             animatorChanged = SetAnimatorTrueksi(5);
         }
-        else if (angle > 165 && angle <= 180)
+        else if (angle > 165 || (angle <= -180 && angle > -15))
         {
             //vali
             // m_SpriteRenderer.flipX = false;
@@ -519,6 +564,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
             animatorChanged = SetAnimatorTrueksi(6);
 
+            m_Animator.SetBool("left", true);
         }
 
         m_Animator.SetFloat("angle", angle);
@@ -561,7 +607,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         //laskuri++;
 
         //ampuminen eli
-        if (instanssi == null && !firstime && m_Animator.GetBool("animchangeallowed"))
+        if (instanssi == null && !firstime && fireallowed)
         {
             //oli 0.3f
             //eli spriten asennosta on kiinni
@@ -667,4 +713,17 @@ public class MakitaVihollinenScripti : MonoBehaviour
     {
 
     }
+
+
+    public void Explode()
+    {
+
+        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+
+        Destroy(explosionIns, 1.0f);
+        Destroy(gameObject, 0.1f);
+
+
+    }
+
 }

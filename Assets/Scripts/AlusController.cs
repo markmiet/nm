@@ -5,6 +5,9 @@ using UnityEngine;
 public class AlusController : MonoBehaviour
 {
 
+
+    public GameObject explosion;
+
     private Rigidbody2D m_Rigidbody2D;
 
     //vauhti
@@ -273,5 +276,16 @@ public class AlusController : MonoBehaviour
     }
 
 
+
+    public void Explode()
+    {
+
+        GameObject explosionIns =  Instantiate(explosion, transform.position, Quaternion.identity);
+   
+        Destroy(explosionIns, 1.0f);
+
+        Destroy(gameObject,0.1f);
+
+    }
 
 }
