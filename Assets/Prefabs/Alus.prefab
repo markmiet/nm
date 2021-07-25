@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3294481396978785094}
   - component: {fileID: 3294481396978785095}
   - component: {fileID: 3362095348282915404}
-  - component: {fileID: 9174804361498641160}
+  - component: {fileID: 4189346558496513917}
   m_Layer: 9
   m_Name: Alus
   m_TagString: alustag
@@ -98,12 +98,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f905085a7c9e2e08cf1ac0c0c09213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 3032404537388008043, guid: 14a6a63e2a4c87894ad6359022f051ff,
+  explosion: {fileID: 7737871024420907965, guid: be71e788f53224193a965fdf655875ed,
     type: 3}
   ammusPrefab: {fileID: 9057892473094562812, guid: eb03189b9a8660376b2e58982102e80b,
     type: 3}
+  bulletPrefab: {fileID: 7918195032328455905, guid: 196dd8526859e18d6a77cd2e1fceab16,
+    type: 3}
   gameoverPrefab: {fileID: 1411101464120241289, guid: 0adc702f36fa2039587e34d2e607dfdb,
     type: 3}
+  rotationSpeed: 50
+  m_DetectorOffset: {x: 0, y: 0, z: 0}
+  m_DetectorSize: {x: 0, y: 0, z: 0}
 --- !u!50 &3294481396978785095
 Rigidbody2D:
   serializedVersion: 4
@@ -144,7 +149,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!60 &9174804361498641160
+--- !u!60 &4189346558496513917
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,22 +174,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.32010835, y: 0.02159363}
-      - {x: 0.14883986, y: 0.046769466}
-      - {x: 0.09830373, y: 0.07919578}
-      - {x: -0.19982871, y: 0.078914754}
-      - {x: -0.24707311, y: 0.12588996}
-      - {x: -0.26441738, y: 0.15774395}
-      - {x: -0.31628284, y: 0.15752189}
-      - {x: -0.3189367, y: 0.15445131}
-      - {x: -0.31901708, y: -0.16082704}
-      - {x: -0.30680004, y: -0.073542416}
+    - - {x: 0.32, y: -0.0030870568}
+      - {x: 0.32, y: 0.03}
+      - {x: 0.089999996, y: 0.099999994}
+      - {x: -0.22999999, y: 0.16}
+      - {x: -0.32, y: 0.16}
       - {x: -0.32, y: -0.16}
-      - {x: -0.27642858, y: -0.159781}
-      - {x: -0.24572003, y: -0.1366278}
-      - {x: -0.23565711, y: -0.12982874}
-      - {x: -0.097445324, y: -0.072796784}
-      - {x: 0.00204085, y: -0.06276216}
-      - {x: 0.0822282, y: -0.06925726}
-      - {x: 0.24491443, y: -0.035485853}
-      - {x: 0.32048392, y: -0.01927821}
+      - {x: -0.22999999, y: -0.16}
+      - {x: 0.02, y: -0.089999996}
+      - {x: 0.26, y: -0.06}
+      - {x: 0.32, y: -0.03}

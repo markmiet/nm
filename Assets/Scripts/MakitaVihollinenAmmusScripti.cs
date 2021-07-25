@@ -30,7 +30,7 @@ public class MakitaVihollinenAmmusScripti : MonoBehaviour {
 
 	void OnBecameInvisible ()
 	{
-		Debug.Log ("OnBecameInvisible");
+//		Debug.Log ("OnBecameInvisible");
 		// Destroy the enemy
 		tuhoa = true;
 
@@ -40,7 +40,8 @@ public class MakitaVihollinenAmmusScripti : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col)
     {
-        Debug.Log("tagi=" + col.collider.tag);
+
+  //      Debug.Log("tagi=" + col.collider.tag);
 		if (col.collider.tag == "alustag") {
 			//Destroy (col.gameObject);
 			Debug.Log ("game over");

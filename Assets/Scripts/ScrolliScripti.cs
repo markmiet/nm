@@ -6,7 +6,7 @@ public class ScrolliScripti : MonoBehaviour
 {
 
 
-	public float skrollimaara = 0.5f;
+    public float skrollimaara = 0.01f;
 	// Start is called before the first frame update
 	void Start ()
 	{
@@ -17,9 +17,12 @@ public class ScrolliScripti : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		//transform.position.x = transform.position.x - skrollimaara;
+        //transform.position.x = transform.position.x - skrollimaara;
+        float deltaAika = Time.deltaTime;
+        float maara = deltaAika * skrollimaara;
 
-	//	transform.position = new Vector2 (transform.position.x - 0.01f, 0);
+		transform.position = new Vector2 (transform.position.x - maara, transform.position.y);
+
 
 	}
 }

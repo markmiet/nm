@@ -65,7 +65,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         sprite = m_SpriteRenderer.sprite;
 
-
+        
 
 
     }
@@ -258,7 +258,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         }
 
 
-        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
+//        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
 
 
         //    float ammusx= m_SpriteRenderer.bounds.center.x;
@@ -570,7 +570,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         m_Animator.SetFloat("angle", angle);
 
 
-        Debug.Log("angle=" + angle);
+//        Debug.Log("angle=" + angle);
 
 
         if (animatorChanged)
@@ -642,6 +642,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
             vv.Scale(new Vector2(4.0f, 4.0f));
 
             instanssi.GetComponent<Rigidbody2D>().velocity = vv;
+
 
         }
 
