@@ -43,6 +43,7 @@ public class AlusController : MonoBehaviour
     public GameObject ammusPrefab;
 
     public GameObject bulletPrefab;
+
     public GameObject gameoverPrefab;
 
 
@@ -60,6 +61,7 @@ public class AlusController : MonoBehaviour
 
 
     private GameObject instanssiBullet;
+    private GameObject instanssiBulletYlos;
 
     // Start is called before the first frame update
     void Start()
@@ -123,7 +125,6 @@ public class AlusController : MonoBehaviour
             //		Debug.Log ("space ei painettu ");
             spaceNappiaPainettu = false;
         }
-
 
     }
 
@@ -285,7 +286,21 @@ public class AlusController : MonoBehaviour
             if (instanssiBullet == null)
             {
                 instanssiBullet = Instantiate(bulletPrefab, v3, Quaternion.identity);
+                instanssiBullet.SendMessage("Alas", true);
                 instanssiBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -2);
+
+
+                instanssiBullet.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+
+            }
+
+            if (instanssiBulletYlos == null)
+            {
+                instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
+                instanssiBulletYlos.SendMessage("Alas", false);
+                instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 2);
+
+                instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale =- 1.0f;
 
             }
 
@@ -305,7 +320,7 @@ public class AlusController : MonoBehaviour
 
 
         viewpos.x =
-            Mathf.Clamp(viewpos.x, screenBounds.x * -1 + objectWidth, screenBounds.x+ objectWidth);
+            Mathf.Clamp(viewpos.x, screenBounds.x * -1 + objectWidth, screenBounds.x + objectWidth);
 
 
         //viewpos.x =
@@ -319,10 +334,10 @@ public class AlusController : MonoBehaviour
         //     viewpos.x =
         //   Mathf.Clamp(viewpos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
 
-        Debug.Log(" viewpos.x=" + viewpos.x + " screenBounds.x=" + screenBounds.x + " objectWidth=" + objectWidth+ " m_SpriteRenderer.transform.position.x="+
-        m_SpriteRenderer.transform.position.x
+        //Debug.Log(" viewpos.x=" + viewpos.x + " screenBounds.x=" + screenBounds.x + " objectWidth=" + objectWidth + " m_SpriteRenderer.transform.position.x=" +
+        //m_SpriteRenderer.transform.position.x
 
-            );
+        //       );
         /*
         if (viewpos.x<0)
         {
@@ -474,6 +489,18 @@ public class AlusController : MonoBehaviour
     {
         Debug.Log("on OnCollisionEnter2D ");
         collision = false;
+
+
+        if (col.collider.tag == "tiilitag")
+        {
+
+            Explode();
+
+            //Destroy (col.gameObject);
+
+        }
+
+
     }
 
 

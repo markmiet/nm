@@ -244,8 +244,10 @@ public class MakitaVihollinenScripti : MonoBehaviour
         }
         */
 
+      
+
         //sallittua jos alus on vähintään vihollisen alatasolla
-        if (alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
+        if (m_SpriteRenderer.isVisible && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
         {
             fireallowed = true;
 
