@@ -70,6 +70,19 @@ public class AlusController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         //        Debug.Log("screenBounds=" + screenBounds);
+
+        Debug.Log("ennen findia");
+        if (Application.platform!=RuntimePlatform.Android)
+        {
+            GameObject[] oo = GameObject.FindGameObjectsWithTag("painike");
+            foreach (GameObject o in oo)
+            {
+                o.SetActive(false);
+            }
+        }
+
+
+
     }
 
     // Update is called once per frame
@@ -131,22 +144,31 @@ public class AlusController : MonoBehaviour
     void FixedUpdate()
     {
 
+        if (gameover)
+        {
+                        GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
+           + (m_SpriteRenderer.bounds.size.x / 2),10, 0), Quaternion.identity);
+                //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+
+            Destroy(instanssi, 1);
+        }
+
 
         if (m_Animator.GetBool("explode"))
         {
-            if (!gameover)
-            {
-                gameover = true;
-                for (int i = 0; i < 100; i++)
-                {
-                    GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(0.1f +
-        m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
-                    // instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+        //    if (!gameover)
+        //    {
+        //        gameover = true;
+        //        for (int i = 0; i < 100; i++)
+        //        {
+        //            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(0.1f +
+        //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
+            //        // instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 
-                }
+            //    }
 
 
-            }
+            //}
 
             return;
         }
@@ -300,7 +322,7 @@ public class AlusController : MonoBehaviour
                 instanssiBulletYlos.SendMessage("Alas", false);
                 instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 2);
 
-                instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale =- 1.0f;
+                instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
 
             }
 
@@ -361,17 +383,14 @@ public class AlusController : MonoBehaviour
 
     public void Explode()
     {
-
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-
-
-
-
         Destroy(explosionIns, 1.0f);
-
         Destroy(gameObject, 0.1f);
+        gameover = true;
 
     }
+
+
 
     public float rotationSpeed = 50.0f;
 
@@ -389,22 +408,6 @@ public class AlusController : MonoBehaviour
     {
 
         Vector3 v = transform.position;
-        //v.x = v.x + 100.0f;
-
-
-
-
-
-        //Collider[] hitColliders = Physics.OverlapSphere(v, 0.1f);
-        //if (hitColliders != null && hitColliders.Length > 0)
-        //{
-        //    Debug.Log("seina oikealla");
-        //    return true;
-        //}
-        //return false;
-
-        // public static Collider2D OverlapBox(Vector2 point, Vector2 size, float angle);
-        //  Physics2D.OverlapBoxAll
 
         Collider2D[] cs =
         Physics2D.OverlapBoxAll(new Vector2(v.x
@@ -430,31 +433,9 @@ public class AlusController : MonoBehaviour
         }
         return false;
 
-        //return Physics2D.OverlapPoint(new Vector2(v.x+ m_SpriteRenderer.bounds.size.x
-
-        //, v.y));
-
     }
 
-    public Vector3 m_DetectorOffset = Vector3.zero;
-    public Vector3 m_DetectorSize = Vector3.zero;
 
-
-    public bool CheckForCollisions()
-    {
-        Vector3 colliderPos = transform.TransformPoint(m_DetectorOffset);
-        Collider[] colliders = Physics.OverlapBox(colliderPos, m_DetectorSize, transform.rotation);
-        if (colliders.Length == 1)
-        {
-            // Ignore collision with itself
-            if (colliders[0].gameObject == gameObject)
-                return false;
-            return true;
-        }
-        if (colliders.Length > 0)
-            return true;
-        return false;
-    }
 
 
 
@@ -506,7 +487,7 @@ public class AlusController : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D col)
     {
-        Debug.Log("on OnCollisionStay ");
+    //   Debug.Log("on OnCollisionStay ");
         collision = false;
     }
 
