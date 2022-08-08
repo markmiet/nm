@@ -5,6 +5,12 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class AlusController : MonoBehaviour
 {
+
+    public GameObject speedbonusbutton;
+    public GameObject missilebonusbutton;
+
+
+
     public Joystick joystick;
 
     public GameObject explosion;
@@ -72,7 +78,7 @@ public class AlusController : MonoBehaviour
         //        Debug.Log("screenBounds=" + screenBounds);
 
         Debug.Log("ennen findia");
-        if (Application.platform!=RuntimePlatform.Android)
+        if (Application.platform != RuntimePlatform.Android)
         {
             GameObject[] oo = GameObject.FindGameObjectsWithTag("painike");
             foreach (GameObject o in oo)
@@ -83,7 +89,26 @@ public class AlusController : MonoBehaviour
 
 
 
+        BonusButtonController[] bs = (BonusButtonController[])FindObjectsOfType(typeof(BonusButtonController));
+
+        foreach (BonusButtonController btc in bs)
+        {
+            // do whatever with each 'enemy' here
+            // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
+
+
+            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.used=" + btc.used);
+            bbc.Add(btc);
+
+        }
+        // words.Sort((a, b) => a.Length.CompareTo(b.Length));
+
+        bbc.Sort((a, b) => a.order.CompareTo(b.order));
+
+
     }
+
+    List<BonusButtonController> bbc = new List<BonusButtonController>();
 
     // Update is called once per frame
     void Update()
@@ -146,9 +171,9 @@ public class AlusController : MonoBehaviour
 
         if (gameover)
         {
-                        GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
-           + (m_SpriteRenderer.bounds.size.x / 2),10, 0), Quaternion.identity);
-                //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
++(m_SpriteRenderer.bounds.size.x / 2), 10, 0), Quaternion.identity);
+            //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 
             Destroy(instanssi, 1);
         }
@@ -156,13 +181,13 @@ public class AlusController : MonoBehaviour
 
         if (m_Animator.GetBool("explode"))
         {
-        //    if (!gameover)
-        //    {
-        //        gameover = true;
-        //        for (int i = 0; i < 100; i++)
-        //        {
-        //            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(0.1f +
-        //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
+            //    if (!gameover)
+            //    {
+            //        gameover = true;
+            //        for (int i = 0; i < 100; i++)
+            //        {
+            //            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(0.1f +
+            //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
             //        // instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 
             //    }
@@ -487,7 +512,7 @@ public class AlusController : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D col)
     {
-    //   Debug.Log("on OnCollisionStay ");
+        //   Debug.Log("on OnCollisionStay ");
         collision = false;
     }
 
@@ -522,6 +547,57 @@ public class AlusController : MonoBehaviour
     //tai sitten ammuskärki oma gameobjecti joka on se neliö
 
 
+
+    public void BonusCollected()
+    {
+
+
+        //olemme koskeneet bonukseen
+
+        //    public BonusButtonController.Bonusbuttontype speedbonusbutton;
+        //    public BonusButtonController.Bonusbuttontype missilebonusbutton;
+
+        //bool valittu=  speedbonusbutton.
+        //     speedbonusbutton
+
+
+        // BonusButtonController[] bs = (BonusButtonController[])FindObjectsOfType(typeof(BonusButtonController));
+        /*      */
+
+
+        //siinä on nyt järjestyksessä
+        int selectedIndex = -1;
+        foreach (BonusButtonController btc in bbc)
+        {
+            // do whatever with each 'enemy' here
+            // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
+
+
+            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.used=" + btc.used);
+            if (btc.selected)
+            {
+                selectedIndex = btc.order;
+            }
+
+        }
+        if (selectedIndex<0)
+        {
+            bbc[0].selected = true;
+        }
+        else
+        {
+            bbc[selectedIndex].selected = false;
+
+            if (selectedIndex + 1>= bbc.Count)
+            {
+                bbc[0].selected = true;
+            }
+            else {
+                bbc[selectedIndex + 1 ].selected = true;
+            }
+        }
+
+    }
 
 }
 
