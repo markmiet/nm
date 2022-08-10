@@ -69,6 +69,10 @@ public class AlusController : MonoBehaviour
     private GameObject instanssiBullet;
     private GameObject instanssiBulletYlos;
 
+
+    private bool missileDownCollected = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -163,6 +167,12 @@ public class AlusController : MonoBehaviour
             //		Debug.Log ("space ei painettu ");
             spaceNappiaPainettu = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            BonusButtonPressed();
+        }
+
 
     }
 
@@ -330,7 +340,7 @@ public class AlusController : MonoBehaviour
 
             //alas tippuva
 
-            if (instanssiBullet == null)
+            if (missileDownCollected && instanssiBullet == null)
             {
                 instanssiBullet = Instantiate(bulletPrefab, v3, Quaternion.identity);
                 instanssiBullet.SendMessage("Alas", true);
@@ -341,6 +351,7 @@ public class AlusController : MonoBehaviour
 
             }
 
+            /*
             if (instanssiBulletYlos == null)
             {
                 instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
@@ -350,7 +361,7 @@ public class AlusController : MonoBehaviour
                 instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
 
             }
-
+            */
 
 
             //	}
@@ -580,7 +591,7 @@ public class AlusController : MonoBehaviour
             }
 
         }
-        if (selectedIndex<0)
+        if (selectedIndex < 0)
         {
             bbc[0].selected = true;
         }
@@ -588,17 +599,43 @@ public class AlusController : MonoBehaviour
         {
             bbc[selectedIndex].selected = false;
 
-            if (selectedIndex + 1>= bbc.Count)
+            if (selectedIndex + 1 >= bbc.Count)
             {
                 bbc[0].selected = true;
             }
-            else {
-                bbc[selectedIndex + 1 ].selected = true;
+            else
+            {
+                bbc[selectedIndex + 1].selected = true;
             }
         }
 
     }
 
+
+    public void BonusButtonPressed()
+    {
+        foreach (BonusButtonController btc in bbc)
+        {
+            if (btc.selected && !btc.used)
+            {
+                btc.used = true;
+                btc.selected = false;
+                if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Speed))
+                {
+                    Debug.Log("speed()");
+                    vauhtiOikeaMax += 4.0f;
+
+                }
+                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Missile))
+                {
+                    Debug.Log("missile()");
+                    missileDownCollected = true;
+                }
+            }
+          
+        }
+    }
+    
+
+
 }
-
-
