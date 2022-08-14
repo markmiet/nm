@@ -25,9 +25,9 @@ public class AlusController : MonoBehaviour
     private bool vasenNappiPainettu = false;
 
     private float vauhtiOikea = 0.0f;
-    private float vauhtiOikeaMax = 4.0f;
+    public float vauhtiOikeaMax = 4.0f;
 
-    private float hidastuvuusKunMitaanEiPainettu = 0.3f;
+    public float hidastuvuusKunMitaanEiPainettu = 0.3f;
     private float nopeudenMuutosKunPainettu = 1f;
     //ylos/alla
 
@@ -36,7 +36,7 @@ public class AlusController : MonoBehaviour
 
 
     private float vauhtiYlos = 0.0f;
-    private float vauhtiYlosMax = 4.0f;
+    public float vauhtiYlosMax = 4.0f;
 
     private bool spaceNappiaPainettu = false;
     //private bool spaceNappiAlhaalla = false;
@@ -70,8 +70,10 @@ public class AlusController : MonoBehaviour
     private GameObject instanssiBulletYlos;
 
 
-    private bool missileDownCollected = false;
+    private int missileDownCollected = 0;
+    //
 
+    public float vauhdinLisaysKunSpeedbonusOtettu = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +103,7 @@ public class AlusController : MonoBehaviour
             // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
 
 
-            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.used=" + btc.used);
+            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
             bbc.Add(btc);
 
         }
@@ -333,35 +335,65 @@ public class AlusController : MonoBehaviour
 
 
 
+
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             ammusinstantioitiin = true;
 
 
             //alas tippuva
-
-            if (missileDownCollected && instanssiBullet == null)
+            // missileDownCollected
+            if (missileDownCollected >= 1 && instanssiBullet == null)
             {
-                instanssiBullet = Instantiate(bulletPrefab, v3, Quaternion.identity);
+
+
+                Vector3 v3alas =
+new Vector3(0.1f +
+m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y -0.1f, 0);
+
+
+
+                instanssiBullet = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
                 instanssiBullet.SendMessage("Alas", true);
-                instanssiBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -2);
+                instanssiBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
 
 
                 instanssiBullet.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
 
             }
-
             /*
-            if (instanssiBulletYlos == null)
+  if (missileDownCollected == 2 && instanssiBulletToinen == null)
+  {
+      instanssiBulletToinen = Instantiate(bulletPrefab, v3, Quaternion.identity);
+      instanssiBulletToinen.SendMessage("Alas", true);
+      instanssiBulletToinen.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -4);
+
+
+      instanssiBulletToinen.GetComponent<Rigidbody2D>().gravityScale = 2.0f;
+
+  }
+
+              */
+
+
+            if (missileDownCollected == 2 && instanssiBulletYlos == null)
             {
-                instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
+
+
+                Vector3 v3ylos =
+    new Vector3(0.1f +
+    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y+0.1f, 0);
+
+
+
+                instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
                 instanssiBulletYlos.SendMessage("Alas", false);
-                instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 2);
+                instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
 
                 instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
 
             }
-            */
+
 
 
             //	}
@@ -404,7 +436,9 @@ public class AlusController : MonoBehaviour
         */
 
 
-        viewpos.y = Mathf.Clamp(viewpos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
+        //viewpos.y = Mathf.Clamp(viewpos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
+        viewpos.y = Mathf.Clamp(viewpos.y, 5.0f + objectHeight, screenBounds.y - objectHeight);
+
         transform.position = viewpos;
 
         /*
@@ -584,7 +618,7 @@ public class AlusController : MonoBehaviour
             // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
 
 
-            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.used=" + btc.used);
+            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
             if (btc.selected)
             {
                 selectedIndex = btc.order;
@@ -616,26 +650,27 @@ public class AlusController : MonoBehaviour
     {
         foreach (BonusButtonController btc in bbc)
         {
-            if (btc.selected && !btc.used)
+            if (btc.selected && btc.usedcount <= btc.maxusedcount)
             {
-                btc.used = true;
+                btc.usedcount = btc.usedcount + 1;
                 btc.selected = false;
                 if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Speed))
                 {
                     Debug.Log("speed()");
-                    vauhtiOikeaMax += 4.0f;
+                    vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
+                    vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
 
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Missile))
                 {
                     Debug.Log("missile()");
-                    missileDownCollected = true;
+                    missileDownCollected++;
                 }
             }
-          
+
         }
     }
-    
+
 
 
 }
