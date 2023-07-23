@@ -79,11 +79,13 @@ public class AlusController : MonoBehaviour
     void Start()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         //        Debug.Log("screenBounds=" + screenBounds);
 
-        Debug.Log("ennen findia");
+        // Debug.Log("ennen findia");
         if (Application.platform != RuntimePlatform.Android)
         {
             GameObject[] oo = GameObject.FindGameObjectsWithTag("painike");
@@ -103,7 +105,7 @@ public class AlusController : MonoBehaviour
             // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
 
 
-            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
+            //       Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
             bbc.Add(btc);
 
         }
@@ -349,7 +351,7 @@ public class AlusController : MonoBehaviour
 
                 Vector3 v3alas =
 new Vector3(0.1f +
-m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y -0.1f, 0);
+m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y - 0.1f, 0);
 
 
 
@@ -382,7 +384,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
                 Vector3 v3ylos =
     new Vector3(0.1f +
-    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y+0.1f, 0);
+    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.1f, 0);
 
 
 
