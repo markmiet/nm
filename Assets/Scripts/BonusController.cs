@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BonusController : MonoBehaviour
 {
+    public float skrollimaara = 0.01f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,13 @@ public class BonusController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float deltaAika = Time.deltaTime;
+        float maara = deltaAika * skrollimaara;
+
+        transform.position = new Vector2(transform.position.x - maara, transform.position.y);
+
+
+
     }
 
 

@@ -552,6 +552,22 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             //Destroy (col.gameObject);
 
         }
+        else if (col.collider.tag == "pallerospritetag")
+        {
+
+            Explode();
+
+            //Destroy (col.gameObject);
+
+        }
+        else if (col.collider.tag == "makitavihollinentag")
+        {
+
+            Explode();
+
+            //Destroy (col.gameObject);
+
+        }
 
 
     }

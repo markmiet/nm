@@ -132,8 +132,17 @@ public class AmmusController : MonoBehaviour {
 
         }
 
+        if (col.collider.tag == "pallerospritetag")
+        {
 
-		/*
+            col.gameObject.SendMessage("ExplodePallero");
+
+            //Destroy (col.gameObject);
+
+        }
+
+
+        /*
 		if (col.collider.tag=="ammustag") {
 			Debug.Log ("ammustörmäys");
 			Destroy (gameObject);
@@ -141,12 +150,12 @@ public class AmmusController : MonoBehaviour {
 		}
 	*/
 
-		//Debug.Log ("tormaystagi="+col.collider.tag);
+        //Debug.Log ("tormaystagi="+col.collider.tag);
 
-		//Debug.Log ("OnCollisionEnter2D");
+        //Debug.Log ("OnCollisionEnter2D");
 
-		//col.otherCollider.gameObject.name
-		/*
+        //col.otherCollider.gameObject.name
+        /*
 			if (!tuhottu && col.collider.tag=="tiilitag" && m_Rigidbody2D!=null ) {
 				tuhottu = true;
 				m_Rigidbody2D.gravityScale = 5;
@@ -169,7 +178,7 @@ public class AmmusController : MonoBehaviour {
 
 			}
 		*/
-		tuhoaViivella = true;
+        tuhoaViivella = true;
 		tormaysmaara++;
 
 

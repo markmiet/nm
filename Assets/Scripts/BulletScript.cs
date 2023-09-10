@@ -92,6 +92,15 @@ public class BulletScript : MonoBehaviour
             //Destroy (col.gameObject);
 
         }
+
+        else if (col.collider.tag == "pallerospritetag")
+        {
+
+            //col.gameObject.SendMessage("ExplodePallero");
+            col.gameObject.SendMessage("Explode");
+            Destroy (col.gameObject);
+
+        }
     }
 
 
