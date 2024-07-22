@@ -159,7 +159,8 @@ public class AlusController : MonoBehaviour
         //spaceNappiYlhaalla = Input.GetButtonUp ("Jump");
 
         //spaceNappiaPainettu = Input.GetKeyDown (KeyCode.Space);
-        if (Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("Jump"))
+       // Input.GetKey
+        if (Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             //Shoot ();
             //		Debug.Log ("space painettu " );
@@ -179,7 +180,7 @@ public class AlusController : MonoBehaviour
 
 
     }
-
+    float deltaaikojensumma = 0f;
     void FixedUpdate()
     {
 
@@ -328,7 +329,11 @@ public class AlusController : MonoBehaviour
         //tee vaan rämpytyksestä parempi...
         //tai sitten rajoitettu määrä ammuksia...
 
-        if (spaceNappiaPainettu && !OnkoSeinaOikealla())
+        float aika= Time.deltaTime;
+        deltaaikojensumma += aika;
+        Debug.Log("deltatime=" + aika);
+
+        if (spaceNappiaPainettu && deltaaikojensumma>0.4f && onkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
         {
             //	if (!ammusInstantioitiinviimekerralla) {
             Vector3 v3 =
@@ -341,6 +346,9 @@ public class AlusController : MonoBehaviour
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             ammusinstantioitiin = true;
+            deltaaikojensumma = 0;
+           // instantioinninajankohta=
+
 
 
             //alas tippuva
@@ -688,7 +696,27 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         }
     }
+    private int palautaAmmustenMaara()
+    {
+        return GameObject.FindGameObjectsWithTag("ammustag").Length;
 
+    }
+    private bool onkoAmmustenMaaraAlleMaksimin()
+    {
+        int maksimi = 3;
+        int nykymaara = palautaAmmustenMaara();
+        return nykymaara < maksimi;
+    }
 
+    float reloadEndTime = 0f;
+    float reloadTimer = 3f;
+    private bool onkoRealoadMenossa()
+    {
+        bool IsReloading = Time.time < reloadEndTime;
+        // bool CanShoot => !IsReloading; // other conditions...
+        reloadEndTime = Time.time + reloadTimer;
+
+        return IsReloading;
+    }
 
 }
