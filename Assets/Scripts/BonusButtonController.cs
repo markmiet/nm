@@ -22,7 +22,8 @@ public class BonusButtonController : MonoBehaviour
     public enum Bonusbuttontype
     {
         Speed,
-        Missile
+        Missile,
+        Option
     }
 
     public Bonusbuttontype bonusbuttontype;

@@ -17,6 +17,9 @@ public class AlusController : MonoBehaviour
     public float ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
     public int ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
 
+    public int nykyinenoptioidenmaara;
+
+    public int optioidenmaksimaara;
 
 
     public Joystick joystick;
@@ -77,6 +80,10 @@ public class AlusController : MonoBehaviour
     private GameObject instanssiBullet;
     private GameObject instanssiBulletYlos;
 
+
+
+    public GameObject instanssiOption1;
+    private bool teeOptionPallukka = false;
 
     private int missileDownCollected = 0;
     //
@@ -354,6 +361,8 @@ public class AlusController : MonoBehaviour
 
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            ammuOptioneilla();
+
             ammusinstantioitiin = true;
             deltaaikojensumma = 0;
             // instantioinninajankohta=
@@ -420,9 +429,44 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         ammusInstantioitiinviimekerralla = ammusinstantioitiin;
 
 
+        if (teeOptionPallukka)
+        {
+     //       Vector3 vektori =
+   // new Vector3(0.1f +
+   // m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0);
+
+            Vector3 vektori =
+    new Vector3(
+    m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
+            GameObject instanssiOption = Instantiate(instanssiOption1, vektori, Quaternion.identity);
+
+
+            OptionController myScript = instanssiOption.GetComponent<OptionController>();
+            if (myScript != null)
+            {
+                myScript.jarjestysnro = nykyinenoptioidenmaara;
+                optionControllerit.Add(myScript);
+            }
+
+            //    instanssiOption.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            teeOptionPallukka = false;
+        }
     }
+
+    private void ammuOptioneilla()
+    {
+        foreach (OptionController obj in optionControllerit)
+        {
+            // Set the position
+            obj.ammuNormilaukaus(ammusPrefab);
+        }
+    }
+
+    private List<OptionController> optionControllerit = new  List<OptionController>();
+
+
     void LateUpdate()
     {
         Vector3 viewpos = transform.position;
@@ -704,8 +748,20 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                     Debug.Log("missile()");
                     missileDownCollected++;
                 }
-            }
+                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Option))
+                {
+                    //                  public int nykyinenoptioidenmaara;
 
+                    //public int optioidenmaksimaara;
+                    if (nykyinenoptioidenmaara < optioidenmaksimaara)
+                    {
+                        teeOptionPallukka = true;
+                        nykyinenoptioidenmaara++;
+
+
+                    }
+                }
+            }
         }
     }
     private int palautaAmmustenMaara()
