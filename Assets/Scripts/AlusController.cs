@@ -9,6 +9,14 @@ public class AlusController : MonoBehaviour
     public GameObject speedbonusbutton;
     public GameObject missilebonusbutton;
 
+    public int ammustenmaksimaaraProperty;
+
+    public float ampumakertojenvalinenviive;
+
+
+    public float ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
+    public int ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
+
 
 
     public Joystick joystick;
@@ -92,6 +100,7 @@ public class AlusController : MonoBehaviour
             foreach (GameObject o in oo)
             {
                 o.SetActive(false);
+
             }
         }
 
@@ -159,7 +168,7 @@ public class AlusController : MonoBehaviour
         //spaceNappiYlhaalla = Input.GetButtonUp ("Jump");
 
         //spaceNappiaPainettu = Input.GetKeyDown (KeyCode.Space);
-       // Input.GetKey
+        // Input.GetKey
         if (Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             //Shoot ();
@@ -218,7 +227,7 @@ public class AlusController : MonoBehaviour
 
         if (oikeaNappiPainettu)
         {
-            vauhtiOikea = vauhtiOikea + nopeudenMuutosKunPainettu;
+            vauhtiOikea += nopeudenMuutosKunPainettu;
         }
         if (vasenNappiPainettu)
         {
@@ -329,11 +338,11 @@ public class AlusController : MonoBehaviour
         //tee vaan rämpytyksestä parempi...
         //tai sitten rajoitettu määrä ammuksia...
 
-        float aika= Time.deltaTime;
+        float aika = Time.deltaTime;
         deltaaikojensumma += aika;
         Debug.Log("deltatime=" + aika);
 
-        if (spaceNappiaPainettu && deltaaikojensumma>0.4f && onkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
+        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive && onkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
         {
             //	if (!ammusInstantioitiinviimekerralla) {
             Vector3 v3 =
@@ -347,7 +356,7 @@ public class AlusController : MonoBehaviour
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             ammusinstantioitiin = true;
             deltaaikojensumma = 0;
-           // instantioinninajankohta=
+            // instantioinninajankohta=
 
 
 
@@ -686,6 +695,9 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                     vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
                     vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
 
+                    ammustenmaksimaaraProperty += ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
+                    ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
+
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Missile))
                 {
@@ -703,7 +715,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     }
     private bool onkoAmmustenMaaraAlleMaksimin()
     {
-        int maksimi = 3;
+        int maksimi = ammustenmaksimaaraProperty;
         int nykymaara = palautaAmmustenMaara();
         return nykymaara < maksimi;
     }

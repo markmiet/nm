@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3294481396978785095}
   - component: {fileID: 3362095348282915404}
   - component: {fileID: 4189346558496513917}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Alus
   m_TagString: alustag
   m_Icon: {fileID: 0}
@@ -100,15 +100,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedbonusbutton: {fileID: 0}
   missilebonusbutton: {fileID: 0}
+  ammustenmaksimaaraProperty: 1
+  ampumakertojenvalinenviive: 0.6
+  ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu: -0.2
+  ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu: 3
   joystick: {fileID: 0}
   explosion: {fileID: 7737871024420907965, guid: be71e788f53224193a965fdf655875ed,
     type: 3}
+  vauhtiOikeaMax: 4
+  hidastuvuusKunMitaanEiPainettu: 0.3
+  vauhtiYlosMax: 4
   ammusPrefab: {fileID: 9057892473094562812, guid: eb03189b9a8660376b2e58982102e80b,
     type: 3}
   bulletPrefab: {fileID: 7918195032328455905, guid: 196dd8526859e18d6a77cd2e1fceab16,
     type: 3}
   gameoverPrefab: {fileID: 1411101464120241289, guid: 0adc702f36fa2039587e34d2e607dfdb,
     type: 3}
+  vauhdinLisaysKunSpeedbonusOtettu: 0.5
   rotationSpeed: 50
 --- !u!50 &3294481396978785095
 Rigidbody2D:
