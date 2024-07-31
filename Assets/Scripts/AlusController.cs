@@ -77,8 +77,11 @@ public class AlusController : MonoBehaviour
     private bool gameover = false;
 
 
-    private GameObject instanssiBullet;
+    private GameObject instanssiBulletAlas;
     private GameObject instanssiBulletYlos;
+
+
+
 
 
 
@@ -86,6 +89,8 @@ public class AlusController : MonoBehaviour
     private bool teeOptionPallukka = false;
 
     private int missileDownCollected = 0;
+    private int missileUpCollected = 0;
+
     //
 
     public float vauhdinLisaysKunSpeedbonusOtettu = 1.0f;
@@ -371,7 +376,7 @@ public class AlusController : MonoBehaviour
 
             //alas tippuva
             // missileDownCollected
-            if (missileDownCollected >= 1 && instanssiBullet == null)
+            if (missileDownCollected >= 1 && instanssiBulletAlas == null)
             {
 
 
@@ -381,12 +386,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
 
-                instanssiBullet = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
-                instanssiBullet.SendMessage("Alas", true);
-                instanssiBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
+                instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
+                instanssiBulletAlas.SendMessage("Alas", true);
+                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
 
 
-                instanssiBullet.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
 
             }
             /*
@@ -403,7 +408,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
               */
 
-
+            /*
             if (missileDownCollected == 2 && instanssiBulletYlos == null)
             {
 
@@ -421,6 +426,27 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
 
             }
+            */
+            if (missileUpCollected >=1  && instanssiBulletYlos == null)
+            {
+
+
+                Vector3 v3ylos =
+    new Vector3(0.1f +
+    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.1f, 0);
+
+
+
+                instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
+                instanssiBulletYlos.SendMessage("Alas", false);
+                instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
+
+                instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
+
+            }
+
+
+            
 
 
 
@@ -461,6 +487,14 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         {
             // Set the position
             obj.ammuNormilaukaus(ammusPrefab);
+            if (missileDownCollected>=1)
+            {
+                obj.ammuAlaslaukaus(bulletPrefab);
+            }
+            if (missileUpCollected >= 1)
+            {
+                obj.ammuYloslaukaus(bulletPrefab);
+            }
         }
     }
 
@@ -729,7 +763,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         foreach (BonusButtonController btc in bbc)
         {
-            if (btc.selected && btc.usedcount <= btc.maxusedcount)
+            if (btc.selected && btc.usedcount < btc.maxusedCount)
             {
                 btc.usedcount = btc.usedcount + 1;
                 btc.selected = false;
@@ -743,10 +777,15 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                     ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
 
                 }
-                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Missile))
+                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.MissileDown))
                 {
                     Debug.Log("missile()");
                     missileDownCollected++;
+                }
+                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.MissileUp))
+                {
+                    Debug.Log("missile()");
+                    missileUpCollected++;
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Option))
                 {
@@ -761,6 +800,10 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
                     }
                 }
+            }
+            else
+            {
+                Debug.Log("painettu bonusta, mutta selectoitu jo kaytetty");
             }
         }
     }

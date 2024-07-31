@@ -96,8 +96,8 @@ public class BulletScript : MonoBehaviour
         else if (col.collider.tag == "pallerospritetag")
         {
 
-            //col.gameObject.SendMessage("ExplodePallero");
-            col.gameObject.SendMessage("Explode");
+            col.gameObject.SendMessage("ExplodePallero");
+            //col.gameObject.SendMessage("Explode");
             Destroy (col.gameObject);
 
         }

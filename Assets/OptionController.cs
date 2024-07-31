@@ -99,9 +99,52 @@ new Vector3(0.1f +
 m_Rigidbody2D.position.x  , m_Rigidbody2D.position.y, 0);
 
         GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+        // instanssi.
         instanssi.tag = "optionammustag";
 
         instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
-    } 
+    }
+    GameObject instanssiBulletAlas;
+    GameObject instanssiBulletYlos;
+
+    public void ammuAlaslaukaus(GameObject bulletPrefab)
+    {
+        if (instanssiBulletAlas == null)
+        {
+            Vector3 v3 =
+new Vector3(0.1f +
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+
+
+
+            instanssiBulletAlas = Instantiate(bulletPrefab, v3, Quaternion.identity);
+            instanssiBulletAlas.SendMessage("Alas", true);
+            instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
+
+
+            instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+        }
+
+    }
+
+    public void ammuYloslaukaus(GameObject bulletPrefab)
+    {
+        if (instanssiBulletYlos == null)
+        {
+            Vector3 v3 =
+new Vector3(0.1f +
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+
+
+
+            instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
+            instanssiBulletYlos.SendMessage("Alas", false);
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
+
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
+
+        }
+
+    }
 
 }

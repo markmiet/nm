@@ -11,7 +11,7 @@ public class BonusButtonController : MonoBehaviour
                      //usedcount max
 
     public int usedcount = 0;
-    public int maxusedcount = 2;
+    public int maxusedCount ;
 
     public string text;
 
@@ -22,9 +22,12 @@ public class BonusButtonController : MonoBehaviour
     public enum Bonusbuttontype
     {
         Speed,
-        Missile,
+        MissileDown,
+        MissileUp,
         Option
     }
+
+
 
     public Bonusbuttontype bonusbuttontype;
 
@@ -45,13 +48,13 @@ public class BonusButtonController : MonoBehaviour
         {
             GetComponent<Image>().color = Color.yellow;
 
-            if (usedcount>= maxusedcount)
+            if (usedcount>= maxusedCount)
             {
                 //keltainen väri, ei tekstiä
                 // text = "";
 
-                _title.text = "";
-
+                    _title.text = "";
+                
 
             }
             else
@@ -64,7 +67,7 @@ public class BonusButtonController : MonoBehaviour
         {
             GetComponent<Image>().color = Color.blue;
 
-            if (usedcount >= maxusedcount)
+            if (usedcount >= maxusedCount)
             {
                 //sininen väri ei tekstiä
                 _title.text = "";
