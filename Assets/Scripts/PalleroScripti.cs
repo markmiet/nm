@@ -52,7 +52,7 @@ public class PalleroScripti : MonoBehaviour
 
 
       //  Debug.Log(" Screen.height=" + Screen.height);
-        Debug.Log(" starttimaara=" + starttimaara++);
+      //  Debug.Log(" starttimaara=" + starttimaara++);
 
 
 

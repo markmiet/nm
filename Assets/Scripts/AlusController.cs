@@ -352,7 +352,6 @@ public class AlusController : MonoBehaviour
 
         float aika = Time.deltaTime;
         deltaaikojensumma += aika;
-        Debug.Log("deltatime=" + aika);
 
         if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive && onkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
         {
@@ -731,7 +730,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
 
 
-            Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
+            //Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
             if (btc.selected)
             {
                 selectedIndex = btc.order;
