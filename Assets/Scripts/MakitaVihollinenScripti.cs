@@ -65,7 +65,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         sprite = m_SpriteRenderer.sprite;
 
-        
+
 
 
     }
@@ -98,7 +98,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
     {
 
 
-        if (alusSpriteRenderer==null)
+        if (alusSpriteRenderer == null)
         {
             return;
         }
@@ -162,7 +162,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         float ammusx = 0f;//= m_SpriteRenderer.bounds.center.x;
 
-        if (alusSpriteRenderer!=null & alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
+        if (alusSpriteRenderer != null & alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
         {
             //m_SpriteRenderer.flipX = false;
 
@@ -244,7 +244,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         }
         */
 
-      
+
 
         //sallittua jos alus on vähintään vihollisen alatasolla
         if (m_SpriteRenderer.isVisible && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
@@ -258,9 +258,9 @@ public class MakitaVihollinenScripti : MonoBehaviour
             fireallowed = false;
 
         }
+        //fireallowed = false;
 
-
-//        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
+        //        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
 
 
         //    float ammusx= m_SpriteRenderer.bounds.center.x;
@@ -572,7 +572,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         m_Animator.SetFloat("angle", angle);
 
 
-//        Debug.Log("angle=" + angle);
+        //        Debug.Log("angle=" + angle);
 
 
         if (animatorChanged)

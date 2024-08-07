@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638585746890357283
-    m_Hash: 1946883587
+      ticks: 638586447874270481
+    m_Hash: 1788961103
   m_LockFileStatus:
     m_FilePath: C:/pr/nm/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638585747644682283
-    m_Hash: 1299714039
+      ticks: 638586447874270481
+    m_Hash: 1617697212
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -36,7 +36,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 2D
-  type: 
+  type: assets
   description: 2D Animation provides all the necessary tooling and runtime components
     for skeletal animation using Sprites.
   status: 0
@@ -115,6 +115,8 @@ m_ResolvedPackages:
     - 5.2.1
     - 5.2.3
     - 5.2.4
+    - 5.2.6
+    - 5.2.7
     - 6.0.0-pre.1
     - 6.0.0-pre.2
     - 6.0.1
@@ -133,6 +135,13 @@ m_ResolvedPackages:
     - 7.0.6
     - 7.0.7
     - 7.0.8
+    - 7.0.9
+    - 7.0.10
+    - 7.0.11
+    - 7.0.12
+    - 7.0.13
+    - 7.1.0
+    - 7.1.1
     - 8.0.0-pre.3
     - 8.0.0-pre.4
     - 8.0.0
@@ -145,8 +154,20 @@ m_ResolvedPackages:
     - 9.0.0-pre.3
     - 9.0.0
     - 9.0.1
+    - 9.0.2
+    - 9.0.3
+    - 9.0.4
+    - 9.1.0
     - 9.1.1
     - 10.0.0-pre.1
+    - 10.0.0-pre.2
+    - 10.0.0
+    - 10.0.1
+    - 10.0.2
+    - 10.0.3
+    - 10.1.0
+    - 10.1.1
+    - 10.1.2
     compatible:
     - 9.1.1
     recommended: 9.1.1
@@ -200,7 +221,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638515171890000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.2d.animation@9.1/manual/index.html
   hasRepository: 1
   repository:
@@ -315,7 +336,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 2D
-  type: 
+  type: assets
   description: A ScriptedImporter for importing Adobe Photoshop PSB (Photoshop Big)
     file format. The ScriptedImporter is currently targeted for users who wants to
     create multi Sprite character animation using Unity 2D Animation Package.
@@ -379,6 +400,9 @@ m_ResolvedPackages:
     - 6.0.4
     - 6.0.5
     - 6.0.6
+    - 6.0.7
+    - 6.0.8
+    - 6.0.9
     - 7.0.0-pre.3
     - 7.0.0-pre.4
     - 7.0.0
@@ -389,8 +413,16 @@ m_ResolvedPackages:
     - 8.0.0-pre.3
     - 8.0.0
     - 8.0.1
+    - 8.0.2
+    - 8.0.3
+    - 8.0.4
     - 8.0.5
     - 9.0.0-pre.1
+    - 9.0.0-pre.2
+    - 9.0.0
+    - 9.0.1
+    - 9.0.2
+    - 9.0.3
     compatible:
     - 8.0.5
     recommended: 8.0.5
@@ -443,7 +475,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638515171920000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.2d.psdimporter@8.0/manual/index.html
   hasRepository: 1
   repository:
@@ -533,7 +565,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 2D
-  type: 
+  type: assets
   description: SpriteShape Runtime & Editor Package contains the tooling and the
     runtime component that allows you to create very organic looking spline based
     2D worlds. It comes with intuitive configurator and a highly performant renderer.
@@ -609,6 +641,7 @@ m_ResolvedPackages:
     - 7.0.4
     - 7.0.5
     - 7.0.6
+    - 7.0.7
     - 8.0.0-pre.4
     - 8.0.0-pre.5
     - 8.0.0
@@ -616,8 +649,18 @@ m_ResolvedPackages:
     - 9.0.0-pre.1
     - 9.0.0
     - 9.0.1
+    - 9.0.2
+    - 9.0.3
     - 9.0.4
     - 10.0.0-pre.1
+    - 10.0.0-pre.2
+    - 10.0.0
+    - 10.0.1
+    - 10.0.2
+    - 10.0.3
+    - 10.0.4
+    - 10.0.5
+    - 10.0.6
     compatible:
     - 9.0.4
     recommended: 9.0.4
@@ -667,7 +710,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638567250110000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.2d.spriteshape@9.0/manual/index.html
   hasRepository: 1
   repository:
@@ -772,14 +815,27 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: assets
   description: High-level NavMesh components for building and using NavMeshes at
     runtime and at edit time.
   status: 0
   errors: []
   versions:
     all:
+    - 1.0.0-exp.1
+    - 1.0.0-exp.2
+    - 1.0.0-exp.3
+    - 1.0.0-exp.4
+    - 1.1.0-pre.1
+    - 1.1.0-pre.2
+    - 1.1.1
+    - 1.1.3
+    - 1.1.4
     - 1.1.5
+    - 2.0.0-pre.3
+    - 2.0.0-pre.4
+    - 2.0.0
+    - 2.0.3
     compatible:
     - 1.1.5
     recommended: 1.1.5
@@ -801,7 +857,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638319373850000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.ai.navigation@1.1/manual/index.html
   hasRepository: 1
   repository:
@@ -832,7 +888,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: Editor
-  type: 
+  type: assets
   description: The package gives you the ability to use Unity Version Control in
     the Unity editor. To use Unity Version Control, a subscription is required. Learn
     more about how you can get started for free by visiting https://unity.com/solutions/version-control
@@ -891,6 +947,7 @@ m_ResolvedPackages:
     - 1.17.1
     - 1.17.2
     - 1.17.6
+    - 1.17.7
     - 2.0.0-preview.6
     - 2.0.0-preview.8
     - 2.0.0-preview.15
@@ -898,13 +955,24 @@ m_ResolvedPackages:
     - 2.0.0-preview.20
     - 2.0.0-preview.21
     - 2.0.0-preview.22
+    - 2.0.0
+    - 2.0.1
+    - 2.0.3
+    - 2.0.4
+    - 2.0.5
+    - 2.0.7
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
+    - 2.1.0
+    - 2.2.0
+    - 2.3.1
     - 2.4.3
+    - 2.4.4
     compatible:
     - 2.4.3
-    recommended: 2.4.3
+    - 2.4.4
+    recommended: 2.4.4
     deprecated: []
   dependencies: []
   resolvedDependencies: []
@@ -933,7 +1001,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638549067850000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.4/manual/index.html
   hasRepository: 1
   repository:
@@ -964,7 +1032,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: assets
   description: The JetBrains Rider Editor package provides an integration for using
     the JetBrains Rider IDE as a code editor for Unity. It adds support for generating
     .csproj files for code completion and auto-discovery of installations.
@@ -1004,6 +1072,16 @@ m_ResolvedPackages:
     - 3.0.14
     - 3.0.15
     - 3.0.16
+    - 3.0.17
+    - 3.0.18
+    - 3.0.20
+    - 3.0.21
+    - 3.0.22
+    - 3.0.24
+    - 3.0.25
+    - 3.0.26
+    - 3.0.27
+    - 3.0.28
     - 3.0.31
     compatible:
     - 3.0.31
@@ -1026,7 +1104,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638548308080000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.ide.rider@3.0/manual/index.html
   hasRepository: 1
   repository:
@@ -1057,7 +1135,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: assets
   description: Code editor integration for supporting Visual Studio as code editor
     for unity. Adds support for generating csproj files for intellisense purposes,
     auto discovery of installations, etc.
@@ -1084,6 +1162,10 @@ m_ResolvedPackages:
     - 2.0.14
     - 2.0.15
     - 2.0.16
+    - 2.0.17
+    - 2.0.18
+    - 2.0.20
+    - 2.0.21
     - 2.0.22
     compatible:
     - 2.0.22
@@ -1112,7 +1194,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638326061910000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.ide.visualstudio@2.0/manual/index.html
   hasRepository: 1
   repository:
@@ -1253,13 +1335,43 @@ m_ResolvedPackages:
     - 1.1.31
     - 1.1.33
     - 1.3.0
+    - 1.3.1
+    - 1.3.2
+    - 1.3.3
+    - 1.3.4
+    - 1.3.5
+    - 1.3.7
+    - 1.3.8
+    - 1.3.9
+    - 1.4.0
+    - 1.4.1
+    - 1.4.2
+    - 1.4.3
+    - 1.4.4
+    - 1.4.5
     - 2.0.1-exp.1
+    - 2.0.1-exp.2
     - 2.0.1-pre.12
     - 2.0.1-pre.18
     compatible:
     - 1.1.33
     - 1.3.0
+    - 1.3.1
+    - 1.3.2
+    - 1.3.3
+    - 1.3.4
+    - 1.3.5
+    - 1.3.7
+    - 1.3.8
+    - 1.3.9
+    - 1.4.0
+    - 1.4.1
+    - 1.4.2
+    - 1.4.3
+    - 1.4.4
+    - 1.4.5
     - 2.0.1-exp.1
+    - 2.0.1-exp.2
     - 2.0.1-pre.12
     - 2.0.1-pre.18
     recommended: 1.1.33
@@ -1427,17 +1539,39 @@ m_ResolvedPackages:
     - 3.0.4
     - 3.0.5
     - 3.0.6
+    - 3.0.7
+    - 3.0.8
+    - 3.0.9
     - 3.2.0-pre.1
     - 3.2.0-pre.2
     - 3.2.0-pre.3
+    - 3.2.0-pre.4
+    - 3.2.0-pre.5
+    - 3.2.0-pre.6
+    - 3.2.0-pre.7
+    - 3.2.0-pre.8
+    - 3.2.0-pre.9
+    - 3.2.0-pre.10
     - 4.0.0-pre.1
+    - 4.0.0-pre.2
     compatible:
     - 3.0.6
+    - 3.0.7
+    - 3.0.8
+    - 3.0.9
     - 3.2.0-pre.1
     - 3.2.0-pre.2
     - 3.2.0-pre.3
+    - 3.2.0-pre.4
+    - 3.2.0-pre.5
+    - 3.2.0-pre.6
+    - 3.2.0-pre.7
+    - 3.2.0-pre.8
+    - 3.2.0-pre.9
+    - 3.2.0-pre.10
     - 4.0.0-pre.1
-    recommended: 3.0.6
+    - 4.0.0-pre.2
+    recommended: 3.0.9
     deprecated: []
   dependencies:
   - name: com.unity.ugui
@@ -1496,7 +1630,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: assets
   description: Use Unity Timeline to create cinematic content, game-play sequences,
     audio sequences, and complex particle effects.
   status: 0
@@ -1571,14 +1705,34 @@ m_ResolvedPackages:
     - 1.6.2
     - 1.6.3
     - 1.6.4
+    - 1.6.5
     - 1.7.0-pre.1
     - 1.7.0-pre.2
     - 1.7.0
     - 1.7.1
     - 1.7.2
+    - 1.7.3
+    - 1.7.4
+    - 1.7.5
     - 1.7.6
+    - 1.8.0
+    - 1.8.1
+    - 1.8.2
+    - 1.8.3
+    - 1.8.4
+    - 1.8.5
+    - 1.8.6
+    - 1.8.7
     compatible:
     - 1.7.6
+    - 1.8.0
+    - 1.8.1
+    - 1.8.2
+    - 1.8.3
+    - 1.8.4
+    - 1.8.5
+    - 1.8.6
+    - 1.8.7
     recommended: 1.7.6
     deprecated: []
   dependencies:
@@ -1615,7 +1769,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638326112840000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.timeline@1.7/manual/index.html
   hasRepository: 1
   repository:
@@ -1746,6 +1900,9 @@ m_ResolvedPackages:
   versions:
     all:
     - 1.0.0
+    - 3.0.0-exp.1
+    - 3.0.0-exp.3
+    - 3.0.0-exp.4
     compatible:
     - 1.0.0
     recommended: 1.0.0
@@ -3919,10 +4076,14 @@ m_ResolvedPackages:
     - 1.0.6
     - 2.0.2
     - 2.0.3
+    - 2.0.4
+    - 2.0.5
     compatible:
     - 1.0.6
     - 2.0.2
     - 2.0.3
+    - 2.0.4
+    - 2.0.5
     recommended: 1.0.6
     deprecated: []
   dependencies: []
@@ -3996,8 +4157,12 @@ m_ResolvedPackages:
     - 1.2.4
     - 1.2.5
     - 1.2.6
+    - 1.3.1
+    - 1.3.2
     compatible:
     - 1.2.6
+    - 1.3.1
+    - 1.3.2
     recommended: 1.2.6
     deprecated: []
   dependencies: []
@@ -4045,7 +4210,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 2D
-  type: 
+  type: assets
   description: 2D Common is a package that contains shared functionalities that are
     used by most of the other 2D packages.
   status: 0
@@ -4086,6 +4251,8 @@ m_ResolvedPackages:
     - 6.0.3
     - 6.0.4
     - 6.0.5
+    - 6.0.6
+    - 6.0.7
     - 7.0.0-pre.3
     - 7.0.0-pre.4
     - 7.0.0
@@ -4096,8 +4263,16 @@ m_ResolvedPackages:
     - 8.0.0-pre.2
     - 8.0.0
     - 8.0.1
+    - 8.0.2
     - 8.0.3
     - 9.0.0-pre.1
+    - 9.0.0-pre.2
+    - 9.0.0
+    - 9.0.1
+    - 9.0.2
+    - 9.0.3
+    - 9.0.4
+    - 9.0.5
     compatible:
     - 8.0.3
     recommended: 8.0.3
@@ -4142,7 +4317,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638567250090000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.2d.common@8.0/manual/index.html
   hasRepository: 1
   repository:
@@ -4228,13 +4403,51 @@ m_ResolvedPackages:
     - 1.2.4
     - 1.3.1
     - 1.4.0
+    - 1.5.1
     - 2.1.0-exp.4
+    - 2.1.0-pre.2
+    - 2.1.0-pre.6
+    - 2.1.0-pre.11
+    - 2.1.0-pre.18
+    - 2.1.1
+    - 2.1.4
+    - 2.2.0
+    - 2.2.1
+    - 2.3.0-exp.1
+    - 2.3.0-pre.3
+    - 2.4.0-exp.2
+    - 2.4.0-pre.2
+    - 2.4.0-pre.5
+    - 2.4.0
+    - 2.4.1
+    - 2.4.2
+    - 2.5.0-exp.1
+    - 2.5.0-pre.2
     compatible:
     - 1.2.4
     - 1.3.1
     - 1.4.0
+    - 1.5.1
     - 2.1.0-exp.4
-    recommended: 
+    - 2.1.0-pre.2
+    - 2.1.0-pre.6
+    - 2.1.0-pre.11
+    - 2.1.0-pre.18
+    - 2.1.1
+    - 2.1.4
+    - 2.2.0
+    - 2.2.1
+    - 2.3.0-exp.1
+    - 2.3.0-pre.3
+    - 2.4.0-exp.2
+    - 2.4.0-pre.2
+    - 2.4.0-pre.5
+    - 2.4.0
+    - 2.4.1
+    - 2.4.2
+    - 2.5.0-exp.1
+    - 2.5.0-pre.2
+    recommended: 2.4.2
     deprecated: []
   dependencies:
   - name: com.unity.burst
@@ -4299,7 +4512,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: assets
   description: Burst is a compiler that translates from IL/.NET bytecode to highly
     optimized native code using LLVM.
   status: 0
@@ -4424,10 +4637,24 @@ m_ResolvedPackages:
     - 1.8.0-pre.2
     - 1.8.0
     - 1.8.1
+    - 1.8.2
+    - 1.8.3
+    - 1.8.4
+    - 1.8.7
+    - 1.8.8
+    - 1.8.9
+    - 1.8.10
+    - 1.8.11
+    - 1.8.12
+    - 1.8.13
+    - 1.8.14
+    - 1.8.15
     - 1.8.16
+    - 1.8.17
     compatible:
     - 1.8.16
-    recommended: 1.8.16
+    - 1.8.17
+    recommended: 1.8.17
     deprecated: []
   dependencies:
   - name: com.unity.mathematics
@@ -4450,7 +4677,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 638538904590000000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.burst@1.8/manual/index.html
   hasRepository: 1
   repository:

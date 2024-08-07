@@ -75,7 +75,7 @@ public class PallovihollinenOikeaLaitaController : MonoBehaviour
         }
 
     }
-
+    /*
 
     void OnDrawGizmos()
     {
@@ -93,5 +93,5 @@ public class PallovihollinenOikeaLaitaController : MonoBehaviour
         Vector3 direction = transform.TransformDirection(Vector3.forward) * 100;
         Gizmos.DrawRay(transform.position, direction);
     }
-
+    */
 }
