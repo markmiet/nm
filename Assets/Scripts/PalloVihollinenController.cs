@@ -6,6 +6,7 @@ public class PalloVihollinenController : MonoBehaviour
 {
     public GameObject alusGameObject;
 
+    //private Camera mainCamera;
 
 
     private SpriteRenderer m_SpriteRenderer;
@@ -13,6 +14,7 @@ public class PalloVihollinenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+     //   mainCamera = Camera.main;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -33,6 +35,7 @@ public class PalloVihollinenController : MonoBehaviour
     private float previousx = 0;
     private int laskuri = 0;
 
+    private Vector3 ed = new Vector3(0, 0, 0);
     private void FixedUpdate()
     {
         if (alusGameObject != null)
@@ -42,14 +45,36 @@ public class PalloVihollinenController : MonoBehaviour
             float alusx = alusGameObject.transform.position.x;
             float x = transform.position.x;
 
-            Debug.Log("eoruut=" + Mathf.Abs(previousx - x));
+            // Debug.Log("eoruut=" + Mathf.Abs(previousx - x));
+
+          //  Debug.Log(" rb.velocity.magnitude=" + rb.velocity.magnitude);
+          //  Debug.Log(" OnkoSeinaOikealla()=" + OnkoSeinaOikealla());
+            
+
             bool pyori = false;
 
-            if (Mathf.Abs(previousx - x)>0.0f)
+            //if (Mathf.Abs(previousx - x)>0.0f && !OnkoSeinaOikealla())
+            //{
+                //pyori = true;
+           // }
+
+           // if (this.transform.hasChanged)
+           // {
+            //    print("Player is not moving");
+            //    pyori = true;
+            //}
+
+
+            //  if (Mathf.Approximately(Vector3.Distance(ed, transform.position), 0))
+            //  {
+            //      pyori = true;
+            //  }
+            //  ed = transform.position;
+
+            if (rb.velocity.magnitude>=0.0001f)
             {
                 pyori = true;
             }
-
 
             previousx = x;
 
@@ -62,7 +87,7 @@ public class PalloVihollinenController : MonoBehaviour
             }
 
             float ero = Mathf.Abs(alusx - x);
-
+            pyori = true;
             if (ero > 0.5f)
             {
                 float uusix = x;
@@ -88,11 +113,12 @@ public class PalloVihollinenController : MonoBehaviour
                     Quaternion targetRotation = Quaternion.Euler(transform.rotation.x - 10f, 0, 0);
                     //transform.rotation = targetRotation;
                     //  transform.Rotate(0, 0,-rotationSpeed * Time.deltaTime);
-                    if (pyori)
+                    if (pyori && !pyorimisesto)
                     {
 
                         transform.Rotate(0, 0, 2.0f);
                     }
+                    //rb.velocity = new Vector2(-1f, rb.velocity.y);
 
                 }
                 else
@@ -102,11 +128,13 @@ public class PalloVihollinenController : MonoBehaviour
                     //transform.rotation = targetRotation;
                     //     Debug.Log("oikealleeee");
                     // transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-                    if (pyori)
+                    if (pyori && !pyorimisesto)
                     {
 
                         transform.Rotate(0, 0, -2.0f);
                     }
+                  //  rb.velocity = new Vector2(1f, rb.velocity.y);
+
                 }
 
 
@@ -114,7 +142,13 @@ public class PalloVihollinenController : MonoBehaviour
 
                 //transform.position.Set(uusix, transform.position.y - 1f, 0);
 
+              
+
                 transform.position = new Vector2(uusix, transform.position.y);
+                //rb.position = new Vector2(uusix, rb.position.y);
+                //rb.MovePosition(new Vector2(uusix, rb.position.y));
+                
+
 
 
             }
@@ -137,5 +171,42 @@ public class PalloVihollinenController : MonoBehaviour
         Destroy(gameObject, 0.1f);
     }
 
+    private bool OnkoSeinaOikealla()
+    {
 
+        Vector3 v = transform.position;
+
+
+        Collider2D[] cs =
+        Physics2D.OverlapBoxAll(new Vector2(v.x
+
+            , v.y +0.1f),
+        new Vector2(1f, 0.1f), 0
+
+            );
+
+        if (cs != null && cs.Length > 0)
+        {
+            foreach (Collider2D c in cs)
+            {
+                if (c.gameObject == this.gameObject)
+                {
+
+                }
+                else if (c.gameObject.tag == "tiilitag")
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    private bool pyorimisesto = false;
+
+    public void estaPyoriminen(bool esta)
+    {
+        pyorimisesto = esta;
+    }
 }

@@ -32,7 +32,7 @@ public class BonusController : MonoBehaviour
         {
             
 
-            Debug.Log("on bonustaaaaaaaaa ");
+          //  Debug.Log("on bonustaaaaaaaaa ");
 
 
 

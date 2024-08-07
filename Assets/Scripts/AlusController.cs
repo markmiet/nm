@@ -634,7 +634,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("on OnCollisionEnter2D ");
+      //  Debug.Log("on OnCollisionEnter2D ");
         collision = false;
 
 
@@ -676,7 +676,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     void OnCollisionExit2D(Collision2D col)
     {
-        Debug.Log("on collision exit");
+    //    Debug.Log("on collision exit");
 
         collision = false;
     }
