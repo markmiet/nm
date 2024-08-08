@@ -33,6 +33,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
     float previousAngle = 0.0f;
 
     public GameObject explosion;
+    public float ampumakertojenvalinenviive;
 
     void Start()
     {
@@ -69,6 +70,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
     }
+    float deltaaikojensumma = 0f;
 
     bool vaihdaPolygonia = false;
     int pollaskuri = 0;
@@ -247,10 +249,15 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
         //sallittua jos alus on vähintään vihollisen alatasolla
-        if (m_SpriteRenderer.isVisible && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
+
+        float aika = Time.deltaTime;
+        deltaaikojensumma += aika;
+
+        if (instanssi == null && deltaaikojensumma > ampumakertojenvalinenviive && m_SpriteRenderer.isVisible && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
         {
             fireallowed = true;
 
+            deltaaikojensumma = 0;
         }
         else
         {
@@ -258,7 +265,11 @@ public class MakitaVihollinenScripti : MonoBehaviour
             fireallowed = false;
 
         }
-        fireallowed = false;
+
+
+   
+
+        // fireallowed = false;
 
         //        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
 
@@ -273,10 +284,10 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 
-   //     float angle = Mathf.Atan2(alusy - polygonCollider2D.bounds.max.y + lisays, alusx - polygonCollider2D.bounds.center.x) *
- //Mathf.Rad2Deg;
+        //     float angle = Mathf.Atan2(alusy - polygonCollider2D.bounds.max.y + lisays, alusx - polygonCollider2D.bounds.center.x) *
+        //Mathf.Rad2Deg;
 
-       
+
 
         float angle = Mathf.Atan2(alusy - transform.position.y + lisays, alusx - transform.position.x) *
  Mathf.Rad2Deg;
@@ -617,6 +628,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         //ampuminen eli
         if (instanssi == null && !firstime && fireallowed)
         {
+
             //oli 0.3f
             //eli spriten asennosta on kiinni
 

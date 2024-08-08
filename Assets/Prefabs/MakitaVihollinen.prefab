@@ -137,6 +137,7 @@ MonoBehaviour:
     type: 3}
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
+  ampumakertojenvalinenviive: 5
 --- !u!95 &1416248142987543733
 Animator:
   serializedVersion: 5
@@ -345,7 +346,7 @@ PolygonCollider2D:
       - {x: -0.15369034, y: 0.16927052}
       - {x: -0.28272247, y: 0.114034176}
       - {x: -0.16719729, y: 0.16837814}
-      - {x: -0.28136826, y: 0.1122179}
+      - {x: -0.31440735, y: 0.110841274}
       - {x: -0.1318779, y: 0.037834644}
       - {x: -0.106910706, y: -0.0550797}
       - {x: -0.10057831, y: -0.16702175}
@@ -353,7 +354,8 @@ PolygonCollider2D:
       - {x: -0.2722435, y: -0.2378428}
       - {x: -0.29532242, y: -0.31892586}
       - {x: -0.24574417, y: -0.32283652}
-      - {x: 0.3136307, y: -0.32347536}
+      - {x: 0.25305712, y: -0.32347536}
+      - {x: 0.24596024, y: -0.22120404}
       - {x: 0.20003414, y: -0.17277533}
   m_UseDelaunayMesh: 0
 --- !u!1 &2783962485292418570
@@ -601,7 +603,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0023918152, y: 0}

@@ -167,8 +167,17 @@ public class PalloVihollinenController : MonoBehaviour
 
     public void Explode()
     {
-        //tänne vielä animaatio
-        Destroy(gameObject, 0.1f);
+        if (transform.parent != null)
+
+        {
+            GameObject parentObject = transform.parent.gameObject;
+            Destroy(parentObject, 0.1f);
+            //tänne vielä animaatio
+            //Destroy(gameObject, 0.1f);
+
+        }
+
+       
     }
 
     private bool OnkoSeinaOikealla()

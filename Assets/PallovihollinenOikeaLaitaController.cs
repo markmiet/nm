@@ -32,8 +32,11 @@ public class PallovihollinenOikeaLaitaController : MonoBehaviour
 
 
     //    transform.position = new Vector2(pallero.transform.position.x + leveys + 0.1f, pallero.transform.position.y);
+        if (pallero!=null)
+        {
+            transform.position = new Vector2(pallero.transform.position.x, pallero.transform.position.y);
 
-        transform.position = new Vector2(pallero.transform.position.x , pallero.transform.position.y);
+        }
 
 
     }
