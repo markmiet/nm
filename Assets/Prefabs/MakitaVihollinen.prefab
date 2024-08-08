@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -3328583325779947177}
   - component: {fileID: 1660899705671000815}
   - component: {fileID: 1416248142987543733}
-  - component: {fileID: 1429670463726668992}
   m_Layer: 10
   m_Name: MakitaVihollinen
   m_TagString: makitavihollinentag
@@ -35,6 +34,12 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3119117598657740788}
+  - {fileID: 5556439403372047197}
+  - {fileID: 3320540773515685576}
+  - {fileID: 5875456412289314279}
+  - {fileID: 5652390289431497724}
+  - {fileID: 5957453313023983305}
+  - {fileID: 4563262016768507375}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4372467517966353899
@@ -153,13 +158,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &1429670463726668992
+--- !u!1 &1871982403076991053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4563262016768507375}
+  - component: {fileID: 5459454745536255455}
+  m_Layer: 10
+  m_Name: Makitavihollinenylos
+  m_TagString: makitavihollinentag
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4563262016768507375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871982403076991053}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7587851952522426830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &5459454745536255455
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501753412327295253}
+  m_GameObject: {fileID: 1871982403076991053}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -188,24 +225,320 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
-    newSize: {x: 0.64, y: 0.64}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.235, y: -0.315}
-      - {x: 0.285, y: -0.315}
-      - {x: 0.185, y: -0.185}
-      - {x: 0.035, y: -0.155}
-      - {x: 0.074999996, y: 0.044999998}
-      - {x: -0.005, y: 0.065}
-      - {x: -0.055, y: 0.275}
-      - {x: -0.095, y: -0.16499999}
-      - {x: -0.24499999, y: -0.285}
+    - - {x: 0.088150024, y: -0.16645145}
+      - {x: 0.12130737, y: -0.10438061}
+      - {x: 0.1194725, y: -0.079722166}
+      - {x: 0.1210022, y: -0.047040462}
+      - {x: 0.11936951, y: 0.049893618}
+      - {x: 0.107105255, y: 0.15825844}
+      - {x: 0.09863663, y: 0.18071938}
+      - {x: 0.05663389, y: 0.29986167}
+      - {x: 0.031223297, y: 0.19765806}
+      - {x: 0.030715942, y: 0.20762968}
+      - {x: 0.027477264, y: 0.19810009}
+      - {x: 0.012752533, y: 0.1367197}
+      - {x: -0.03798294, y: 0.07413769}
+      - {x: -0.08157349, y: 0.053111553}
+      - {x: -0.07811737, y: 0.013065815}
+      - {x: -0.085876465, y: -0.18705773}
+      - {x: 0.09735489, y: -0.16430569}
+      - {x: 0.11606979, y: -0.10300994}
+      - {x: 0.09656143, y: -0.17703009}
+      - {x: -0.18919373, y: -0.18257976}
+      - {x: -0.2722435, y: -0.2378428}
+      - {x: -0.29532242, y: -0.31892586}
+      - {x: -0.24574417, y: -0.32283652}
+      - {x: 0.24354708, y: -0.3194809}
+      - {x: 0.24359894, y: -0.22581792}
+      - {x: 0.20003414, y: -0.17277533}
+  m_UseDelaunayMesh: 0
+--- !u!1 &2204253022792857726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5652390289431497724}
+  - component: {fileID: 7168661500297122430}
+  m_Layer: 10
+  m_Name: Makitavihollinenvasen
+  m_TagString: makitavihollinentag
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5652390289431497724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2204253022792857726}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7587851952522426830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &7168661500297122430
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2204253022792857726}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.088150024, y: -0.16645145}
+      - {x: 0.12130737, y: -0.10438061}
+      - {x: 0.10795975, y: -0.008146286}
+      - {x: 0.14108276, y: 0.10951853}
+      - {x: 0.110515594, y: 0.15524626}
+      - {x: -0.15369034, y: 0.16927052}
+      - {x: -0.28272247, y: 0.114034176}
+      - {x: -0.16719729, y: 0.16837814}
+      - {x: -0.28136826, y: 0.1122179}
+      - {x: -0.1318779, y: 0.037834644}
+      - {x: -0.106910706, y: -0.0550797}
+      - {x: -0.10057831, y: -0.16702175}
+      - {x: -0.22423553, y: -0.20594096}
+      - {x: -0.2722435, y: -0.2378428}
+      - {x: -0.29532242, y: -0.31892586}
+      - {x: -0.24574417, y: -0.32283652}
+      - {x: 0.3136307, y: -0.32347536}
+      - {x: 0.20003414, y: -0.17277533}
+  m_UseDelaunayMesh: 0
+--- !u!1 &2783962485292418570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3320540773515685576}
+  - component: {fileID: 2446492592619412527}
+  m_Layer: 10
+  m_Name: Makitavihollinenoikeaylos
+  m_TagString: makitavihollinentag
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3320540773515685576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783962485292418570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7587851952522426830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &2446492592619412527
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2783962485292418570}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.063144684, y: -0.16436744}
+      - {x: 0.040122986, y: -0.027534962}
+      - {x: 0.14881897, y: 0.05188179}
+      - {x: 0.14342499, y: 0.18248081}
+      - {x: 0.20697403, y: 0.31998968}
+      - {x: 0.08760071, y: 0.26593494}
+      - {x: -0.040966034, y: 0.14546347}
+      - {x: -0.09842974, y: 0.14128712}
+      - {x: -0.097984314, y: 0.062203884}
+      - {x: -0.106910706, y: -0.0550797}
+      - {x: -0.10057831, y: -0.16702175}
+      - {x: -0.23257065, y: -0.18301773}
+      - {x: -0.24574417, y: -0.32283652}
+      - {x: 0.31564105, y: -0.31929278}
+      - {x: 0.20003414, y: -0.17277533}
+  m_UseDelaunayMesh: 0
+--- !u!1 &3983395416013188974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5875456412289314279}
+  - component: {fileID: 3669844860657088665}
+  m_Layer: 10
+  m_Name: Makitavihollinenoylos
+  m_TagString: makitavihollinentag
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5875456412289314279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3983395416013188974}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7587851952522426830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &3669844860657088665
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3983395416013188974}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.063144684, y: -0.16436744}
+      - {x: 0.07962799, y: -0.010604143}
+      - {x: 0.005847931, y: 0.048119545}
+      - {x: -0.008956909, y: 0.105350494}
+      - {x: -0.058280945, y: 0.28236532}
+      - {x: -0.10992813, y: 0.13801193}
+      - {x: -0.1180954, y: 0.08902693}
+      - {x: -0.09842974, y: 0.14128712}
+      - {x: -0.097984314, y: 0.062203884}
+      - {x: -0.106910706, y: -0.0550797}
+      - {x: -0.10057831, y: -0.16702175}
+      - {x: -0.23257065, y: -0.18301773}
+      - {x: -0.24574417, y: -0.32283652}
+      - {x: 0.31945956, y: -0.3214345}
+      - {x: 0.20003414, y: -0.17277533}
   m_UseDelaunayMesh: 0
 --- !u!1 &4855734023025861671
 GameObject:
@@ -284,3 +617,192 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0047836, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &7614615011573209376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5556439403372047197}
+  - component: {fileID: 4290824811149225270}
+  m_Layer: 10
+  m_Name: Makitavihollinenoikea
+  m_TagString: makitavihollinentag
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5556439403372047197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614615011573209376}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7587851952522426830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &4290824811149225270
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614615011573209376}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.063144684, y: -0.16436744}
+      - {x: 0.025074005, y: -0.033178568}
+      - {x: 0.16950989, y: 0.05940628}
+      - {x: 0.3198471, y: 0.11681843}
+      - {x: 0.20611572, y: 0.15494251}
+      - {x: -0.07859039, y: 0.16051292}
+      - {x: -0.09842974, y: 0.14128712}
+      - {x: -0.124320984, y: 0.11299658}
+      - {x: -0.106910706, y: -0.0550797}
+      - {x: -0.10057831, y: -0.16702175}
+      - {x: -0.23257065, y: -0.18301773}
+      - {x: -0.24574417, y: -0.32283652}
+      - {x: 0.0063972473, y: -0.31690764}
+      - {x: 0.31889498, y: -0.32005835}
+      - {x: 0.19627285, y: -0.16901284}
+  m_UseDelaunayMesh: 0
+--- !u!1 &8248805761139656085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5957453313023983305}
+  - component: {fileID: 6317237763325358411}
+  m_Layer: 10
+  m_Name: Makitavihollinenvasenylos
+  m_TagString: makitavihollinentag
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5957453313023983305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248805761139656085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7587851952522426830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &6317237763325358411
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248805761139656085}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.088150024, y: -0.16645145}
+      - {x: 0.12130737, y: -0.10438061}
+      - {x: 0.10795975, y: -0.008146286}
+      - {x: 0.14108276, y: 0.10951853}
+      - {x: -0.10204315, y: 0.11981964}
+      - {x: -0.15994263, y: 0.20261288}
+      - {x: -0.15768433, y: 0.2223978}
+      - {x: -0.22138125, y: 0.3246725}
+      - {x: -0.1334076, y: 0.27059555}
+      - {x: -0.08024979, y: 0.2601924}
+      - {x: -0.016284943, y: 0.21060324}
+      - {x: 0.13069534, y: 0.05867386}
+      - {x: 0.11606979, y: -0.10300994}
+      - {x: 0.099479675, y: -0.17118979}
+      - {x: -0.22423553, y: -0.20594096}
+      - {x: -0.2722435, y: -0.2378428}
+      - {x: -0.29532242, y: -0.31892586}
+      - {x: -0.24574417, y: -0.32283652}
+      - {x: 0.3136307, y: -0.3211298}
+      - {x: 0.20003414, y: -0.17277533}
+  m_UseDelaunayMesh: 0

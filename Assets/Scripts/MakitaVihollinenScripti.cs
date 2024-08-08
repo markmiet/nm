@@ -258,7 +258,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
             fireallowed = false;
 
         }
-        //fireallowed = false;
+        fireallowed = false;
 
         //        Debug.Log("animchangeallowed=" + m_Animator.GetBool("animchangeallowed"));
 
@@ -273,8 +273,14 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
 
-        float angle = Mathf.Atan2(alusy - polygonCollider2D.bounds.max.y + lisays, alusx - polygonCollider2D.bounds.center.x) *
+   //     float angle = Mathf.Atan2(alusy - polygonCollider2D.bounds.max.y + lisays, alusx - polygonCollider2D.bounds.center.x) *
+ //Mathf.Rad2Deg;
+
+       
+
+        float angle = Mathf.Atan2(alusy - transform.position.y + lisays, alusx - transform.position.x) *
  Mathf.Rad2Deg;
+
 
 
         //if (m_Animator.GetBool("left"))
@@ -523,7 +529,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
             //m_Animator.SetBool("4", true);
             //m_Animator.SetBool("5", false);
             //m_Animator.SetBool("6", false);
-            animatorChanged = SetAnimatorTrueksi(4);
+            animatorChanged = SetAnimatorTrueksi(4);//vaihda takas 4
         }
         else if (angle > 120 && angle <= 165)
         {
