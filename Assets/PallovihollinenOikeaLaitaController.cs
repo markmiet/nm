@@ -53,6 +53,12 @@ public class PallovihollinenOikeaLaitaController : MonoBehaviour
             myScript.estaPyoriminen(true);
         }
 
+        if (col.CompareTag("makitavihollinentag"))
+        {
+            //  Debug.Log("OnTriggerExit2D estaPyoriminen(false) ");
+            //myScript.setLiikkumisesto(true);
+        }
+
     }
     void OnTriggerStay2D(Collider2D col)
     {
@@ -62,6 +68,12 @@ public class PallovihollinenOikeaLaitaController : MonoBehaviour
             Debug.Log("OnTriggerStay2D estaPyoriminen(true) ");
 
             myScript.estaPyoriminen(true);
+        }
+
+        if (col.CompareTag("makitavihollinentag"))
+        {
+          //  Debug.Log("OnTriggerExit2D estaPyoriminen(false) ");
+          //  myScript.setLiikkumisesto(true);
         }
     }
 
@@ -76,6 +88,15 @@ public class PallovihollinenOikeaLaitaController : MonoBehaviour
             Debug.Log("OnTriggerExit2D estaPyoriminen(false) ");
             myScript.estaPyoriminen(false);
         }
+
+
+        if (col.CompareTag("makitavihollinentag"))
+        {
+            //  Debug.Log("OnTriggerExit2D estaPyoriminen(false) ");
+        //    myScript.setLiikkumisesto(false);
+        }
+
+
 
     }
     /*

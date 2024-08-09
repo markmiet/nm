@@ -31,15 +31,17 @@ public class BulletScript : MonoBehaviour
     public void Putoa()
     {
     
-        if (alas)
+        if (m_Rigidbody2D != null)
         {
-            m_Rigidbody2D.velocity = new Vector2(0.1f, -20);
+            if (alas)
+            {
+                m_Rigidbody2D.velocity = new Vector2(0.1f, -20);
+            }
+            else
+            {
+                m_Rigidbody2D.velocity = new Vector2(0.1f, 20);
+            }
         }
-        else
-        {
-            m_Rigidbody2D.velocity = new Vector2(0.1f, 20);
-        }
-
     }
 
 
@@ -50,7 +52,11 @@ public class BulletScript : MonoBehaviour
         if (!liukuu)
         {
             liukuu = true;
-            m_Rigidbody2D.velocity = new Vector2(6, 0);
+            if (m_Rigidbody2D!=null)
+            {
+                m_Rigidbody2D.velocity = new Vector2(6, 0);
+            }
+    
         }
 
     }

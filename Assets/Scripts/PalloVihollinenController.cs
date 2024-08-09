@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PalloVihollinenController : MonoBehaviour
+public class PalloVihollinenController : BaseController
 {
     public GameObject alusGameObject;
 
@@ -14,7 +14,7 @@ public class PalloVihollinenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-     //   mainCamera = Camera.main;
+        //   mainCamera = Camera.main;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -28,9 +28,17 @@ public class PalloVihollinenController : MonoBehaviour
     void Update()
 
     {
- 
+
 
     }
+
+    public float torqueAmount = 99.0f; // The amount of torque to apply
+    public Vector3 torqueDirectionUp = Vector3.up; // The axis around which to apply the torque (e.g., up for rotation around the Y-axis)
+    public Vector3 torqueDirectionDown = Vector3.down; // The axis around which to apply the torque (e.g., up for rotation around the Y-axis)
+
+
+
+    private Vector3 lastPosition;
 
     private float previousx = 0;
     private int laskuri = 0;
@@ -44,42 +52,6 @@ public class PalloVihollinenController : MonoBehaviour
 
             float alusx = alusGameObject.transform.position.x;
             float x = transform.position.x;
-
-            // Debug.Log("eoruut=" + Mathf.Abs(previousx - x));
-
-          //  Debug.Log(" rb.velocity.magnitude=" + rb.velocity.magnitude);
-          //  Debug.Log(" OnkoSeinaOikealla()=" + OnkoSeinaOikealla());
-            
-
-            bool pyori = false;
-
-            //if (Mathf.Abs(previousx - x)>0.0f && !OnkoSeinaOikealla())
-            //{
-                //pyori = true;
-           // }
-
-           // if (this.transform.hasChanged)
-           // {
-            //    print("Player is not moving");
-            //    pyori = true;
-            //}
-
-
-            //  if (Mathf.Approximately(Vector3.Distance(ed, transform.position), 0))
-            //  {
-            //      pyori = true;
-            //  }
-            //  ed = transform.position;
-
-            if (rb.velocity.magnitude>=0.0001f)
-            {
-                pyori = true;
-            }
-
-            previousx = x;
-
-            
-            //       Debug.Log("transform.localPosition.x=" + transform.localPosition.x);
             if (alusx < x)
             {
                 vasemmalle = true;
@@ -87,82 +59,59 @@ public class PalloVihollinenController : MonoBehaviour
             }
 
             float ero = Mathf.Abs(alusx - x);
-            pyori = true;
-            if (ero > 0.5f)
+
+            if (ero > 1f)
             {
-                float uusix = x;
 
-                float speed = rb.velocity.magnitude;
-                //float erotus = x - previousx;
-
-               // Debug.Log("Mathf.Abs(erotus)=" + Mathf.Abs(erotus));
-                //if (Mathf.Abs(erotus)>0.01f)
-                //{
-                //    pyori = true;
-                //}
-
-                //        Time.timeScale = 1; // Ensure the time scale is set to normal
-
-               // Debug.Log("pyori="+ pyori);
-                //   Debug.Log("transform.rotation.x=" + transform.rotation.x);
                 if (vasemmalle)
                 {
-                    uusix = uusix - 0.02f;
-                    //   Debug.Log("vasemmalle");
+                    rb.velocity = new Vector2(-1f, rb.velocity.y);
+                    //                    transform.position = new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z);
 
-                    Quaternion targetRotation = Quaternion.Euler(transform.rotation.x - 10f, 0, 0);
-                    //transform.rotation = targetRotation;
-                    //  transform.Rotate(0, 0,-rotationSpeed * Time.deltaTime);
-                    if (pyori && !pyorimisesto)
-                    {
 
-                        transform.Rotate(0, 0, 2.0f);
-                    }
-                    //rb.velocity = new Vector2(-1f, rb.velocity.y);
-
+                    //rb.AddTorque(torqueDirectionUp * torqueAmount, ForceMode.Force);
                 }
                 else
                 {
-                    uusix = uusix + 0.02f;
-                    Quaternion targetRotation = Quaternion.Euler(transform.rotation.x + 10f, 0, 0);
-                    //transform.rotation = targetRotation;
-                    //     Debug.Log("oikealleeee");
-                    // transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-                    if (pyori && !pyorimisesto)
-                    {
 
-                        transform.Rotate(0, 0, -2.0f);
-                    }
-                  //  rb.velocity = new Vector2(1f, rb.velocity.y);
+                   rb.velocity = new Vector2(1f, rb.velocity.y);
+                   // transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
 
                 }
-
-
-                // transform.Rotate(0,0, rotationSpeed * Time.deltaTime);
-
-                //transform.position.Set(uusix, transform.position.y - 1f, 0);
-
-              
-
-                transform.position = new Vector2(uusix, transform.position.y);
-                //rb.position = new Vector2(uusix, rb.position.y);
-                //rb.MovePosition(new Vector2(uusix, rb.position.y));
-                
-
-
-
             }
-            if (laskuri==100)
+            base.tallennaSijaintiSailytaVainNkplViimeisinta(2, false,false);
+
+            float eroo = base.palautaEro(transform.position, 0, false);
+
+          //  Debug.Log("eroo=" + eroo);
+
+           // if (Mathf.Abs(eroo) >0.005f)
+           // {
+                transform.Rotate(0, 0, -eroo*150);
+           // }
+            
+
+            /*
+            if (base.onkoliikkunutVasemmalle(transform.position,0,false, 0.01f))
             {
-                laskuri = 0;
-              //  previousx = transform.position.x;
+                //tämä rotate vauhdin mukaan...
+                transform.Rotate(0, 0, 5.0f);
+                Debug.Log("rotate vasen");
+
+
             }
-      
-
-
-            laskuri++;
+            else if (base.onkoliikkunutOikealle(transform.position, 0,false,0.01f))
+            {
+                transform.Rotate(0, 0, -5.0f);
+                Debug.Log("rotate oikea");
+            }
+            else
+            {
+               // transform.Rotate(0, 0, 0);
+                Debug.Log("ei rotate");
+            }
+            */
         }
-
     }
 
     public void Explode()
@@ -177,7 +126,7 @@ public class PalloVihollinenController : MonoBehaviour
 
         }
 
-       
+
     }
 
     private bool OnkoSeinaOikealla()
@@ -189,7 +138,7 @@ public class PalloVihollinenController : MonoBehaviour
         Collider2D[] cs =
         Physics2D.OverlapBoxAll(new Vector2(v.x
 
-            , v.y +0.1f),
+            , v.y + 0.1f),
         new Vector2(1f, 0.1f), 0
 
             );
@@ -217,5 +166,21 @@ public class PalloVihollinenController : MonoBehaviour
     public void estaPyoriminen(bool esta)
     {
         pyorimisesto = esta;
+    }
+
+    private bool liikkumisesto = false;
+
+    public void setLiikkumisesto(bool p_liikkumisesto)
+    {
+        this.liikkumisesto = p_liikkumisesto;
+    }
+
+    void OnBecameInvisible()
+    {
+        //Debug.Log ("OnBecameInvisible");
+        // Destroy the enemy
+        //tuhoa = true;
+
+        Destroy(gameObject);
     }
 }

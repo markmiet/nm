@@ -18,7 +18,7 @@ public class OptionController : MonoBehaviour
 
 
 
-    private List<Vector3> positions = new List<Vector3>();
+    private AlusController aluscontroller;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,63 +32,27 @@ public class OptionController : MonoBehaviour
         m_Rigidbody2D =GetComponent<Rigidbody2D>();
 
 
+         aluscontroller=alusGameObject.GetComponent<AlusController>();
+
+
+
     }
 
-    Vector3 aluksenviimekerrankohta = new Vector3(0, 0, 0);
-    private bool onkoAlusLiikkunutViimekerrasta(Vector3 aluksennykykohta)
-    {
-        return aluksennykykohta.x != aluksenviimekerrankohta.x || aluksennykykohta.y != aluksenviimekerrankohta.y; 
-    }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 alusScreenCoordinaateissa =aluscontroller.palautaViimeinenSijaintiScreenpositioneissa(jarjestysnro);
 
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(alusScreenCoordinaateissa);
 
+        transform.position = worldPosition;
 
     }
 
     void FixedUpdate()
     {
 
-
-        // if (onkoAlusLiikkunutViimekerrasta(aluksenm_Rigidbody2D.position))
-        // {
-
-        //        m_Rigidbody2D.position.Set(aluksenm_Rigidbody2D.position.x, aluksenm_Rigidbody2D.position.y);
-
-        // transform.position.Set(aluksenm_Rigidbody2D.position.x, aluksenm_Rigidbody2D.position.y,0);
-
-        //transform.position.Set(1.0f,1.0f,0.0f);
-
-
-        //     }
-        if  (alusGameObject!=null &&  onkoAlusLiikkunutViimekerrasta(alusGameObject.transform.position))
-        {
-            positions.Add(alusGameObject.transform.position);
-
-            // Ensure the list does not exceed the maximum number of positions
-            if (positions.Count > maxPositionMaaraMikaAluksestaTallennetaan*jarjestysnro)
-            {
-                positions.RemoveAt(0); // Remove the oldest position
-            }
-
-
-
-
-            Vector3 vector3 = positions[0];
-
-            transform.position = vector3;
-
-            aluksenviimekerrankohta = alusGameObject.transform.position;
-        }
-        // {
-        //    aluksenviimekerrankohta = aluksenm_Rigidbody2D.position;
-        //    alusGameObject.transform
-        //    return;
-        //}
-
-        //positions.Add(aluksenm_Rigidbody2D.position);
 
     }
 

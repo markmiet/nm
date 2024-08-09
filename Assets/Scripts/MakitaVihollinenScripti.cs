@@ -730,5 +730,12 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
 
     }
+    void OnBecameInvisible()
+    {
+        //Debug.Log ("OnBecameInvisible");
+        // Destroy the enemy
+        //tuhoa = true;
 
+        Destroy(gameObject);
+    }
 }

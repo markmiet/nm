@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class AlusController : MonoBehaviour
+public class AlusController : BaseController
 {
 
     public GameObject speedbonusbutton;
@@ -37,6 +37,9 @@ public class AlusController : MonoBehaviour
 
     private float vauhtiOikea = 0.0f;
     public float vauhtiOikeaMax = 4.0f;
+
+
+
 
     public float hidastuvuusKunMitaanEiPainettu = 0.3f;
     private float nopeudenMuutosKunPainettu = 1f;
@@ -92,6 +95,68 @@ public class AlusController : MonoBehaviour
     private int missileUpCollected = 0;
 
     //
+    private bool alusliikkeessa = false;
+
+    public bool onkoAlusLiikkeessa()
+    {
+        return alusliikkeessa;
+
+        //return Mathf.Abs(vauhtiOikea)>0.1f || Mathf.Abs(vauhtiYlos)>0.1f;
+
+    }
+
+    public Vector3 palautaViimeinenSijaintiScreenpositioneissa(int optionjarjestysnumero)
+    {
+
+        //return aluksenpositiotCameraViewissa[optioidenmaksimaara * 10 - optionjarjestysnumero* 10];
+
+        return base.palautaScreenpositioneissa(optioidenmaksimaara * 10 - optionjarjestysnumero * 10);
+        
+    }
+ //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
+    private void tallennaSijaintiSailytaVainKymmenenViimeisinta()
+    {
+        base.tallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 10,true,true);
+        if (true)
+        {
+            return;
+        }
+        /**
+        Vector3 worldPosition = transform.position;
+
+        // Convert the world position to screen position
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+        screenPosition = new Vector3( (int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
+        if (aluksenpositiotCameraViewissa.Count == 0)
+        {
+            // Vector3Int sijainti = new Vector3Int( (int)screenPosition.x, (int)screenPosition.y,(int)screenPosition.z );
+
+            //Vector3 sijainti = new Vector3( (int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
+            aluksenpositiotCameraViewissa.Add(screenPosition);
+        }
+        else
+        {
+            Vector3 viimeisin = aluksenpositiotCameraViewissa[aluksenpositiotCameraViewissa.Count - 1];
+            if (!Vector3.Equals(viimeisin,screenPosition))
+        
+            {
+                //viimeisin.x != screenPosition.x || viimeisin.y != screenPosition.y)
+                //Debug.Log("viimeisin.x=" + viimeisin.x + "screenPosition.x=" + screenPosition.x+" viimeisin.y="+viimeisin.y+ " screenPosition.y="+ screenPosition.y);
+                //Vector3 sijainti = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
+                aluksenpositiotCameraViewissa.Add(screenPosition);
+
+            }
+        }
+        //40,30 optio 3,20 optio2 ,10 optio1 ,0
+
+
+        //0 optio3,10 optio2,20 optio 1,30
+        if (aluksenpositiotCameraViewissa.Count >optioidenmaksimaara*10)
+        {
+            aluksenpositiotCameraViewissa.RemoveAt(0);
+        }
+        **/
+    }
 
     public float vauhdinLisaysKunSpeedbonusOtettu = 1.0f;
 
@@ -198,7 +263,7 @@ public class AlusController : MonoBehaviour
         {
             BonusButtonPressed();
         }
-
+        //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
 
     }
     float deltaaikojensumma = 0f;
@@ -235,16 +300,20 @@ public class AlusController : MonoBehaviour
         }
 
 
-
+        alusliikkeessa = false;
 
         if (oikeaNappiPainettu)
         {
             vauhtiOikea += nopeudenMuutosKunPainettu;
+            alusliikkeessa = true;
+
         }
         if (vasenNappiPainettu)
         {
             //vasen painettu
             vauhtiOikea = vauhtiOikea - nopeudenMuutosKunPainettu;
+            alusliikkeessa = true;
+
         }
         if (!oikeaNappiPainettu && !vasenNappiPainettu)
         {
@@ -284,11 +353,13 @@ public class AlusController : MonoBehaviour
         if (ylosNappiPainettu)
         {
             vauhtiYlos = vauhtiYlos + nopeudenMuutosKunPainettu;
+            alusliikkeessa = true;
         }
         if (alasNappiPainettu)
         {
             //vasen painettu
             vauhtiYlos = vauhtiYlos - nopeudenMuutosKunPainettu;
+            alusliikkeessa = true;
         }
 
 
@@ -426,7 +497,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             }
             */
-            if (missileUpCollected >=1  && instanssiBulletYlos == null)
+            if (missileUpCollected >= 1 && instanssiBulletYlos == null)
             {
 
 
@@ -443,12 +514,6 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
 
             }
-
-
-            
-
-
-
             //	}
         }
         ammusInstantioitiinviimekerralla = ammusinstantioitiin;
@@ -456,9 +521,9 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         if (teeOptionPallukka)
         {
-     //       Vector3 vektori =
-   // new Vector3(0.1f +
-   // m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0);
+            //       Vector3 vektori =
+            // new Vector3(0.1f +
+            // m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0);
 
             Vector3 vektori =
     new Vector3(
@@ -466,6 +531,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
             GameObject instanssiOption = Instantiate(instanssiOption1, vektori, Quaternion.identity);
+          //  instanssiOption.transform.SetParent(transform);
 
 
             OptionController myScript = instanssiOption.GetComponent<OptionController>();
@@ -478,6 +544,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             //    instanssiOption.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             teeOptionPallukka = false;
         }
+
+        tallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
 
     private void ammuOptioneilla()
@@ -486,7 +554,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         {
             // Set the position
             obj.ammuNormilaukaus(ammusPrefab);
-            if (missileDownCollected>=1)
+            if (missileDownCollected >= 1)
             {
                 obj.ammuAlaslaukaus(bulletPrefab);
             }
@@ -497,7 +565,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         }
     }
 
-    private List<OptionController> optionControllerit = new  List<OptionController>();
+    private List<OptionController> optionControllerit = new List<OptionController>();
 
 
     void LateUpdate()
@@ -634,7 +702,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     void OnCollisionEnter2D(Collision2D col)
     {
-      //  Debug.Log("on OnCollisionEnter2D ");
+        //  Debug.Log("on OnCollisionEnter2D ");
         collision = false;
 
 
@@ -676,7 +744,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     void OnCollisionExit2D(Collision2D col)
     {
-    //    Debug.Log("on collision exit");
+        //    Debug.Log("on collision exit");
 
         collision = false;
     }
