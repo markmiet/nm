@@ -628,6 +628,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     public float rotationSpeed = 50.0f;
 
+    /*
     void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(0.75f, 0.0f, 0.0f, 0.75f);
@@ -637,6 +638,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawCube(Vector3.zero, Vector3.one);
     }
+    */
 
     private bool OnkoSeinaOikealla()
     {
