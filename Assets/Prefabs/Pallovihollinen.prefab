@@ -142,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 7639041830807167212}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -59.819244, y: -1.7584944, z: 0}
+  m_LocalPosition: {x: -37.7, y: -2.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -301,22 +301,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxsizeylhaalla: {x: 0.1, y: 0.1}
-  boxsizekeskella: {x: 0.09, y: 0.2}
-  boxsizelaidatalhaalla: {x: 0.6, y: 0.1}
-  boxsizealhaalla: {x: 0.05, y: 0.04}
+  boxsizekeskella: {x: 0.5, y: 0.3}
+  boxsizelaidatalhaalla: {x: 0.6, y: 6}
+  boxsizealhaalla: {x: 0.2, y: 0.04}
   vasenylaboxcenter: {x: -0.2, y: 0.4}
   oikeaylaboxcenter: {x: 0.2, y: 0.4}
-  vasenboxcenter: {x: -0.34, y: 0}
+  vasenboxcenter: {x: -0.4, y: 0}
   oikeaboxcenter: {x: 0.4, y: 0}
-  vasenalaboxcenter: {x: -0.35, y: -0.38}
-  oikeaalaboxcenter: {x: 0.35, y: -0.38}
-  alaboxcenter: {x: 0, y: -0.35}
-  oikeayla2center: {x: 0.6, y: 0.6}
-  vasenyla2center: {x: -0.6, y: 0.6}
-  boxsizeyla2: {x: 0.5, y: 0.5}
+  vasenalaboxcenter: {x: -0.35, y: -3.3}
+  oikeaalaboxcenter: {x: 0.35, y: -3.3}
+  alaboxcenter: {x: 0, y: -0.31}
+  oikeayla2center: {x: 0.3, y: 0}
+  vasenyla2center: {x: -0.3, y: 0}
+  boxsizeyla2: {x: 0.1, y: 0.5}
   alusGameObject: {fileID: 0}
-  jumpForce: 5
-  moveSpeed: 2
+  jumpForce: 6
+  moveSpeed: 1
+  xsuunnanjakomaara: 2
+  delay: 0.3
   layerMask:
     serializedVersion: 2
     m_Bits: 1024

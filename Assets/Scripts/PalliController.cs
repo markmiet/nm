@@ -34,6 +34,8 @@ public class PalliController : MonoBehaviour
 
     public GameObject alusGameObject;
 
+
+
     //private Camera mainCamera;
 
 
@@ -48,6 +50,11 @@ public class PalliController : MonoBehaviour
 
         wheelJoint = GetComponent<WheelJoint2D>();
         rb = GetComponent<Rigidbody2D>();
+
+        if (boostParticles!=null && boostParticles.isPlaying)
+        {
+            boostParticles.Stop();
+        }
 
     }
 
@@ -74,6 +81,7 @@ public class PalliController : MonoBehaviour
     private float hypynkestominimiTyyppi2 = 0.1f;
     private bool onkohypynsuuntavasemmalleKyseHyppytyypista2 = false;
 
+    public ParticleSystem boostParticles; // Particle system for the rocket flames
 
     private bool OnkoHyppytyyppi1Ohi()
     {
@@ -85,7 +93,7 @@ public class PalliController : MonoBehaviour
         hypynkestotyyppi1+= Time.deltaTime;
         if (tiilalla && hypynkestotyyppi1 > hypynkestominimiTyyppi1)
         {
-            hyppymenossaTyyppi1 = false;
+          //  hyppymenossaTyyppi1 = false;
             return true;
         }
         return false;
@@ -101,7 +109,7 @@ public class PalliController : MonoBehaviour
         hypynkestotyyppi2 +=Time.deltaTime;
         if (tiilalla && hypynkestotyyppi2 > hypynkestominimiTyyppi2)
         {
-            hyppymenossaTyyppi2 = false;
+            //hyppymenossaTyyppi2 = false;
             return true;
         }
         return false;
@@ -110,8 +118,10 @@ public class PalliController : MonoBehaviour
 
     //int laskuri = 0;
     float deltojensumma = 0.0f;
+
     private void FixedUpdate()
     {
+
         if (alusGameObject != null)
         {
 
@@ -156,11 +166,24 @@ public class PalliController : MonoBehaviour
 
             bool onkomenossaYlospain = OnkoMenossaylospain();
             bool onkomenossaAlaspain = OnkoMenossaAlaspain();
-            bool onkohyppyohi = OnkoHyppytyyppi1Ohi();//onkohypynsuuntavasemmalle
+            //bool onkohyppyohi = OnkoHyppytyyppi1Ohi();//onkohypynsuuntavasemmalle
 
-            bool onkohyppy2ohi = OnkoHyppytyyppi2Ohi();
+            //bool onkohyppy2ohi = OnkoHyppytyyppi2Ohi();
 
-            if (ero > 1.0f && !onkomenossaYlospain)
+            if (onkoTiiliPallonAlla)
+            {
+                hyppymenossaTyyppi2 = false;
+                hyppymenossaTyyppi1 = false;
+                if (boostParticles.isPlaying)
+                {
+                    boostParticles.Stop();
+                }
+               
+
+            }
+
+
+            if (ero > 0.4f && !hyppymenossaTyyppi2 && /*onkohyppyohi && onkohyppy2ohi &&*/ !onkomenossaYlospain && !hyppymenossaTyyppi1)
             {
 
                 if (vasemmalle)
@@ -220,10 +243,46 @@ public class PalliController : MonoBehaviour
                 wheelJoint.motor = motor;
 
             }
-            if (OnkoMenossaylospain() && !onkohyppyohi && onkohyppy2ohi)
+            if (onkomenossaYlospain && hyppymenossaTyyppi2)
+            {
+                //
+                if (!onkohypynsuuntavasemmalleKyseHyppytyypista2)
+                {
+                    if (onkoTiiliOikeallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya)
+                    {
+                        //eikun ylöspäin
+                        //   float nykyinenylos = rb.velocity.y;
+                        //   rb.velocity = new Vector2(rb.velocity.x/2.0f, nykyinenylos*4.0f);
+                        hyppymenossaTyyppi2 = false;
+                        LoikkaaYlos(true);
+                        rb.velocity = new Vector2(0.0f, rb.velocity.y);
+                        boostParticles.Play();
+
+                    }
+                }
+                else
+                {
+                    //VASEN
+                    if (onkoTiiliVasemmallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya)
+                    {
+                        //eikun ylöspäin
+                        //   float nykyinenylos = rb.velocity.y;
+                        //   rb.velocity = new Vector2(rb.velocity.x/2.0f, nykyinenylos*4.0f);
+                        hyppymenossaTyyppi2 = false;
+                        LoikkaaYlos(false);
+                        rb.velocity = new Vector2(0.0f, rb.velocity.y);
+                        boostParticles.Play();
+
+
+
+                    }
+                }
+
+            }
+            if (OnkoMenossaylospain() && !hyppymenossaTyyppi2 /*&& !onkohyppyohi && onkohyppy2ohi*/)
             {
 
-                if (!onkohypynsuuntavasemmalleKyseHyppytyypista1 && !OnkoTiiliOikeallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya())
+                if (!onkohypynsuuntavasemmalleKyseHyppytyypista1 && !onkoTiiliOikeallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya)
                 {
                     rb.velocity = new Vector2(moveSpeed, rb.velocity.y);//oikealle
                                                                         //hyppy1
@@ -251,6 +310,14 @@ public class PalliController : MonoBehaviour
                 {
                     //hyppy1
                     //oikea
+                 
+
+                    //onko tiilettämän kohdan vieressä oikealla tiiliseinä?
+                    //if (!onkoTiiliOikeallaAlhaalla)
+                    //{
+                        
+                    //}
+                    //else 
                     if (onkoTiiliOikealla && !onkoTiiliOikeallaYlhaalla)
                     {
                         LoikkaaYlos(onkoTiiliOikealla);
@@ -289,13 +356,13 @@ public class PalliController : MonoBehaviour
 
     private bool OnkoMenossaylospain()
     {
-        bool ylos = rb.velocity.y > 0.1f;
+        bool ylos = rb.velocity.y > 0.03f;
         return ylos;
 
     }
     private bool OnkoMenossaAlaspain()
     {
-        bool ylos = rb.velocity.y < -0.1f;
+        bool ylos = rb.velocity.y < -0.03f;
         Debug.Log("velco" + rb.velocity.y);
         return ylos;
 
@@ -328,7 +395,7 @@ public class PalliController : MonoBehaviour
             {
                 float voima = jumpForce;
                 float lisays = 0.0f;
-                voima = 2.34f * yx + 4.4f;
+                voima = 2.34f * yx + 4.5f;
 
 //                Debug.Log("voima=" + voima + " yx=" + yx);
 
@@ -336,7 +403,8 @@ public class PalliController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, voima);
                 hyppymenossaTyyppi1 = true;
                 hypynkestotyyppi1 = 0.0f;
-                
+                //boostParticles.Play();
+
                 break;
             }
         }
@@ -379,13 +447,13 @@ public class PalliController : MonoBehaviour
                 {
                     rb.velocity = new Vector2(rb.velocity.x, voima);
 
-                    rb.velocity = new Vector2(voima, rb.velocity.y);
+                    rb.velocity = new Vector2(voima/ xsuunnanjakomaara, rb.velocity.y);
                 }
                 else
                 {
                     rb.velocity = new Vector2(rb.velocity.x, voima);
 
-                    rb.velocity = new Vector2(-voima, rb.velocity.y);
+                    rb.velocity = new Vector2(-voima/ xsuunnanjakomaara, rb.velocity.y);
                 }
                 
 
@@ -393,6 +461,7 @@ public class PalliController : MonoBehaviour
 
                 hyppymenossaTyyppi2 = true;
                 hypynkestotyyppi2 = 0.0f;
+               // boostParticles.Play();
 
                 break;
             }
@@ -400,7 +469,7 @@ public class PalliController : MonoBehaviour
 
     }
 
-
+    public float xsuunnanjakomaara = 2.0f;
 
     public float delay = 0.3f;  // Delay in seconds
 
@@ -467,6 +536,7 @@ public class PalliController : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        
         // Set the color of the Gizmos
         Gizmos.color = Color.green;
 
@@ -491,17 +561,18 @@ public class PalliController : MonoBehaviour
 
         Gizmos.color = Color.gray;
         Gizmos.DrawWireCube((Vector2)transform.position + oikeaalaboxcenter, boxsizelaidatalhaalla);
-
-
-        Gizmos.color = Color.blue;
+        
+        Gizmos.color = Color.black;
         Gizmos.DrawWireCube((Vector2)transform.position + alaboxcenter, boxsizealhaalla);
-
+        
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube((Vector2)transform.position + oikeayla2center, boxsizeyla2);
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube((Vector2)transform.position + vasenyla2center, boxsizeyla2);
+
+        
 
         //
         // Gizmos.color = Color.yellow;
