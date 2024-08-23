@@ -168,6 +168,9 @@ public class PalliController : MonoBehaviour
             bool onkomenossaAlaspain = OnkoMenossaAlaspain();
             //bool onkohyppyohi = OnkoHyppytyyppi1Ohi();//onkohypynsuuntavasemmalle
 
+
+            bool onkoMakitaOikealla = OnkoMakitaOikealla();
+
             //bool onkohyppy2ohi = OnkoHyppytyyppi2Ohi();
 
             if (onkoTiiliPallonAlla)
@@ -363,7 +366,6 @@ public class PalliController : MonoBehaviour
     private bool OnkoMenossaAlaspain()
     {
         bool ylos = rb.velocity.y < -0.03f;
-        Debug.Log("velco" + rb.velocity.y);
         return ylos;
 
     }
@@ -397,13 +399,13 @@ public class PalliController : MonoBehaviour
                 float lisays = 0.0f;
                 voima = 2.34f * yx + 4.5f;
 
-//                Debug.Log("voima=" + voima + " yx=" + yx);
+                Debug.Log("voima=" + voima + " yx=" + yx);
 
 
                 rb.velocity = new Vector2(rb.velocity.x, voima);
                 hyppymenossaTyyppi1 = true;
                 hypynkestotyyppi1 = 0.0f;
-                //boostParticles.Play();
+                boostParticles.Play();
 
                 break;
             }
@@ -461,7 +463,7 @@ public class PalliController : MonoBehaviour
 
                 hyppymenossaTyyppi2 = true;
                 hypynkestotyyppi2 = 0.0f;
-               // boostParticles.Play();
+                boostParticles.Play();
 
                 break;
             }
@@ -635,6 +637,17 @@ public class PalliController : MonoBehaviour
         return onkotiilioikeallaAlhaalla;
 
     }
+
+
+    private bool OnkoMakitaOikealla()
+    {
+
+
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("makitavihollinentag", boxsizekeskella, oikeaboxcenter, layerMask);
+        return onkotiilioikeallaAlhaalla;
+
+    }
+
     private bool OnkoTiiliVasemmalla()
     {
 
@@ -696,23 +709,39 @@ public class PalliController : MonoBehaviour
 
     public bool onkoTagiaBoxissa(string tagname, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
+        string[] tagit;// = { "fads", "tagname" };
 
-
-        Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
-
-        if (cs != null && cs.Length > 0)
+        if (tagname.Equals("tiilitag"))
         {
-            foreach (Collider2D c in cs)
+           tagit = new string[2];
+            tagit[0] = tagname;
+            tagit[1] = "makitavihollinentag";
+        }
+        else
+        {
+             tagit = new string[1];
+            tagit[0] = tagname;
+        }
+       foreach (string name in tagit)
             {
-                if (c.gameObject == this.gameObject)
-                {
+            Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
 
-                }
-                else if (c.gameObject.tag == tagname)
+            if (cs != null && cs.Length > 0)
+            {
+                foreach (Collider2D c in cs)
                 {
-                    return true;
+                    if (c.gameObject == this.gameObject)
+                    {
+
+                    }
+                    else if (c.gameObject.tag == name)
+                    {
+                        return true;
+                    }
                 }
             }
+         
+
         }
         return false;
 
