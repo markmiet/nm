@@ -34,6 +34,7 @@ public class PalliController : MonoBehaviour
 
     public GameObject alusGameObject;
 
+    public string[] tagilistaJoitaTutkitaan;
 
 
     //private Camera mainCamera;
@@ -392,7 +393,7 @@ public class PalliController : MonoBehaviour
 
             }
 
-            bool onkotiiliatuossakohti = onkoTagiaBoxissa("tiilitag", boxsizekeskella, aloituspiste, layerMask);
+            bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, aloituspiste, layerMask);
             if (!onkotiiliatuossakohti)
             {
                 float voima = jumpForce;
@@ -435,7 +436,7 @@ public class PalliController : MonoBehaviour
                 onkohypynsuuntavasemmalleKyseHyppytyypista2 = true;
             }
 
-            bool onkotiiliatuossakohti = onkoTagiaBoxissa("tiilitag", boxsizealhaalla, aloituspiste, layerMask);
+            bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizealhaalla, aloituspiste, layerMask);
             if (onkotiiliatuossakohti)
             {
                 //laskeutusmispaikka löytyi
@@ -491,20 +492,7 @@ public class PalliController : MonoBehaviour
         rb.velocity = new Vector2(moveSpeed, rb.velocity.y);//oikealle
     }
 
-    public void Explode()
-    {
-        if (transform.parent != null)
 
-        {
-            GameObject parentObject = transform.parent.gameObject;
-            Destroy(parentObject, 0.1f);
-            //tänne vielä animaatio
-            //Destroy(gameObject, 0.1f);
-
-        }
-
-
-    }
     /*
     public void hyppaa(bool vasen)
     {
@@ -605,7 +593,7 @@ public class PalliController : MonoBehaviour
     {
         // return true;
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizealhaalla, alaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizealhaalla, alaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -614,7 +602,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizelaidatalhaalla, vasenalaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizelaidatalhaalla, vasenalaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -623,7 +611,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizelaidatalhaalla, oikeaalaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizelaidatalhaalla, oikeaalaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -633,7 +621,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizekeskella, oikeaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, oikeaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -643,7 +631,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("makitavihollinentag", boxsizekeskella, oikeaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, oikeaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -652,7 +640,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizekeskella, vasenboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, vasenboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -661,7 +649,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizeylhaalla, vasenylaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeylhaalla, vasenylaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -670,7 +658,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizeylhaalla, oikeaylaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeylhaalla, oikeaylaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -678,7 +666,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizeyla2, oikeayla2center, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeyla2, oikeayla2center, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -687,7 +675,7 @@ public class PalliController : MonoBehaviour
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa("tiilitag", boxsizeyla2, vasenyla2center, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeyla2, vasenyla2center, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -707,21 +695,9 @@ public class PalliController : MonoBehaviour
     }
 
 
-    public bool onkoTagiaBoxissa(string tagname, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
+    public bool onkoTagiaBoxissa(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
-        string[] tagit;// = { "fads", "tagname" };
 
-        if (tagname.Equals("tiilitag"))
-        {
-           tagit = new string[2];
-            tagit[0] = tagname;
-            tagit[1] = "makitavihollinentag";
-        }
-        else
-        {
-             tagit = new string[1];
-            tagit[0] = tagname;
-        }
        foreach (string name in tagit)
             {
             Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
@@ -744,6 +720,17 @@ public class PalliController : MonoBehaviour
 
         }
         return false;
+
+    }
+    public GameObject explosion;
+    public void Explode()
+    {
+
+        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+
+        Destroy(explosionIns, 1.0f);
+        Destroy(gameObject, 0.1f);
+
 
     }
 }

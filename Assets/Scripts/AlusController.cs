@@ -160,11 +160,13 @@ public class AlusController : BaseController
 
     public float vauhdinLisaysKunSpeedbonusOtettu = 1.0f;
 
+
+    private Camera mainCamera;
     // Start is called before the first frame update
     void Start()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
+        mainCamera = Camera.main;
 
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -298,7 +300,7 @@ public class AlusController : BaseController
 
             return;
         }
-
+        asetaSijainti();
 
         alusliikkeessa = false;
 
@@ -397,6 +399,9 @@ public class AlusController : BaseController
         //float perusliike = 5;
 
         m_Rigidbody2D.velocity = new Vector2(vauhtiOikea, vauhtiYlos);
+
+        asetaSijainti();
+
 
         //m_Rigidbody2D.position.x = 3f;
 
@@ -568,52 +573,72 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     private List<OptionController> optionControllerit = new List<OptionController>();
 
 
+    public GameObject alamaksiminMaarittava;
+    public GameObject ylamaksiminMaarittava;
+
+
     void LateUpdate()
     {
-        Vector3 viewpos = transform.position;
+        asetaSijainti();
 
 
-        viewpos.x =
-            Mathf.Clamp(viewpos.x, screenBounds.x * -1 + objectWidth, screenBounds.x + objectWidth);
-
-
-        //viewpos.x =
-        //    Mathf.Clamp(viewpos.x, screenBounds.x * -1, screenBounds.x);
-
-
-
-
-
-
-        //     viewpos.x =
-        //   Mathf.Clamp(viewpos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
-
-        //Debug.Log(" viewpos.x=" + viewpos.x + " screenBounds.x=" + screenBounds.x + " objectWidth=" + objectWidth + " m_SpriteRenderer.transform.position.x=" +
-        //m_SpriteRenderer.transform.position.x
-
-        //       );
-        /*
-        if (viewpos.x<0)
-        {
-            viewpos.x = 0;
-        }
-        */
-
-
-        //viewpos.y = Mathf.Clamp(viewpos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
-        viewpos.y = Mathf.Clamp(viewpos.y, 5.0f + objectHeight, screenBounds.y - objectHeight);
-
-        transform.position = viewpos;
-
-        /*
-        if (transform.position.x<0.0f)
-        {
-            transform.position.x = 0.0f;
-        }
-*/
     }
 
+    private void asetaSijainti()
+    {
+        // Debug.Log(alamaksiminMaarittava);
 
+        // Vector3 
+
+        // screenPosition = Camera.main.WorldToScreenPoint(alamaksiminMaarittava.transform.position);
+
+        //screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+
+        float halfWidth = m_SpriteRenderer.bounds.extents.x;
+        float halfHeight = m_SpriteRenderer.bounds.extents.y;
+
+
+        float camHeight = mainCamera.orthographicSize;
+        float camWidth = mainCamera.aspect * mainCamera.orthographicSize;
+
+
+        Vector3 pos = transform.position;
+
+        // Calculate the bounds based on the camera size
+        float minX = mainCamera.transform.position.x - camWidth;
+        float maxX = mainCamera.transform.position.x + camWidth;
+        float minY = mainCamera.transform.position.y - camHeight;
+        float maxY = mainCamera.transform.position.y + camHeight;
+
+        // Clamp the position to restrict the GameObject within the camera bounds
+        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+
+
+        pos.x = Mathf.Clamp(pos.x, minX + halfWidth, maxX - halfWidth);
+        pos.y = Mathf.Clamp(pos.y, minY + halfHeight, maxY - halfHeight);
+
+        if (pos.y < alamaksiminMaarittava.transform.position.y)
+        {
+            pos.y = alamaksiminMaarittava.transform.position.y;
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
+        }
+
+        if (ylamaksiminMaarittava != null)
+        {
+            if (pos.y > ylamaksiminMaarittava.transform.position.y)
+            {
+                pos.y = ylamaksiminMaarittava.transform.position.y;
+                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
+            }
+        }
+
+
+        // Apply the clamped position back to the GameObject
+        transform.position = pos;
+
+    }
 
     public void Explode()
     {
