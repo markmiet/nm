@@ -35,22 +35,14 @@ public class AlusController : BaseController
 
     private bool vasenNappiPainettu = false;
 
-    private float vauhtiOikea = 0.0f;
-    public float vauhtiOikeaMax = 4.0f;
 
 
-
-
-    public float hidastuvuusKunMitaanEiPainettu = 0.3f;
-    private float nopeudenMuutosKunPainettu = 1f;
     //ylos/alla
 
     private bool ylosNappiPainettu = false;
     private bool alasNappiPainettu = false;
 
 
-    private float vauhtiYlos = 0.0f;
-    public float vauhtiYlosMax = 4.0f;
 
     private bool spaceNappiaPainettu = false;
     //private bool spaceNappiAlhaalla = false;
@@ -95,15 +87,8 @@ public class AlusController : BaseController
     private int missileUpCollected = 0;
 
     //
-    private bool alusliikkeessa = false;
 
-    public bool onkoAlusLiikkeessa()
-    {
-        return alusliikkeessa;
 
-        //return Mathf.Abs(vauhtiOikea)>0.1f || Mathf.Abs(vauhtiYlos)>0.1f;
-
-    }
 
     public Vector3 palautaViimeinenSijaintiScreenpositioneissa(int optionjarjestysnumero)
     {
@@ -111,12 +96,12 @@ public class AlusController : BaseController
         //return aluksenpositiotCameraViewissa[optioidenmaksimaara * 10 - optionjarjestysnumero* 10];
 
         return base.palautaScreenpositioneissa(optioidenmaksimaara * 10 - optionjarjestysnumero * 10);
-        
+
     }
- //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
+    //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
     private void tallennaSijaintiSailytaVainKymmenenViimeisinta()
     {
-        base.tallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 10,true,true);
+        base.tallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 10, true, true);
         if (true)
         {
             return;
@@ -267,7 +252,154 @@ public class AlusController : BaseController
         }
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
 
+
+
+
+
+
+
+        float xsuuntamuutos = 0.0f;
+        float ysuuntamuutos = 0.0f;
+        //sijaintimuutos tämä siis 0.05 joka on se kiinteä arvo paljonko se liikkuu jos nappi pohjassa
+        //xsuuntamuutos kasvattaa vielä tuon päälle sitten sitä sijaintia
+        //xsuuntamuutos kasvaa niin kauan kuin nappula pohjassa
+
+
+
+
+        if (oikeaNappiPainettu)
+        {
+
+            oikeanappipainettukestoaika += Time.deltaTime;
+            if (oikeanappipainettukestoaika > turboviiveSekunneissa)
+            {
+                xsuuntamuutos +=( oikeanappipainettukestoaika- turboviiveSekunneissa )* kiihtyvyys;
+            }
+
+
+            xsuuntamuutos += perusnopeus;
+
+
+        }
+        else
+        {
+            oikeanappipainettukestoaika = 0.0f;
+        }
+        if (vasenNappiPainettu)
+        {
+            vasennappipainettukestoaika += Time.deltaTime;
+
+            if (vasennappipainettukestoaika > turboviiveSekunneissa)
+            {
+                xsuuntamuutos -= (vasennappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
+            }
+            xsuuntamuutos -= perusnopeus;
+        }
+        else
+        {
+            vasennappipainettukestoaika = 0.0f;
+        }
+        if (ylosNappiPainettu)
+        {
+            ylosnappipainettukestoaika += Time.deltaTime;
+            if (ylosnappipainettukestoaika > turboviiveSekunneissa)
+            {
+                ysuuntamuutos +=( ylosnappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
+            }
+
+            ysuuntamuutos += perusnopeus;
+            // edellinenylosNappiPainettu += muuttuja;
+
+
+
+
+        }
+        else
+        {
+            ylosnappipainettukestoaika = 0.0f;
+        }
+        if (alasNappiPainettu)
+        {
+            alasnappipainettukestoaika += Time.deltaTime;
+            if (alasnappipainettukestoaika > turboviiveSekunneissa)
+            {
+                ysuuntamuutos -= (alasnappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
+            }
+
+            ysuuntamuutos -= perusnopeus;
+        }
+        else
+        {
+            alasnappipainettukestoaika = 0.0f;
+        }
+
+
+        //edellinenoikeaNappiPainettu = oikeaNappiPainettu;
+
+        //   xsuuntamuutos = Mathf.Clamp(xsuuntamuutos, 0, maksiminopeus);
+        //   ysuuntamuutos = Mathf.Clamp(ysuuntamuutos, 0, maksiminopeus);
+
+
+        //Debug.Log("xsuuntamuutos=" + oikeanappipainettukestoaika);
+
+
+        if (xsuuntamuutos > maksiminopeus)
+        {
+            xsuuntamuutos = maksiminopeus;
+        }
+        if (xsuuntamuutos < -maksiminopeus)
+        {
+            xsuuntamuutos = -maksiminopeus;
+
+        }
+
+        if (ysuuntamuutos > maksiminopeus)
+        {
+            ysuuntamuutos = maksiminopeus;
+        }
+        if (ysuuntamuutos < -maksiminopeus)
+        {
+            ysuuntamuutos = -maksiminopeus;
+
+        }
+
+
+        Debug.Log("xuusntam=" + xsuuntamuutos);
+
+        transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
+
+        asetaSijainti();
+
+        if (ysuuntamuutos > 0.0f)
+        {
+            m_Animator.SetBool("up", true);
+
+        }
+        else
+        {
+            m_Animator.SetBool("up", false);
+        }
+
+
+
+
     }
+    public float turboviiveSekunneissa = 0.4f;
+    public float maksiminopeus = 0.08f;
+
+    public float kiihtyvyys = 0.05f;
+
+    private float oikeanappipainettukestoaika = 0.0f;
+
+    private float vasennappipainettukestoaika = 0.0f;
+
+
+    private float ylosnappipainettukestoaika = 0.0f;
+    private float alasnappipainettukestoaika = 0.0f;
+
+    public float perusnopeus = 0.05f;
+
+
     float deltaaikojensumma = 0f;
     void FixedUpdate()
     {
@@ -300,122 +432,27 @@ public class AlusController : BaseController
 
             return;
         }
-        asetaSijainti();
-
-        alusliikkeessa = false;
-
-        if (oikeaNappiPainettu)
-        {
-            vauhtiOikea += nopeudenMuutosKunPainettu;
-            alusliikkeessa = true;
-
-        }
-        if (vasenNappiPainettu)
-        {
-            //vasen painettu
-            vauhtiOikea = vauhtiOikea - nopeudenMuutosKunPainettu;
-            alusliikkeessa = true;
-
-        }
-        if (!oikeaNappiPainettu && !vasenNappiPainettu)
-        {
-            if (vauhtiOikea > 0.0f)
-            {
-                vauhtiOikea = vauhtiOikea - hidastuvuusKunMitaanEiPainettu;
-                if (vauhtiOikea < 0.0f)
-                {
-                    vauhtiOikea = 0.0f;
-                }
-            }
-            else if (vauhtiOikea < 0.0f)
-            {
-                vauhtiOikea = vauhtiOikea + hidastuvuusKunMitaanEiPainettu;
-                if (vauhtiOikea > 0.0f)
-                {
-                    vauhtiOikea = 0.0f;
-                }
-            }
-        }
+        //asetaSijainti();
 
 
-
-        if (vauhtiOikea > 0 && vauhtiOikea > vauhtiOikeaMax)
-        {
-            vauhtiOikea = vauhtiOikeaMax;
-        }
-        else if (vauhtiOikea < 0 && vauhtiOikea <= -(vauhtiOikeaMax))
-        {
-            vauhtiOikea = -(vauhtiOikeaMax);
-        }
-
-
-
-
-        //alas/ylös
-        if (ylosNappiPainettu)
-        {
-            vauhtiYlos = vauhtiYlos + nopeudenMuutosKunPainettu;
-            alusliikkeessa = true;
-        }
-        if (alasNappiPainettu)
-        {
-            //vasen painettu
-            vauhtiYlos = vauhtiYlos - nopeudenMuutosKunPainettu;
-            alusliikkeessa = true;
-        }
-
-
-
-        if (!ylosNappiPainettu && !alasNappiPainettu)
-        {
-            if (vauhtiYlos > 0.0f)
-            {
-                vauhtiYlos = vauhtiYlos - hidastuvuusKunMitaanEiPainettu;
-                if (vauhtiYlos < 0.0f)
-                {
-                    vauhtiYlos = 0.0f;
-                }
-            }
-            else if (vauhtiYlos < 0.0f)
-            {
-                vauhtiYlos = vauhtiYlos + hidastuvuusKunMitaanEiPainettu;
-                if (vauhtiYlos > 0.0f)
-                {
-                    vauhtiYlos = 0.0f;
-                }
-            }
-        }
-
-
-
-        if (vauhtiYlos > 0 && vauhtiYlos > vauhtiYlosMax)
-        {
-            vauhtiYlos = vauhtiYlosMax;
-        }
-        else if (vauhtiYlos < 0 && vauhtiYlos <= -(vauhtiYlosMax))
-        {
-            vauhtiYlos = -(vauhtiYlosMax);
-        }
         //float perusliike = 5;
 
-        m_Rigidbody2D.velocity = new Vector2(vauhtiOikea, vauhtiYlos);
+        // m_Rigidbody2D.velocity = new Vector2(vauhtiOikea, vauhtiYlos);
+        //        m_Rigidbody2D.position= new Vector2(m_Rigidbody2D.position.x+vauhtiOikea/50, m_Rigidbody2D.position.y+vauhtiYlos / 50.0f);
 
-        asetaSijainti();
+
+        //        asetaSijainti();
+
+
+        // asetaSijainti();
 
 
         //m_Rigidbody2D.position.x = 3f;
 
 
         //        m_Rigidbody2D
-        if (vauhtiYlos > 0.0f)
-        {
-            m_Animator.SetBool("up", true);
 
-        }
-        else
-        {
-            m_Animator.SetBool("up", false);
-        }
+
 
         //Debug.Log("vauhtiOikea=" + vauhtiOikea);
         //Debug.Log("vauhtiYlos=" + vauhtiYlos);
@@ -536,7 +573,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
             GameObject instanssiOption = Instantiate(instanssiOption1, vektori, Quaternion.identity);
-          //  instanssiOption.transform.SetParent(transform);
+            //  instanssiOption.transform.SetParent(transform);
 
 
             OptionController myScript = instanssiOption.GetComponent<OptionController>();
@@ -579,7 +616,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     void LateUpdate()
     {
-        asetaSijainti();
+        // asetaSijainti();
 
 
     }
@@ -864,8 +901,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Speed))
                 {
                     Debug.Log("speed()");
-                    vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
-                    vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
+                    //vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
+                    //vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
+
+                    maksiminopeus += vauhdinLisaysKunSpeedbonusOtettu;
+
+
 
                     ammustenmaksimaaraProperty += ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
                     ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;

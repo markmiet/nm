@@ -193,7 +193,7 @@ public class PalliController : MonoBehaviour
                 if (vasemmalle)
                 {
 
-                    Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliVasemmalla=" + onkoTiiliVasemmalla + " onkoTiiliVasemmallaAlhaalla=" + onkoTiiliVasemmallaAlhaalla);
+                   // Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliVasemmalla=" + onkoTiiliVasemmalla + " onkoTiiliVasemmallaAlhaalla=" + onkoTiiliVasemmallaAlhaalla);
                     //    rb.velocity = new Vector2(-1f, rb.velocity.y);
                     //                    transform.position = new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z);
 
@@ -223,7 +223,7 @@ public class PalliController : MonoBehaviour
                     //  rb.velocity = new Vector2(1f, rb.velocity.y);
                     // transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
 
-                    Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliOikealla=" + onkoTiiliOikealla + " onkoTiiliOikeallaAlhaalla=" + onkoTiiliOikeallaAlhaalla);
+                 //   Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliOikealla=" + onkoTiiliOikealla + " onkoTiiliOikeallaAlhaalla=" + onkoTiiliOikeallaAlhaalla);
                     if (!onkoTiiliOikealla && onkoTiiliOikeallaAlhaalla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
@@ -330,7 +330,7 @@ public class PalliController : MonoBehaviour
                     else if (!onkoTiiliOikeallaAlhaalla && !onkoTiiliOikeallaYlhaalla )
                     {
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
-                        Debug.Log("loikkaa aukon yli oikealle");
+                    //    Debug.Log("loikkaa aukon yli oikealle");
                         LoikkaaAukonYli(!vasemmalle);
 
                     }
@@ -348,7 +348,7 @@ public class PalliController : MonoBehaviour
                     else if (!onkoTiiliVasemmallaAlhaalla && !onkoTiiliVasemmallaYlhaalla)
                     {
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
-                        Debug.Log("loikkaa aukon yli vasemmalle");
+                  //      Debug.Log("loikkaa aukon yli vasemmalle");
                         LoikkaaAukonYli(!vasemmalle);
 
                     }
@@ -400,7 +400,7 @@ public class PalliController : MonoBehaviour
                 float lisays = 0.0f;
                 voima = 2.34f * yx + 4.5f;
 
-                Debug.Log("voima=" + voima + " yx=" + yx);
+                //Debug.Log("voima=" + voima + " yx=" + yx);
 
 
                 rb.velocity = new Vector2(rb.velocity.x, voima);
