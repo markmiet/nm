@@ -33,7 +33,9 @@ public class PalleroScripti : MonoBehaviour
     public GameObject pallerotkokonaisuus;
 
     public GameObject bonus;
+    private SpriteRenderer m_SpriteRenderer;
 
+    private SpriteRenderer m_SpriteRendererEkapallero;
 
     void Start()
     {
@@ -50,12 +52,14 @@ public class PalleroScripti : MonoBehaviour
         Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
 
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
-      //  Debug.Log(" Screen.height=" + Screen.height);
-      //  Debug.Log(" starttimaara=" + starttimaara++);
+        //  Debug.Log(" Screen.height=" + Screen.height);
+        //  Debug.Log(" starttimaara=" + starttimaara++);
 
-
-
+        if (ekapallero!=null)
+        m_SpriteRendererEkapallero=
+        ekapallero.GetComponent<SpriteRenderer>();
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
@@ -103,9 +107,28 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
 
     }
+    private bool OnkoOkLiikkua()
+    {
+       // return m_SpriteRendererEkapallero != null && m_SpriteRendererEkapallero.isVisible;
 
+        if (m_SpriteRendererEkapallero==null)
+        {
+            return m_SpriteRenderer.isVisible;
+        }
+        else
+        {
+            return m_SpriteRendererEkapallero.isVisible;
+        }
+
+    }
     void FixedUpdate()
     {
+
+        if (!OnkoOkLiikkua())
+        {
+            return;
+        }
+
         if (jarjestysnro!=0)
         {
             if (alkuloysaatekemassa)
@@ -163,7 +186,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
 
 
-    public void ExplodePallero()
+    public void Explode()
     {
 
     //    GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);

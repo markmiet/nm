@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5247729779323276946}
   m_Layer: 12
   m_Name: bullet-png-39206
-  m_TagString: Untagged
+  m_TagString: ammustag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &7615176302225465455
 MonoBehaviour:
@@ -137,7 +137,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 7918195032328455905}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5fe1cb20e6fea984a8d7e7756c4e8098, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -182,7 +182,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 7918195032328455905}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5fe1cb20e6fea984a8d7e7756c4e8098, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -205,6 +205,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 3.283639, y: 0.19156992}
-  m_Size: {x: 0.56637764, y: 1.8596518}
+  m_Offset: {x: 3.3141851, y: -0.10638356}
+  m_Size: {x: 0.50528526, y: 1.0193634}
   m_Direction: 0

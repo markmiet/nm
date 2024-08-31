@@ -34,6 +34,8 @@ public class PalliController : MonoBehaviour
 
     public GameObject alusGameObject;
 
+    public GameObject bonus;
+
     public string[] tagilistaJoitaTutkitaan;
 
 
@@ -52,11 +54,10 @@ public class PalliController : MonoBehaviour
         wheelJoint = GetComponent<WheelJoint2D>();
         rb = GetComponent<Rigidbody2D>();
 
-        if (boostParticles!=null && boostParticles.isPlaying)
+        if (boostParticles != null && boostParticles.isPlaying)
         {
             boostParticles.Stop();
         }
-
     }
 
     //   public float rotationSpeed = 90f; // Degrees per second
@@ -84,6 +85,20 @@ public class PalliController : MonoBehaviour
 
     public ParticleSystem boostParticles; // Particle system for the rocket flames
 
+
+    public float hyppyjenValinenViive = 2.0f;
+
+
+    private float viimeisenhypynaloitusajankohta = 0.0f;
+
+
+    public float erominimissaanJottaLiikutaan = 0.4f;
+
+    private bool OnkoOkLiikkua(float ero)
+    {
+        return ero > erominimissaanJottaLiikutaan &&  m_SpriteRenderer.isVisible;
+    }
+
     private bool OnkoHyppytyyppi1Ohi()
     {
         // if (hypynAloitusAjankohta==0.0f)
@@ -91,10 +106,10 @@ public class PalliController : MonoBehaviour
         //     return true;
         // }
         bool tiilalla = OnkoTiiliPallonAlla();
-        hypynkestotyyppi1+= Time.deltaTime;
+        hypynkestotyyppi1 += Time.deltaTime;
         if (tiilalla && hypynkestotyyppi1 > hypynkestominimiTyyppi1)
         {
-          //  hyppymenossaTyyppi1 = false;
+            //  hyppymenossaTyyppi1 = false;
             return true;
         }
         return false;
@@ -107,7 +122,7 @@ public class PalliController : MonoBehaviour
         //     return true;
         // }
         bool tiilalla = OnkoTiiliPallonAlla();
-        hypynkestotyyppi2 +=Time.deltaTime;
+        hypynkestotyyppi2 += Time.deltaTime;
         if (tiilalla && hypynkestotyyppi2 > hypynkestominimiTyyppi2)
         {
             //hyppymenossaTyyppi2 = false;
@@ -182,18 +197,18 @@ public class PalliController : MonoBehaviour
                 {
                     boostParticles.Stop();
                 }
-               
+
 
             }
 
 
-            if (ero > 0.4f && !hyppymenossaTyyppi2 && /*onkohyppyohi && onkohyppy2ohi &&*/ !onkomenossaYlospain && !hyppymenossaTyyppi1)
+            if (OnkoOkLiikkua(ero)  && !hyppymenossaTyyppi2 && /*onkohyppyohi && onkohyppy2ohi &&*/ !onkomenossaYlospain && !hyppymenossaTyyppi1)
             {
 
                 if (vasemmalle)
                 {
 
-                   // Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliVasemmalla=" + onkoTiiliVasemmalla + " onkoTiiliVasemmallaAlhaalla=" + onkoTiiliVasemmallaAlhaalla);
+                    // Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliVasemmalla=" + onkoTiiliVasemmalla + " onkoTiiliVasemmallaAlhaalla=" + onkoTiiliVasemmallaAlhaalla);
                     //    rb.velocity = new Vector2(-1f, rb.velocity.y);
                     //                    transform.position = new Vector3(transform.position.x - 0.1f, transform.position.y, transform.position.z);
 
@@ -223,7 +238,7 @@ public class PalliController : MonoBehaviour
                     //  rb.velocity = new Vector2(1f, rb.velocity.y);
                     // transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
 
-                 //   Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliOikealla=" + onkoTiiliOikealla + " onkoTiiliOikeallaAlhaalla=" + onkoTiiliOikeallaAlhaalla);
+                    //   Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliOikealla=" + onkoTiiliOikealla + " onkoTiiliOikeallaAlhaalla=" + onkoTiiliOikeallaAlhaalla);
                     if (!onkoTiiliOikealla && onkoTiiliOikeallaAlhaalla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
@@ -314,12 +329,12 @@ public class PalliController : MonoBehaviour
                 {
                     //hyppy1
                     //oikea
-                 
+
 
                     //onko tiilettämän kohdan vieressä oikealla tiiliseinä?
                     //if (!onkoTiiliOikeallaAlhaalla)
                     //{
-                        
+
                     //}
                     //else 
                     if (onkoTiiliOikealla && !onkoTiiliOikeallaYlhaalla)
@@ -327,10 +342,10 @@ public class PalliController : MonoBehaviour
                         LoikkaaYlos(onkoTiiliOikealla);
                     }
                     //hyppy2
-                    else if (!onkoTiiliOikeallaAlhaalla && !onkoTiiliOikeallaYlhaalla )
+                    else if (!onkoTiiliOikeallaAlhaalla && !onkoTiiliOikeallaYlhaalla)
                     {
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
-                    //    Debug.Log("loikkaa aukon yli oikealle");
+                        //    Debug.Log("loikkaa aukon yli oikealle");
                         LoikkaaAukonYli(!vasemmalle);
 
                     }
@@ -348,7 +363,7 @@ public class PalliController : MonoBehaviour
                     else if (!onkoTiiliVasemmallaAlhaalla && !onkoTiiliVasemmallaYlhaalla)
                     {
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
-                  //      Debug.Log("loikkaa aukon yli vasemmalle");
+                        //      Debug.Log("loikkaa aukon yli vasemmalle");
                         LoikkaaAukonYli(!vasemmalle);
 
                     }
@@ -377,38 +392,44 @@ public class PalliController : MonoBehaviour
     Vector2 aloituspiste = Vector2.zero;
     private void LoikkaaYlos(bool tiilionoikealla)
     {
-        for (float yx = 0; yx < 4f; yx += 0.01f)
+
+        if(Time.realtimeSinceStartup - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
         {
-            if (tiilionoikealla)
+            for (float yx = 0; yx < 4f; yx += 0.01f)
             {
-                aloituspiste = new Vector2(oikeaboxcenter.x, oikeaboxcenter.y + yx);
-                onkohypynsuuntavasemmalleKyseHyppytyypista1 = false;
+                if (tiilionoikealla)
+                {
+                    aloituspiste = new Vector2(oikeaboxcenter.x, oikeaboxcenter.y + yx);
+                    onkohypynsuuntavasemmalleKyseHyppytyypista1 = false;
 
 
-            }
-            else
-            {
-                aloituspiste = new Vector2(vasenboxcenter.x, vasenboxcenter.y + yx);
-                onkohypynsuuntavasemmalleKyseHyppytyypista1 = true;
+                }
+                else
+                {
+                    aloituspiste = new Vector2(vasenboxcenter.x, vasenboxcenter.y + yx);
+                    onkohypynsuuntavasemmalleKyseHyppytyypista1 = true;
 
-            }
+                }
 
-            bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, aloituspiste, layerMask);
-            if (!onkotiiliatuossakohti)
-            {
-                float voima = jumpForce;
-                float lisays = 0.0f;
-                voima = 2.34f * yx + 4.5f;
+                bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, aloituspiste, layerMask);
+                if (!onkotiiliatuossakohti)
+                {
+                    float voima = jumpForce;
+                    float lisays = 0.0f;
+                    voima = 2.34f * yx + 4.5f;
 
-                //Debug.Log("voima=" + voima + " yx=" + yx);
+                    //Debug.Log("voima=" + voima + " yx=" + yx);
 
 
-                rb.velocity = new Vector2(rb.velocity.x, voima);
-                hyppymenossaTyyppi1 = true;
-                hypynkestotyyppi1 = 0.0f;
-                boostParticles.Play();
+                    rb.velocity = new Vector2(rb.velocity.x, voima);
+                    hyppymenossaTyyppi1 = true;
+                    hypynkestotyyppi1 = 0.0f;
+                    viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
+                    boostParticles.Play();
+                    
 
-                break;
+                    break;
+                }
             }
         }
 
@@ -417,59 +438,67 @@ public class PalliController : MonoBehaviour
 
     private void LoikkaaAukonYli(bool aukkoOnOikealla)
     {
-        for (float yx = 0; yx < 4f; yx += 0.01f)
+ 
+        if (Time.realtimeSinceStartup- hyppyjenValinenViive> viimeisenhypynaloitusajankohta )
         {
-            if (aukkoOnOikealla)
+
+
+            for (float yx = 0; yx < 4f; yx += 0.01f)
             {
-                //eli siirretään alalaatikkoa oikealle niin paljon, että on tiilittömässä kohdassa
-                aloituspiste = new Vector2(alaboxcenter.x+ yx+0.5f, alaboxcenter.y );
-                // onkohypynsuuntavasemmalleKyseHyppytyypista1 = false;
-
-                onkohypynsuuntavasemmalleKyseHyppytyypista2 = false;
-
-            }
-            else
-            {
-                aloituspiste = new Vector2(alaboxcenter.x - yx-0.5f, alaboxcenter.y);
-                //onkohypynsuuntavasemmalleKyseHyppytyypista1 = true;
-
-                onkohypynsuuntavasemmalleKyseHyppytyypista2 = true;
-            }
-
-            bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizealhaalla, aloituspiste, layerMask);
-            if (onkotiiliatuossakohti)
-            {
-                //laskeutusmispaikka löytyi
-                float voima = jumpForce;
-                float lisays = 0.0f;
-                voima = 2.34f * yx + 4.4f;
-
-                //                Debug.Log("voima=" + voima + " yx=" + yx);
-
                 if (aukkoOnOikealla)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, voima);
+                    //eli siirretään alalaatikkoa oikealle niin paljon, että on tiilittömässä kohdassa
+                    aloituspiste = new Vector2(alaboxcenter.x + yx + 0.5f, alaboxcenter.y);
+                    // onkohypynsuuntavasemmalleKyseHyppytyypista1 = false;
 
-                    rb.velocity = new Vector2(voima/ xsuunnanjakomaara, rb.velocity.y);
+                    onkohypynsuuntavasemmalleKyseHyppytyypista2 = false;
+
                 }
                 else
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, voima);
+                    aloituspiste = new Vector2(alaboxcenter.x - yx - 0.5f, alaboxcenter.y);
+                    //onkohypynsuuntavasemmalleKyseHyppytyypista1 = true;
 
-                    rb.velocity = new Vector2(-voima/ xsuunnanjakomaara, rb.velocity.y);
+                    onkohypynsuuntavasemmalleKyseHyppytyypista2 = true;
                 }
-                
+
+                bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizealhaalla, aloituspiste, layerMask);
+                if (onkotiiliatuossakohti)
+                {
+                    //laskeutusmispaikka löytyi
+                    float voima = jumpForce;
+                    float lisays = 0.0f;
+                    voima = 2.34f * yx + 4.4f;
+
+                    //                Debug.Log("voima=" + voima + " yx=" + yx);
+
+                    if (aukkoOnOikealla)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, voima);
+
+                        rb.velocity = new Vector2(voima / xsuunnanjakomaara, rb.velocity.y);
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, voima);
+
+                        rb.velocity = new Vector2(-voima / xsuunnanjakomaara, rb.velocity.y);
+                    }
 
 
 
-                hyppymenossaTyyppi2 = true;
-                hypynkestotyyppi2 = 0.0f;
-                boostParticles.Play();
 
-                break;
+                    hyppymenossaTyyppi2 = true;
+                    hypynkestotyyppi2 = 0.0f;
+
+                    viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
+
+                    boostParticles.Play();
+
+                    break;
+                }
             }
         }
-
     }
 
     public float xsuunnanjakomaara = 2.0f;
@@ -526,7 +555,7 @@ public class PalliController : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        
+
         // Set the color of the Gizmos
         Gizmos.color = Color.green;
 
@@ -551,10 +580,10 @@ public class PalliController : MonoBehaviour
 
         Gizmos.color = Color.gray;
         Gizmos.DrawWireCube((Vector2)transform.position + oikeaalaboxcenter, boxsizelaidatalhaalla);
-        
+
         Gizmos.color = Color.black;
         Gizmos.DrawWireCube((Vector2)transform.position + alaboxcenter, boxsizealhaalla);
-        
+
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube((Vector2)transform.position + oikeayla2center, boxsizeyla2);
@@ -562,7 +591,7 @@ public class PalliController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube((Vector2)transform.position + vasenyla2center, boxsizeyla2);
 
-        
+
 
         //
         // Gizmos.color = Color.yellow;
@@ -579,7 +608,7 @@ public class PalliController : MonoBehaviour
 
 
 
-            
+
         }
 
     }
@@ -698,8 +727,8 @@ public class PalliController : MonoBehaviour
     public bool onkoTagiaBoxissa(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
 
-       foreach (string name in tagit)
-            {
+        foreach (string name in tagit)
+        {
             Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
 
             if (cs != null && cs.Length > 0)
@@ -710,13 +739,13 @@ public class PalliController : MonoBehaviour
                     {
 
                     }
-                    else if (c.gameObject.tag == name)
+                    else if (c.gameObject.tag.Contains(name))
                     {
                         return true;
                     }
                 }
             }
-         
+
 
         }
         return false;
@@ -725,6 +754,17 @@ public class PalliController : MonoBehaviour
     public GameObject explosion;
     public void Explode()
     {
+        nykyinenosuminenmaara++;
+        if (nykyinenosuminenmaara>=osumiemaarajokaTarvitaanRajahdykseen)
+        {
+            ExplodeOikeasti();
+        }
+    }
+    public int osumiemaarajokaTarvitaanRajahdykseen = 5;
+    private int nykyinenosuminenmaara = 0;
+
+    public void ExplodeOikeasti()
+    {
 
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
@@ -732,5 +772,11 @@ public class PalliController : MonoBehaviour
         Destroy(gameObject, 0.1f);
 
 
+        Vector3 v3 =
+new Vector3(0.1f +
+rb.position.x, rb.position.y, 0);
+
+        Instantiate(bonus, v3, Quaternion.identity);
     }
+
 }

@@ -55,7 +55,11 @@ public class MakitaVihollinenAmmusScripti : MonoBehaviour {
 
             col.gameObject.SendMessage("Explode");
         }
-		else if (col.collider.tag == "makitavihollinentag" || col.collider.tag== "makitavihollinenammustag") {
+		else if (col.collider.tag == "tiilivihollinentag")
+		{
+			tuhoa = true;
+		}
+		else if (col.collider.tag.Contains("vihollinen") || col.collider.tag== "makitavihollinenammustag") {
 			//Destroy (col.gameObject);
 			//Debug.Log ("dame over");
 	    		//just continue

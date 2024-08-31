@@ -273,7 +273,7 @@ public class AlusController : BaseController
             oikeanappipainettukestoaika += Time.deltaTime;
             if (oikeanappipainettukestoaika > turboviiveSekunneissa)
             {
-                xsuuntamuutos +=( oikeanappipainettukestoaika- turboviiveSekunneissa )* kiihtyvyys;
+                xsuuntamuutos += (oikeanappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
             }
 
 
@@ -304,7 +304,7 @@ public class AlusController : BaseController
             ylosnappipainettukestoaika += Time.deltaTime;
             if (ylosnappipainettukestoaika > turboviiveSekunneissa)
             {
-                ysuuntamuutos +=( ylosnappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
+                ysuuntamuutos += (ylosnappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
             }
 
             ysuuntamuutos += perusnopeus;
@@ -416,52 +416,11 @@ public class AlusController : BaseController
 
         if (m_Animator.GetBool("explode"))
         {
-            //    if (!gameover)
-            //    {
-            //        gameover = true;
-            //        for (int i = 0; i < 100; i++)
-            //        {
-            //            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(0.1f +
-            //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0), Quaternion.identity);
-            //        // instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
-
-            //    }
-
-
-            //}
 
             return;
         }
-        //asetaSijainti();
 
-
-        //float perusliike = 5;
-
-        // m_Rigidbody2D.velocity = new Vector2(vauhtiOikea, vauhtiYlos);
-        //        m_Rigidbody2D.position= new Vector2(m_Rigidbody2D.position.x+vauhtiOikea/50, m_Rigidbody2D.position.y+vauhtiYlos / 50.0f);
-
-
-        //        asetaSijainti();
-
-
-        // asetaSijainti();
-
-
-        //m_Rigidbody2D.position.x = 3f;
-
-
-        //        m_Rigidbody2D
-
-
-
-        //Debug.Log("vauhtiOikea=" + vauhtiOikea);
-        //Debug.Log("vauhtiYlos=" + vauhtiYlos);
-        //		Debug.Log ("spaceNappiYlhaalla=" + spaceNappiYlhaalla);
-
-        //m_Rigidbody2D.position.
         bool ammusinstantioitiin = false;
-        //tee vaan rämpytyksestä parempi...
-        //tai sitten rajoitettu määrä ammuksia...
 
         float aika = Time.deltaTime;
         deltaaikojensumma += aika;
@@ -494,7 +453,7 @@ public class AlusController : BaseController
 
                 Vector3 v3alas =
 new Vector3(0.1f +
-m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y - 0.1f, 0);
+m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y +0.0f, 0);
 
 
 
@@ -506,46 +465,15 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
 
             }
-            /*
-  if (missileDownCollected == 2 && instanssiBulletToinen == null)
-  {
-      instanssiBulletToinen = Instantiate(bulletPrefab, v3, Quaternion.identity);
-      instanssiBulletToinen.SendMessage("Alas", true);
-      instanssiBulletToinen.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -4);
 
 
-      instanssiBulletToinen.GetComponent<Rigidbody2D>().gravityScale = 2.0f;
-
-  }
-
-              */
-
-            /*
-            if (missileDownCollected == 2 && instanssiBulletYlos == null)
-            {
-
-
-                Vector3 v3ylos =
-    new Vector3(0.1f +
-    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.1f, 0);
-
-
-
-                instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
-                instanssiBulletYlos.SendMessage("Alas", false);
-                instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
-
-                instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
-
-            }
-            */
             if (missileUpCollected >= 1 && instanssiBulletYlos == null)
             {
 
 
                 Vector3 v3ylos =
     new Vector3(0.1f +
-    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.1f, 0);
+    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
 
 
 
@@ -563,9 +491,6 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         if (teeOptionPallukka)
         {
-            //       Vector3 vektori =
-            // new Vector3(0.1f +
-            // m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0);
 
             Vector3 vektori =
     new Vector3(
@@ -768,32 +693,42 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         //  Debug.Log("on OnCollisionEnter2D ");
         collision = false;
+        //explodetag
 
-
-        if (col.collider.tag == "tiilitag")
+        if (col.collider.tag.Contains("vihollinen"))
         {
 
             Explode();
 
-            //Destroy (col.gameObject);
-
         }
-        else if (col.collider.tag == "pallerospritetag")
-        {
 
-            Explode();
+        /*
+     if (col.collider.tag == "tiilitag")
+     {
 
-            //Destroy (col.gameObject);
+         Explode();
 
-        }
-        else if (col.collider.tag == "makitavihollinentag")
-        {
+         //Destroy (col.gameObject);
 
-            Explode();
+     }
+     else if (col.collider.tag == "pallerospritetag")
+     {
 
-            //Destroy (col.gameObject);
+         Explode();
 
-        }
+         //Destroy (col.gameObject);
+
+     }
+
+     else if (col.collider.tag == "makitavihollinentag")
+     {
+
+         Explode();
+
+         //Destroy (col.gameObject);
+
+     }
+     */
 
 
     }

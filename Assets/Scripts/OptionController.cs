@@ -74,11 +74,11 @@ m_Rigidbody2D.position.x  , m_Rigidbody2D.position.y, 0);
 
     public void ammuAlaslaukaus(GameObject bulletPrefab)
     {
-        if (instanssiBulletAlas == null)
+          if (instanssiBulletAlas == null)
         {
             Vector3 v3 =
 new Vector3(0.1f +
-m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y-0.0f, 0);
 
 
 

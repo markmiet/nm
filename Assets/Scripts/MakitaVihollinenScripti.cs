@@ -33,7 +33,11 @@ public class MakitaVihollinenScripti : MonoBehaviour
     float previousAngle = 0.0f;
 
     public GameObject explosion;
+
     public float ampumakertojenvalinenviive;
+
+    public GameObject bonus;
+
 
     void Start()
     {
@@ -96,11 +100,17 @@ public class MakitaVihollinenScripti : MonoBehaviour
     }
 
     bool firstime = true;
+
+    private bool OnkoOkLiikkua()
+    {
+        return m_SpriteRenderer.isVisible;
+    }
+
     void FixedUpdate()
     {
 
 
-        if (alusSpriteRenderer == null)
+        if (alusSpriteRenderer == null || !OnkoOkLiikkua())
         {
             return;
         }
@@ -727,6 +737,13 @@ public class MakitaVihollinenScripti : MonoBehaviour
 
         Destroy(explosionIns, 1.0f);
         Destroy(gameObject, 0.1f);
+
+
+        Vector3 v3 =
+new Vector3(0.1f +
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+
+        Instantiate(bonus, v3, Quaternion.identity);
 
 
     }

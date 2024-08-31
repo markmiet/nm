@@ -66,12 +66,14 @@ public class BulletScript : MonoBehaviour
     {
         Debug.Log("alaosa collidoi");
 
-        if (col.collider.tag == "tiilitag")
+        if (col.collider.tag.Contains("tiili"))
         {
 
             //  col.otherCollider
 
             CapsuleCollider2D collider = col.otherCollider as CapsuleCollider2D;
+
+            //eli jos törmäävä osa on tämä capsulocollider niin tuhoa 
             if (collider!=null)
             {
                 Destroy(gameObject);
@@ -89,7 +91,7 @@ public class BulletScript : MonoBehaviour
 
             // transform.parent.gameObject.SendMessage("Liu");
         }
-        else if (col.collider.tag == "makitavihollinentag")
+        else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
 
             col.gameObject.SendMessage("Explode");
@@ -98,7 +100,7 @@ public class BulletScript : MonoBehaviour
             //Destroy (col.gameObject);
 
         }
-
+        /*
         else if (col.collider.tag == "pallerospritetag")
         {
 
@@ -107,6 +109,7 @@ public class BulletScript : MonoBehaviour
             Destroy (col.gameObject);
 
         }
+        */
     }
 
 

@@ -17,7 +17,7 @@ public class BonusController : MonoBehaviour
         float deltaAika = Time.deltaTime;
         float maara = deltaAika * skrollimaara;
 
-        transform.position = new Vector2(transform.position.x - maara, transform.position.y);
+      //  transform.position = new Vector2(transform.position.x - maara, transform.position.y);
 
 
 

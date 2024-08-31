@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1416248142987543733}
   m_Layer: 10
   m_Name: MakitaVihollinen
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,7 +137,8 @@ MonoBehaviour:
     type: 3}
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
-  ampumakertojenvalinenviive: 5
+  ampumakertojenvalinenviive: 3
+  bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
 --- !u!95 &1416248142987543733
 Animator:
   serializedVersion: 5
@@ -171,7 +172,7 @@ GameObject:
   - component: {fileID: 5459454745536255455}
   m_Layer: 10
   m_Name: Makitavihollinenylos
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,7 +275,7 @@ GameObject:
   - component: {fileID: 7168661500297122430}
   m_Layer: 10
   m_Name: Makitavihollinenvasen
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -370,7 +371,7 @@ GameObject:
   - component: {fileID: 2446492592619412527}
   m_Layer: 10
   m_Name: Makitavihollinenoikeaylos
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -462,7 +463,7 @@ GameObject:
   - component: {fileID: 3669844860657088665}
   m_Layer: 10
   m_Name: Makitavihollinenoylos
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -554,7 +555,7 @@ GameObject:
   - component: {fileID: 2813412255701652892}
   m_Layer: 16
   m_Name: Piippu
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -631,7 +632,7 @@ GameObject:
   - component: {fileID: 4290824811149225270}
   m_Layer: 10
   m_Name: Makitavihollinenoikea
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -723,7 +724,7 @@ GameObject:
   - component: {fileID: 6317237763325358411}
   m_Layer: 10
   m_Name: Makitavihollinenvasenylos
-  m_TagString: makitavihollinentag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

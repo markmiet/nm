@@ -124,61 +124,71 @@ public class AmmusController : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
-		if (col.collider.tag=="makitavihollinentag") {
-			
-            col.gameObject.SendMessage("Explode");
 
-            //Destroy (col.gameObject);
-
-        }
-
-        if (col.collider.tag == "pallerospritetag")
-        {
-
-            col.gameObject.SendMessage("ExplodePallero");
-
-            //Destroy (col.gameObject);
-
-        }
-
-
-        /*
-		if (col.collider.tag=="ammustag") {
-			Debug.Log ("ammustörmäys");
-			Destroy (gameObject);
-			Destroy (col.collider);
+		if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
+		{
+			col.gameObject.SendMessage("Explode");
 		}
-	*/
 
-        //Debug.Log ("tormaystagi="+col.collider.tag);
 
-        //Debug.Log ("OnCollisionEnter2D");
+			/*
+			if (col.collider.tag=="makitavihollinentag") {
 
-        //col.otherCollider.gameObject.name
-        /*
-			if (!tuhottu && col.collider.tag=="tiilitag" && m_Rigidbody2D!=null ) {
-				tuhottu = true;
-				m_Rigidbody2D.gravityScale = 5;
-				Debug.Log ("ookoo");
-				m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-				Destroy (gameObject, 2);
+				col.gameObject.SendMessage("Explode");
+
+				//Destroy (col.gameObject);
+
 			}
-			else if (!tuhottu && col.collider.tag == "ammustag" && m_Rigidbody2D != null) {
-				tuhottu = true;
-				m_Rigidbody2D.gravityScale = 5;
-				Debug.Log ("ookoo");
-				m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-				Destroy (gameObject, 2);
-			} else if (!tuhottu && col.collider.tag == "alustag" && m_Rigidbody2D != null) {
-				tuhottu = true;
-				m_Rigidbody2D.gravityScale = 5;
-				Debug.Log ("ookoo");
-				m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-				Destroy (gameObject, 2);
 
+
+			if (col.collider.tag == "pallerospritetag")
+			{
+
+				col.gameObject.SendMessage("ExplodePallero");
+
+				//Destroy (col.gameObject);
+
+			}
+			*/
+
+
+			/*
+			if (col.collider.tag=="ammustag") {
+				Debug.Log ("ammustörmäys");
+				Destroy (gameObject);
+				Destroy (col.collider);
 			}
 		*/
-        tuhoaViivella = true;
+
+			//Debug.Log ("tormaystagi="+col.collider.tag);
+
+			//Debug.Log ("OnCollisionEnter2D");
+
+			//col.otherCollider.gameObject.name
+			/*
+				if (!tuhottu && col.collider.tag=="tiilitag" && m_Rigidbody2D!=null ) {
+					tuhottu = true;
+					m_Rigidbody2D.gravityScale = 5;
+					Debug.Log ("ookoo");
+					m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
+					Destroy (gameObject, 2);
+				}
+				else if (!tuhottu && col.collider.tag == "ammustag" && m_Rigidbody2D != null) {
+					tuhottu = true;
+					m_Rigidbody2D.gravityScale = 5;
+					Debug.Log ("ookoo");
+					m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
+					Destroy (gameObject, 2);
+				} else if (!tuhottu && col.collider.tag == "alustag" && m_Rigidbody2D != null) {
+					tuhottu = true;
+					m_Rigidbody2D.gravityScale = 5;
+					Debug.Log ("ookoo");
+					m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
+					Destroy (gameObject, 2);
+
+				}
+			*/
+			tuhoaViivella = true;
 		tormaysmaara++;
 
 
