@@ -110,17 +110,24 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
     private bool OnkoOkLiikkua()
     {
        // return m_SpriteRendererEkapallero != null && m_SpriteRendererEkapallero.isVisible;
+       if (onkook)
+        {
+            return true;
+        }
 
         if (m_SpriteRendererEkapallero==null)
         {
-            return m_SpriteRenderer.isVisible;
+
+            onkook= m_SpriteRenderer.isVisible;
         }
         else
         {
-            return m_SpriteRendererEkapallero.isVisible;
+            onkook= m_SpriteRendererEkapallero.isVisible;
         }
+        return onkook;
 
     }
+    private bool onkook = false;
     void FixedUpdate()
     {
 

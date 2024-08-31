@@ -46,6 +46,9 @@ public class PalliController : MonoBehaviour
     private Rigidbody2D rb;
     // Start is called before the first frame update
     private WheelJoint2D wheelJoint;
+
+    public int osumiemaarajokaTarvitaanRajahdykseen = 5;
+    private float nykyinenosuminenmaara = 0.0f;
     void Start()
     {
         //   mainCamera = Camera.main;
@@ -67,7 +70,25 @@ public class PalliController : MonoBehaviour
     void Update()
 
     {
+        //nykyinenosuminenmaara;
+        Color color = m_SpriteRenderer.color;
+        color.a = PalautaFadeArvo();
+        
+        m_SpriteRenderer.color = color;
 
+        float startAlpha = m_SpriteRenderer.color.a;
+      //  Debug.Log("alpha=" + startAlpha);
+
+    }
+
+    private float PalautaFadeArvo()
+    {
+        //1.0 originelli
+
+        //0.1 näkyy jotain
+        float alkuper = 1.0f;
+        float vah = alkuper - nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
+        return vah + 0.1f;
 
     }
 
@@ -140,6 +161,9 @@ public class PalliController : MonoBehaviour
 
         if (alusGameObject != null)
         {
+
+
+
 
             // JointMotor2D motor = wheelJoint.motor;
             // motor.motorSpeed = -100f;  // Negative for clockwise rotation
@@ -395,7 +419,7 @@ public class PalliController : MonoBehaviour
 
         if(Time.realtimeSinceStartup - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
         {
-            for (float yx = 0; yx < 4f; yx += 0.01f)
+            for (float yx = 0; yx < hypppaaylostutkinnanmaara; yx += 0.01f)
             {
                 if (tiilionoikealla)
                 {
@@ -443,7 +467,7 @@ public class PalliController : MonoBehaviour
         {
 
 
-            for (float yx = 0; yx < 4f; yx += 0.01f)
+            for (float yx = 0; yx < hypppaaylostutkinnanmaara; yx += 0.01f)
             {
                 if (aukkoOnOikealla)
                 {
@@ -500,7 +524,7 @@ public class PalliController : MonoBehaviour
             }
         }
     }
-
+    public float hypppaaylostutkinnanmaara=4.0f;
     public float xsuunnanjakomaara = 2.0f;
 
     public float delay = 0.3f;  // Delay in seconds
@@ -724,6 +748,8 @@ public class PalliController : MonoBehaviour
     }
 
 
+
+
     public bool onkoTagiaBoxissa(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
 
@@ -741,6 +767,8 @@ public class PalliController : MonoBehaviour
                     }
                     else if (c.gameObject.tag.Contains(name))
                     {
+                      //  bool onko = IsInView((Vector2)transform.position + boxlocation);
+                      //  return onko;
                         return true;
                     }
                 }
@@ -751,17 +779,27 @@ public class PalliController : MonoBehaviour
         return false;
 
     }
+
+    bool IsInView(Vector2 worldPosition)
+    {
+  
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPosition);
+        return viewportPoint.x >= 0 && viewportPoint.x <= 1 &&
+               viewportPoint.y >= 0 && viewportPoint.y <= 1;
+    }
+
+
+
     public GameObject explosion;
     public void Explode()
     {
-        nykyinenosuminenmaara++;
+        nykyinenosuminenmaara += 1.0f;
         if (nykyinenosuminenmaara>=osumiemaarajokaTarvitaanRajahdykseen)
         {
             ExplodeOikeasti();
         }
     }
-    public int osumiemaarajokaTarvitaanRajahdykseen = 5;
-    private int nykyinenosuminenmaara = 0;
+
 
     public void ExplodeOikeasti()
     {

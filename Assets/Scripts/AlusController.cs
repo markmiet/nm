@@ -194,6 +194,8 @@ public class AlusController : BaseController
     // Update is called once per frame
     void Update()
     {
+        m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
+
 
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
@@ -364,7 +366,7 @@ public class AlusController : BaseController
         }
 
 
-        Debug.Log("xuusntam=" + xsuuntamuutos);
+       // Debug.Log("xuusntam=" + xsuuntamuutos);
 
         transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
 
@@ -604,11 +606,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     public void Explode()
     {
+        /*
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(explosionIns, 1.0f);
         Destroy(gameObject, 0.1f);
         gameover = true;
-
+        */
     }
 
 
@@ -868,6 +871,10 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                         nykyinenoptioidenmaara++;
 
 
+                    }
+                    else
+                    {
+                        Debug.Log("nykyinenoptioidenmaara="+ nykyinenoptioidenmaara);
                     }
                 }
             }

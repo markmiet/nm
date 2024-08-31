@@ -19,7 +19,13 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float speed = m_Rigidbody2D.velocity.magnitude;
+        Debug.Log("ammuksen nopeus=" + speed);
+
+        if (speed < 0.5f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Alas(bool al)

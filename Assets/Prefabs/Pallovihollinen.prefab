@@ -5084,7 +5084,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 99445f8052117484fa1bc31078513faa, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 1}
   m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 0
@@ -5133,14 +5133,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxsizeylhaalla: {x: 0.1, y: 0.1}
   boxsizekeskella: {x: 0.5, y: 0.3}
-  boxsizelaidatalhaalla: {x: 0.6, y: 6}
+  boxsizelaidatalhaalla: {x: 0.6, y: 10}
   boxsizealhaalla: {x: 0.2, y: 0.04}
   vasenylaboxcenter: {x: -0.2, y: 0.4}
   oikeaylaboxcenter: {x: 0.2, y: 0.4}
   vasenboxcenter: {x: -0.4, y: 0.05}
   oikeaboxcenter: {x: 0.4, y: 0.05}
-  vasenalaboxcenter: {x: -0.35, y: -3.3}
-  oikeaalaboxcenter: {x: 0.35, y: -3.3}
+  vasenalaboxcenter: {x: -0.35, y: -5.3}
+  oikeaalaboxcenter: {x: 0.35, y: -5.3}
   alaboxcenter: {x: 0, y: -0.31}
   oikeayla2center: {x: 0.3, y: 0}
   vasenyla2center: {x: -0.3, y: 0}
@@ -5151,12 +5151,13 @@ MonoBehaviour:
   tagilistaJoitaTutkitaan:
   - tiili
   - viholinen
+  osumiemaarajokaTarvitaanRajahdykseen: 100
   boostParticles: {fileID: 8014632376814700969}
-  hyppyjenValinenViive: 5
-  eromaksimissaanJottaLiikutaan: 5
+  hyppyjenValinenViive: 3
   erominimissaanJottaLiikutaan: 0.4
   jumpForce: 6
   moveSpeed: 1
+  hypppaaylostutkinnanmaara: 8
   xsuunnanjakomaara: 2
   delay: 0.3
   layerMask:
@@ -5164,4 +5165,3 @@ MonoBehaviour:
     m_Bits: 1024
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
-  osumiemaarajokaTarvitaanRajahdykseen: 5
