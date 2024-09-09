@@ -195,27 +195,35 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
     public void Explode()
     {
+        Debug.Log("pallero explore");
 
     //    GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
     //    Destroy(explosionIns, 1.0f);
-        Destroy(gameObject);
+      
 
 
         //onko kaikki pallerot destroytu
-
+        if (pallerotkokonaisuus==null)
+        {
+            Debug.Log("pallerotnullia");
+        }
 
         int lapset = pallerotkokonaisuus.transform.childCount;
-   
+        Debug.Log("lapset=" + lapset);
         if (lapset==1)
         {
-            Debug.Log("lapset=" + lapset);
+     //       Debug.Log("lapset=" + lapset);
             Vector3 v3 =
 new Vector3(0.1f +
 m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
             Instantiate(bonus, v3, Quaternion.identity);
+            Debug.Log("instantioidaan bonus");
         }
+
+       // pallerotkokonaisuus = null;
+        Destroy(gameObject);
 
     }
 }

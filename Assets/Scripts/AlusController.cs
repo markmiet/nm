@@ -6,8 +6,8 @@ using UnityStandardAssets.CrossPlatformInput;
 public class AlusController : BaseController
 {
 
-    public GameObject speedbonusbutton;
-    public GameObject missilebonusbutton;
+  //  public GameObject speedbonusbutton;
+  //  public GameObject missilebonusbutton;
 
     public int ammustenmaksimaaraProperty;
 
@@ -150,6 +150,7 @@ public class AlusController : BaseController
     // Start is called before the first frame update
     void Start()
     {
+       // Application.targetFrameRate = 10; // For example, cap to 60 FPS
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
 
@@ -189,12 +190,52 @@ public class AlusController : BaseController
 
     }
 
-    List<BonusButtonController> bbc = new List<BonusButtonController>();
+    private List<BonusButtonController> bbc = new List<BonusButtonController>();
 
     // Update is called once per frame
     void Update()
     {
         m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
+
+
+
+
+    }
+    public float turboviiveSekunneissa = 0.4f;
+    public float maksiminopeus = 0.08f;
+
+    public float kiihtyvyys = 0.05f;
+
+    private float oikeanappipainettukestoaika = 0.0f;
+
+    private float vasennappipainettukestoaika = 0.0f;
+
+
+    private float ylosnappipainettukestoaika = 0.0f;
+    private float alasnappipainettukestoaika = 0.0f;
+
+    public float perusnopeus = 0.05f;
+
+
+    float deltaaikojensumma = 0f;
+    void FixedUpdate()
+    {
+
+        if (gameover)
+        {
+            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
++(m_SpriteRenderer.bounds.size.x / 2), 10, 0), Quaternion.identity);
+            //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+
+            Destroy(instanssi, 1);
+        }
+
+
+        if (m_Animator.GetBool("explode"))
+        {
+
+            return;
+        }
 
 
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
@@ -366,7 +407,7 @@ public class AlusController : BaseController
         }
 
 
-       // Debug.Log("xuusntam=" + xsuuntamuutos);
+        // Debug.Log("xuusntam=" + xsuuntamuutos);
 
         transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
 
@@ -383,44 +424,6 @@ public class AlusController : BaseController
         }
 
 
-
-
-    }
-    public float turboviiveSekunneissa = 0.4f;
-    public float maksiminopeus = 0.08f;
-
-    public float kiihtyvyys = 0.05f;
-
-    private float oikeanappipainettukestoaika = 0.0f;
-
-    private float vasennappipainettukestoaika = 0.0f;
-
-
-    private float ylosnappipainettukestoaika = 0.0f;
-    private float alasnappipainettukestoaika = 0.0f;
-
-    public float perusnopeus = 0.05f;
-
-
-    float deltaaikojensumma = 0f;
-    void FixedUpdate()
-    {
-
-        if (gameover)
-        {
-            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
-+(m_SpriteRenderer.bounds.size.x / 2), 10, 0), Quaternion.identity);
-            //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
-
-            Destroy(instanssi, 1);
-        }
-
-
-        if (m_Animator.GetBool("explode"))
-        {
-
-            return;
-        }
 
         bool ammusinstantioitiin = false;
 
@@ -508,6 +511,10 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             {
                 myScript.jarjestysnro = nykyinenoptioidenmaara;
                 optionControllerit.Add(myScript);
+            }
+            else
+            {
+                Debug.Log("ei ole controlleria");
             }
 
             //    instanssiOption.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
@@ -694,13 +701,13 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        //  Debug.Log("on OnCollisionEnter2D ");
-        collision = false;
+
+        collision = true;
         //explodetag
 
         if (col.collider.tag.Contains("vihollinen"))
         {
-
+ 
             Explode();
 
         }
@@ -777,7 +784,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     public void BonusCollected()
     {
-
+        //Debug.Log("BonusCollected aluksella");
 
         //olemme koskeneet bonukseen
 
@@ -804,9 +811,11 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             if (btc.selected)
             {
                 selectedIndex = btc.order;
+                break;
             }
 
         }
+
         if (selectedIndex < 0)
         {
             bbc[0].selected = true;
@@ -814,7 +823,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         else
         {
             bbc[selectedIndex].selected = false;
-
+            //0,1,2,3 =4
             if (selectedIndex + 1 >= bbc.Count)
             {
                 bbc[0].selected = true;
@@ -822,30 +831,35 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             else
             {
                 bbc[selectedIndex + 1].selected = true;
+
             }
         }
+        //  Debug.Log("selectedIndex=" + selectedIndex);
 
+        foreach (BonusButtonController btc in bbc)
+        {
+            Debug.Log("order=" + btc.order + " selected=" + btc.selected);
+
+
+        }
     }
-
 
     public void BonusButtonPressed()
     {
+        bool asetakaikkieiselectoiduiksi = false;
         foreach (BonusButtonController btc in bbc)
         {
             if (btc.selected && btc.usedcount < btc.maxusedCount)
             {
                 btc.usedcount = btc.usedcount + 1;
                 btc.selected = false;
+                asetakaikkieiselectoiduiksi = true;
                 if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Speed))
                 {
-                    Debug.Log("speed()");
+                 //   Debug.Log("speed()");
                     //vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
                     //vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
-
                     maksiminopeus += vauhdinLisaysKunSpeedbonusOtettu;
-
-
-
                     ammustenmaksimaaraProperty += ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
                     ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
 
@@ -874,15 +888,23 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                     }
                     else
                     {
-                        Debug.Log("nykyinenoptioidenmaara="+ nykyinenoptioidenmaara);
+                //        Debug.Log("nykyinenoptioidenmaara="+ nykyinenoptioidenmaara);
                     }
                 }
             }
             else
             {
-                Debug.Log("painettu bonusta, mutta selectoitu jo kaytetty");
+              //  Debug.Log("painettu bonusta, mutta selectoitu jo kaytetty");
             }
         }
+        if (asetakaikkieiselectoiduiksi)
+        {
+            foreach (BonusButtonController btc in bbc)
+            {
+                btc.selected = false;
+            }
+        }
+
     }
     private int palautaAmmustenMaara()
     {

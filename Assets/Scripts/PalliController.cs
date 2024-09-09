@@ -807,7 +807,7 @@ public class PalliController : MonoBehaviour
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
         Destroy(explosionIns, 1.0f);
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject);
 
 
         Vector3 v3 =

@@ -20,7 +20,7 @@ public class BulletScript : MonoBehaviour
     void Update()
     {
         float speed = m_Rigidbody2D.velocity.magnitude;
-        Debug.Log("ammuksen nopeus=" + speed);
+ //       Debug.Log("ammuksen nopeus=" + speed);
 
         if (speed < 0.5f)
         {

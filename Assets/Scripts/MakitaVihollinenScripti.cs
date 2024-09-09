@@ -277,7 +277,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         }
 
 
-   
+
 
         // fireallowed = false;
 
@@ -736,8 +736,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
         Destroy(explosionIns, 1.0f);
-        Destroy(gameObject, 0.1f);
-
+        Destroy(gameObject);
 
         Vector3 v3 =
 new Vector3(0.1f +
@@ -745,8 +744,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         Instantiate(bonus, v3, Quaternion.identity);
 
-
     }
+
+
+
     void OnBecameInvisible()
     {
         //Debug.Log ("OnBecameInvisible");

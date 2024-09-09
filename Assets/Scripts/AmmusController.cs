@@ -120,84 +120,41 @@ public class AmmusController : MonoBehaviour {
 
 
 	}
-
+	private bool tormattyviholliseen = false;
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
+		if (col.collider.tag.Equals("alustag"))
+        {
+			return;
+        }
+
+		if (tormattyviholliseen)
+        {
+			return;
+        }
+		
 
 		if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
 		{
-			col.gameObject.SendMessage("Explode");
-		}
+			tormattyviholliseen = true;
+			Debug.Log("explodeeeeeeeeeeeeeeeee ");
 
-
-			/*
-			if (col.collider.tag=="makitavihollinentag") {
-
+			if (col.gameObject!=null)
+            {
 				col.gameObject.SendMessage("Explode");
-
-				//Destroy (col.gameObject);
-
 			}
+			else
+            {
+				Debug.Log("gameobjekcti null");
 
-
-			if (col.collider.tag == "pallerospritetag")
-			{
-
-				col.gameObject.SendMessage("ExplodePallero");
-
-				//Destroy (col.gameObject);
-
-			}
-			*/
-
-
-			/*
-			if (col.collider.tag=="ammustag") {
-				Debug.Log ("ammustörmäys");
-				Destroy (gameObject);
-				Destroy (col.collider);
-			}
-		*/
-
-			//Debug.Log ("tormaystagi="+col.collider.tag);
-
-			//Debug.Log ("OnCollisionEnter2D");
-
-			//col.otherCollider.gameObject.name
-			/*
-				if (!tuhottu && col.collider.tag=="tiilitag" && m_Rigidbody2D!=null ) {
-					tuhottu = true;
-					m_Rigidbody2D.gravityScale = 5;
-					Debug.Log ("ookoo");
-					m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-					Destroy (gameObject, 2);
-				}
-				else if (!tuhottu && col.collider.tag == "ammustag" && m_Rigidbody2D != null) {
-					tuhottu = true;
-					m_Rigidbody2D.gravityScale = 5;
-					Debug.Log ("ookoo");
-					m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-					Destroy (gameObject, 2);
-				} else if (!tuhottu && col.collider.tag == "alustag" && m_Rigidbody2D != null) {
-					tuhottu = true;
-					m_Rigidbody2D.gravityScale = 5;
-					Debug.Log ("ookoo");
-					m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-					Destroy (gameObject, 2);
-
-				}
-			*/
-			tuhoaViivella = true;
-		tormaysmaara++;
-
-
-		if (tormaysmaara > 20) {
-			//Destroy (gameObject);
+            }
+			
 		}
-        Explode(0.0f);
 
-    }
+		Explode(0.0f);
+
+	}
 
 	void OnBecameInvisible ()
 	{
@@ -221,15 +178,17 @@ public class AmmusController : MonoBehaviour {
 
     public void Explode(float viive)
     {
+		Destroy(gameObject);
 
-
-        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+		GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
         Destroy(explosionIns, 1.0f);
 
-        Destroy(gameObject,viive);
+//        Destroy(gameObject,viive);
+		
 
-    }
+
+	}
 
 
 
