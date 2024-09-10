@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PalliController : MonoBehaviour
+public class PalliController : BaseController
 {
     public Vector2 boxsizeylhaalla = new Vector2(2.0f, 2.0f);  // Size of the box
     public Vector2 boxsizekeskella = new Vector2(2.0f, 0.1f);  // Size of the box
@@ -49,6 +49,7 @@ public class PalliController : MonoBehaviour
 
     public int osumiemaarajokaTarvitaanRajahdykseen = 5;
     private float nykyinenosuminenmaara = 0.0f;
+    private Vector2 boxsize;// = new Vector2(0, 0);
     void Start()
     {
         //   mainCamera = Camera.main;
@@ -61,6 +62,8 @@ public class PalliController : MonoBehaviour
         {
             boostParticles.Stop();
         }
+
+        boxsize = new Vector2(m_SpriteRenderer.size.x, m_SpriteRenderer.size.y);
     }
 
     //   public float rotationSpeed = 90f; // Degrees per second
@@ -806,15 +809,21 @@ public class PalliController : MonoBehaviour
 
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
-        Destroy(explosionIns, 1.0f);
+        Destroy(explosionIns);
         Destroy(gameObject);
 
 
         Vector3 v3 =
-new Vector3(0.1f +
+new Vector3(
 rb.position.x, rb.position.y, 0);
 
-        Instantiate(bonus, v3, Quaternion.identity);
+        //  Instantiate(bonus, v3, Quaternion.identity)
+        int bonusmaara = 3;
+        
+            TeeBonus(bonus, v3, boxsize, bonusmaara);
+        
+
+
     }
 
 }

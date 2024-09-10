@@ -54,7 +54,7 @@ public class BulletScript : MonoBehaviour
 
     public void Liu()
     {
-        Debug.Log("liukuuuuuuu");
+      // Debug.Log("liukuuuuuuu");
         if (!liukuu)
         {
             liukuu = true;
@@ -70,7 +70,7 @@ public class BulletScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("alaosa collidoi");
+      //  Debug.Log("alaosa collidoi");
 
         if (col.collider.tag.Contains("tiili"))
         {

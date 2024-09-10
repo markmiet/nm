@@ -138,7 +138,7 @@ public class AmmusController : MonoBehaviour {
 		if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
 		{
 			tormattyviholliseen = true;
-			Debug.Log("explodeeeeeeeeeeeeeeeee ");
+		//	Debug.Log("explodeeeeeeeeeeeeeeeee ");
 
 			if (col.gameObject!=null)
             {

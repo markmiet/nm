@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MakitaVihollinenScripti : MonoBehaviour
+public class MakitaVihollinenScripti : BaseController
 {
 
     private Rigidbody2D m_Rigidbody2D;
@@ -37,7 +37,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
     public float ampumakertojenvalinenviive;
 
     public GameObject bonus;
-
+    private Vector2 boxsize;// = new Vector2(0, 0);
 
     void Start()
     {
@@ -71,7 +71,7 @@ public class MakitaVihollinenScripti : MonoBehaviour
         sprite = m_SpriteRenderer.sprite;
 
 
-
+        boxsize = new Vector2(m_SpriteRenderer.size.x, m_SpriteRenderer.size.y);
 
     }
     float deltaaikojensumma = 0f;
@@ -739,10 +739,12 @@ public class MakitaVihollinenScripti : MonoBehaviour
         Destroy(gameObject);
 
         Vector3 v3 =
-new Vector3(0.1f +
+new Vector3(
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
-        Instantiate(bonus, v3, Quaternion.identity);
+        //  Instantiate(bonus, v3, Quaternion.identity);
+
+        TeeBonus(bonus, v3, boxsize, 1);
 
     }
 

@@ -244,10 +244,14 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         if (lapset == 1)
         {
             //       Debug.Log("lapset=" + lapset);
-         //   for (int i = 0; i < 3; i++)
-         //   {
-                TeeBonus();
-         //   }
+            //   for (int i = 0; i < 3; i++)
+            //   {
+            //  TeeBonus();
+
+            TeeBonus(bonus, v2, boxsize, 1);
+
+
+
 
         }
 
@@ -256,113 +260,5 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
     }
 
-    private void TeeBonus()
-    {
-        for (float x = 0.0f; x < 100.0f; x += 0.1f)
-        {
-            //         Vector3 v3 =
-            //new Vector3(0.1f +
-            //m_Rigidbody2D.position.x+x, m_Rigidbody2D.position.y, 0);
 
-            v2 = new Vector2(x, 0.0f);
-
-
-
-
-            bool onko = OnkoBonusJoTuossa(v2);
-            if (!onko)
-            {
-                Vector3 v3 =
-new Vector3(
-transform.position.x + v2.x, transform.position.y + v2.y, 0);
-                Instantiate(bonus, v3, Quaternion.identity);
-
-
-                Debug.Log("instantioidaan bonus");
-                return;
-            }
-            else
-            {
-                Debug.Log("oli jo tuossa");
-            }
-        }
-
-    }
-
-    private bool OnkoBonusJoTuossa(Vector2 parametri)
-    {
-        // Vector2 v2 = new Vector2(v3.x, v3.y);
-        string[] tagit = new string[1];
-        tagit[0] = "bonustag";
-
-        // SpriteRenderer s =bonus.GetComponent<SpriteRenderer>();
-
-        // Vector2 boxsize = new Vector2(s.size.x, s.size.y);
-        //   Vector2 boxsize = new Vector2(10.0f, 10.0f);
-
-        bool onko = onkoTagiaBoxissa(tagit, boxsize, parametri, LayerMask.GetMask("BonusLayer"));
-
-        return onko;
-    }
-
-
-
-    void OnDrawGizmos()
-    {
-
-        // Set the color of the Gizmos
-        Gizmos.color = Color.green;
-
-        // Draw the box representing the overlap area
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube((Vector2)transform.position + v2, boxsize);
-    }
-
-
-    public bool onkoTagiaBoxissa(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
-    {
-        Vector2 uusi = (Vector2)transform.position + boxlocation;
-
-        foreach (string name in tagit)
-        {
-            // Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
-            Collider2D[] cs = Physics2D.OverlapBoxAll(uusi, boxsize, 0f);
-
-            if (cs != null && cs.Length > 0)
-            {
-                foreach (Collider2D c in cs)
-                {
-                    Debug.Log("tagi=" + c.gameObject.tag);
-                    if (c.gameObject == this.gameObject)
-                    {
-
-                    }
-                    else if (c.gameObject.tag.Contains(name))
-                    {
-                        //  bool onko = IsInView((Vector2)transform.position + boxlocation);
-                        //  return onko;
-                        float olemassaolevanpalleronx = c.gameObject.transform.position.x;
-                        float olemassaolevanpallerony = c.gameObject.transform.position.y;
-
-                        float erox = Mathf.Abs(olemassaolevanpalleronx - uusi.x);
-                        float eroy = Mathf.Abs(olemassaolevanpallerony - uusi.y);
-
-                        if (erox < 0.5f || eroy < 0.5f)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            Debug.Log("eri paikassa");
-                        }
-                        //return true;//
-                    }
-                }
-            }
-
-
-        }
-        return false;
-
-    }
 }
