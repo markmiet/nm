@@ -838,7 +838,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         foreach (BonusButtonController btc in bbc)
         {
-            Debug.Log("order=" + btc.order + " selected=" + btc.selected);
+           // Debug.Log("order=" + btc.order + " selected=" + btc.selected);
 
 
         }
