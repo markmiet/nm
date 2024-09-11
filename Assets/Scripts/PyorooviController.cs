@@ -6,10 +6,17 @@ public class PyorooviController : MonoBehaviour
 {
 
     private SpriteRenderer m_SpriteRenderer;
+    private Rigidbody2D rb;
     // Start is called before the first frame update
+    public float torqueAmount = 10000f; // Control the strength of the rotation
+    public Vector3 torqueDirection = Vector3.up; // Direction of the rotation (around the Y-axis)
+
+
     void Start()
     {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        rb=GetComponent<Rigidbody2D>();
+        rb.AddTorque(4000f);
     }
     public float rotationSpeed = 30.0f;
     // Update is called once per frame
@@ -22,8 +29,18 @@ public class PyorooviController : MonoBehaviour
         float rotationAmount = rotationSpeed * Time.deltaTime;
 
         // Apply the rotation around the Y-axis (you can change the axis as needed)
-        transform.Rotate(0, 0, rotationAmount);
+        //transform.Rotate(0, 0, rotationAmount);
+   
+
+
     }
+    public void FixedUpdate()
+    {
+       
+    }
+
+    
+
 
     private bool OnkoOkLiikkua()
     {
