@@ -19,6 +19,9 @@ public class PalleroScripti : BaseController
 
 
     public GameObject ekapallero;
+
+    public GameObject alus;
+    public GameObject ammus;
     public int jarjestysnro;
 
 
@@ -39,6 +42,9 @@ public class PalleroScripti : BaseController
 
     private Vector2 v2 = new Vector2(0, 0);
     private Vector2 boxsize;// = new Vector2(0, 0);
+
+    public float ampumisenvoimakkuus = 2.0f;
+    public bool ammuBonuksenTekovaiheessa = true;
 
     void Start()
     {
@@ -138,6 +144,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
 
 
+    private float kestoaika = 0.0f;
 
     void FixedUpdate()
     {
@@ -146,6 +153,8 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         {
             return;
         }
+
+
 
         //   v2 = new Vector2(0.1f + transform.position.x, transform.position.y);
 
@@ -249,16 +258,43 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
             //  TeeBonus();
 
             TeeBonus(bonus, v2, boxsize, 1);
-
-
+            Ammu();
 
 
         }
+        
 
         // pallerotkokonaisuus = null;
         Destroy(gameObject);
 
     }
 
+    public void Ammu()
+    {
+        if (ammuBonuksenTekovaiheessa)
+        {
+            Vector2 ve = palautaAmmuksellaVelocityVector(alus, ampumisenvoimakkuus);
+
+            Instantiate(ammus);
+
+
+
+            GameObject instanssi = Instantiate(ammus, new Vector3(
+     transform.position.x, transform.position.y, 0), Quaternion.identity);
+
+            instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+        }
+
+
+    }
+
+    void OnBecameInvisible()
+    {
+        //Debug.Log ("OnBecameInvisible");
+        // Destroy the enemy
+        //tuhoa = true;
+
+        Destroy(gameObject);
+    }
 
 }

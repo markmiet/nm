@@ -648,7 +648,7 @@ public class MakitaVihollinenScripti : BaseController
             instanssi = Instantiate(ammusPrefab, new Vector3(
     ammusx, ammusy + lisays, 0), Quaternion.identity);
 
-
+            /*
 
             float pysty = alus.transform.position.y - transform.position.y;
             float vaaka = alus.transform.position.x - transform.position.x;
@@ -667,9 +667,10 @@ public class MakitaVihollinenScripti : BaseController
 
             Vector2 vv = new Vector2(alusx - ammusx,
                alusy - ammusy + lisays);
+            */
 
-            vv.Normalize();
-            vv.Scale(new Vector2(4.0f, 4.0f));
+
+            Vector2 vv = palautaAmmuksellaVelocityVector(alus, ampumisenkokonaisvoima);
 
             instanssi.GetComponent<Rigidbody2D>().velocity = vv;
 
@@ -690,7 +691,7 @@ public class MakitaVihollinenScripti : BaseController
         firstime = false;
 
     }
-
+    public float ampumisenkokonaisvoima = 2.0f;
 
 
 

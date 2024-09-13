@@ -4972,7 +4972,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7639041830807167212}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.31, y: -48.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5134,23 +5134,23 @@ MonoBehaviour:
   boxsizeylhaalla: {x: 0.1, y: 0.1}
   boxsizekeskella: {x: 0.5, y: 0.3}
   boxsizelaidatalhaalla: {x: 0.6, y: 10}
-  boxsizealhaalla: {x: 0.2, y: 0.04}
+  boxsizealhaalla: {x: 0.3, y: 0.15}
   vasenylaboxcenter: {x: -0.2, y: 0.4}
   oikeaylaboxcenter: {x: 0.2, y: 0.4}
   vasenboxcenter: {x: -0.4, y: 0.05}
   oikeaboxcenter: {x: 0.4, y: 0.05}
   vasenalaboxcenter: {x: -0.35, y: -5.3}
   oikeaalaboxcenter: {x: 0.35, y: -5.3}
-  alaboxcenter: {x: 0, y: -0.31}
+  alaboxcenter: {x: 0, y: -0.35}
   oikeayla2center: {x: 0.3, y: 0}
   vasenyla2center: {x: -0.3, y: 0}
   boxsizeyla2: {x: 0.1, y: 0.5}
-  alusGameObject: {fileID: 3294481396978785091, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
-    type: 3}
+  alusGameObject: {fileID: 0}
   bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
+  ammus: {fileID: 1985379849892578813, guid: d20a7acdf168dacf883f197695575668, type: 3}
   tagilistaJoitaTutkitaan:
   - tiili
-  - viholinen
+  - vihollinen
   osumiemaarajokaTarvitaanRajahdykseen: 100
   boostParticles: {fileID: 8014632376814700969}
   hyppyjenValinenViive: 3
@@ -5165,3 +5165,5 @@ MonoBehaviour:
     m_Bits: 1024
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
+  ampumisenvoimakkuus: 2
+  ammu: 1

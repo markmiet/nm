@@ -444,4 +444,40 @@ public class BaseController : MonoBehaviour
 
     }
     //  private bool bonusjotehty = false;
+
+
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus,float ampumisevoimakkuus)
+    {
+        float pysty = alus.transform.position.y - transform.position.y;
+        float vaaka = alus.transform.position.x - transform.position.x;
+
+        float suhdeluku = pysty / vaaka;
+
+        float kokonaisvoima = ampumisevoimakkuus;
+
+        float vaakavoima = kokonaisvoima * suhdeluku;
+        float pystyvoima = kokonaisvoima - vaakavoima;
+
+
+        //           float angle = Mathf.Atan2(alusSpriteRenderer.bounds.center.y - m_SpriteRenderer.bounds.center.y, alusSpriteRenderer.bounds.center.x - m_SpriteRenderer.bounds.center.x) *
+        //Mathf.Rad2Deg;
+        SpriteRenderer alusSpriteRenderer = alus.GetComponent<SpriteRenderer>();
+
+        float alusy = alusSpriteRenderer.bounds.center.y;
+        float alusx = alusSpriteRenderer.bounds.center.x;
+
+
+       float ammusx= transform.position.x;
+        float ammusy = transform.position.y;
+
+        //ammusx = piipunboxit.bounds.center.x;
+
+        Vector2 vv = new Vector2(alusx - ammusx,
+           alusy - ammusy);
+
+        vv.Normalize();
+        vv.Scale(new Vector2(4.0f, 4.0f));
+        return vv;
+    }
+
 }

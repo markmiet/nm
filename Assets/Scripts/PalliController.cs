@@ -36,6 +36,7 @@ public class PalliController : BaseController
 
     public GameObject bonus;
 
+    public GameObject ammus;
     public string[] tagilistaJoitaTutkitaan;
 
 
@@ -159,12 +160,23 @@ public class PalliController : BaseController
     //int laskuri = 0;
     float deltojensumma = 0.0f;
 
+    private bool OnkoOkToimia()
+    {
+        return m_SpriteRenderer.isVisible;
+    }
+
+
     private void FixedUpdate()
     {
 
         if (alusGameObject != null)
         {
 
+
+            if (!OnkoOkToimia())
+            {
+                return;
+            }
 
 
 
@@ -214,6 +226,9 @@ public class PalliController : BaseController
 
             bool onkoMakitaOikealla = OnkoMakitaOikealla();
 
+            bool onkoPallovasemmalla = OnkoPalloVasemmalla();
+            bool onkoPalloOikealla=OnkoPalloOikealla();
+
             //bool onkohyppy2ohi = OnkoHyppytyyppi2Ohi();
 
             if (onkoTiiliPallonAlla)
@@ -242,7 +257,7 @@ public class PalliController : BaseController
 
                     //rb.AddTorque(torqueDirectionUp * torqueAmount, ForceMode.Force);
 
-                    if (!onkoTiiliVasemmalla && onkoTiiliVasemmallaAlhaalla)
+                    if (!onkoTiiliVasemmalla && onkoTiiliVasemmallaAlhaalla && !onkoPallovasemmalla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
                         motor.motorSpeed = -180;  // Negative for clockwise rotation
@@ -266,7 +281,7 @@ public class PalliController : BaseController
                     // transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
 
                     //   Debug.Log("vasemmalle=" + vasemmalle + " onkoTiiliOikealla=" + onkoTiiliOikealla + " onkoTiiliOikeallaAlhaalla=" + onkoTiiliOikeallaAlhaalla);
-                    if (!onkoTiiliOikealla && onkoTiiliOikeallaAlhaalla)
+                    if (!onkoTiiliOikealla && onkoTiiliOikeallaAlhaalla && !onkoPalloOikealla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
                         motor.motorSpeed = 180;  // Negative for clockwise rotation
@@ -364,17 +379,18 @@ public class PalliController : BaseController
 
                     //}
                     //else 
-                    if (onkoTiiliOikealla && !onkoTiiliOikeallaYlhaalla)
+                    if (onkoTiiliOikealla && !onkoTiiliOikeallaYlhaalla && !onkoPalloOikealla)
                     {
                         LoikkaaYlos(onkoTiiliOikealla);
+                      //  Ammu();
                     }
                     //hyppy2
-                    else if (!onkoTiiliOikeallaAlhaalla && !onkoTiiliOikeallaYlhaalla)
+                    else if (!onkoTiiliOikeallaAlhaalla && !onkoTiiliOikeallaYlhaalla && !onkoPalloOikealla)
                     {
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
                         //    Debug.Log("loikkaa aukon yli oikealle");
                         LoikkaaAukonYli(!vasemmalle);
-
+                        //Ammu();
                     }
 
                 }
@@ -382,18 +398,31 @@ public class PalliController : BaseController
                 {
                     //hyppy1
                     //vasen
-                    if (onkoTiiliVasemmalla && !onkoTiiliVasemmallaYlhaalla)
+                    if (onkoTiiliVasemmalla && !onkoTiiliVasemmallaYlhaalla && !onkoPallovasemmalla)
                     {
                         LoikkaaYlos(!onkoTiiliVasemmalla);
                     }
                     //hyppy2
-                    else if (!onkoTiiliVasemmallaAlhaalla && !onkoTiiliVasemmallaYlhaalla)
+                    else if (!onkoTiiliVasemmallaAlhaalla && !onkoTiiliVasemmallaYlhaalla && !onkoPallovasemmalla)
                     {
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
                         //      Debug.Log("loikkaa aukon yli vasemmalle");
                         LoikkaaAukonYli(!vasemmalle);
+                       // Ammu();
 
                     }
+                }
+            }
+            bool alasmenossa = OnkoMenossaAlasPainKovaaVauhtia();
+            if (alasmenossa)
+            {
+                bool oikealla =
+                OnkoTiiliOikeallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya();
+                bool vasen = OnkoTiiliVasemmallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya();
+
+                if (!oikealla && !vasen)
+                {
+               //     Ammu();
                 }
             }
 
@@ -411,6 +440,11 @@ public class PalliController : BaseController
         bool ylos = rb.velocity.y < -0.03f;
         return ylos;
 
+    }
+    private bool OnkoMenossaAlasPainKovaaVauhtia()
+    {
+        bool ylos = rb.velocity.y < -0.03f;
+        return ylos;
     }
 
     public float jumpForce = 5f;  // Vertical force applied to jump
@@ -453,7 +487,7 @@ public class PalliController : BaseController
                     hypynkestotyyppi1 = 0.0f;
                     viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
                     boostParticles.Play();
-                    
+                  // Ammu();
 
                     break;
                 }
@@ -522,6 +556,7 @@ public class PalliController : BaseController
 
                     boostParticles.Play();
 
+                   // Ammu();
                     break;
                 }
             }
@@ -746,15 +781,50 @@ public class PalliController : BaseController
         //Debug.Log ("OnBecameInvisible");
         // Destroy the enemy
         //tuhoa = true;
-
-        Destroy(gameObject);
+        bool ollaankokameranoikealla = IsObjectRightOfCamera(Camera.main, transform);
+        if (!ollaankokameranoikealla)
+        {
+            Destroy(gameObject);
+        }
+        //onko 
     }
 
+    bool IsObjectRightOfCamera(Camera cam, Transform objTransform)
+    {
+        // Convert object's world position to viewport coordinates
+        Vector3 viewportPoint = cam.WorldToViewportPoint(objTransform.position);
 
+        // Check if the object is on the right side of the camera and not visible
+        // x > 1 means the object is beyond the right edge of the camera's view
+        // y should be between 0 and 1 (within the vertical bounds of the camera)
+        // z > 0 means the object is in front of the camera, not behind
+        return viewportPoint.x > 1 && viewportPoint.z > 0;
+    }
+
+    public bool OnkoPalloVasemmalla()
+    {
+        string[] tagit = new string[1];
+        tagit[0] = "pallovihollinenexplodetag";
+
+       
+        bool ret = onkoTagiaBoxissa(tagit, boxsizekeskella, vasenboxcenter, layerMask);
+        return ret;
+    }
+
+    public bool OnkoPalloOikealla()
+    {
+        string[] tagit = new string[1];
+        tagit[0] = "pallovihollinenexplodetag";
+
+
+        bool ret = onkoTagiaBoxissa(tagit, boxsizekeskella, oikeaboxcenter, layerMask);
+        return ret;
+    }
 
 
     public bool onkoTagiaBoxissa(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
+        //string aa = "pallovihollinenexplodetag";
 
         foreach (string name in tagit)
         {
@@ -821,9 +891,32 @@ rb.position.x, rb.position.y, 0);
         int bonusmaara = 3;
         
             TeeBonus(bonus, v3, boxsize, bonusmaara);
+
         
 
 
     }
 
+    public float ampumisenvoimakkuus = 2.0f;
+    public bool ammu = false;
+    public void Ammu()
+    {
+        if (ammu)
+        {
+            Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
+
+            Instantiate(ammus);
+
+
+
+            GameObject instanssi = Instantiate(ammus, new Vector3(
+     transform.position.x, transform.position.y, 0), Quaternion.identity);
+
+            PalliController p = instanssi.GetComponent<PalliController>();
+            p.alusGameObject = alusGameObject;
+
+            instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+        }
+
+    }
 }

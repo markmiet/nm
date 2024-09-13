@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1459944511438759979}
   - component: {fileID: 1267133359014167363}
   - component: {fileID: 2132718050068797262}
+  - component: {fileID: 1803048764405262496}
   m_Layer: 10
   m_Name: MakitaVihollinenAmmus
   m_TagString: makitavihollinenammustag
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1e0f4e07cf4ecf84991eddeec47a75c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a9041a5a16eda44c9f51afb09c445d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,7 +122,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985379849892578813}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -150,7 +151,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.12, y: 0.08}
+    oldSize: {x: 0.16, y: 0.16}
     newSize: {x: 0.16, y: 0.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -171,3 +172,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0577e2ca8bd2b1f62896ec13cf2c906a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &1803048764405262496
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985379849892578813}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.08
