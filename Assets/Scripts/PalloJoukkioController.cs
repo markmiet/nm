@@ -6,9 +6,9 @@ public class PalloJoukkioController : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    //public GameObject pallo;
-    //public GameObject alus;
-    //public int pallojenmaara = 10;
+    public GameObject pallo;
+    private GameObject alus;
+    public int pallojenmaara = 10;
     void Start()
     {
      
@@ -26,15 +26,15 @@ public class PalloJoukkioController : MonoBehaviour
         Gizmos.color = gizmoColor;
         Gizmos.DrawSphere(transform.position, gizmoRadius);
     }
-    /*
+    
  private bool pallottehty = false;
- */
+
     // Update is called once per frame
     void Update()
     {
 
         //  GameObject instanssi= Instantiate(pallo);
-        /*
+        
         bool nakyvissa = IsObjectInView(Camera.main, transform);
         if (!nakyvissa)
         {
@@ -48,12 +48,12 @@ public class PalloJoukkioController : MonoBehaviour
                 GameObject instanssi = Instantiate(pallo, new Vector3(
     transform.position.x+i, transform.position.y, 0), Quaternion.identity);
 
-                PalliController p = instanssi.GetComponent<PalliController>();
-                p.alusGameObject = alus;
+              //  PalliController p = instanssi.GetComponent<PalliController>();
+              //  p.alusGameObject = alus;
             }
         }
 
-        */
+        
  
 
        // instanssi.GetComponent<Rigidbody2D>().velocity = ve;

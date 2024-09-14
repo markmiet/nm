@@ -32,7 +32,7 @@ public class PalliController : BaseController
 
 
 
-    public GameObject alusGameObject;
+    private GameObject alusGameObject;
 
     public GameObject bonus;
 
@@ -65,6 +65,12 @@ public class PalliController : BaseController
         }
 
         boxsize = new Vector2(m_SpriteRenderer.size.x, m_SpriteRenderer.size.y);
+        rb.simulated = false;
+        GameObject[] allObstacles = GameObject.FindGameObjectsWithTag("alustag");
+        foreach (GameObject obstacles in allObstacles)
+        {
+            alusGameObject = obstacles;
+        }
     }
 
     //   public float rotationSpeed = 90f; // Degrees per second
@@ -177,7 +183,7 @@ public class PalliController : BaseController
             {
                 return;
             }
-
+            rb.simulated = true;
 
 
             // JointMotor2D motor = wheelJoint.motor;
@@ -778,9 +784,20 @@ public class PalliController : BaseController
 
     void OnBecameInvisible()
     {
+        if (true)
+            return;
+       if (!rb.IsAwake())
+        {
+            return;
+        }
         //Debug.Log ("OnBecameInvisible");
         // Destroy the enemy
         //tuhoa = true;
+        if  (transform==null )
+        {
+            Debug.Log("transformi null");
+            return;
+        }
         bool ollaankokameranoikealla = IsObjectRightOfCamera(Camera.main, transform);
         if (!ollaankokameranoikealla)
         {
@@ -789,8 +806,18 @@ public class PalliController : BaseController
         //onko 
     }
 
+
+    private void OnBecameVisible()
+    {
+        
+    }
+
     bool IsObjectRightOfCamera(Camera cam, Transform objTransform)
     {
+        if (objTransform==null)
+        {
+            return false;
+        }
         // Convert object's world position to viewport coordinates
         Vector3 viewportPoint = cam.WorldToViewportPoint(objTransform.position);
 
