@@ -480,4 +480,16 @@ public class BaseController : MonoBehaviour
         return vv;
     }
 
+    public GameObject PalautaAlus()
+    {
+        GameObject[] allObstacles = GameObject.FindGameObjectsWithTag("alustag");
+        foreach (GameObject obstacles in allObstacles)
+        {
+            GameObject alus = obstacles;
+            return alus;
+        }
+        return null;
+        
+    }
+
 }
