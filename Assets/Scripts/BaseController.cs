@@ -492,4 +492,118 @@ public class BaseController : MonoBehaviour
         
     }
 
+    public void RajaytaSprite(GameObject go, int rows, int columns,float explosionForce,float alivetime)
+    {
+
+        Sprite originalSprite= GetComponent<SpriteRenderer>().sprite;
+
+        // Get the original sprite's texture
+        Texture2D texture = originalSprite.texture;
+
+        // Calculate the width and height of each slice
+        int sliceWidth = texture.width / columns;
+        int sliceHeight = texture.height / rows;
+
+        // Create a list to store the sliced sprites
+        List<Sprite> slicedSprites = new List<Sprite>();
+
+        // Loop through each row and column to create slices
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                // Calculate the rectangle for the slice
+                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
+
+                // Create a new sprite from the slice
+                Sprite newSprite = Sprite.Create(
+                    texture,
+                    sliceRect,
+                    new Vector2(0.5f, 0.5f),
+                    //new Vector2(0.0f, 0.0f),
+
+                    originalSprite.pixelsPerUnit
+                );
+
+                // Store the new sprite in the list
+                slicedSprites.Add(newSprite);
+
+                // Optionally, instantiate a GameObject with the new sprite in the scene
+                /**/
+                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
+                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                sr.sprite = newSprite;
+                //Debug.0lo0ff000ddddddddtagi=" + sliceObject.tag);
+
+
+                //sliceObject.tag="vih"
+                // Set the position of the slice in the scene (adjust if needed)
+                /*   */
+                Rigidbody2D pieceRigidbody =
+                sliceObject.AddComponent<Rigidbody2D>();
+                pieceRigidbody.gravityScale = 0.5f;
+                pieceRigidbody.simulated = true;
+                
+                /*
+                BoxCollider2D p =
+                sliceObject.AddComponent<BoxCollider2D>();
+                p.size = new Vector2(0.1f, 0.1f);
+                                
+             
+
+                */
+
+                sliceObject.transform.position = new Vector3(
+                    -0.2f +
+                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
+                        -0.2f +
+      transform.position.y +
+      y * sliceHeight / originalSprite.pixelsPerUnit, 0);
+
+                /*    
+                Vector3 explosionCenter = new Vector3(transform.position.x, transform.position.y,0);
+          float forceAmount = 10.0f;
+
+
+
+          Vector2 explosionForce = (sliceObject.transform.position - explosionCenter).normalized * forceAmount;
+          pieceRigidbody.AddForce(explosionForce, ForceMode2D.Impulse);
+         */
+
+                Vector3 randomDirection = Random.insideUnitSphere.normalized;
+
+                // Apply force in that direction with random strength
+                float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
+                pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
+
+                // Optionally, add random torque for rotation
+
+                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
+
+                Destroy(sliceObject, 0.3f);
+                //  Instantiate(sliceObject);
+
+            }
+        }
+
+
+      //  Debug.Log("Slicing completed. Number of slices: " + slicedSprites.Count);
+
+    }
+    void IgnoreChildCollisions(Transform parent)
+    {
+
+        Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
+
+        for (int i = 0; i < childColliders.Length; i++)
+        {
+            Physics.IgnoreCollision(childColliders[i], parent.gameObject.GetComponent<Collider>());
+            for (int j = i + 1; j < childColliders.Length; j++)
+            {
+                Physics.IgnoreCollision(childColliders[i], childColliders[j]);
+
+            }
+        }
+    }
+
 }

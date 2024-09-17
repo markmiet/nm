@@ -142,6 +142,8 @@ public class AmmusController : MonoBehaviour {
 
 			if (col.gameObject!=null)
             {
+			//	Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
+				
 				col.gameObject.SendMessage("Explode");
 			}
 			else

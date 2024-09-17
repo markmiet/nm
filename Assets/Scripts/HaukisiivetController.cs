@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HaukisiivetController : MonoBehaviour
+public class HaukisiivetController : BaseController
 {
     // Start is called before the first frame update
     void Start()
@@ -21,5 +21,6 @@ public class HaukisiivetController : MonoBehaviour
     {
      //   transform.parent.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
         Destroy(gameObject);
+        RajaytaSprite(gameObject, 10, 10, 10.0f, 0.3f);
     }
 }

@@ -905,7 +905,7 @@ public class PalliController : BaseController
     {
 
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-
+        RajaytaSprite(gameObject, 10, 10, 10.0f, 0.6f);
         Destroy(explosionIns);
         Destroy(gameObject);
 

@@ -107,7 +107,14 @@ public class HaukirunkoController : BaseController
         */
         alus = PalautaAlus();
 
+        Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+      //  SliceSprite(sprite, 3, 2);
+
         IgnoreChildCollisions(transform);
+     //   SliceSprite(sprite, 3, 2);
+
+
+
     }
     private GameObject alus;
 
@@ -238,7 +245,7 @@ public class HaukirunkoController : BaseController
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 0.0f);
             }
         }
-        
+    
 
       
     }
@@ -270,6 +277,8 @@ public class HaukirunkoController : BaseController
     public void Explode()
     {
         Destroy(gameObject);
+        RajaytaSprite(gameObject, 10, 10, 10.0f, 0.3f);
+
     }
 
     void IgnoreChildCollisions(Transform parent)
@@ -288,4 +297,54 @@ public class HaukirunkoController : BaseController
         }
     }
 
+    /*
+    void SliceSprite(Sprite originalSprite, int rows, int columns)
+    {
+        // Get the original sprite's texture
+        Texture2D texture = originalSprite.texture;
+
+        // Calculate the width and height of each slice
+        int sliceWidth = texture.width / columns;
+        int sliceHeight = texture.height / rows;
+
+        // Create a list to store the sliced sprites
+        List<Sprite> slicedSprites = new List<Sprite>();
+
+        // Loop through each row and column to create slices
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                // Calculate the rectangle for the slice
+                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
+
+                // Create a new sprite from the slice
+                Sprite newSprite = Sprite.Create(
+                    texture,
+                    sliceRect,
+                    new Vector2(0.5f, 0.5f),
+                    originalSprite.pixelsPerUnit
+                );
+
+                // Store the new sprite in the list
+                slicedSprites.Add(newSprite);
+
+                // Optionally, instantiate a GameObject with the new sprite in the scene
+                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
+                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                sr.sprite = newSprite;
+
+                // Set the position of the slice in the scene (adjust if needed)
+                sliceObject.transform.position = new Vector3(transform.position.x+ x * sliceWidth / originalSprite.pixelsPerUnit, 
+                    transform.position.y+
+                    y * sliceHeight / originalSprite.pixelsPerUnit, 0);
+                Instantiate(sliceObject);
+            }
+        }
+
+
+        Debug.Log("Slicing completed. Number of slices: " + slicedSprites.Count);
+
+    }
+    */
 }

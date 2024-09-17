@@ -262,9 +262,10 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
 
         }
-        
+
 
         // pallerotkokonaisuus = null;
+        RajaytaSprite(gameObject, 10, 10, 10.0f, 0.1f);
         Destroy(gameObject);
 
     }

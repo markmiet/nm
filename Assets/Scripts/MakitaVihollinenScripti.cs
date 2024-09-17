@@ -735,7 +735,7 @@ public class MakitaVihollinenScripti : BaseController
     {
 
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-
+        RajaytaSprite(gameObject, 10, 10, 10.0f,0.2f);
         Destroy(explosionIns, 1.0f);
         Destroy(gameObject);
 
