@@ -38,7 +38,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
     public GameObject bonus;
     private Vector2 boxsize;// = new Vector2(0, 0);
-
+    public bool teebonus = false;
     void Start()
     {
 
@@ -744,8 +744,11 @@ new Vector3(
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //  Instantiate(bonus, v3, Quaternion.identity);
-
-        TeeBonus(bonus, v3, boxsize, 1);
+        if (teebonus)
+        {
+            TeeBonus(bonus, v3, boxsize, 1);
+        }
+    
 
     }
 
