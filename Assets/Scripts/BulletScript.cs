@@ -20,7 +20,7 @@ public class BulletScript : MonoBehaviour
     void Update()
     {
         float speed = m_Rigidbody2D.velocity.magnitude;
- //       Debug.Log("ammuksen nopeus=" + speed);
+        //       Debug.Log("ammuksen nopeus=" + speed);
 
         if (speed < 0.5f)
         {
@@ -36,7 +36,7 @@ public class BulletScript : MonoBehaviour
 
     public void Putoa()
     {
-    
+
         if (m_Rigidbody2D != null)
         {
             if (alas)
@@ -54,15 +54,15 @@ public class BulletScript : MonoBehaviour
 
     public void Liu()
     {
-      // Debug.Log("liukuuuuuuu");
+        // Debug.Log("liukuuuuuuu");
         if (!liukuu)
         {
             liukuu = true;
-            if (m_Rigidbody2D!=null)
+            if (m_Rigidbody2D != null)
             {
                 m_Rigidbody2D.velocity = new Vector2(6, 0);
             }
-    
+
         }
 
     }
@@ -70,7 +70,7 @@ public class BulletScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-      //  Debug.Log("alaosa collidoi");
+        //  Debug.Log("alaosa collidoi");
 
         if (col.collider.tag.Contains("tiili"))
         {
@@ -80,7 +80,7 @@ public class BulletScript : MonoBehaviour
             CapsuleCollider2D collider = col.otherCollider as CapsuleCollider2D;
 
             //eli jos törmäävä osa on tämä capsulocollider niin tuhoa 
-            if (collider!=null)
+            if (collider != null)
             {
                 Destroy(gameObject);
             }
@@ -99,8 +99,37 @@ public class BulletScript : MonoBehaviour
         }
         else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
+            /*
+            if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
+            {
+                tormattyviholliseen = true;
+                //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
 
-            col.gameObject.SendMessage("Explode");
+                if (col.gameObject != null)
+                {
+                    Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
+
+                    //col.gameObject.SendMessage("Explode");
+                    IExplodable o =
+                    col.gameObject.GetComponent<IExplodable>();
+                    */
+
+            // col.gameObject.SendMessage("Explode");
+            if (col.gameObject != null)
+            {
+                IExplodable o =
+col.gameObject.GetComponent<IExplodable>();
+                if (o != null)
+                {
+                    o.Explode();
+                }
+                else
+                {
+                    Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                }
+            }
+
+
             Destroy(gameObject);
 
             //Destroy (col.gameObject);

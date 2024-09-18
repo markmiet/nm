@@ -142,9 +142,19 @@ public class AmmusController : MonoBehaviour {
 
 			if (col.gameObject!=null)
             {
-			//	Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
+				Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
 				
-				col.gameObject.SendMessage("Explode");
+				//col.gameObject.SendMessage("Explode");
+				IExplodable o =
+				col.gameObject.GetComponent<IExplodable>();
+				if (o!=null)
+                {
+					o.Explode();
+                }
+				else
+                {
+					Debug.Log("vihollinen ja explode mutta ei ookkaan "+ col.collider.tag);
+                }
 			}
 			else
             {

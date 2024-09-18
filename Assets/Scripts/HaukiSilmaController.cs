@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HaukiSilmaController : BaseController
+public class HaukiSilmaController : MonoBehaviour, IExplodable
 {
     // Start is called before the first frame update
     void Start()
@@ -19,6 +19,6 @@ public class HaukiSilmaController : BaseController
     public void Explode()
     {
         Destroy(gameObject);
-
     }
+
 }

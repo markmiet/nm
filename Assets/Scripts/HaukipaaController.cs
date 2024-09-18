@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HaukipaaController : BaseController
+public class HaukipaaController : BaseController, IExplodable
 {
 
     public float explosionForce = 10f; // Base force magnitude
@@ -43,7 +43,7 @@ public class HaukipaaController : BaseController
     public void Explode()
     {
         //Tipu();
-        AmmuJaRajahda();
+        TipUEnsinSenJalkeenAmmuJaRajahda();
         //     GetComponent<Rigidbody2D>().gravityScale = 0.5f;
         //   Destroy(gameObject, 0.5f);
     }
@@ -60,25 +60,57 @@ public class HaukipaaController : BaseController
     {
         //ampu
         // Destroy(gameObject);
-        GameObject haukisilma = transform.parent.Find("Haukisilma").gameObject;
-        GameObject alus = PalautaAlus();
+        if (transform!=null && 
+            transform.parent!=null && transform.parent.Find("Haukisilma")!=null)
+        {
+            GameObject haukisilma = transform.parent.Find("Haukisilma").gameObject;
+            GameObject alus = PalautaAlus();
 
-        Vector2 vv = palautaAmmuksellaVelocityVector(alus, 2.0f);
+            Vector2 vv = palautaAmmuksellaVelocityVector(alus, 2.0f);
 
-        haukisilma.GetComponent<Rigidbody2D>().simulated = true;
-        haukisilma.GetComponent<Rigidbody2D>().velocity = vv;
-
-
+            haukisilma.transform.parent = null;
+            haukisilma.GetComponent<Rigidbody2D>().simulated = true;
+            haukisilma.GetComponent<Rigidbody2D>().velocity = vv;
+        }
 
     }
 
-    public void AmmuJaRajahda()
+    public void TipUEnsinSenJalkeenAmmuJaRajahda()
     {
-        Destroy(gameObject);
+
+        //antaa tippua ihan hetki pieni ja sitten vasta tämä
+        GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+        FixedJoint2D jointi = GetComponent<FixedJoint2D>();
+        Destroy(jointi);
         Ammu();
-        RajaytaSprite(gameObject, 10, 10,explosionForce,0.3f);
+        StartCoroutine(ExecuteAfterDelay(1.0f));
+
+        HaukirunkoController h=
+        gameObject.GetComponentInParent<HaukirunkoController>();
+        h.PaaIrtiSekoita(1.2f);
 
     }
+
+
+    private IEnumerator ExecuteAfterDelay(float delay)
+    {
+        // Wait for the specified amount of time
+        yield return new WaitForSeconds(delay);
+
+        // After the delay, execute your action
+        PerformAction();
+    }
+
+    // Example of what could happen after the delay
+    private void PerformAction()
+    {
+        Debug.Log("Action performed after delay!");
+        Destroy(gameObject);
+     
+        RajaytaSprite(gameObject, 10, 10, explosionForce, 0.3f);
+        // Add your actual action logic here
+    }
+
 
 
     public bool ollaankoTiputtuAlasasti()

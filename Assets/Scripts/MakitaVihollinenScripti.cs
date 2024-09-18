@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MakitaVihollinenScripti : BaseController
+public class MakitaVihollinenScripti : BaseController, IExplodable
 {
 
     private Rigidbody2D m_Rigidbody2D;

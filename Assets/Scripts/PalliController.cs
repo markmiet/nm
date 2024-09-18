@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PalliController : BaseController
+public class PalliController : BaseController, IExplodable
 {
     public Vector2 boxsizeylhaalla = new Vector2(2.0f, 2.0f);  // Size of the box
     public Vector2 boxsizekeskella = new Vector2(2.0f, 0.1f);  // Size of the box
@@ -915,7 +915,7 @@ new Vector3(
 rb.position.x, rb.position.y, 0);
 
         //  Instantiate(bonus, v3, Quaternion.identity)
-        int bonusmaara = 3;
+        int bonusmaara = 1;
         
             TeeBonus(bonus, v3, boxsize, bonusmaara);
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HaukirunkoController : BaseController
+public class HaukirunkoController : BaseController, IExplodable
 {
     // Start is called before the first frame update
     private GameObject haukipaa;
@@ -108,10 +108,10 @@ public class HaukirunkoController : BaseController
         alus = PalautaAlus();
 
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
-      //  SliceSprite(sprite, 3, 2);
+        //  SliceSprite(sprite, 3, 2);
 
         IgnoreChildCollisions(transform);
-     //   SliceSprite(sprite, 3, 2);
+        //   SliceSprite(sprite, 3, 2);
 
 
 
@@ -126,8 +126,9 @@ public class HaukirunkoController : BaseController
     private bool silmaheitettyilmaan = false;
     public void FixedUpdate()
     {
-//haukip‰‰
+        //haukip‰‰
         rotationTime += Time.deltaTime;
+
         float t = Mathf.PingPong(rotationTime / rotatetimeseconds, 1f);
         float currentRotationsiivet = Mathf.Lerp(siivetrotatemin, siivetrotatemax, t);
 
@@ -142,7 +143,7 @@ public class HaukirunkoController : BaseController
 
         float currentRotationsilma = Mathf.Lerp(silmarotatemax, silmarotatemin, t);
         float currentRotationylaeva = Mathf.Lerp(ylaevarotatemax, ylaevarotatemin, t);
-        float currentRotationalaeva= Mathf.Lerp(alaevarotatemax, alaevarotatemin, t);
+        float currentRotationalaeva = Mathf.Lerp(alaevarotatemax, alaevarotatemin, t);
 
         float currentRotationetueva = Mathf.Lerp(etuevarotatemax, etuevarotatemin, t);
 
@@ -151,18 +152,18 @@ public class HaukirunkoController : BaseController
         float currentRotationkeskieva = Mathf.Lerp(keskievarotatemax, keskievarotatemin, t);
 
 
-      //  haukisilma.transform.localRotation = Quaternion.Euler(0, 0, currentRotationsilma);  // Z-axis rotation (for 2D)
+        //  haukisilma.transform.localRotation = Quaternion.Euler(0, 0, currentRotationsilma);  // Z-axis rotation (for 2D)
 
-        transform.rotation= Quaternion.Euler(0, currentRotationrunkoy, currentRotationrunko);
-        if (haukipaa!=null)
+        transform.rotation = Quaternion.Euler(0, currentRotationrunkoy, currentRotationrunko);
+        if (haukipaa != null)
         {
             haukipaa.transform.localRotation = Quaternion.Euler(0, currentRotationpaa, 0);  // Z-axis rotation (for 2D)
-         //   if (haukipaa.GetComponent<Rigidbody2D>().gravityScale>0)
-       //     {
-             //   haukisilma.GetComponent<Rigidbody2D>().gravityScale = haukipaa.GetComponent<Rigidbody2D>().gravityScale / 2;
+                                                                                            //   if (haukipaa.GetComponent<Rigidbody2D>().gravityScale>0)
+                                                                                            //     {
+                                                                                            //   haukisilma.GetComponent<Rigidbody2D>().gravityScale = haukipaa.GetComponent<Rigidbody2D>().gravityScale / 2;
 
-             //   haukisilma.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 5.0f);
-          //  }
+            //   haukisilma.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 5.0f);
+            //  }
         }
         else
         {
@@ -177,7 +178,7 @@ public class HaukirunkoController : BaseController
             */
         }
 
-    
+
         //siivet
 
 
@@ -189,9 +190,9 @@ public class HaukirunkoController : BaseController
 
         haukiylaeva.transform.localRotation = Quaternion.Euler(0, 0, currentRotationylaeva);  // Z-axis rotation (for 2D)
 
-        haukikeskieva.transform.localRotation = Quaternion.Euler(currentRotationkeskieva,0, 0);  // Z-axis rotation (for 2D)
+        haukikeskieva.transform.localRotation = Quaternion.Euler(currentRotationkeskieva, 0, 0);  // Z-axis rotation (for 2D)
 
-      //  haukietueva.transform.localRotation = Quaternion.Euler(currentRotationetueva, 0, 0);  // Z-axis rotation (for 2D)
+        //  haukietueva.transform.localRotation = Quaternion.Euler(currentRotationetueva, 0, 0);  // Z-axis rotation (for 2D)
 
         haukietueva.transform.localRotation = Quaternion.Euler(0, 0, currentRotationetueva);  // Z-axis rotation (for 2D)
 
@@ -211,23 +212,23 @@ public class HaukirunkoController : BaseController
             Vector2 uusloca = new Vector2(hauenlocalpos.x, peruspositio);
             haukisiivet.transform.localPosition = uusloca;
         }
-       else
+        else
         {
             m_Rigidbody2D.gravityScale = 0.5f;
-          //  haukipaa.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-        //    haukisilma.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+            //  haukipaa.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+            //    haukisilma.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
         }
-      // if (haukipaa!=null)
-      // {
-      //      haukipaa.transform.localPosition = hauenpaanlocalpos;
-          //  haukipaa.transform.rotation = hauenpaaquaternion;
-      // }
+        // if (haukipaa!=null)
+        // {
+        //      haukipaa.transform.localPosition = hauenpaanlocalpos;
+        //  haukipaa.transform.rotation = hauenpaaquaternion;
+        // }
 
-        
+
         bool ylos = AlusYlhaalla();
         bool alas = AlusAlhaalla();
-        
-        if (m_Rigidbody2D.gravityScale ==0.0f)
+
+        if (haukipaa != null && m_Rigidbody2D.gravityScale == 0.0f)
         {
             if (ylos)
             {
@@ -245,30 +246,30 @@ public class HaukirunkoController : BaseController
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 0.0f);
             }
         }
-    
 
-      
+
+
     }
 
 
     private float PalautaSiipienKorkeus()
     {
-       return  haukisiivetspriterender.bounds.size.y;
-//         haukisiivetspriterender.size.y;
+        return haukisiivetspriterender.bounds.size.y;
+        //         haukisiivetspriterender.size.y;
 
     }
 
     public bool AlusYlhaalla()
     {
-      bool onko=alus.transform.position.y > transform.position.y;
+        bool onko = alus.transform.position.y > transform.position.y;
 
-      return onko && Mathf.Abs(alus.transform.position.y - transform.position.y) > 0.5 ;
+        return onko && Mathf.Abs(alus.transform.position.y - transform.position.y) > 0.5;
 
     }
 
     public bool AlusAlhaalla()
     {
-        bool onko= alus.transform.position.y < transform.position.y;
+        bool onko = alus.transform.position.y < transform.position.y;
 
         return onko && Mathf.Abs(alus.transform.position.y - transform.position.y) > 0.5;
 
@@ -283,7 +284,7 @@ public class HaukirunkoController : BaseController
 
     void IgnoreChildCollisions(Transform parent)
     {
-     
+
         Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
 
         for (int i = 0; i < childColliders.Length; i++)
@@ -347,4 +348,40 @@ public class HaukirunkoController : BaseController
 
     }
     */
+
+
+    public void PaaIrtiSekoita(float sekoituskerroin)
+    {
+
+
+       // haukipyrstorotatemax *= sekoituskerroin;
+       // haukipyrstorotatemin *= sekoituskerroin;
+
+        haukirunkozrotatemax *= sekoituskerroin;
+        haukirunkozrotatemin *= sekoituskerroin;
+        haukirunkoyrotatemax *= sekoituskerroin;
+        haukirunkoyrotatemin *= sekoituskerroin;
+
+
+      //  silmarotatemax *= sekoituskerroin;
+      //  silmarotatemin *= sekoituskerroin;
+
+
+       // alaevarotatemax *= sekoituskerroin;
+      //  alaevarotatemin *= sekoituskerroin;
+
+
+     //   ylaevarotatemax *= sekoituskerroin;
+     //   ylaevarotatemin *= sekoituskerroin;
+
+
+        etuevarotatemax *= sekoituskerroin;
+        etuevarotatemin *= sekoituskerroin;
+
+     //   keskievarotatemax *= sekoituskerroin;
+     //   keskievarotatemin *= sekoituskerroin;
+
+        rotatetimeseconds = rotatetimeseconds / 1.5f;
+
+    }
 }

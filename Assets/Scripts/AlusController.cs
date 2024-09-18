@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class AlusController : BaseController
+public class AlusController : BaseController, IExplodable
 {
 
   //  public GameObject speedbonusbutton;

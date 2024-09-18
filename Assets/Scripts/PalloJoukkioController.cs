@@ -46,7 +46,7 @@ public class PalloJoukkioController : MonoBehaviour
             for (int i=0;i<pallojenmaara;i++)
             {
                 GameObject instanssi = Instantiate(pallo, new Vector3(
-    transform.position.x+i, transform.position.y, 0), Quaternion.identity);
+    transform.position.x+i*4.0f, transform.position.y, 0), Quaternion.identity);
 
               //  PalliController p = instanssi.GetComponent<PalliController>();
               //  p.alusGameObject = alus;
