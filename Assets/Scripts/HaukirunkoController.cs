@@ -124,8 +124,36 @@ public class HaukirunkoController : BaseController, IExplodable
 
     }
     private bool silmaheitettyilmaan = false;
+
+    private bool OnkoOkLiikkua()
+    {
+        return haukirunkospriterender.isVisible;
+    }
+
+
+    public float swayAmount = 0.5f;       // Amplitude of the swaying motion
+    public float swaySpeed = 1.0f;          // Speed of the swaying (frequency of the tail movement)
+
+    private float swayTimer = 0f;         // Timer for the sway
     public void FixedUpdate()
     {
+        if (!OnkoOkLiikkua())
+        {
+            return;
+        }
+        /*
+        transform.Translate(Vector2.left * 0.2f * Time.deltaTime);
+
+        // Sway movement (up and down to simulate fish swimming)
+        swayTimer += Time.deltaTime * swaySpeed;
+        float sway = Mathf.Sin(swayTimer) * swayAmount;
+
+        // Apply the swaying on the Y axis (up and down)
+        transform.Translate(Vector2.up * sway * Time.deltaTime);
+
+        if (true)
+            return;
+        */
         //haukip‰‰
         rotationTime += Time.deltaTime;
 
@@ -230,12 +258,17 @@ public class HaukirunkoController : BaseController, IExplodable
 
         if (haukipaa != null && m_Rigidbody2D.gravityScale == 0.0f)
         {
-            if (ylos)
+            if (OnkoTiiliYlhaalla())
+            {
+             //   Debug.Log("tiili");
+            }
+
+            if (ylos && !OnkoTiiliYlhaalla())
             {
                 m_Rigidbody2D.velocity = new Vector2(liikex, 1.0f);
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 1.0f);
             }
-            else if (alas)
+            else if (alas && !OnkoTiiliAlhaalla())
             {
                 m_Rigidbody2D.velocity = new Vector2(liikex, -1.0f);
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, -1.0f);
@@ -245,6 +278,15 @@ public class HaukirunkoController : BaseController, IExplodable
                 m_Rigidbody2D.velocity = new Vector2(liikex, 0.0f);
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 0.0f);
             }
+
+            swayTimer += Time.deltaTime * swaySpeed;
+            float sway = Mathf.Sin(swayTimer) * swayAmount;
+
+            // Apply the swaying on the Y axis (up and down)
+            //transform.Translate(Vector2.up * sway * Time.deltaTime);
+
+            Vector2 vector2 = new Vector2(m_Rigidbody2D.velocity.x, m_Rigidbody2D.velocity.y+sway);
+            m_Rigidbody2D.velocity = vector2;
         }
 
 
@@ -282,20 +324,86 @@ public class HaukirunkoController : BaseController, IExplodable
 
     }
 
-    void IgnoreChildCollisions(Transform parent)
+    private bool OnkoTiiliAlhaalla()
+    {
+        // alabocenter, boxsizealhaalla
+
+        return onkoTagiaBoxissa("vihollinen", boxsizealhaalla, alabocenter, layerMask);
+
+    }
+
+    //  public float rayDistance = 5.0f;  // Distance for the raycast
+    // public string tileTag = "tiilivihollinentag"; // The tag to check for
+
+    public LayerMask layerMask;
+    private bool OnkoTiiliYlhaalla()
     {
 
-        Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
 
-        for (int i = 0; i < childColliders.Length; i++)
+        return onkoTagiaBoxissa("vihollinen", boxsizeylhaalla, ylaboxcenter, layerMask);
+
+
+        /*
+        int tileLayerMask = LayerMask.GetMask("Keskilayer");  // Ensure "TileLayer" is the correct name
+
+    //  RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, rayDistance, tileLayerMask);
+
+    for (float i = 0; i < rayDistance; i += 0.1f)
+    {
+        //tehd‰‰n 
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, rayDistance, tileLayerMask);
+
+        // Check if the ray hit something
+        if (hit.collider != null)
         {
-            Physics.IgnoreCollision(childColliders[i], parent.gameObject.GetComponent<Collider>());
-            for (int j = i + 1; j < childColliders.Length; j++)
-            {
-                Physics.IgnoreCollision(childColliders[i], childColliders[j]);
+            // Check if the object we hit has the tag we are looking for
+            Debug.Log("colliderin tagi=" + hit.collider.tag);
 
+            if (hit.collider.CompareTag("tiilivihollinentag"))
+            {
+                Debug.Log("Up direction is colliding with a tiletag object in 2D.");
+                // Add further logic if necessary
+                return true;
             }
         }
+    }
+
+    return false;
+    */
+    }
+    /*
+        private void OnDrawGizmos()
+        {
+            // Set the color for the gizmo ray
+            Gizmos.color = Color.red;
+
+            // Draw the ray going upwards from the GameObject's position in the Scene view
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.up * rayDistance);
+        }
+        */
+
+    public Vector2 ylaboxcenter = new Vector2(1, 2);
+    public Vector2 boxsizeylhaalla = new Vector2(2, 2);
+
+
+    public Vector2 alabocenter = new Vector2(1, -2);
+    public Vector2 boxsizealhaalla = new Vector2(2, 2);
+
+
+    void OnDrawGizmos()
+    {
+
+        // Set the color of the Gizmos
+        //Gizmos.color = Color.green;
+
+        // Draw the box representing the overlap area
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube((Vector2)transform.position + ylaboxcenter, boxsizeylhaalla);
+
+        Gizmos.DrawWireCube((Vector2)transform.position + alabocenter, boxsizealhaalla);
+
+
+
     }
 
     /*
@@ -354,8 +462,8 @@ public class HaukirunkoController : BaseController, IExplodable
     {
 
 
-       // haukipyrstorotatemax *= sekoituskerroin;
-       // haukipyrstorotatemin *= sekoituskerroin;
+        // haukipyrstorotatemax *= sekoituskerroin;
+        // haukipyrstorotatemin *= sekoituskerroin;
 
         haukirunkozrotatemax *= sekoituskerroin;
         haukirunkozrotatemin *= sekoituskerroin;
@@ -363,25 +471,34 @@ public class HaukirunkoController : BaseController, IExplodable
         haukirunkoyrotatemin *= sekoituskerroin;
 
 
-      //  silmarotatemax *= sekoituskerroin;
-      //  silmarotatemin *= sekoituskerroin;
+        //  silmarotatemax *= sekoituskerroin;
+        //  silmarotatemin *= sekoituskerroin;
 
 
-       // alaevarotatemax *= sekoituskerroin;
-      //  alaevarotatemin *= sekoituskerroin;
+        // alaevarotatemax *= sekoituskerroin;
+        //  alaevarotatemin *= sekoituskerroin;
 
 
-     //   ylaevarotatemax *= sekoituskerroin;
-     //   ylaevarotatemin *= sekoituskerroin;
+        //   ylaevarotatemax *= sekoituskerroin;
+        //   ylaevarotatemin *= sekoituskerroin;
 
 
         etuevarotatemax *= sekoituskerroin;
         etuevarotatemin *= sekoituskerroin;
 
-     //   keskievarotatemax *= sekoituskerroin;
-     //   keskievarotatemin *= sekoituskerroin;
+        //   keskievarotatemax *= sekoituskerroin;
+        //   keskievarotatemin *= sekoituskerroin;
 
         rotatetimeseconds = rotatetimeseconds / 1.5f;
 
+    }
+
+    void OnBecameInvisible()
+    {
+        //Debug.Log ("OnBecameInvisible");
+        // Destroy the enemy
+        //tuhoa = true;
+
+        Destroy(gameObject);
     }
 }

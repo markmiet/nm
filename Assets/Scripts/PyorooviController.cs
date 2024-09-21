@@ -20,6 +20,15 @@ public class PyorooviController : MonoBehaviour
     }
     public float rotationSpeed = 30.0f;
     // Update is called once per frame
+
+    void OnBecameInvisible()
+    {
+        //Debug.Log ("OnBecameInvisible");
+        // Destroy the enemy
+        //tuhoa = true;
+
+        Destroy(gameObject);
+    }
     void Update()
     {
         if (!OnkoOkLiikkua())

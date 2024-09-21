@@ -64,11 +64,18 @@ public class HaukipaaController : BaseController, IExplodable
             transform.parent!=null && transform.parent.Find("Haukisilma")!=null)
         {
             GameObject haukisilma = transform.parent.Find("Haukisilma").gameObject;
+            
+            //GameObject instantiate()
             GameObject alus = PalautaAlus();
 
             Vector2 vv = palautaAmmuksellaVelocityVector(alus, 2.0f);
 
-            haukisilma.transform.parent = null;
+            HaukiSilmaController h=
+            haukisilma.GetComponent<HaukiSilmaController>();
+            h.paassakiinni = false;
+
+              haukisilma.transform.parent = null;
+            //haukisilma.transform.localPosition=new Vector3(0, 0, 0);
             haukisilma.GetComponent<Rigidbody2D>().simulated = true;
             haukisilma.GetComponent<Rigidbody2D>().velocity = vv;
         }
@@ -104,7 +111,7 @@ public class HaukipaaController : BaseController, IExplodable
     // Example of what could happen after the delay
     private void PerformAction()
     {
-        Debug.Log("Action performed after delay!");
+       // Debug.Log("Action performed after delay!");
         Destroy(gameObject);
      
         RajaytaSprite(gameObject, 10, 10, explosionForce, 0.3f);

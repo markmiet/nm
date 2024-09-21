@@ -234,7 +234,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
     public void Explode()
     {
-        Debug.Log("pallero explore");
+       // Debug.Log("pallero explore");
 
         //    GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
@@ -245,11 +245,11 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         //onko kaikki pallerot destroytu
         if (pallerotkokonaisuus == null)
         {
-            Debug.Log("pallerotnullia");
+         //   Debug.Log("pallerotnullia");
         }
 
         int lapset = pallerotkokonaisuus.transform.childCount;
-        Debug.Log("lapset=" + lapset);
+        //Debug.Log("lapset=" + lapset);
         if (lapset == 1)
         {
             //       Debug.Log("lapset=" + lapset);

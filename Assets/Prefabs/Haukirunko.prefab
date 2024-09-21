@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2972877402547505517}
   m_Layer: 10
   m_Name: Haukisilma
-  m_TagString: haukivihollinenexplodetag
+  m_TagString: haukisilmavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,8 +146,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012628175, y: 0}
-  m_Size: {x: 0.12525634, y: 0.12525634}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.1, y: 0.12}
   m_Direction: 0
 --- !u!114 &2972877402547505517
 MonoBehaviour:
@@ -161,6 +161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f1447ab42555a4fb9bd0e01e34e8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paassakiinni: 1
+  nopeusjonkaalleTuhoutuu: 1
+  minScale: {x: 1, y: 1, z: 1}
+  maxScale: {x: 2, y: 2, z: 2}
+  duration: 2
 --- !u!1 &862965253683319235
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +182,7 @@ GameObject:
   - component: {fileID: 7219817451574311916}
   m_Layer: 10
   m_Name: Haukipaa
-  m_TagString: haukivihollinenexplodetag
+  m_TagString: haukipaavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,7 +299,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.023468018, y: 0.02403456}
+  m_Offset: {x: -0.05129242, y: -0.014845908}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -305,7 +310,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7498779, y: 0.43859804}
+  m_Size: {x: 0.6942291, y: 0.4001268}
   m_EdgeRadius: 0
 --- !u!50 &2512007942827139269
 Rigidbody2D:
@@ -620,7 +625,7 @@ GameObject:
   - component: {fileID: 7097633372191412774}
   m_Layer: 10
   m_Name: Haukisiivet
-  m_TagString: haukivihollinenexplodetag
+  m_TagString: haukisiivetvihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -875,7 +880,7 @@ GameObject:
   - component: {fileID: 476300214085579814}
   m_Layer: 10
   m_Name: Haukirunko
-  m_TagString: haukivihollinenexplodetag
+  m_TagString: haukirunkovihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -889,7 +894,7 @@ Transform:
   m_GameObject: {fileID: 6285986203447048253}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -169.1, y: -0.9, z: 0}
+  m_LocalPosition: {x: -157.55, y: -2.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -988,7 +993,16 @@ MonoBehaviour:
   keskievarotatemax: 35
   keskievarotatemin: -35
   rotatetimeseconds: 1
-  liikex: -0.3
+  liikex: -0.1
+  swayAmount: 0.5
+  swaySpeed: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  ylaboxcenter: {x: -0.1, y: 1}
+  boxsizeylhaalla: {x: 2.5, y: 1.4}
+  alabocenter: {x: 0, y: -1}
+  boxsizealhaalla: {x: 2.5, y: 1.7}
 --- !u!50 &8895591303680804712
 Rigidbody2D:
   serializedVersion: 4
@@ -1048,7 +1062,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.21484375, y: 0.12670934}
+  m_Offset: {x: 0.12071228, y: 0.12670934}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1059,7 +1073,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2668152, y: 0.4370556}
+  m_Size: {x: 1.0785522, y: 0.4370556}
   m_EdgeRadius: 0
 --- !u!1 &6745005026888760977
 GameObject:

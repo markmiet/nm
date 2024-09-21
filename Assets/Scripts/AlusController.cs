@@ -289,8 +289,9 @@ public class AlusController : BaseController, IExplodable
             spaceNappiaPainettu = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKey(KeyCode.N))
         {
+            Debug.Log("BonusButtonPressed");
             BonusButtonPressed();
         }
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
@@ -614,11 +615,16 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     public void Explode()
     {
         /*
-        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(explosionIns, 1.0f);
+        
+  
         Destroy(gameObject, 0.1f);
         gameover = true;
+        
+        Time.timeScale = 0f;
         */
+        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(explosionIns, 1.0f);
+        Debug.Log("gameover");
     }
 
 

@@ -11,6 +11,15 @@ public class BonusController : MonoBehaviour
         
     }
 
+    void OnBecameInvisible()
+    {
+        //Debug.Log ("OnBecameInvisible");
+        // Destroy the enemy
+        //tuhoa = true;
+
+        Destroy(gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {

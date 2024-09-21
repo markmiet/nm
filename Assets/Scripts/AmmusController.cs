@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmusController : MonoBehaviour {
+public class AmmusController : BaseController, IExplodable {
 	private Animator m_Animator;
-	private bool tuhoaViivella = false;
-	private bool tuhoa = false;
-	private bool tuhoamistoimenpiteetkaynnistetty = false;
+	//private bool tuhoaViivella = false;
+	//private bool tuhoa = false;
+	//private bool tuhoamistoimenpiteetkaynnistetty = false;
 	private int tormaysmaara = 0;
 
 	private Rigidbody2D m_Rigidbody2D;
@@ -53,16 +53,35 @@ public class AmmusController : MonoBehaviour {
 	}
 
 
+	public float nopeusjonkaalleTuhoutuu = 0.2f;
+
+	private bool tuhoa = false;
 	void FixedUpdate ()
 	{
+		/*
+		if (tuhoa)
+        {
+			return;
+        }
+		*/
 		//Debug.Log ("vauhti x=" + m_Rigidbody2D.velocity.x);
 		//Debug.Log ("vauhti y=" + m_Rigidbody2D.velocity.y);
-
-		if (Mathf.Abs (m_Rigidbody2D.velocity.x) <0.2 && Mathf.Abs (m_Rigidbody2D.velocity.y) < 0.2) {
+		/*
+		if (Mathf.Abs (m_Rigidbody2D.velocity.x) <= nopeusjonkaalleTuhoutuu && Mathf.Abs (m_Rigidbody2D.velocity.y) <= nopeusjonkaalleTuhoutuu) {
+			Debug.Log("ammuksen vauhti liian pieni tuhoa");
 			Destroy (gameObject);
-            Explode(0.0f);
+			//   Explode(0.0f);
+			tuhoa = true;
 
             return;
+		}
+		*/
+		float speed = m_Rigidbody2D.velocity.magnitude;
+		Debug.Log("alusammuksen nopeus=" + speed);
+
+		if (speed <= nopeusjonkaalleTuhoutuu)
+		{
+			Destroy(gameObject);
 		}
 
 
@@ -78,9 +97,10 @@ public class AmmusController : MonoBehaviour {
 		se
 	*/
 
-		if (tuhoa && !tuhoamistoimenpiteetkaynnistetty) {
-			tuhoamistoimenpiteetkaynnistetty = true;
-            Explode(0.0f);
+		/*
+		//if (tuhoa && !tuhoamistoimenpiteetkaynnistetty) {
+			//tuhoamistoimenpiteetkaynnistetty = true;
+            //Explode(0.0f);
 
         //   Destroy (gameObject);
 		} else if (tuhoaViivella && !tuhoamistoimenpiteetkaynnistetty) {
@@ -107,7 +127,7 @@ public class AmmusController : MonoBehaviour {
 
 	//		Destroy (gameObject);
 		}
-
+		*/
 
 	}
 
@@ -142,7 +162,7 @@ public class AmmusController : MonoBehaviour {
 
 			if (col.gameObject!=null)
             {
-				Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
+				//Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
 				
 				//col.gameObject.SendMessage("Explode");
 				IExplodable o =
@@ -155,6 +175,8 @@ public class AmmusController : MonoBehaviour {
                 {
 					Debug.Log("vihollinen ja explode mutta ei ookkaan "+ col.collider.tag);
                 }
+				tuhoa = true;
+				Explode();
 			}
 			else
             {
@@ -164,9 +186,10 @@ public class AmmusController : MonoBehaviour {
 			
 		}
 
-		Explode(0.0f);
+		//Explode(0.0f);
 
 	}
+
 
 	void OnBecameInvisible ()
 	{
@@ -177,8 +200,16 @@ public class AmmusController : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
+	public void Explode()
+	{
+		GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+		Destroy(explosionIns, 1.0f);
+		RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
 
-    /*
+		Destroy(gameObject);
+	}
+
+	/*
 	bool IsVisibleFrom2 (this Renderer parent, Camera camera)
 	{
 		Plane [] planes = GeometryUtility.CalculateFrustumPlanes (camera);
@@ -188,7 +219,8 @@ public class AmmusController : MonoBehaviour {
 
 
 
-    public void Explode(float viive)
+	/*
+	public void Explode(float viive)
     {
 		Destroy(gameObject);
 
@@ -201,6 +233,7 @@ public class AmmusController : MonoBehaviour {
 
 
 	}
+	*/
 
 
 

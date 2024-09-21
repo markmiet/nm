@@ -648,6 +648,8 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
             instanssi = Instantiate(ammusPrefab, new Vector3(
     ammusx, ammusy + lisays, 0), Quaternion.identity);
 
+
+            instanssi.transform.parent = gameObject.transform;
             /*
 
             float pysty = alus.transform.position.y - transform.position.y;

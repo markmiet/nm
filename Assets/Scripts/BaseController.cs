@@ -255,6 +255,7 @@ public class BaseController : MonoBehaviour
         return onkoTagiaBoxissa(tagname, boxinsize, vkboxlocation, layerMas);
     }
     */
+    /*
     public bool onkoTagiaBoxissa(string tagname, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
 
@@ -277,6 +278,46 @@ public class BaseController : MonoBehaviour
         return false;
 
     }
+    */
+
+    public bool onkoTagiaBoxissa(string name, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
+    {
+        Vector2 uusi = (Vector2)transform.position + boxlocation;
+
+        //foreach (string name in tagit)
+        //{
+        // Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
+        Collider2D[] cs = Physics2D.OverlapBoxAll(uusi, boxsize, 0f);
+
+        if (cs != null && cs.Length > 0)
+        {
+            foreach (Collider2D c in cs)
+            {
+                // Debug.Log("tagi=" + c.gameObject.tag);
+                if (c.gameObject == this.gameObject)
+                {
+
+                }
+                else if (c.gameObject.transform.parent == this.gameObject.transform)
+                {
+
+                }
+                else if (c.gameObject.tag.Contains(name))
+                {
+                    return true;
+                }
+            }
+        }
+
+
+        //}
+        return false;
+
+    }
+
+
+
+
     /*
     void OnDrawGizmos()
     {
@@ -318,7 +359,7 @@ public class BaseController : MonoBehaviour
 
     public void TeeBonus(GameObject bonus, Vector2 v2, Vector2 boxsize, int bonuksienmaara)
     {
-        for (int i=0;i< bonuksienmaara;i++)
+        for (int i = 0; i < bonuksienmaara; i++)
         {
             TeeBonusReal(bonus, v2, boxsize, bonuksienmaara);
         }
@@ -443,10 +484,11 @@ public class BaseController : MonoBehaviour
         return false;
 
     }
+
     //  private bool bonusjotehty = false;
 
 
-    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus,float ampumisevoimakkuus)
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
     {
         float pysty = alus.transform.position.y - transform.position.y;
         float vaaka = alus.transform.position.x - transform.position.x;
@@ -467,7 +509,7 @@ public class BaseController : MonoBehaviour
         float alusx = alusSpriteRenderer.bounds.center.x;
 
 
-       float ammusx= transform.position.x;
+        float ammusx = transform.position.x;
         float ammusy = transform.position.y;
 
         //ammusx = piipunboxit.bounds.center.x;
@@ -489,13 +531,13 @@ public class BaseController : MonoBehaviour
             return alus;
         }
         return null;
-        
+
     }
 
-    public void RajaytaSprite(GameObject go, int rows, int columns,float explosionForce,float alivetime)
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime)
     {
 
-        Sprite originalSprite= GetComponent<SpriteRenderer>().sprite;
+        Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
 
         // Get the original sprite's texture
         Texture2D texture = originalSprite.texture;
@@ -543,7 +585,7 @@ public class BaseController : MonoBehaviour
                 sliceObject.AddComponent<Rigidbody2D>();
                 pieceRigidbody.gravityScale = 0.5f;
                 pieceRigidbody.simulated = true;
-                
+
                 /*
                 BoxCollider2D p =
                 sliceObject.AddComponent<BoxCollider2D>();
@@ -587,10 +629,10 @@ public class BaseController : MonoBehaviour
         }
 
 
-      //  Debug.Log("Slicing completed. Number of slices: " + slicedSprites.Count);
+        //  Debug.Log("Slicing completed. Number of slices: " + slicedSprites.Count);
 
     }
-    void IgnoreChildCollisions(Transform parent)
+    public void IgnoreChildCollisions(Transform parent)
     {
 
         Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
@@ -605,5 +647,82 @@ public class BaseController : MonoBehaviour
             }
         }
     }
+
+
+    bool IsObjectRightOfCamera(Camera cam, Transform objTransform)
+    {
+        if (objTransform == null)
+        {
+            return false;
+        }
+        // Convert object's world position to viewport coordinates
+        Vector3 viewportPoint = cam.WorldToViewportPoint(objTransform.position);
+
+        // Check if the object is on the right side of the camera and not visible
+        // x > 1 means the object is beyond the right edge of the camera's view
+        // y should be between 0 and 1 (within the vertical bounds of the camera)
+        // z > 0 means the object is in front of the camera, not behind
+        return viewportPoint.x > 1 && viewportPoint.z > 0;
+    }
+
+    public bool IsObjectLeftOfCamera(GameObject go, float ero)
+    {
+
+        Vector3 objectPosition = go.transform.position;
+        Vector3 cameraPosition = Camera.main.transform.position;
+
+        // Check if the object is to the left of the camera
+        if (objectPosition.x < cameraPosition.x)
+        {
+            // Calculate the distance between the object and the camera
+            float distance = Vector3.Distance(objectPosition, cameraPosition);
+
+            // Check if the distance is approximately 1 unit
+            return distance >= ero;
+        }
+        return false;
+    }
+
+    public bool IsObjectLeftOfCamera(GameObject go)
+    {
+
+        return IsObjectLeftOfCamera(go, 1.0f);
+    }
+
+
+    public bool IsObjectDownOfCamera(GameObject go)
+    {
+
+        Vector3 objectPosition = go.transform.position;
+        Vector3 cameraPosition = Camera.main.transform.position;
+
+        // Check if the object is to the left of the camera
+        if (objectPosition.y < cameraPosition.y)
+        {
+            // Calculate the distance between the object and the camera
+            float distance = Vector3.Distance(objectPosition, cameraPosition);
+
+            // Check if the distance is approximately 1 unit
+            return distance >= 1.0f;
+        }
+        return false;
+    }
+    /*
+    public void IgnoreChildCollisions(Transform parent)
+    {
+
+        Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
+
+        for (int i = 0; i < childColliders.Length; i++)
+        {
+            Physics.IgnoreCollision(childColliders[i], parent.gameObject.GetComponent<Collider>());
+            for (int j = i + 1; j < childColliders.Length; j++)
+            {
+                Physics.IgnoreCollision(childColliders[i], childColliders[j]);
+
+            }
+        }
+    }
+    */
 
 }

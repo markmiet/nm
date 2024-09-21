@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1803048764405262496}
   m_Layer: 10
   m_Name: MakitaVihollinenAmmus
-  m_TagString: makitavihollinenammustag
+  m_TagString: makitavihollinenammusexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0577e2ca8bd2b1f62896ec13cf2c906a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedjonkaalletuhotaan: 1
 --- !u!58 &1803048764405262496
 CircleCollider2D:
   m_ObjectHideFlags: 0

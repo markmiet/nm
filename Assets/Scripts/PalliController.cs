@@ -172,7 +172,7 @@ public class PalliController : BaseController, IExplodable
     }
 
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
 
         if (alusGameObject != null)
@@ -478,7 +478,7 @@ public class PalliController : BaseController, IExplodable
 
                 }
 
-                bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, aloituspiste, layerMask);
+                bool onkotiiliatuossakohti = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizekeskella, aloituspiste, layerMask);
                 if (!onkotiiliatuossakohti)
                 {
                     float voima = jumpForce;
@@ -529,7 +529,7 @@ public class PalliController : BaseController, IExplodable
                     onkohypynsuuntavasemmalleKyseHyppytyypista2 = true;
                 }
 
-                bool onkotiiliatuossakohti = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizealhaalla, aloituspiste, layerMask);
+                bool onkotiiliatuossakohti = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizealhaalla, aloituspiste, layerMask);
                 if (onkotiiliatuossakohti)
                 {
                     //laskeutusmispaikka löytyi
@@ -690,7 +690,7 @@ public class PalliController : BaseController, IExplodable
     {
         // return true;
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizealhaalla, alaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizealhaalla, alaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -699,7 +699,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizelaidatalhaalla, vasenalaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizelaidatalhaalla, vasenalaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -708,7 +708,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizelaidatalhaalla, oikeaalaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizelaidatalhaalla, oikeaalaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -718,7 +718,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, oikeaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizekeskella, oikeaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -728,7 +728,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, oikeaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizekeskella, oikeaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -737,7 +737,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizekeskella, vasenboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizekeskella, vasenboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -746,7 +746,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeylhaalla, vasenylaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizeylhaalla, vasenylaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -755,7 +755,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeylhaalla, oikeaylaboxcenter, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizeylhaalla, oikeaylaboxcenter, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -763,7 +763,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeyla2, oikeayla2center, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizeyla2, oikeayla2center, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -772,7 +772,7 @@ public class PalliController : BaseController, IExplodable
     {
 
 
-        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissa(tagilistaJoitaTutkitaan, boxsizeyla2, vasenyla2center, layerMask);
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizeyla2, vasenyla2center, layerMask);
         return onkotiilioikeallaAlhaalla;
 
     }
@@ -784,26 +784,27 @@ public class PalliController : BaseController, IExplodable
 
     void OnBecameInvisible()
     {
-        if (true)
-            return;
-       if (!rb.IsAwake())
+        
+        if (gameObject==null)
         {
             return;
         }
-        //Debug.Log ("OnBecameInvisible");
-        // Destroy the enemy
-        //tuhoa = true;
-        if  (transform==null )
-        {
-            Debug.Log("transformi null");
-            return;
-        }
-        bool ollaankokameranoikealla = IsObjectRightOfCamera(Camera.main, transform);
-        if (!ollaankokameranoikealla)
+        bool vasemmalla=
+        IsObjectLeftOfCamera(gameObject);
+        if (vasemmalla)
         {
             Destroy(gameObject);
+            Debug.Log("vsen tuhoa");
+
         }
-        //onko 
+        bool alla = IsObjectDownOfCamera(gameObject);
+        if (alla)
+        {
+            Destroy(gameObject);
+            Debug.Log("alla tuhoa");
+
+        }
+        
     }
 
 
@@ -834,7 +835,7 @@ public class PalliController : BaseController, IExplodable
         tagit[0] = "pallovihollinenexplodetag";
 
        
-        bool ret = onkoTagiaBoxissa(tagit, boxsizekeskella, vasenboxcenter, layerMask);
+        bool ret = onkoTagiaBoxissaErikoisversio(tagit, boxsizekeskella, vasenboxcenter, layerMask);
         return ret;
     }
 
@@ -844,12 +845,12 @@ public class PalliController : BaseController, IExplodable
         tagit[0] = "pallovihollinenexplodetag";
 
 
-        bool ret = onkoTagiaBoxissa(tagit, boxsizekeskella, oikeaboxcenter, layerMask);
+        bool ret = onkoTagiaBoxissaErikoisversio(tagit, boxsizekeskella, oikeaboxcenter, layerMask);
         return ret;
     }
 
-
-    public bool onkoTagiaBoxissa(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
+    
+    public bool onkoTagiaBoxissaErikoisversio(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
         //string aa = "pallovihollinenexplodetag";
 
@@ -879,7 +880,7 @@ public class PalliController : BaseController, IExplodable
         return false;
 
     }
-
+    
     bool IsInView(Vector2 worldPosition)
     {
   

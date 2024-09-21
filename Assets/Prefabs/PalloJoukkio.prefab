@@ -45,7 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pallo: {fileID: 7639041830807167212, guid: ee7e3d1373326e1449e007d9eb0bbba7, type: 3}
-  alus: {fileID: 3294481396978785091, guid: 6de5a79242d8055cfaa4ee75beee2ef2, type: 3}
-  pallojenmaara: 10
+  pallojenmaara: 5
   gizmoColor: {r: 0, g: 1, b: 0, a: 1}
   gizmoRadius: 0.5
+  alabocenter: {x: 0, y: 0}
+  boxsizealhaalla: {x: 3, y: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024

@@ -16,17 +16,23 @@ public class BulletScript : MonoBehaviour
 
     }
 
+    public float nopeusjonkaalleTuhoutuu = 0.2f;
     // Update is called once per frame
     void Update()
+    {
+
+    }
+    private void FixedUpdate()
     {
         float speed = m_Rigidbody2D.velocity.magnitude;
         //       Debug.Log("ammuksen nopeus=" + speed);
 
-        if (speed < 0.5f)
+        if (speed <= nopeusjonkaalleTuhoutuu)
         {
             Destroy(gameObject);
         }
     }
+
 
     public void Alas(bool al)
     {

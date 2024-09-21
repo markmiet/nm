@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PalloJoukkioController : MonoBehaviour
+public class PalloJoukkioController : BaseController
 {
     // Start is called before the first frame update
 
@@ -11,30 +11,30 @@ public class PalloJoukkioController : MonoBehaviour
     public int pallojenmaara = 10;
     void Start()
     {
-     
-        
 
-        
+
+
+
     }
- 
+
     public Color gizmoColor = Color.green;
     public float gizmoRadius = 0.5f;
 
     // This method draws the Gizmo when the object is selected
-    private void OnDrawGizmos()
+
+    public void Awake()
     {
-        Gizmos.color = gizmoColor;
-        Gizmos.DrawSphere(transform.position, gizmoRadius);
+        //FixedUpdate2();
     }
-    
- private bool pallottehty = false;
+
+    private bool pallottehty = false;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         //  GameObject instanssi= Instantiate(pallo);
-        
+
         bool nakyvissa = IsObjectInView(Camera.main, transform);
         if (!nakyvissa)
         {
@@ -43,22 +43,86 @@ public class PalloJoukkioController : MonoBehaviour
         if (nakyvissa && !pallottehty)
         {
             pallottehty = true;
-            for (int i=0;i<pallojenmaara;i++)
+            int maara = 0;
+            for (int i = 0; i < pallojenmaara*10; i++)
             {
-                GameObject instanssi = Instantiate(pallo, new Vector3(
-    transform.position.x+i*4.0f, transform.position.y, 0), Quaternion.identity);
+                float xarvo = i * 4.0f;
+                float yarvo = 0.0f;// transform.position.y;
+                if (voikoInstantioida(xarvo, yarvo))
+                {
 
-              //  PalliController p = instanssi.GetComponent<PalliController>();
-              //  p.alusGameObject = alus;
+                    Vector3 v3 =
+new Vector3(
+transform.position.x + xarvo, transform.position.y +yarvo, 0);
+
+                    GameObject instanssi = Instantiate(pallo, v3, Quaternion.identity);
+                    maara++;
+                }
+                else
+                {
+                 //   Debug.Log("ei voi");
+                }
+
+                if (maara==pallojenmaara)
+                {
+                    break;
+                }
+                //  PalliController p = instanssi.GetComponent<PalliController>();
+                //  p.alusGameObject = alus;
             }
         }
-
-        
+        if (nakyvissa && pallottehty)
+        {
  
 
-       // instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+                SpriteRenderer[] ss =
+                GetComponentsInChildren<SpriteRenderer>();
+
+                if (ss != null)
+                {
+                    foreach (SpriteRenderer s in ss)
+                    {
+                        if (s.isVisible)
+                        {
+                            return;
+                        }
+                    }
+                }
+                Destroy(gameObject);
+           
+        }
+
+
+
+        // instanssi.GetComponent<Rigidbody2D>().velocity = ve;
 
     }
+
+    public Vector2 alabocenter = new Vector2(0, 0);
+    public Vector2 boxsizealhaalla = new Vector2(2, 2);
+
+    public LayerMask layerMask;
+    public bool voikoInstantioida(float pos, float posy)
+    {
+        Vector2 uusi = new Vector2(alabocenter.x + pos, alabocenter.y + posy);
+        //return !onkoTagiaBoxissa("vihollinen", boxsizealhaalla, uusi, layerMask);
+        return !onkoTagiaBoxissa("vihollinen", boxsizealhaalla, uusi, layerMask);
+
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = gizmoColor;
+        Gizmos.DrawSphere(transform.position, gizmoRadius);
+
+        Gizmos.color = Color.blue;
+
+        Gizmos.DrawWireCube((Vector2)transform.position + alabocenter, boxsizealhaalla);
+
+
+    }
+
 
 
     bool IsObjectInView(Camera cam, Transform objTransform)
