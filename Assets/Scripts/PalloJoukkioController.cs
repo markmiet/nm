@@ -9,6 +9,8 @@ public class PalloJoukkioController : BaseController
     public GameObject pallo;
     private GameObject alus;
     public int pallojenmaara = 10;
+    private int pallojennykymaara = 0;
+    private float viimeisinx = 0.0f;
     void Start()
     {
 
@@ -30,7 +32,7 @@ public class PalloJoukkioController : BaseController
     private bool pallottehty = false;
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
 
         //  GameObject instanssi= Instantiate(pallo);
@@ -42,28 +44,39 @@ public class PalloJoukkioController : BaseController
         }
         if (nakyvissa && !pallottehty)
         {
-            pallottehty = true;
-            int maara = 0;
-            for (int i = 0; i < pallojenmaara*10; i++)
+            
+     
+            bool instanssiluotu = false;
+            while (true)
             {
-                float xarvo = i * 4.0f;
+
+             
+                //float xarvo = i * 4.0f;
                 float yarvo = 0.0f;// transform.position.y;
-                if (voikoInstantioida(xarvo, yarvo))
+                if (voikoInstantioida(viimeisinx, yarvo))
                 {
 
                     Vector3 v3 =
 new Vector3(
-transform.position.x + xarvo, transform.position.y +yarvo, 0);
+transform.position.x + viimeisinx, transform.position.y + yarvo, 0);
 
                     GameObject instanssi = Instantiate(pallo, v3, Quaternion.identity);
-                    maara++;
+                    pallojennykymaara++;
+                    instanssiluotu = true;
                 }
                 else
                 {
-                 //   Debug.Log("ei voi");
+                    //   Debug.Log("ei voi");
                 }
+                viimeisinx = viimeisinx + 1.0f;
 
-                if (maara==pallojenmaara)
+                if (pallojennykymaara >= pallojenmaara)
+                {
+                    pallottehty = true;
+                    viimeisinx = 0.0f;
+                    break;
+                }
+                if (instanssiluotu)
                 {
                     break;
                 }
@@ -107,6 +120,8 @@ transform.position.x + xarvo, transform.position.y +yarvo, 0);
         Vector2 uusi = new Vector2(alabocenter.x + pos, alabocenter.y + posy);
         //return !onkoTagiaBoxissa("vihollinen", boxsizealhaalla, uusi, layerMask);
         return !onkoTagiaBoxissa("vihollinen", boxsizealhaalla, uusi, layerMask);
+
+
 
     }
 

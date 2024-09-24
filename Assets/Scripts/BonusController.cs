@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class BonusController : MonoBehaviour
 {
-    public float skrollimaara = 0.01f;
+    public float rotationTime = 4f; // Time for a full 360-degree rotation
+    private float elapsedTime = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     void OnBecameInvisible()
@@ -23,10 +25,19 @@ public class BonusController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float deltaAika = Time.deltaTime;
-        float maara = deltaAika * skrollimaara;
+        elapsedTime += Time.deltaTime;
 
-      //  transform.position = new Vector2(transform.position.x - maara, transform.position.y);
+        // Calculate the Y rotation angle (360 degrees)
+        float angle = (elapsedTime / rotationTime) * 360f;
+
+        // Apply rotation
+      //  transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+        // Reset elapsed time after a full rotation (optional)
+        if (elapsedTime >= rotationTime)
+        {
+            elapsedTime = 0f;
+        }
 
 
 

@@ -15,7 +15,7 @@ public class HaukiSilmaController : BaseController, IExplodable
 	public float nopeusjonkaalleTuhoutuu = 0.2f;
 	private bool tuhoa = false;
 	// Update is called once per frame
-	void FixedUpdate()
+	void Update()
     {
 		if (tuhoa)
 			return;

@@ -298,4 +298,41 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         Destroy(gameObject);
     }
 
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("alustag"))
+        {
+            Debug.Log("OnTriggerEnter2D estaPyoriminen(true) ");
+          //  col.gameObject.SendMessage("Explode");
+
+            IExplodable o =
+col.gameObject.GetComponent<IExplodable>();
+            if (o != null)
+            {
+                o.Explode();
+            }
+            else
+            {
+              //  Debug.Log("alus ja explode mutta ei ookkaan " + col.GetComponent<Collider>().tag);
+            }
+        }
+        else if (col.CompareTag("ammustag"))
+        {
+
+            Explode();
+            IExplodable o =
+col.gameObject.GetComponent<IExplodable>();
+            if (o != null)
+            {
+                o.Explode();
+            }
+            else
+            {
+                //Debug.Log("alus ja explode mutta ei ookkaan " + col..);
+            }
+        }
+
+    }
+
 }

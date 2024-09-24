@@ -199,50 +199,6 @@ public class AlusController : BaseController, IExplodable
 
 
 
-
-    }
-    public float turboviiveSekunneissa = 0.4f;
-    public float maksiminopeus = 0.08f;
-
-    public float kiihtyvyys = 0.05f;
-
-    private float oikeanappipainettukestoaika = 0.0f;
-
-    private float vasennappipainettukestoaika = 0.0f;
-
-
-    private float ylosnappipainettukestoaika = 0.0f;
-    private float alasnappipainettukestoaika = 0.0f;
-
-    public float perusnopeus = 0.05f;
-
-
-    float deltaaikojensumma = 0f;
-    void FixedUpdate()
-    {
-
-        if (gameover)
-        {
-            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
-+(m_SpriteRenderer.bounds.size.x / 2), 10, 0), Quaternion.identity);
-            //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
-
-            Destroy(instanssi, 1);
-        }
-
-
-        if (m_Animator.GetBool("explode"))
-        {
-
-            return;
-        }
-
-
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-
-        objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
-        objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
-
         float nappiHorizontal = Input.GetAxisRaw("Horizontal");
 
         oikeaNappiPainettu = (nappiHorizontal > 0.0f); // > 0 for right, < 0 for left
@@ -294,7 +250,52 @@ public class AlusController : BaseController, IExplodable
             Debug.Log("BonusButtonPressed");
             BonusButtonPressed();
         }
+
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
+
+
+    }
+    public float turboviiveSekunneissa = 0.4f;
+    public float maksiminopeus = 0.08f;
+
+    public float kiihtyvyys = 0.05f;
+
+    private float oikeanappipainettukestoaika = 0.0f;
+
+    private float vasennappipainettukestoaika = 0.0f;
+
+
+    private float ylosnappipainettukestoaika = 0.0f;
+    private float alasnappipainettukestoaika = 0.0f;
+
+    public float perusnopeus = 0.05f;
+
+
+    float deltaaikojensumma = 0f;
+    void FixedUpdate()
+    {
+
+        if (gameover)
+        {
+            GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
++(m_SpriteRenderer.bounds.size.x / 2), 10, 0), Quaternion.identity);
+            //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+
+            Destroy(instanssi, 1);
+        }
+
+
+        if (m_Animator.GetBool("explode"))
+        {
+
+            return;
+        }
+
+
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+
+        objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
 
 
 
@@ -319,11 +320,7 @@ public class AlusController : BaseController, IExplodable
             {
                 xsuuntamuutos += (oikeanappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
             }
-
-
             xsuuntamuutos += perusnopeus;
-
-
         }
         else
         {

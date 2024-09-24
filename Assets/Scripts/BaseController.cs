@@ -692,21 +692,99 @@ public class BaseController : MonoBehaviour
 
     public bool IsObjectDownOfCamera(GameObject go)
     {
+        Camera camera = Camera.main; // or reference your specific camera
+        float distance = 1f;
+
+        float height = 2 * Mathf.Tan(camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * distance;
+        float width = height * camera.aspect;
+
+        Debug.Log($"Camera Size (Perspective) - Width: {width}, Height: {height}");
+
 
         Vector3 objectPosition = go.transform.position;
         Vector3 cameraPosition = Camera.main.transform.position;
 
-        // Check if the object is to the left of the camera
+        // onko alla eli y pienempi
+
+        //y on suurempi ylh‰‰ll‰
+        //0-220
+        //y=-0.2
+        //z=-1
         if (objectPosition.y < cameraPosition.y)
         {
             // Calculate the distance between the object and the camera
-            float distance = Vector3.Distance(objectPosition, cameraPosition);
+            float distance2 = Vector3.Distance(objectPosition, cameraPosition);
 
             // Check if the distance is approximately 1 unit
-            return distance >= 1.0f;
+            return distance2 >= 10.0f;
         }
         return false;
     }
+
+    public bool OnkoYsuunnassaKamerassa(GameObject gameObject)
+    {
+        Camera camera = Camera.main; // Reference to the main camera
+        GameObject obj = gameObject; // Reference to the object you want to check
+
+        // Get the camera's orthographic size and aspect ratio
+        float height = camera.orthographicSize * 2; // Full height of the camera view
+        float width = height * camera.aspect; // Full width of the camera view
+
+        // Get the camera's position
+        Vector3 cameraPosition = camera.transform.position;
+
+        // Calculate the bounds of the camera view in world space
+        Vector3 topLeft = cameraPosition + new Vector3(-width / 2, height / 2, 0);
+        Vector3 bottomRight = cameraPosition + new Vector3(width / 2, -height / 2, 0);
+
+        // Get the object's Y position
+        float objYPosition = obj.transform.position.y;
+
+        // Check if the object's Y position is within the camera's bounds
+        bool isVisible = objYPosition >= bottomRight.y && objYPosition <= topLeft.y;
+
+        if (isVisible)
+        {
+          //  Debug.Log("The object is within the visible Y range of the camera.");
+            return true;
+        }
+        else
+        {
+          //  Debug.Log("The object is outside the visible Y range of the camera.");
+            return false;
+        }
+    }
+
+    public void TuhoaJosVaarassaPaikassa(GameObject go)
+    {
+
+        float y = go.transform.position.y;
+        float ykamera = Camera.main.transform.position.y;
+        float koko = Camera.main.orthographicSize;
+        
+
+        if (y>ykamera+koko+1.0f || y<ykamera-koko-1.0f)
+        {
+            Destroy(go);
+        }
+        /*
+       if (!OnkoYsuunnassaKamerassa(go))
+       {
+           Destroy(go);
+           return;
+       }
+
+  
+       */
+
+        if (IsObjectLeftOfCamera(go, 50.0f))
+        {
+            Debug.Log("object left of camerea" + go);
+            Destroy(go);
+            return;
+        }
+    }
+
     /*
     public void IgnoreChildCollisions(Transform parent)
     {

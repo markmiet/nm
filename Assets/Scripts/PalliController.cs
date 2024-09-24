@@ -87,7 +87,10 @@ public class PalliController : BaseController, IExplodable
         m_SpriteRenderer.color = color;
 
         float startAlpha = m_SpriteRenderer.color.a;
-      //  Debug.Log("alpha=" + startAlpha);
+        //  Debug.Log("alpha=" + startAlpha);
+
+        TuhoaJosVaarassaPaikassa(gameObject);
+
 
     }
 
@@ -171,18 +174,22 @@ public class PalliController : BaseController, IExplodable
         return m_SpriteRenderer.isVisible;
     }
 
+ 
+
 
     public void FixedUpdate()
     {
 
         if (alusGameObject != null)
         {
+  
 
-
+            /*
             if (!OnkoOkToimia())
             {
                 return;
             }
+            */
             rb.simulated = true;
 
 
@@ -784,7 +791,9 @@ public class PalliController : BaseController, IExplodable
 
     void OnBecameInvisible()
     {
-        
+        Destroy(gameObject);
+
+        /*
         if (gameObject==null)
         {
             return;
@@ -804,7 +813,21 @@ public class PalliController : BaseController, IExplodable
             Debug.Log("alla tuhoa");
 
         }
-        
+        */
+    }
+
+    private bool TuhoaJosKameranAlla()
+    {
+        bool alla = IsObjectDownOfCamera(gameObject);
+        if (alla)
+        {
+            Destroy(gameObject);
+            Debug.Log("alla tuhoa");
+            return true;
+        }
+        return false;
+
+
     }
 
 

@@ -13,17 +13,11 @@ public class PallerotScripti : BaseController
     }
 
     // Update is called once per frame
-    void Update()
+ 
+    public void Update()
     {
-        //
-     //   this.gameObject.
+        TuhoaJosVaarassaPaikassa(gameObject);
 
-
-       // this.gameObject.
-    }
-
-    private void FixedUpdate()
-    {
         /*
         SpriteRenderer[] ss =
         GetComponentsInChildren<SpriteRenderer>();
@@ -42,12 +36,12 @@ public class PallerotScripti : BaseController
 
         */
         //gameObject.transform.ge
-
+        /*
         if (IsObjectLeftOfCamera(gameObject,10.0f))
         {
             Destroy(gameObject);
         }
-        /*
+        
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             Transform child = gameObject.transform.GetChild(i);

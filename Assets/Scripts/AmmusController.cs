@@ -29,35 +29,35 @@ public class AmmusController : BaseController, IExplodable {
 	}
 
 	// Update is called once per frame
+	/*
 	void Update ()
 	{
-		/*
-	if (m_Renderer.isVisible) {
-		ollutnakyvissa = true;
 
-	}
-	if (!m_Renderer.isVisible && !firstime) {
-		ollutEinakyvissa = true;
-		Destroy (gameObject);
-	}
-
-
-	if (ollutEinakyvissa && ollutnakyvissa) {
-		Debug.Log ("ei visible destroy updatessa");
-
-		Destroy (gameObject);
-
-	}
-*/
 		firstime = false;
 	}
+	*/
 
+	private bool TuhoaJosKameranAlla()
+	{
+		bool alla = IsObjectDownOfCamera(gameObject);
+		if (alla)
+		{
+			Destroy(gameObject);
+			Debug.Log("alla tuhoa");
+			return true;
+		}
+		return false;
+
+
+	}
 
 	public float nopeusjonkaalleTuhoutuu = 0.2f;
 
 	private bool tuhoa = false;
-	void FixedUpdate ()
+	public void Update ()
 	{
+
+		
 		/*
 		if (tuhoa)
         {
@@ -84,6 +84,7 @@ public class AmmusController : BaseController, IExplodable {
 			Destroy(gameObject);
 		}
 
+		TuhoaJosVaarassaPaikassa(gameObject);
 
 		/*
 		if ( !m_Renderer.isVisible) {

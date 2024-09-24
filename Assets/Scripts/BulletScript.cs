@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletScript : BaseController,  IExplodable
 {
 
     public bool alas = true;
@@ -20,7 +20,7 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        TuhoaJosVaarassaPaikassa(gameObject);
     }
     private void FixedUpdate()
     {
@@ -161,6 +161,12 @@ col.gameObject.GetComponent<IExplodable>();
         // Destroy the enemy
         //tuhoa = true;
 
+        Destroy(gameObject);
+    }
+
+    public void Explode()
+    {
+       // RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
         Destroy(gameObject);
     }
 

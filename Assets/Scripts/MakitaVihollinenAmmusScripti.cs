@@ -15,31 +15,33 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 	}
 
 	// Update is called once per frame
-	void Update ()
-	{
-		//jos ei liiku tarpeeksi niin 
 
-		/*
-		Vector2 vv = new Vector2(alusx - ammusx,
-		   alusy - ammusy + lisays);
-
-		vv.Normalize();
-		vv.Scale(new Vector2(4.0f, 4.0f));
-
-		instanssi.GetComponent<Rigidbody2D>().velocity = vv;
-		*/
-
-	}
 
 
 	public float speedjonkaalletuhotaan = 0.5f;
-	void FixedUpdate ()
+
+	private bool TuhoaJosKameranAlla()
+	{
+		bool alla = IsObjectDownOfCamera(gameObject);
+		if (alla)
+		{
+			Destroy(gameObject);
+			Debug.Log("alla tuhoa");
+			return true;
+		}
+		return false;
+
+
+	}
+	void Update ()
 	{
 		/*
 		if (tuhoa) {
 			Destroy (gameObject);
 		}
 		*/
+
+
 
 		float x =
 m_Rigidbody2D.velocity.x;
@@ -49,18 +51,20 @@ m_Rigidbody2D.velocity.x;
 
 		if (speed <= speedjonkaalletuhotaan)
 		{
+			Debug.Log("liian hidas ammus tuhotaaan");
 			Destroy(gameObject);
 		}
+		TuhoaJosVaarassaPaikassa(gameObject);
 	}
 
 
 	void OnBecameInvisible ()
 	{
-//		Debug.Log ("OnBecameInvisible");
+		Debug.Log ("OnBecameInvisible");
 		// Destroy the enemy
 		//tuhoa = true;
 
-		Destroy (gameObject);
+	//	Destroy (gameObject);
 	}
 
 

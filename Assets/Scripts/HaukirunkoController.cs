@@ -61,7 +61,9 @@ public class HaukirunkoController : BaseController, IExplodable
     public float rotatetimeseconds = 2.0f;//sekkaa
     private float rotationTime = 0f;       // Timer to control the rotation
 
-    public float liikex = -0.1f;
+    public float liikex = -0.2f;
+
+    public float liikey = 1.0f;
 
     private SpriteRenderer haukisiivetspriterender;
 
@@ -121,6 +123,7 @@ public class HaukirunkoController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
+        TuhoaJosVaarassaPaikassa(gameObject);
 
     }
     private bool silmaheitettyilmaan = false;
@@ -135,6 +138,11 @@ public class HaukirunkoController : BaseController, IExplodable
     public float swaySpeed = 1.0f;          // Speed of the swaying (frequency of the tail movement)
 
     private float swayTimer = 0f;         // Timer for the sway
+
+
+    public float tippumisaikasiipienmenettamisenjalkeen = 0.6f;
+    private float kestoaikasiipienlahdosta = 0.0f;
+    private bool tippuminensuoritettu = false;
     public void FixedUpdate()
     {
         if (!OnkoOkLiikkua())
@@ -242,7 +250,35 @@ public class HaukirunkoController : BaseController, IExplodable
         }
         else
         {
-            m_Rigidbody2D.gravityScale = 0.5f;
+            if (!tippuminensuoritettu)
+            {
+                if (kestoaikasiipienlahdosta == 0.0f)
+                {
+                    kestoaikasiipienlahdosta = Time.deltaTime;
+                    m_Rigidbody2D.gravityScale = 0.5f;
+                    return;
+                }
+                else
+                {
+                    kestoaikasiipienlahdosta = kestoaikasiipienlahdosta += Time.deltaTime;
+
+                    if (kestoaikasiipienlahdosta >= tippumisaikasiipienmenettamisenjalkeen)
+                    {
+                        m_Rigidbody2D.gravityScale = 0.0f;
+                        m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
+                        tippuminensuoritettu = true;
+                        if (haukipaa==null)
+                        {
+                            Explode();
+                        }
+                    }
+                }
+            }
+
+
+          
+            //LiikuKunSiipiaEiOle();
+            return;
             //  haukipaa.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
             //    haukisilma.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
         }
@@ -265,12 +301,12 @@ public class HaukirunkoController : BaseController, IExplodable
 
             if (ylos && !OnkoTiiliYlhaalla())
             {
-                m_Rigidbody2D.velocity = new Vector2(liikex, 1.0f);
+                m_Rigidbody2D.velocity = new Vector2(liikex,liikey);
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 1.0f);
             }
             else if (alas && !OnkoTiiliAlhaalla())
             {
-                m_Rigidbody2D.velocity = new Vector2(liikex, -1.0f);
+                m_Rigidbody2D.velocity = new Vector2(liikex, -liikey);
                 // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, -1.0f);
             }
             else
@@ -299,6 +335,34 @@ public class HaukirunkoController : BaseController, IExplodable
         return haukisiivetspriterender.bounds.size.y;
         //         haukisiivetspriterender.size.y;
 
+    }
+
+
+    private void LiikuKunSiipiaEiOle()
+    {
+        if (!OnkoOkLiikkua())
+        {
+            return;
+        }
+        bool ylos = AlusYlhaalla();
+        bool alas = AlusAlhaalla();
+        // transform.position = new Vector2(transform.position.x + liikex, transform.position.y);
+        if (ylos && !OnkoTiiliYlhaalla())
+        {
+            m_Rigidbody2D.velocity = new Vector2(liikex, 0.5f);
+            
+            // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 1.0f);
+        }
+        else if (alas && !OnkoTiiliAlhaalla())
+        {
+            m_Rigidbody2D.velocity = new Vector2(liikex, -0.5f);
+            // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, -1.0f);
+        }
+        else
+        {
+            m_Rigidbody2D.velocity = new Vector2(liikex, 0.0f);
+            // haukipaa.GetComponent<Rigidbody2D>().velocity = new Vector2(liikex, 0.0f);
+        }
     }
 
     public bool AlusYlhaalla()
@@ -500,5 +564,18 @@ public class HaukirunkoController : BaseController, IExplodable
         //tuhoa = true;
 
         Destroy(gameObject);
+    }
+    private bool TuhoaJosKameranAlla()
+    {
+        bool alla = IsObjectDownOfCamera(gameObject);
+        if (alla)
+        {
+            Destroy(gameObject);
+            Debug.Log("alla tuhoa");
+            return true;
+        }
+        return false;
+
+
     }
 }

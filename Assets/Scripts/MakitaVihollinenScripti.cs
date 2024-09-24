@@ -79,25 +79,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
     bool vaihdaPolygonia = false;
     int pollaskuri = 0;
     // Update is called once per frame
-    void Update()
-    {
 
-        //if (vaihdaPolygonia && pollaskuri++ >= 11)
-        //{
-
-        //    PolygonCollider2D[] old = this.gameObject.GetComponents<PolygonCollider2D>();
-        //    foreach (PolygonCollider2D o in old)
-        //    {
-        //        Destroy(o);
-        //    }
-        //    this.gameObject.AddComponent<PolygonCollider2D>();
-        //    pollaskuri = 0;
-        //    vaihdaPolygonia = false;
-        //}
-
-
-
-    }
 
     bool firstime = true;
 
@@ -106,8 +88,23 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         return m_SpriteRenderer.isVisible;
     }
 
-    void FixedUpdate()
+    private bool TuhoaJosKameranAlla()
     {
+        bool alla = OnkoYsuunnassaKamerassa(gameObject);
+        if (!alla)
+        {
+            Destroy(gameObject);
+            Debug.Log("alla tuhoa");
+            return true;
+        }
+        return false;
+
+
+    }
+
+    void Update()
+    {
+        TuhoaJosVaarassaPaikassa(gameObject);
 
 
         if (alusSpriteRenderer == null || !OnkoOkLiikkua())
