@@ -11,20 +11,27 @@ public class AmmusController : BaseController, IExplodable {
 
 	private Rigidbody2D m_Rigidbody2D;
 
-
 	private Renderer m_Renderer;
 	private bool ollutnakyvissa = false;
 	private bool ollutEinakyvissa = false;
 	private bool firstime = true;
 
     public GameObject explosion;
-    	// Start is called before the first frame update
+	// Start is called before the first frame update
+
+	private AudioplayerController ad;
 	void Start ()
 	{
+		ad = FindObjectOfType<AudioplayerController>();
 		m_Rigidbody2D = GetComponent<Rigidbody2D> ();
 
 		m_Animator = GetComponent<Animator> ();
 		m_Renderer = GetComponent<Renderer> ();
+		//audiosourceexplode.Play();
+
+		//	audiosourceexplode = GetComponent<AudioSource>();
+
+	
 
 	}
 
@@ -57,7 +64,8 @@ public class AmmusController : BaseController, IExplodable {
 	public void Update ()
 	{
 
-		
+
+
 		/*
 		if (tuhoa)
         {
@@ -145,6 +153,11 @@ public class AmmusController : BaseController, IExplodable {
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
+
+
+
+
+
 		if (col.collider.tag.Equals("alustag"))
         {
 			return;
@@ -170,8 +183,11 @@ public class AmmusController : BaseController, IExplodable {
 				col.gameObject.GetComponent<IExplodable>();
 				if (o!=null)
                 {
+
+					Debug.Log("	rajahdys.Play() kuuluuko");
+					
 					o.Explode();
-                }
+				}
 				else
                 {
 					Debug.Log("vihollinen ja explode mutta ei ookkaan "+ col.collider.tag);

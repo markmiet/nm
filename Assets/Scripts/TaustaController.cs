@@ -75,7 +75,7 @@ public class TaustaController : BaseController
                     if (/*!edellisellaluotiin &&*/ randomNumber < todennakoisyysettatileluodaan)
                     {
                         //0,1,2,3
-                        int tiili = Random.Range(0, tile.Length-1);
+                        int tiili = Random.Range(0, tile.Length);
                         tilemap.SetTile(tilePosition, tile[tiili]);
                         edellisellaluotiin = true;
                     }

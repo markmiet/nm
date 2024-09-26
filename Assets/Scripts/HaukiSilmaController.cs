@@ -6,8 +6,10 @@ public class HaukiSilmaController : BaseController, IExplodable
 {
 	// Start is called before the first frame update
 	private Rigidbody2D m_Rigidbody2D;
+	private AudioplayerController ad;
 	void Start()
-    {
+	{
+		ad = FindObjectOfType<AudioplayerController>();
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 	}
 
@@ -53,7 +55,9 @@ public class HaukiSilmaController : BaseController, IExplodable
 
     public void Explode()
     {
-        RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
+		ad.ExplodePlay();
+
+		RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
         
             Destroy(gameObject);
     }

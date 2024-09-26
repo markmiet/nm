@@ -46,8 +46,10 @@ public class PalleroScripti : BaseController, IExplodable
     public float ampumisenvoimakkuus = 2.0f;
     public bool ammuBonuksenTekovaiheessa = true;
 
+    private AudioplayerController ad;
     void Start()
     {
+        ad = FindObjectOfType<AudioplayerController>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         //aloituspisteen perusteella 
         //transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
@@ -263,7 +265,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
         }
 
-
+        ad.ExplodePlay();
         // pallerotkokonaisuus = null;
         RajaytaSprite(gameObject, 10, 10, 10.0f, 0.1f);
         Destroy(gameObject);

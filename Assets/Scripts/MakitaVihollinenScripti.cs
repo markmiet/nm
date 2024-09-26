@@ -39,9 +39,10 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
     public GameObject bonus;
     private Vector2 boxsize;// = new Vector2(0, 0);
     public bool teebonus = false;
+    private AudioplayerController ad;
     void Start()
     {
-
+        ad = FindObjectOfType<AudioplayerController>();
         piipunboxit = GetComponentInChildren<BoxCollider2D>();
 
         m_Animator = GetComponent<Animator>();
@@ -732,10 +733,11 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
     public void Explode()
     {
+        ad.ExplodePlay();
 
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        RajaytaSprite(gameObject, 10, 10, 10.0f,0.2f);
-        Destroy(explosionIns, 1.0f);
+        RajaytaSprite(gameObject, 3, 3, 2.0f,1.2f); 
+        Destroy(explosionIns, 0.01f);
         Destroy(gameObject);
 
         Vector3 v3 =

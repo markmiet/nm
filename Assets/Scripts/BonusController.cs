@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BonusController : MonoBehaviour
+public class BonusController : BaseController
 {
     public float rotationTime = 4f; // Time for a full 360-degree rotation
     private float elapsedTime = 0f;
 
     // Start is called before the first frame update
+    private AudioplayerController ad;
     void Start()
     {
+        ad = FindObjectOfType<AudioplayerController>();
+        
 
     }
 
@@ -64,12 +67,14 @@ public class BonusController : MonoBehaviour
 
             // col.otherCollider.gameObject.SendMessage
             // col.otherCollider.gameObject.SendMessage("BonusCollected");
-
+            ad.BonusPlay();
+            RajaytaSprite(gameObject, 3, 3, 2.0f, 2f);
             Destroy(this.gameObject);
             AlusController myScript = col.otherCollider.gameObject.GetComponent<AlusController>();
             if (myScript!=null)
             {
                 myScript.BonusCollected();
+                
             }
             else
             {

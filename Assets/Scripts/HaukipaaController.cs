@@ -11,8 +11,10 @@ public class HaukipaaController : BaseController, IExplodable
 
     // Start is called before the first frame update
     private Sprite sprite;
+    private AudioplayerController ad;
     void Start()
     {
+        ad = FindObjectOfType<AudioplayerController>();
         //mit‰ tapahtuu kun hauen p‰‰h‰n osuu?
         //kuoleeko koko roska vai ei?
 
@@ -111,6 +113,8 @@ public class HaukipaaController : BaseController, IExplodable
     // Example of what could happen after the delay
     private void PerformAction()
     {
+        ad.ExplodePlay();
+
        // Debug.Log("Action performed after delay!");
         Destroy(gameObject);
      

@@ -51,8 +51,10 @@ public class PalliController : BaseController, IExplodable
     public int osumiemaarajokaTarvitaanRajahdykseen = 5;
     private float nykyinenosuminenmaara = 0.0f;
     private Vector2 boxsize;// = new Vector2(0, 0);
+    private AudioplayerController ad;
     void Start()
     {
+        ad = FindObjectOfType<AudioplayerController>();
         //   mainCamera = Camera.main;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -927,10 +929,12 @@ public class PalliController : BaseController, IExplodable
 
     public void ExplodeOikeasti()
     {
+        ad.ExplodePlay();
 
-        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        RajaytaSprite(gameObject, 10, 10, 10.0f, 0.6f);
-        Destroy(explosionIns);
+
+        //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+        RajaytaSprite(gameObject, 3, 3, 2.0f, 0.6f);
+      //  Destroy(explosionIns);
         Destroy(gameObject);
 
 

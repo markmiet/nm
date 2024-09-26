@@ -75,8 +75,10 @@ public class HaukirunkoController : BaseController, IExplodable
     private Quaternion hauenpaaquaternion;
 
     private Rigidbody2D m_Rigidbody2D;
+    private AudioplayerController ad;
     void Start()
     {
+        ad = FindObjectOfType<AudioplayerController>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         haukirunkospriterender = GetComponent<SpriteRenderer>();
 
@@ -383,6 +385,7 @@ public class HaukirunkoController : BaseController, IExplodable
 
     public void Explode()
     {
+        ad.ExplodePlay();
         Destroy(gameObject);
         RajaytaSprite(gameObject, 10, 10, 10.0f, 0.3f);
 

@@ -6,8 +6,12 @@ using UnityStandardAssets.CrossPlatformInput;
 public class AlusController : BaseController, IExplodable
 {
 
-  //  public GameObject speedbonusbutton;
-  //  public GameObject missilebonusbutton;
+
+
+
+
+    //  public GameObject speedbonusbutton;
+    //  public GameObject missilebonusbutton;
 
     public int ammustenmaksimaaraProperty;
 
@@ -148,10 +152,16 @@ public class AlusController : BaseController, IExplodable
 
     private Camera mainCamera;
     // Start is called before the first frame update
+
+
+
+    private AudioplayerController ad;
     void Start()
     {
-       // Application.targetFrameRate = 10; // For example, cap to 60 FPS
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+    //  audiosourcetaustamusiikki.Play();
+
+    // Application.targetFrameRate = 10; // For example, cap to 60 FPS
+    m_Rigidbody2D = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
 
         m_Animator = GetComponent<Animator>();
@@ -188,6 +198,8 @@ public class AlusController : BaseController, IExplodable
         bbc.Sort((a, b) => a.order.CompareTo(b.order));
 
 
+        ad = FindObjectOfType<AudioplayerController>();
+        ad.TaustaMusiikkiPlay();
     }
 
     private List<BonusButtonController> bbc = new List<BonusButtonController>();
@@ -436,7 +448,9 @@ public class AlusController : BaseController, IExplodable
             m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y, 0);
 
 
-
+            //audiosourcelaukaus.
+            //    audiosourcelaukaus.Play();
+            ad.AlusammusPlay();
 
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
@@ -622,6 +636,10 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(explosionIns, 1.0f);
         Debug.Log("gameover");
+
+        ad.ExplodePlay();
+
+        // audiosourceexplode.Play();
     }
 
 
@@ -787,6 +805,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
     public void BonusCollected()
     {
+     //   audiosourcebonus.Play();
+
         //Debug.Log("BonusCollected aluksella");
 
         //olemme koskeneet bonukseen
