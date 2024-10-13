@@ -932,9 +932,9 @@ public class PalliController : BaseController, IExplodable
         ad.ExplodePlay();
 
 
-        //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        RajaytaSprite(gameObject, 3, 3, 2.0f, 0.6f);
-      //  Destroy(explosionIns);
+          GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+        RajaytaSprite(gameObject, 3, 3, 2.0f, 1.0f);
+        Destroy(explosionIns,1.0f);
         Destroy(gameObject);
 
 

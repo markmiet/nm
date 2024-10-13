@@ -219,8 +219,8 @@ public class AmmusController : BaseController, IExplodable {
 
 	public void Explode()
 	{
-		GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-		Destroy(explosionIns, 1.0f);
+		//GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+	//	Destroy(explosionIns, 1.0f);
 		RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
 
 		Destroy(gameObject);
