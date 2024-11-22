@@ -15,7 +15,7 @@ C:/pr/nm
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-50790
+49161
 Successfully changed project path to: C:/pr/nm
 C:/pr/nm
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -49,18 +49,18 @@ C:/pr/nm
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [240500]  Target information:
+Player connection [63604]  Target information:
 
-Player connection [240500]  * "[IP] 172.19.208.1 [Port] 0 [Flags] 2 [Guid] 2243160576 [EditorId] 2243160576 [Version] 1048832 [Id] WindowsEditor(7,markokone) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63604]  * "[IP] 172.29.192.1 [Port] 0 [Flags] 2 [Guid] 4292733575 [EditorId] 4292733575 [Version] 1048832 [Id] WindowsEditor(7,markokone) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [240500]  * "[IP] 192.168.56.1 [Port] 0 [Flags] 2 [Guid] 2243160576 [EditorId] 2243160576 [Version] 1048832 [Id] WindowsEditor(7,markokone) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63604]  * "[IP] 192.168.56.1 [Port] 0 [Flags] 2 [Guid] 4292733575 [EditorId] 4292733575 [Version] 1048832 [Id] WindowsEditor(7,markokone) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [240500]  * "[IP] 192.168.32.129 [Port] 0 [Flags] 2 [Guid] 2243160576 [EditorId] 2243160576 [Version] 1048832 [Id] WindowsEditor(7,markokone) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [63604]  * "[IP] 192.168.32.129 [Port] 0 [Flags] 2 [Guid] 4292733575 [EditorId] 4292733575 [Version] 1048832 [Id] WindowsEditor(7,markokone) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [240500] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [240500] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [63604] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [63604] Host joined alternative multi-casting on [225.0.0.222:34997]...
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
-Refreshing native plugins compatible for Editor in 23.85 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 36.13 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.40f1 (cbdda657d2f0)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.40f1/Editor/Data/Resources/UnitySubsystems
@@ -76,47 +76,47 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.40f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.40f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.40f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56992
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56112
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.40f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.40f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.017429 seconds.
-- Loaded All Assemblies, in  0.809 seconds
+Registered in 0.025092 seconds.
+- Loaded All Assemblies, in  0.830 seconds
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 589 ms
+Android Extension - Scanning For ADB Devices 1292 ms
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.218 seconds
-Domain Reload Profiling: 2025ms
-	BeginReloadAssembly (201ms)
+- Finished resetting the current domain, in  2.038 seconds
+Domain Reload Profiling: 2864ms
+	BeginReloadAssembly (272ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (64ms)
-	RebuildNativeTypeToScriptingClass (18ms)
-	initialDomainReloadingComplete (93ms)
-	LoadAllAssembliesAndSetupDomain (429ms)
-		LoadAssemblies (198ms)
+		CreateAndSetChildDomain (2ms)
+	RebuildCommonClasses (65ms)
+	RebuildNativeTypeToScriptingClass (27ms)
+	initialDomainReloadingComplete (166ms)
+	LoadAllAssembliesAndSetupDomain (295ms)
+		LoadAssemblies (268ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (425ms)
-			TypeCache.Refresh (423ms)
-				TypeCache.ScanAssembly (400ms)
+		AnalyzeDomain (290ms)
+			TypeCache.Refresh (287ms)
+				TypeCache.ScanAssembly (262ms)
 			ScanForSourceGeneratedMonoScriptInfo (1ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (1220ms)
+	FinalizeReload (2039ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1149ms)
+		SetupLoadedEditorAssemblies (1942ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (813ms)
-			SetLoadedEditorAssemblies (7ms)
+			InitializePlatformSupportModulesInManaged (1572ms)
+			SetLoadedEditorAssemblies (9ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (4ms)
-			ProcessInitializeOnLoadAttributes (239ms)
-			ProcessInitializeOnLoadMethodAttributes (86ms)
+			BeforeProcessingInitializeOnLoad (5ms)
+			ProcessInitializeOnLoadAttributes (257ms)
+			ProcessInitializeOnLoadMethodAttributes (98ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -125,7 +125,7 @@ Domain Reload Profiling: 2025ms
 Worker process is ready to serve import requests
 Caller must complete domain reload
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.100 seconds
+- Loaded All Assemblies, in  1.331 seconds
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
 Package Manager log level set to [2]
@@ -133,51 +133,51 @@ Package Manager log level set to [2]
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.246 seconds
-Domain Reload Profiling: 2340ms
-	BeginReloadAssembly (270ms)
+- Finished resetting the current domain, in  1.290 seconds
+Domain Reload Profiling: 2613ms
+	BeginReloadAssembly (430ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (10ms)
+		DisableScriptedObjects (14ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (40ms)
-	RebuildCommonClasses (65ms)
-	RebuildNativeTypeToScriptingClass (24ms)
-	initialDomainReloadingComplete (89ms)
-	LoadAllAssembliesAndSetupDomain (645ms)
-		LoadAssemblies (558ms)
+		CreateAndSetChildDomain (47ms)
+	RebuildCommonClasses (116ms)
+	RebuildNativeTypeToScriptingClass (27ms)
+	initialDomainReloadingComplete (76ms)
+	LoadAllAssembliesAndSetupDomain (673ms)
+		LoadAssemblies (668ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (248ms)
-			TypeCache.Refresh (208ms)
-				TypeCache.ScanAssembly (181ms)
-			ScanForSourceGeneratedMonoScriptInfo (31ms)
-			ResolveRequiredComponents (7ms)
-	FinalizeReload (1247ms)
+		AnalyzeDomain (257ms)
+			TypeCache.Refresh (210ms)
+				TypeCache.ScanAssembly (183ms)
+			ScanForSourceGeneratedMonoScriptInfo (38ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (1291ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (951ms)
+		SetupLoadedEditorAssemblies (1005ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (58ms)
+			InitializePlatformSupportModulesInManaged (50ms)
 			SetLoadedEditorAssemblies (7ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (154ms)
-			ProcessInitializeOnLoadAttributes (652ms)
-			ProcessInitializeOnLoadMethodAttributes (70ms)
-			AfterProcessingInitializeOnLoad (11ms)
+			BeforeProcessingInitializeOnLoad (164ms)
+			ProcessInitializeOnLoadAttributes (717ms)
+			ProcessInitializeOnLoadMethodAttributes (56ms)
+			AfterProcessingInitializeOnLoad (10ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (10ms)
+		AwakeInstancesAfterBackupRestoration (8ms)
 Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
 Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
 Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
-Refreshing native plugins compatible for Editor in 7.17 ms, found 3 plugins.
+Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.10 seconds
+Refreshing native plugins compatible for Editor in 8.35 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2588 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 71 unused Assets / (4.7 MB). Loaded Objects now: 3031.
-Memory consumption went from 131.5 MB to 126.8 MB.
-Total: 8.872500 ms (FindLiveObjects: 0.314400 ms CreateObjectMapping: 0.432300 ms MarkObjects: 5.060300 ms  DeleteObjects: 3.063100 ms)
+Unloading 71 unused Assets / (4.8 MB). Loaded Objects now: 3031.
+Memory consumption went from 131.6 MB to 126.8 MB.
+Total: 7.332200 ms (FindLiveObjects: 0.279900 ms CreateObjectMapping: 0.207000 ms MarkObjects: 3.735200 ms  DeleteObjects: 3.107200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
@@ -194,609 +194,383 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 1725916.823544 seconds.
-  path: Assets/Art/darkpianoarrpgeggio.flac
-  artifactKey: Guid(8e5093247bfa27d41a2e2f0ddea06f95) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/darkpianoarrpgeggio.flac using Guid(8e5093247bfa27d41a2e2f0ddea06f95) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+  Time since last request: 251164.858407 seconds.
+  path: Assets/Art/2tausta.wav
+  artifactKey: Guid(f5536e22ce8e94b4e9d616081f510b7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/2tausta.wav using Guid(f5536e22ce8e94b4e9d616081f510b7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
- -> (artifact id: 'dc4372c009e494f2b23091c3e42b8403') in 0.140390 seconds
+ -> (artifact id: 'a6680c4b2e02ed76f80731648fcd0209') in 0.161270 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000133 seconds.
+  path: Assets/Art/HALLO-01.flac
+  artifactKey: Guid(9d4356000653b274d8a8aead16485202) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/HALLO-01.flac using Guid(9d4356000653b274d8a8aead16485202) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '4cc04f5c24ba3a0cadb008ab45065608') in 0.060123 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Art/FINALMODhalloweenidarpiano.flac
+  artifactKey: Guid(791d85b64b315644c89f5b3f32192af7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/FINALMODhalloweenidarpiano.flac using Guid(791d85b64b315644c89f5b3f32192af7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '50b0a3274f9de5465045956b9156ae62') in 0.057327 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000140 seconds.
+  path: Assets/Art/weird.wav
+  artifactKey: Guid(72db7e874409d794780e94b4681b3151) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/weird.wav using Guid(72db7e874409d794780e94b4681b3151) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '8c8a5526727c8b85f2eb37e20fa9e80a') in 0.090344 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Art/klassista.flac
+  artifactKey: Guid(fd2aa5d38e71bf343b35ad1792665ab9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/klassista.flac using Guid(fd2aa5d38e71bf343b35ad1792665ab9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '6dc626edfb57db66b4db5bc5247c26d1') in 0.067051 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/Art/weird-01.wav
+  artifactKey: Guid(3e55d559a8bed864a99cd7f8a241d6a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/weird-01.wav using Guid(3e55d559a8bed864a99cd7f8a241d6a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '4daf70d1108748d68d273139ad33e3fc') in 0.076959 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000353 seconds.
+  path: Assets/Art/halloween.wav
+  artifactKey: Guid(179b76e56237c0b40b8ae6364b29e4d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/halloween.wav using Guid(179b76e56237c0b40b8ae6364b29e4d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '50d75e3510504b60f838f95e05695674') in 0.054516 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
 ========================================================================
 Received Import Request.
   Time since last request: 0.000054 seconds.
-  path: Assets/Art/halloweeni.ogg
-  artifactKey: Guid(0b40c705ea969fe419e922ab1dfb11e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/halloweeni.ogg using Guid(0b40c705ea969fe419e922ab1dfb11e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+  path: Assets/Art/darkmodeyksinkertainen_hyvarytmi.wav
+  artifactKey: Guid(950958c2c141f66408e3e879477c79b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/darkmodeyksinkertainen_hyvarytmi.wav using Guid(950958c2c141f66408e3e879477c79b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
- -> (artifact id: 'c2190c7e04026b7b977a03121ca63ffa') in 0.030747 seconds
+ -> (artifact id: 'cd0d1e71b293cf76631f06ac20e0b172') in 0.063147 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
 ========================================================================
 Received Import Request.
   Time since last request: 0.000027 seconds.
-  path: Assets/Art/FINALMODhalloweeni.flac
-  artifactKey: Guid(5996435b68043a245a4c1947e5f87cf8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/FINALMODhalloweeni.flac using Guid(5996435b68043a245a4c1947e5f87cf8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+  path: Assets/Art/halloweeni.flac
+  artifactKey: Guid(5e53bb38ab01c2e40b2d9b708c8ceaf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/halloweeni.flac using Guid(5e53bb38ab01c2e40b2d9b708c8ceaf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
- -> (artifact id: 'e6c4e71beead869dbe52585f810f4825') in 0.029642 seconds
+ -> (artifact id: '7558f19f285fade8feb2f5dadc3de70e') in 0.071677 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Art/tahtisimppelixcf2.asset
+  artifactKey: Guid(c2c5d3fe859aac4469cb2aed2a808c06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/tahtisimppelixcf2.asset using Guid(c2c5d3fe859aac4469cb2aed2a808c06) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'f15942f21203b81e1c8d806be7a4752d') in 0.067531 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000092 seconds.
+  path: Assets/Art/tahtipieni3.asset
+  artifactKey: Guid(990a2321b8a8d944aa6760ab9fb9d268) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/tahtipieni3.asset using Guid(990a2321b8a8d944aa6760ab9fb9d268) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'be87567aae897ba15e713d3fcb19d38a') in 0.084947 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Art/tahtipieni.asset
+  artifactKey: Guid(9f1f1261998bacb4690ecd086ddb7129) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/tahtipieni.asset using Guid(9f1f1261998bacb4690ecd086ddb7129) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'd590db48728dd49a626a05345fcc050c') in 0.057775 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Art/spooky2.wav
+  artifactKey: Guid(be69548520e620b4a87e383d3143ca37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/spooky2.wav using Guid(be69548520e620b4a87e383d3143ca37) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '99bf88460f0b871217985e2bf1a471f4') in 0.073622 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Art/FINALdarkpianoviimeisincalfmult.flac
+  artifactKey: Guid(012d095170ac89948abc3518c059778c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/FINALdarkpianoviimeisincalfmult.flac using Guid(012d095170ac89948abc3518c059778c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '492436081adf4fdcea153457de6a1e69') in 0.095628 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/Art/1.wav
+  artifactKey: Guid(0f703972dcd70324bb9f518ff679f92c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/1.wav using Guid(0f703972dcd70324bb9f518ff679f92c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'cc1f2a115dfb093bc233d3bc9c31ffb9') in 0.123344 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Art/darkpianoviimeisin160tempo.wav
+  artifactKey: Guid(f3a248baabe15b0409dd0100727b3d0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/darkpianoviimeisin160tempo.wav using Guid(f3a248baabe15b0409dd0100727b3d0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'e66976e9f008bd2cbdd9e13653a8e651') in 0.066798 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Art/rytmikone2.wav
+  artifactKey: Guid(1ba0b16a71d13a64082785c534763d9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/rytmikone2.wav using Guid(1ba0b16a71d13a64082785c534763d9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '8c2e3f90401af8492053200e7d8dbabb') in 0.077835 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
 ========================================================================
 Received Import Request.
   Time since last request: 0.000041 seconds.
-  path: Assets/Art/halloween.wav
-  artifactKey: Guid(179b76e56237c0b40b8ae6364b29e4d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/halloween.wav using Guid(179b76e56237c0b40b8ae6364b29e4d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+  path: Assets/Art/darkpianorhytm.wav
+  artifactKey: Guid(2012223583be489429e53adeed39fd37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/darkpianorhytm.wav using Guid(2012223583be489429e53adeed39fd37) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
- -> (artifact id: '0425af3e9c7b9c990b4f13a93a5ee474') in 0.027825 seconds
+ -> (artifact id: '7f393827f92aa5f5fb355e68bdbc82a1') in 0.076170 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/Art/MODhalloweeni.flac
-  artifactKey: Guid(00104a7163215c74cb3401db0609dad6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/MODhalloweeni.flac using Guid(00104a7163215c74cb3401db0609dad6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+  Time since last request: 0.000057 seconds.
+  path: Assets/Art/tahtipieni2.asset
+  artifactKey: Guid(1c2df7720083ee14c89040d913252f2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/tahtipieni2.asset using Guid(1c2df7720083ee14c89040d913252f2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '2a252d50c623f2264cdca0d10b86a8c4') in 0.055478 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Art/FINALMODhalloweeni.flac
+  artifactKey: Guid(5996435b68043a245a4c1947e5f87cf8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/FINALMODhalloweeni.flac using Guid(5996435b68043a245a4c1947e5f87cf8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
- -> (artifact id: '898fd7414590bc4f171cb34688343e86') in 0.023922 seconds
+ -> (artifact id: 'bb212e6fcb1934645a3a0351d3281236') in 0.070972 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000111 seconds.
+  path: Assets/Art/uusialkurecover-04-tuuli.flac
+  artifactKey: Guid(0e685c57d6c2e3d47b22b2491a220e8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/uusialkurecover-04-tuuli.flac using Guid(0e685c57d6c2e3d47b22b2491a220e8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '1a5be682abe61e9c66a6dd6e9228d1b9') in 0.145567 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000100 seconds.
+  path: Assets/Art/halloweeni.wav
+  artifactKey: Guid(bfd684db6ebdbca4aa7236676e518ac2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/halloweeni.wav using Guid(bfd684db6ebdbca4aa7236676e518ac2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '1c7c8616ef42848401b17db5363bf7e3') in 0.074511 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/Art/24_clap01.ogg.wav
+  artifactKey: Guid(177e8a647a57e5b4e81418a4becaaf0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/24_clap01.ogg.wav using Guid(177e8a647a57e5b4e81418a4becaaf0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a2f3b6aab76c75b5f094fc22b90d4a7d') in 0.066131 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
 ========================================================================
 Received Import Request.
   Time since last request: 0.000056 seconds.
-  path: Assets/Art/FINALdarkpianoviimeisin.ogg
-  artifactKey: Guid(7de5722ac13561a48aaac330cf39283e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Art/FINALdarkpianoviimeisin.ogg using Guid(7de5722ac13561a48aaac330cf39283e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+  path: Assets/Art/rytmiversio.wav
+  artifactKey: Guid(3bf34b0bd23f5494f906d930dda76ac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/rytmiversio.wav using Guid(3bf34b0bd23f5494f906d930dda76ac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
- -> (artifact id: '4a15479715b40aa8eb6a3870ef9efa67') in 0.034800 seconds
+ -> (artifact id: 'a0e8c8dd9299cb654cc12641c41d4c50') in 0.069448 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
 ========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.010 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.699 seconds
-Domain Reload Profiling: 2704ms
-	BeginReloadAssembly (561ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (291ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (53ms)
-	RebuildCommonClasses (57ms)
-	RebuildNativeTypeToScriptingClass (25ms)
-	initialDomainReloadingComplete (51ms)
-	LoadAllAssembliesAndSetupDomain (311ms)
-		LoadAssemblies (443ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (17ms)
-			TypeCache.Refresh (9ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (7ms)
-	FinalizeReload (1700ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (967ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (42ms)
-			SetLoadedEditorAssemblies (7ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (130ms)
-			ProcessInitializeOnLoadAttributes (704ms)
-			ProcessInitializeOnLoadMethodAttributes (73ms)
-			AfterProcessingInitializeOnLoad (10ms)
-			EditorAssembliesLoaded (1ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (22ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 8.82 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 60 unused Assets / (4.7 MB). Loaded Objects now: 3044.
-Memory consumption went from 128.9 MB to 124.3 MB.
-Total: 6.587500 ms (FindLiveObjects: 0.540800 ms CreateObjectMapping: 0.332800 ms MarkObjects: 3.518900 ms  DeleteObjects: 2.192800 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Art/3spooky.wav
+  artifactKey: Guid(80387f51026fc67439d6774e63ba0a13) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/3spooky.wav using Guid(80387f51026fc67439d6774e63ba0a13) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '83318e7fc631b8db4cba5e05e12ebead') in 0.061399 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Art/channelitrauhallinen_versio.wav
+  artifactKey: Guid(a45232ad5229d0942b7ddff9b4d3541e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/channelitrauhallinen_versio.wav using Guid(a45232ad5229d0942b7ddff9b4d3541e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a6e85decefc9889399017a6afdb87bd2') in 0.078934 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Art/rytmitchannelitrauhallinen_versio.wav
+  artifactKey: Guid(14275098de53825459c04d849ab62c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/rytmitchannelitrauhallinen_versio.wav using Guid(14275098de53825459c04d849ab62c35) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '4a29b5260a12b0f2cdad7107ee0f596d') in 0.083882 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000068 seconds.
+  path: Assets/Scripts/WFXMR_ExplosiveSmoke Big.prefab
+  artifactKey: Guid(1ae4db7b36e51124b89d2b32303a7a0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/WFXMR_ExplosiveSmoke Big.prefab using Guid(1ae4db7b36e51124b89d2b32303a7a0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'f695f8ba5f4af6e4d42f300bd7d924c8') in 0.192801 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 35
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/Art/voikayttaa.wav
+  artifactKey: Guid(59c576e6347f32344ac8e7325a495e6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/voikayttaa.wav using Guid(59c576e6347f32344ac8e7325a495e6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '9d8f0c5d59409deb874fd5ed94ee2f04') in 0.070008 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/Art/explosion.wav
+  artifactKey: Guid(f184fb5b84acc48488e49f0b88c92234) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/explosion.wav using Guid(f184fb5b84acc48488e49f0b88c92234) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3dd1409cfb436b42aa58fb4b09966fa8') in 0.078612 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000088 seconds.
+  path: Assets/Art/HALLO-01.mp3
+  artifactKey: Guid(608a3d2da2facd04a979c9a44d1a4b2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/HALLO-01.mp3 using Guid(608a3d2da2facd04a979c9a44d1a4b2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a2d44af90fd59612eb70d56e40572f9e') in 0.070712 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 90.641884 seconds.
+  path: Assets/Art/FINALdarkpianoviimeisincalfmultiband.flac
+  artifactKey: Guid(eecee5b406fb5b44cb87bc1fa408db62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/FINALdarkpianoviimeisincalfmultiband.flac using Guid(eecee5b406fb5b44cb87bc1fa408db62) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3143992bd6e0fc4527d0931d0e2af8f8') in 0.001369 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 5.117349 seconds.
+  path: Assets/Art/darkmodealkukitaramuokattuok.wav
+  artifactKey: Guid(e5580b10604acdf40bbea1beeeea53d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/darkmodealkukitaramuokattuok.wav using Guid(e5580b10604acdf40bbea1beeeea53d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '868f53565b8505d661ca0b6dad0d3165') in 0.001674 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
 ========================================================================
 Received Prepare
 Caller must complete domain reload
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.031 seconds
+- Loaded All Assemblies, in  1.457 seconds
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.711 seconds
-Domain Reload Profiling: 2736ms
-	BeginReloadAssembly (565ms)
+- Finished resetting the current domain, in  2.222 seconds
+Domain Reload Profiling: 3673ms
+	BeginReloadAssembly (785ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (26ms)
+		DisableScriptedObjects (426ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (47ms)
-	RebuildCommonClasses (51ms)
-	RebuildNativeTypeToScriptingClass (18ms)
-	initialDomainReloadingComplete (43ms)
-	LoadAllAssembliesAndSetupDomain (346ms)
-		LoadAssemblies (454ms)
+		CreateAndSetChildDomain (78ms)
+	RebuildCommonClasses (61ms)
+	RebuildNativeTypeToScriptingClass (32ms)
+	initialDomainReloadingComplete (74ms)
+	LoadAllAssembliesAndSetupDomain (498ms)
+		LoadAssemblies (660ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (17ms)
-			TypeCache.Refresh (8ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (1712ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (917ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (39ms)
-			SetLoadedEditorAssemblies (8ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (161ms)
-			ProcessInitializeOnLoadAttributes (619ms)
-			ProcessInitializeOnLoadMethodAttributes (75ms)
-			AfterProcessingInitializeOnLoad (14ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (35ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 11.96 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.7 MB). Loaded Objects now: 3047.
-Memory consumption went from 129.0 MB to 124.3 MB.
-Total: 9.217200 ms (FindLiveObjects: 0.381900 ms CreateObjectMapping: 0.386800 ms MarkObjects: 4.664600 ms  DeleteObjects: 3.780200 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.984 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.584 seconds
-Domain Reload Profiling: 2564ms
-	BeginReloadAssembly (539ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (21ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (41ms)
-	RebuildCommonClasses (57ms)
-	RebuildNativeTypeToScriptingClass (18ms)
-	initialDomainReloadingComplete (46ms)
-	LoadAllAssembliesAndSetupDomain (319ms)
-		LoadAssemblies (445ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (17ms)
-			TypeCache.Refresh (8ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (1586ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (817ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (37ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (137ms)
-			ProcessInitializeOnLoadAttributes (577ms)
-			ProcessInitializeOnLoadMethodAttributes (41ms)
-			AfterProcessingInitializeOnLoad (18ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (28ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 8.27 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.7 MB). Loaded Objects now: 3050.
-Memory consumption went from 129.0 MB to 124.3 MB.
-Total: 6.214000 ms (FindLiveObjects: 0.289700 ms CreateObjectMapping: 0.346400 ms MarkObjects: 2.960300 ms  DeleteObjects: 2.615900 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.871 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  3.513 seconds
-Domain Reload Profiling: 5379ms
-	BeginReloadAssembly (1027ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (39ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (93ms)
-	RebuildCommonClasses (98ms)
-	RebuildNativeTypeToScriptingClass (35ms)
-	initialDomainReloadingComplete (93ms)
-	LoadAllAssembliesAndSetupDomain (610ms)
-		LoadAssemblies (819ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (30ms)
-			TypeCache.Refresh (11ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (1ms)
-			ResolveRequiredComponents (16ms)
-	FinalizeReload (3516ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1779ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (98ms)
-			SetLoadedEditorAssemblies (13ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (285ms)
-			ProcessInitializeOnLoadAttributes (1243ms)
-			ProcessInitializeOnLoadMethodAttributes (113ms)
-			AfterProcessingInitializeOnLoad (26ms)
-			EditorAssembliesLoaded (1ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (49ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 16.05 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.7 MB). Loaded Objects now: 3053.
-Memory consumption went from 129.0 MB to 124.3 MB.
-Total: 17.058900 ms (FindLiveObjects: 0.460400 ms CreateObjectMapping: 0.221500 ms MarkObjects: 6.446800 ms  DeleteObjects: 9.927100 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.931 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.558 seconds
-Domain Reload Profiling: 2485ms
-	BeginReloadAssembly (512ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (17ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (43ms)
-	RebuildCommonClasses (58ms)
-	RebuildNativeTypeToScriptingClass (19ms)
-	initialDomainReloadingComplete (50ms)
-	LoadAllAssembliesAndSetupDomain (287ms)
-		LoadAssemblies (398ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (18ms)
-			TypeCache.Refresh (8ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (9ms)
-	FinalizeReload (1559ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (859ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (40ms)
-			SetLoadedEditorAssemblies (4ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (161ms)
-			ProcessInitializeOnLoadAttributes (595ms)
-			ProcessInitializeOnLoadMethodAttributes (47ms)
-			AfterProcessingInitializeOnLoad (12ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (19ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 7.52 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.6 MB). Loaded Objects now: 3056.
-Memory consumption went from 128.9 MB to 124.3 MB.
-Total: 6.939100 ms (FindLiveObjects: 0.211600 ms CreateObjectMapping: 0.074600 ms MarkObjects: 4.224600 ms  DeleteObjects: 2.426900 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.114 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.684 seconds
-Domain Reload Profiling: 2790ms
-	BeginReloadAssembly (599ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (15ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (52ms)
-	RebuildCommonClasses (66ms)
-	RebuildNativeTypeToScriptingClass (27ms)
-	initialDomainReloadingComplete (63ms)
-	LoadAllAssembliesAndSetupDomain (349ms)
-		LoadAssemblies (504ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (25ms)
+		AnalyzeDomain (27ms)
 			TypeCache.Refresh (11ms)
 				TypeCache.ScanAssembly (0ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (1685ms)
+			ResolveRequiredComponents (14ms)
+	FinalizeReload (2223ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (785ms)
+		SetupLoadedEditorAssemblies (1055ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (48ms)
-			SetLoadedEditorAssemblies (5ms)
+			InitializePlatformSupportModulesInManaged (65ms)
+			SetLoadedEditorAssemblies (9ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (134ms)
-			ProcessInitializeOnLoadAttributes (535ms)
-			ProcessInitializeOnLoadMethodAttributes (50ms)
-			AfterProcessingInitializeOnLoad (14ms)
+			BeforeProcessingInitializeOnLoad (181ms)
+			ProcessInitializeOnLoadAttributes (729ms)
+			ProcessInitializeOnLoadMethodAttributes (55ms)
+			AfterProcessingInitializeOnLoad (15ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (25ms)
+		AwakeInstancesAfterBackupRestoration (38ms)
 Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
 Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
 Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 5.12 ms, found 3 plugins.
+Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
+Refreshing native plugins compatible for Editor in 28.03 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.7 MB). Loaded Objects now: 3059.
-Memory consumption went from 129.0 MB to 124.3 MB.
-Total: 9.799500 ms (FindLiveObjects: 0.487800 ms CreateObjectMapping: 1.089200 ms MarkObjects: 5.393500 ms  DeleteObjects: 2.826900 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.062 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.518 seconds
-Domain Reload Profiling: 2576ms
-	BeginReloadAssembly (617ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (18ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (52ms)
-	RebuildCommonClasses (51ms)
-	RebuildNativeTypeToScriptingClass (24ms)
-	initialDomainReloadingComplete (48ms)
-	LoadAllAssembliesAndSetupDomain (317ms)
-		LoadAssemblies (443ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (18ms)
-			TypeCache.Refresh (8ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (1ms)
-			ResolveRequiredComponents (9ms)
-	FinalizeReload (1520ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (730ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (36ms)
-			SetLoadedEditorAssemblies (6ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (131ms)
-			ProcessInitializeOnLoadAttributes (504ms)
-			ProcessInitializeOnLoadMethodAttributes (44ms)
-			AfterProcessingInitializeOnLoad (9ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (20ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 8.30 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.7 MB). Loaded Objects now: 3062.
-Memory consumption went from 129.0 MB to 124.3 MB.
-Total: 8.835900 ms (FindLiveObjects: 0.338700 ms CreateObjectMapping: 0.377900 ms MarkObjects: 5.871300 ms  DeleteObjects: 2.245200 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  1.133 seconds
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
-[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
-[Package Manager] Cannot connect to Unity Package Manager local server
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.448 seconds
-Domain Reload Profiling: 2574ms
-	BeginReloadAssembly (598ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (24ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (60ms)
-	RebuildCommonClasses (57ms)
-	RebuildNativeTypeToScriptingClass (19ms)
-	initialDomainReloadingComplete (61ms)
-	LoadAllAssembliesAndSetupDomain (390ms)
-		LoadAssemblies (515ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (19ms)
-			TypeCache.Refresh (8ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (10ms)
-	FinalizeReload (1448ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (723ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (47ms)
-			SetLoadedEditorAssemblies (5ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (110ms)
-			ProcessInitializeOnLoadAttributes (506ms)
-			ProcessInitializeOnLoadMethodAttributes (42ms)
-			AfterProcessingInitializeOnLoad (13ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (20ms)
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Diffuse': fallback shader 'Particles/Alpha Blended' not found
-Shader 'WFX/Transparent Specular': fallback shader 'Particles/Alpha Blended' not found
-Refreshing native plugins compatible for Editor in 9.62 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2578 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 59 unused Assets / (4.6 MB). Loaded Objects now: 3065.
-Memory consumption went from 128.9 MB to 124.3 MB.
-Total: 8.046200 ms (FindLiveObjects: 0.269400 ms CreateObjectMapping: 0.233100 ms MarkObjects: 5.134100 ms  DeleteObjects: 2.406800 ms)
+Unloading 60 unused Assets / (4.7 MB). Loaded Objects now: 3050.
+Memory consumption went from 129.3 MB to 124.6 MB.
+Total: 8.686400 ms (FindLiveObjects: 0.329500 ms CreateObjectMapping: 0.323200 ms MarkObjects: 4.117000 ms  DeleteObjects: 3.914500 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):

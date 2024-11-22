@@ -779,7 +779,7 @@ public class BaseController : MonoBehaviour
 
         if (IsObjectLeftOfCamera(go, 50.0f))
         {
-            Debug.Log("object left of camerea" + go);
+       //     Debug.Log("object left of camerea" + go);
             Destroy(go);
             return;
         }

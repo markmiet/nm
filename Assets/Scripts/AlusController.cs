@@ -158,10 +158,10 @@ public class AlusController : BaseController, IExplodable
     private AudioplayerController ad;
     void Start()
     {
-    //  audiosourcetaustamusiikki.Play();
-
-    // Application.targetFrameRate = 10; // For example, cap to 60 FPS
-    m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        //  audiosourcetaustamusiikki.Play();
+     //   Application.targetFrameRate = 45;
+        // Application.targetFrameRate = 10; // For example, cap to 60 FPS
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
 
         m_Animator = GetComponent<Animator>();
@@ -207,6 +207,12 @@ public class AlusController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
+        {
+            Debug.Log("Application would quit now.");
+            Application.Quit();
+        }
+
         m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
 
 
@@ -257,7 +263,7 @@ public class AlusController : BaseController, IExplodable
             spaceNappiaPainettu = false;
         }
 
-        if (Input.GetKey(KeyCode.N))
+        if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus") )
         {
             Debug.Log("BonusButtonPressed");
             BonusButtonPressed();
@@ -564,7 +570,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         // asetaSijainti();
 
-
+      //  Explode();
     }
 
     private void asetaSijainti()
@@ -635,7 +641,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         */
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(explosionIns, 1.0f);
-        Debug.Log("gameover");
+       // Debug.Log("gameover");
 
         ad.ExplodePlay();
 

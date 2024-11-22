@@ -26,7 +26,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 		if (alla)
 		{
 			Destroy(gameObject);
-			Debug.Log("alla tuhoa");
+			//Debug.Log("alla tuhoa");
 			return true;
 		}
 		return false;
@@ -47,7 +47,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 m_Rigidbody2D.velocity.x;
 		float y = m_Rigidbody2D.velocity.y;
 		float speed = m_Rigidbody2D.velocity.magnitude;
-		Debug.Log("ammuksen nopeus=" + speed);
+		//Debug.Log("ammuksen nopeus=" + speed);
 
 		if (speed <= speedjonkaalletuhotaan)
 		{
@@ -60,7 +60,7 @@ m_Rigidbody2D.velocity.x;
 
 	void OnBecameInvisible ()
 	{
-		Debug.Log ("OnBecameInvisible");
+	//	Debug.Log ("OnBecameInvisible");
 		// Destroy the enemy
 		//tuhoa = true;
 
@@ -93,7 +93,7 @@ col.gameObject.GetComponent<IExplodable>();
 			}
 			else
 			{
-				Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
+		//		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
 			}
 		}
 		else if (col.collider.CompareTag("tiilivihollinentag"))
@@ -106,7 +106,7 @@ col.gameObject.GetComponent<IExplodable>();
 		else if (col.collider.CompareTag("makitavihollinenexplodetag") &&
 			col.gameObject.transform == gameObject.transform.parent
 			) {
-			Debug.Log("ampui itesaan ignere");
+		//	Debug.Log("ampui itesaan ignere");
 			//instanssi.transform.parent = gameObject.transform;
 
 		}

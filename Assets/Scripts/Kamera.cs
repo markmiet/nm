@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Kamera : MonoBehaviour
 {
-	float y = 0f;
+    float y = 0f;
 
-	public GameObject alus;
+    public GameObject alus;
     public float skrollimaara;
     // Start is called before the first frame update
     void Start()
     {
-		y = alus.transform.position.y; 
+        y = alus.transform.position.y;
     }
 
     // Update is called once per frame
@@ -21,14 +21,15 @@ public class Kamera : MonoBehaviour
 
 
         Vector3 skrolli = new Vector3(skrollimaara, 0f, 0f) * Time.deltaTime;
+        Debug.Log("skrolli=" + skrolli);
 
         transform.position += skrolli;
-        if (alus!=null)
+        if (alus != null)
         {
             alus.transform.position += skrolli;
-            
+
         }
-       
+
 
     }
 }

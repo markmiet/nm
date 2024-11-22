@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class TaustaController : BaseController
 {
-    public float parallaxFactor = 0.5f;  // The speed factor for the background movement
+    //public float parallaxFactor = 0.5f;  // The speed factor for the background movement
 
     private Tilemap tilemap;  // Reference to the Tilemap component
     public TileBase[] tile;    // The tile you want to set
 
 
-    private Vector3 lastCameraPosition;
+    //private Vector3 lastCameraPosition;
     public float ysaato = 0.0f;
     public float xsaato = 0.0f;
     public int todennakoisyysettatileluodaan = 0;
@@ -42,18 +42,24 @@ public class TaustaController : BaseController
         tilemap = GetComponent<Tilemap>();
         if (tilemap != null)
         {
-            Debug.Log("Tilemap found.");
+            //Debug.Log("Tilemap found.");
         }
         else
         {
             Debug.LogWarning("Tilemap not found.");
         }
-        lastCameraPosition = Camera.main.transform.position;
+        //lastCameraPosition = Camera.main.transform.position;
+
+       
+
+
+        // Cache the camera's transform for efficiency
+        cameraTransform = Camera.main.transform;
+
+        // Initialize the last camera position
+        lastCameraPosition = cameraTransform.position;
 
         TeeRandomit();
-
-
-
 
     }
 
@@ -121,17 +127,33 @@ public class TaustaController : BaseController
     }
 
 
-    public void Update()
+    public float parallaxFactor = 0.5f; // Lower values for slower movement (further away)
+
+    private Vector3 lastCameraPosition; // Tracks the camera's last position
+    private Transform cameraTransform; // Cached reference to the camera's transform
+
+    /*
+    void Start()
+    {
+        // Cache the camera's transform for efficiency
+        cameraTransform = Camera.main.transform;
+
+        // Initialize the last camera position
+        lastCameraPosition = cameraTransform.position;
+    }
+    */
+
+    void Update()
     {
         
-      //  TyhjaaKaikkiTilet(tilemap);
-      //  TeeRandomit();
+        // Calculate the camera's movement since the last frame
+        Vector3 cameraMovement = cameraTransform.position - lastCameraPosition;
 
-        Vector3 cameraMovement = Camera.main.transform.position - lastCameraPosition;
-
-        // Move the background in proportion to the camera movement but slower (parallaxFactor)
+        // Move the background in proportion to the camera movement
         transform.position += new Vector3(cameraMovement.x * parallaxFactor, cameraMovement.y * parallaxFactor, 0);
+
         // Update the last camera position for the next frame
-        lastCameraPosition = Camera.main.transform.position;
+        lastCameraPosition = cameraTransform.position;
+        
     }
 }
