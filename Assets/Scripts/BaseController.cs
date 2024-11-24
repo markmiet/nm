@@ -755,8 +755,17 @@ public class BaseController : MonoBehaviour
         }
     }
 
+
+    GameObject alamaksimi = null;
+
     public void TuhoaJosVaarassaPaikassa(GameObject go)
     {
+
+        if (alamaksimi==null)
+        {
+            alamaksimi = GameObject.FindWithTag("alamaksiminmaarittavatag");
+        }
+       
 
         float y = go.transform.position.y;
         float ykamera = Camera.main.transform.position.y;
@@ -766,7 +775,11 @@ public class BaseController : MonoBehaviour
         if (y>ykamera+koko+1.0f || y<ykamera-koko-1.0f)
         {
             Destroy(go);
+            return;
         }
+
+
+
         /*
        if (!OnkoYsuunnassaKamerassa(go))
        {
@@ -782,6 +795,18 @@ public class BaseController : MonoBehaviour
        //     Debug.Log("object left of camerea" + go);
             Destroy(go);
             return;
+        }
+        float objectHeight = 0.0f;
+        SpriteRenderer renderer = go.GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            objectHeight = renderer.bounds.size.y; // Half height for top/bottom calculation
+        }
+
+
+        if (y + objectHeight < alamaksimi.transform.position.y )
+        {
+            Destroy(go);
         }
     }
 
