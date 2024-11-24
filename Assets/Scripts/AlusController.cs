@@ -250,7 +250,10 @@ public class AlusController : BaseController, IExplodable
 
         //spaceNappiaPainettu = Input.GetKeyDown (KeyCode.Space);
         // Input.GetKey
-        if (Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("Jump"))
+
+        //CrossPlatformInputManager.GetButton
+
+        if (Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButton("Jump"))
         {
             //Shoot ();
             //		Debug.Log ("space painettu " );
