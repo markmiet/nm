@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class AlusController : BaseController, IExplodable
 {
 
-
-
+    public InputActionReference moveInputActionReference;
 
 
     //  public GameObject speedbonusbutton;
@@ -207,6 +207,8 @@ public class AlusController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
+        Vector2 moveDirection = moveInputActionReference.action.ReadValue<Vector2>();
+
         if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
         {
             Debug.Log("Application would quit now.");
@@ -215,9 +217,12 @@ public class AlusController : BaseController, IExplodable
 
         m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
 
+        
 
+        //float nappiHorizontal = Input.GetAxisRaw("Horizontal");
 
-        float nappiHorizontal = Input.GetAxisRaw("Horizontal");
+        float nappiHorizontal = moveDirection.x;
+
 
         oikeaNappiPainettu = (nappiHorizontal > 0.0f); // > 0 for right, < 0 for left
         vasenNappiPainettu = (nappiHorizontal < 0.0f);
@@ -231,7 +236,9 @@ public class AlusController : BaseController, IExplodable
 
 
 
-        float nappiVertical = Input.GetAxisRaw("Vertical");
+        //float nappiVertical = Input.GetAxisRaw("Vertical");
+
+        float nappiVertical = moveDirection.y;
 
 
         ylosNappiPainettu = nappiVertical > 0; // > 0 for right, < 0 for left
