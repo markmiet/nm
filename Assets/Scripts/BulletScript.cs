@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : BaseController,  IExplodable
+public class BulletScript : BaseController,  IExplodable, IAlas
 {
 
     public bool alas = true;

@@ -19,6 +19,11 @@ public class BaseController : MonoBehaviour
     public Vector3 palautaScreenpositioneissa(int positionumero)
     {
 
+        if (aluksenpositiotCameraViewissa == null || positionumero >= aluksenpositiotCameraViewissa.Count)
+        {
+            return Vector3.zero; // Return a default value
+        }
+
         return aluksenpositiotCameraViewissa[positionumero];
     }
 

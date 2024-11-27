@@ -10,6 +10,12 @@ public class AlusController : BaseController, IExplodable
     public InputActionReference moveInputActionReference;
 
 
+    public InputActionReference moveDownInputActionReference;
+
+    public InputActionReference moveUpInputActionReference;
+
+
+    public bool autofire;
     //  public GameObject speedbonusbutton;
     //  public GameObject missilebonusbutton;
 
@@ -200,7 +206,36 @@ public class AlusController : BaseController, IExplodable
 
         ad = FindObjectOfType<AudioplayerController>();
         ad.TaustaMusiikkiPlay();
+
+        TeeOptioni();
+
+
+
+
     }
+
+    private void TeeOptioni()
+    {
+        Vector3 vektori =
+new Vector3(
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+
+        GameObject instanssiOption = Instantiate(instanssiOption1, vektori, Quaternion.identity);
+        //  instanssiOption.transform.SetParent(transform);
+
+
+        OptionController myScript = instanssiOption.GetComponent<OptionController>();
+        if (myScript != null)
+        {
+            myScript.jarjestysnro = nykyinenoptioidenmaara;
+            optionControllerit.Add(myScript);
+        }
+        else
+        {
+            Debug.Log("ei ole controlleria");
+        }
+    }
+
 
     private List<BonusButtonController> bbc = new List<BonusButtonController>();
 
@@ -208,6 +243,12 @@ public class AlusController : BaseController, IExplodable
     void Update()
     {
         Vector2 moveDirection = moveInputActionReference.action.ReadValue<Vector2>();
+
+
+        float moveDirectionAlas  =moveDownInputActionReference.action.ReadValue<float>();
+
+        float moveDirectionUp= moveUpInputActionReference.action.ReadValue<float>();
+
 
         if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
         {
@@ -219,9 +260,9 @@ public class AlusController : BaseController, IExplodable
 
         
 
-        //float nappiHorizontal = Input.GetAxisRaw("Horizontal");
+        float nappiHorizontal = Input.GetAxisRaw("Horizontal");
 
-        float nappiHorizontal = moveDirection.x;
+        //float nappiHorizontal = moveDirection.x;
 
 
         oikeaNappiPainettu = (nappiHorizontal > 0.0f); // > 0 for right, < 0 for left
@@ -236,9 +277,16 @@ public class AlusController : BaseController, IExplodable
 
 
 
-        //float nappiVertical = Input.GetAxisRaw("Vertical");
+        float nappiVertical = Input.GetAxisRaw("Vertical");
 
-        float nappiVertical = moveDirection.y;
+        // float nappiVertical = moveDirection.y;
+
+        //float nappiVertical = -moveDirectionAlas;
+
+        //if (nappiVertical == 0.0)
+        //{
+        //    nappiVertical = moveDirectionUp;
+        //}
 
 
         ylosNappiPainettu = nappiVertical > 0; // > 0 for right, < 0 for left
@@ -260,7 +308,7 @@ public class AlusController : BaseController, IExplodable
 
         //CrossPlatformInputManager.GetButton
 
-        if (Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButton("Jump"))
+        if (autofire  || Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButton("Jump"))
         {
             //Shoot ();
             //		Debug.Log ("space painettu " );
@@ -356,7 +404,9 @@ public class AlusController : BaseController, IExplodable
         }
         if (vasenNappiPainettu)
         {
-            vasennappipainettukestoaika += Time.deltaTime;
+            //vasennappipainettukestoaika += Time.deltaTime;//OLI AIEMMIN
+            vasennappipainettukestoaika += Time.fixedDeltaTime;
+
 
             if (vasennappipainettukestoaika > turboviiveSekunneissa)
             {
@@ -389,7 +439,8 @@ public class AlusController : BaseController, IExplodable
         }
         if (alasNappiPainettu)
         {
-            alasnappipainettukestoaika += Time.deltaTime;
+            alasnappipainettukestoaika += Time.deltaTime;// OLI AIEMMIN
+            alasnappipainettukestoaika += Time.fixedDeltaTime;
             if (alasnappipainettukestoaika > turboviiveSekunneissa)
             {
                 ysuuntamuutos -= (alasnappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
@@ -453,7 +504,9 @@ public class AlusController : BaseController, IExplodable
 
         bool ammusinstantioitiin = false;
 
-        float aika = Time.deltaTime;
+        //float aika = Time.deltaTime;//OLI AIEMMIN
+        float aika = Time.fixedDeltaTime;
+
         deltaaikojensumma += aika;
 
         if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive && onkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
@@ -491,11 +544,14 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
                 instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
-                instanssiBulletAlas.SendMessage("Alas", true);
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
-
-
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                IAlas alas= instanssiBulletAlas.GetComponent<IAlas>();
+                if (alas!=null)
+                {
+                    //instanssiBulletAlas.SendMessage("Alas", true);
+                    alas.Alas(true);
+                    instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
+                    instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                }
 
             }
 
@@ -512,7 +568,15 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
                 instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
                 instanssiBulletYlos.SendMessage("Alas", false);
-                instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
+
+                IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
+                if (alas != null)
+                {
+                    //instanssiBulletAlas.SendMessage("Alas", true);
+                    alas.Alas(false);
+                }
+
+                    instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
 
                 instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
 
@@ -525,6 +589,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         if (teeOptionPallukka)
         {
 
+            TeeOptioni();
+            /*
             Vector3 vektori =
     new Vector3(
     m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
@@ -546,16 +612,21 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             }
 
             //    instanssiOption.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            */
             teeOptionPallukka = false;
         }
 
         tallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
 
+
+
+
     private void ammuOptioneilla()
     {
         foreach (OptionController obj in optionControllerit)
         {
+         //   obj.gameObject.transform.position
             // Set the position
             obj.ammuNormilaukaus(ammusPrefab);
             if (missileDownCollected >= 1)

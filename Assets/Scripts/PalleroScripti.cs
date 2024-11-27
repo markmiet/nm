@@ -148,6 +148,9 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
     private float kestoaika = 0.0f;
 
+
+    public float liikevasemmalle = -0.1f;//oli 
+
     void FixedUpdate()
     {
 
@@ -187,7 +190,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
                 }
                 else
                 {
-                    m_Rigidbody2D.velocity = new Vector2(-1f, 0);
+                    m_Rigidbody2D.velocity = new Vector2(liikevasemmalle, 0);
                     return;
                 }
             }
@@ -200,7 +203,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         // m_Rigidbody2D.velocity = new Vector2(vauhtiOikea, vauhtiYlos);
         if (menossavasemmalle)
         {
-            m_Rigidbody2D.velocity = new Vector2(-1f, 0);
+            m_Rigidbody2D.velocity = new Vector2(liikevasemmalle, 0);
 
             vasenkertojamaara++;
 
@@ -297,7 +300,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         // Destroy the enemy
         //tuhoa = true;
 
-        Destroy(gameObject);
+  //      Destroy(gameObject);
     }
 
 
@@ -331,7 +334,7 @@ col.gameObject.GetComponent<IExplodable>();
             }
             else
             {
-                //Debug.Log("alus ja explode mutta ei ookkaan " + col..);
+                Debug.Log("alus ja explode mutta ei ookkaan " + col);
             }
         }
 
