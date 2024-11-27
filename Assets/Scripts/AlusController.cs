@@ -261,6 +261,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         
 
         float nappiHorizontal = Input.GetAxisRaw("Horizontal");
+        if (nappiHorizontal==0.0f)
+        {
+            nappiHorizontal = moveDirection.x;
+        }
 
         //float nappiHorizontal = moveDirection.x;
 
@@ -278,6 +282,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
         float nappiVertical = Input.GetAxisRaw("Vertical");
+        if (nappiVertical == 0.0f)
+        {
+             nappiVertical = moveDirection.y;
+        }
 
         // float nappiVertical = moveDirection.y;
 
