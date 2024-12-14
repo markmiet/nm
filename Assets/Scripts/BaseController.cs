@@ -235,15 +235,32 @@ public class BaseController : MonoBehaviour
             float ero = Vector3.Distance(lastPosition, positionToSave);
             if (go!=null)
             {
-                go.GetComponent<TextMesh>().text = "ero=" + ero;
+            //    go.GetComponent<TextMesh>().text = "ero=" + ero;
             }
 
-
-            // Check uniqueness if saveUniqueValuesOnly is true
-            if (!saveUniqueValuesOnly || ero > threshold)
+            if (!saveUniqueValuesOnly)
             {
                 aluksenpositiotCameraViewissa.Add(positionToSave);
             }
+            else
+            {
+                //if (ero > threshold)
+                //{
+                  
+                //}
+
+                if (!Vector3.Equals(lastPosition, positionToSave))
+                {
+                    aluksenpositiotCameraViewissa.Add(positionToSave);
+                }
+
+            }
+            /* || ero > threshold 
+            // Check uniqueness if saveUniqueValuesOnly is true
+            if (!saveUniqueValuesOnly)
+            {
+                aluksenpositiotCameraViewissa.Add(positionToSave);
+            }*/
         }
 
         // Maintain the list size to maxCount by removing the oldest entry if necessary

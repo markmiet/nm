@@ -6,6 +6,12 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class AlusController : BaseController, IExplodable
 {
+
+
+
+    public float optiotfollowDistance = 0.5f; // Distance behind the player
+    public float optiotmoveSpeed = 1f; // Speed of the Option Ball's movement
+
     private int aluksenluomienElossaOlevienAmmustenMaara;
 
     public InputActionReference moveInputActionReference;
@@ -106,13 +112,13 @@ public class AlusController : BaseController, IExplodable
 
         //return aluksenpositiotCameraViewissa[optioidenmaksimaara * 10 - optionjarjestysnumero* 10];
 
-        return base.palautaScreenpositioneissa(optioidenmaksimaara * 10 - optionjarjestysnumero * 10);
+        return base.palautaScreenpositioneissa(optioidenmaksimaara * 8 - optionjarjestysnumero * 8);
 
     }
     //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
     private void tallennaSijaintiSailytaVainKymmenenViimeisinta()
     {
-        base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 10, true, true, debugloota);
+        base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 8, true, true, debugloota);
         if (true)
         {
             return;
@@ -380,7 +386,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
 
-
+        tallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
     public float turboviiveSekunneissa = 0.4f;
     public float maksiminopeusylosalas = 0.08f;
@@ -444,20 +450,29 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
 
 
+    //Vector3 viimeisin = Vector3.zero;
 
     private void MoveObject(Vector3 inputPosition)
     {
-        // Offset the input position by 50 pixels to the right in screen space
-        float offsetti = 100;
-        Vector3 screenPositionWithOffset = new Vector3(inputPosition.x + offsetti, inputPosition.y, 0);
+  //      float ero = Vector3.Distance(inputPosition, viimeisin);
+    //    Debug.Log("hiiriero=" + ero);
+       // if (ero>20.0f)
+       // {
+         //   viimeisin = inputPosition;
+            // Offset the input position by 50 pixels to the right in screen space
+            float offsetti = 100;
+            Vector3 screenPositionWithOffset = new Vector3(inputPosition.x + offsetti, inputPosition.y, 0);
 
-        // Convert the offset screen position to world space
-        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
+            // Convert the offset screen position to world space
+            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
 
-        //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
-        //Vector3 te = new Vector3(50, 0, 0);
+            //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
+            //Vector3 te = new Vector3(50, 0, 0);
 
-        transform.position = worldPosition + _offset;
+            transform.position = worldPosition + _offset;
+//        }
+
+
 
 
 
@@ -746,7 +761,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             teeOptionPallukka = false;
         }
 
-        tallennaSijaintiSailytaVainKymmenenViimeisinta();
+       
     }
 
     public void VahennaaluksenluomienElossaOlevienAmmustenMaaraa()

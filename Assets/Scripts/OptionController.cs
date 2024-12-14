@@ -37,17 +37,63 @@ public class OptionController : MonoBehaviour
 
 
     }
+    //public Transform player; // Reference to the player's spaceship
 
+
+    private Vector3 targetPosition;
 
     // Update is called once per frame
     void Update()
     {
+        /*
         Vector3 alusScreenCoordinaateissa =aluscontroller.palautaViimeinenSijaintiScreenpositioneissa(jarjestysnro);
 
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(alusScreenCoordinaateissa);
 
         transform.position = worldPosition;
+        */
+        
 
+        bool even = jarjestysnro % 2 == 0;
+        Vector2 testi;
+        if (even)
+        {
+             testi = new Vector2(1, -1);
+        }
+        else
+        {
+             testi = new Vector2(1, 1);
+
+        }
+        if (jarjestysnro==1)
+        {
+            testi = new Vector2(1, -1);
+        }
+        else if (jarjestysnro == 2)
+        {
+            testi = new Vector2(1, 1);
+        }
+        else if (jarjestysnro == 3)
+        {
+            testi = new Vector2(1, -2);
+        }
+        else if (jarjestysnro == 4)
+        {
+            testi = new Vector2(1, 2);
+        }
+        else if (jarjestysnro == 5)
+        {
+            testi = new Vector2(2, 0);
+        }
+
+        //Vector2.left
+
+        //  targetPosition = (Vector2)alusGameObject.transform.position + testi * aluscontroller.optiotfollowDistance* jarjestysnro;
+        targetPosition = (Vector2)alusGameObject.transform.position + testi * aluscontroller.optiotfollowDistance;
+
+
+        // Smoothly move the Option Ball towards the target position
+        transform.position = Vector2.Lerp(transform.position, targetPosition, aluscontroller.optiotmoveSpeed * Time.deltaTime);
     }
 
     void FixedUpdate()
