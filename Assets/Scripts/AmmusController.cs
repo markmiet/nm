@@ -19,6 +19,15 @@ public class AmmusController : BaseController, IExplodable {
     public GameObject explosion;
 	// Start is called before the first frame update
 
+
+	private bool aluksenluoma = false;
+	public GameObject alus;
+
+	public void SetAluksenluoma(bool arvo)
+    {
+		aluksenluoma = arvo;
+    }
+
 	private AudioplayerController ad;
 	void Start ()
 	{
@@ -226,7 +235,7 @@ public class AmmusController : BaseController, IExplodable {
 		Destroy(gameObject);
 	}
 
-	/*
+    /*
 	bool IsVisibleFrom2 (this Renderer parent, Camera camera)
 	{
 		Plane [] planes = GeometryUtility.CalculateFrustumPlanes (camera);
@@ -236,7 +245,7 @@ public class AmmusController : BaseController, IExplodable {
 
 
 
-	/*
+    /*
 	public void Explode(float viive)
     {
 		Destroy(gameObject);
@@ -252,6 +261,15 @@ public class AmmusController : BaseController, IExplodable {
 	}
 	*/
 
+
+    public void OnDestroy()
+    {
+        if (aluksenluoma && alus!=null)
+        {
+			//aluscontrollerin 
+			alus.GetComponent<AlusController>().VahennaaluksenluomienElossaOlevienAmmustenMaaraa();
+        }
+    }
 
 
 }

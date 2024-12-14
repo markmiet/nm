@@ -397,7 +397,7 @@ public class PalliController : BaseController, IExplodable
                     if (onkoTiiliOikealla && !onkoTiiliOikeallaYlhaalla && !onkoPalloOikealla)
                     {
                         LoikkaaYlos(onkoTiiliOikealla);
-                      //  Ammu();
+                        Ammu();
                     }
                     //hyppy2
                     else if (!onkoTiiliOikeallaAlhaalla && !onkoTiiliOikeallaYlhaalla && !onkoPalloOikealla)
@@ -405,7 +405,7 @@ public class PalliController : BaseController, IExplodable
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
                         //    Debug.Log("loikkaa aukon yli oikealle");
                         LoikkaaAukonYli(!vasemmalle);
-                        //Ammu();
+                        Ammu();
                     }
 
                 }
@@ -416,6 +416,7 @@ public class PalliController : BaseController, IExplodable
                     if (onkoTiiliVasemmalla && !onkoTiiliVasemmallaYlhaalla && !onkoPallovasemmalla)
                     {
                         LoikkaaYlos(!onkoTiiliVasemmalla);
+                        Ammu();
                     }
                     //hyppy2
                     else if (!onkoTiiliVasemmallaAlhaalla && !onkoTiiliVasemmallaYlhaalla && !onkoPallovasemmalla)
@@ -423,7 +424,7 @@ public class PalliController : BaseController, IExplodable
                         //!onkoTiiliOikeallaAlhaalla=reikä lattiassa
                         //      Debug.Log("loikkaa aukon yli vasemmalle");
                         LoikkaaAukonYli(!vasemmalle);
-                       // Ammu();
+                        Ammu();
 
                     }
                 }
@@ -952,25 +953,34 @@ rb.position.x, rb.position.y, 0);
 
     }
 
-    public float ampumisenvoimakkuus = 2.0f;
+    public float ampumisenvoimakkuus = 6.0f;
+    public float pieninmahdollinenAikaValiAmpumisissa = 2.0f;
+    private float viimeksiAmmuttu = 0.0f;
+
     public bool ammu = false;
     public void Ammu()
     {
         if (ammu)
         {
-            Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
+            float aikanyt = Time.realtimeSinceStartup;
+            if (aikanyt- viimeksiAmmuttu> pieninmahdollinenAikaValiAmpumisissa)
+            {
+                Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
 
-            Instantiate(ammus);
+                //GameObject Instantiate(ammus);
 
 
 
-            GameObject instanssi = Instantiate(ammus, new Vector3(
-     transform.position.x, transform.position.y, 0), Quaternion.identity);
+                GameObject instanssi = Instantiate(ammus, new Vector3(
+         transform.position.x, transform.position.y + 1.0f, 0), Quaternion.identity);
 
-            PalliController p = instanssi.GetComponent<PalliController>();
-            p.alusGameObject = alusGameObject;
+                //   PalliController p = instanssi.GetComponent<PalliController>();
+                //   p.alusGameObject = alusGameObject;
 
-            instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+                instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+                viimeksiAmmuttu = Time.realtimeSinceStartup;
+
+            }
         }
 
     }

@@ -150,7 +150,7 @@ public class BaseController : MonoBehaviour
     }
 
     private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
-    public void tallennaSijaintiSailytaVainNkplViimeisinta(int nkpl, bool muutaworldpositionScreenpositionin, bool tallennavainyksiloivatArvot)
+    public void tallennaSijaintiSailytaVainNkplViimeisintaVanha(int nkpl, bool muutaworldpositionScreenpositionin, bool tallennavainyksiloivatArvot)
     {
 
         Vector3 worldPosition = transform.position;
@@ -197,6 +197,63 @@ public class BaseController : MonoBehaviour
         }
 
     }
+
+
+    public void TallennaSijaintiSailytaVainNkplViimeisinta(int maxCount, bool useScreenPosition, bool saveUniqueValuesOnly,GameObject go)
+    {
+        // Get the current world position of the GameObject
+        Vector3 worldPosition = transform.position;
+
+        // Convert to screen position if required
+        Vector3 positionToSave = useScreenPosition
+            ? Camera.main.WorldToScreenPoint(worldPosition)
+            : worldPosition;
+
+        // Round screen position to integers for consistency
+        if (useScreenPosition)
+        {
+            positionToSave = new Vector3((int)positionToSave.x, (int)positionToSave.y, positionToSave.z);
+        }
+
+        // Add the position if:
+        // 1. The list is empty.
+        // 2. The new position is different from the last one (if saveUniqueValuesOnly is true).
+        if (aluksenpositiotCameraViewissa.Count == 0)
+        {
+            aluksenpositiotCameraViewissa.Add(positionToSave);
+        }
+        else
+        {
+            Vector3 lastPosition = aluksenpositiotCameraViewissa[aluksenpositiotCameraViewissa.Count - 1];
+            float threshold = 4.0f;
+            // Check uniqueness if saveUniqueValuesOnly is true
+            //  if (!saveUniqueValuesOnly || !Vector3.Equals(lastPosition, positionToSave))
+            //  {
+            //      aluksenpositiotCameraViewissa.Add(positionToSave);
+            //  }
+
+            float ero = Vector3.Distance(lastPosition, positionToSave);
+            if (go!=null)
+            {
+                go.GetComponent<TextMesh>().text = "ero=" + ero;
+            }
+
+
+            // Check uniqueness if saveUniqueValuesOnly is true
+            if (!saveUniqueValuesOnly || ero > threshold)
+            {
+                aluksenpositiotCameraViewissa.Add(positionToSave);
+            }
+        }
+
+        // Maintain the list size to maxCount by removing the oldest entry if necessary
+        if (aluksenpositiotCameraViewissa.Count > maxCount)
+        {
+            aluksenpositiotCameraViewissa.RemoveAt(0);
+        }
+    }
+
+
     /*
     Vector2 boxinsize = new Vector2(1, 1);
     Vector2 vyboxlocation = new Vector2(-1, 1);

@@ -112,7 +112,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
             //instanssiBulletYlos.SendMessage("Alas", false);
 
-            IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
+            IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
             if (alas != null)
             {
                 alas.Alas(false);

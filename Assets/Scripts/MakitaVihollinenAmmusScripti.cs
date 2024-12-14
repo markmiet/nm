@@ -116,7 +116,7 @@ col.gameObject.GetComponent<IExplodable>();
 			//Debug.Log ("dame over");
 			//just continue
 			//Destroy(gameObject);
-			Explode();
+			//Explode();
 
 		} else {
 			tuhoa = true;

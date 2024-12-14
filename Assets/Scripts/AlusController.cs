@@ -6,6 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class AlusController : BaseController, IExplodable
 {
+    private int aluksenluomienElossaOlevienAmmustenMaara;
 
     public InputActionReference moveInputActionReference;
 
@@ -98,7 +99,7 @@ public class AlusController : BaseController, IExplodable
 
     //
 
-
+    public GameObject debugloota;
 
     public Vector3 palautaViimeinenSijaintiScreenpositioneissa(int optionjarjestysnumero)
     {
@@ -111,7 +112,7 @@ public class AlusController : BaseController, IExplodable
     //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
     private void tallennaSijaintiSailytaVainKymmenenViimeisinta()
     {
-        base.tallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 10, true, true);
+        base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 10, true, true, debugloota);
         if (true)
         {
             return;
@@ -242,6 +243,48 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            //Vector3 touchPosition = mainCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10f));
+            Vector3 touchPosition = touch.position;
+            switch (touch.phase)
+            {
+
+                case UnityEngine.TouchPhase.Began:
+                    CheckIfTouched(touchPosition);
+                    break;
+
+                case UnityEngine.TouchPhase.Moved:
+                    if (_isDragging)
+                    {
+                        MoveObject(touchPosition);
+                    }
+                    break;
+
+                case UnityEngine.TouchPhase.Ended:
+                    _isDragging = false;
+                    break;
+            }
+        }
+        // Handle mouse input for PC testing
+        else if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            CheckIfTouched(mousePosition);
+        }
+        else if (Input.GetMouseButton(0) && _isDragging)
+        {
+            MoveObject(Input.mousePosition);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            _isDragging = false;
+        }
+
+
+
         Vector2 moveDirection = moveInputActionReference.action.ReadValue<Vector2>();
 
 
@@ -359,6 +402,73 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
     float deltaaikojensumma = 0f;
+
+    private Vector3 _offset; // Erotus aluksen ja kosketuksen välillä
+    private bool _isDragging = false;
+
+
+    /*
+    private void CheckIfTouched(Vector3 inputPosition)
+    {
+        Ray ray = mainCamera.ScreenPointToRay(inputPosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit) && hit.transform == transform)
+        {
+            _isDragging = true;
+            _offset = transform.position - inputPosition;
+        }
+    }
+*/
+    private void CheckIfTouched(Vector3 inputPosition)
+    {
+        // Convert input position to world space
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
+
+        // Check if the input position overlaps a 2D collider
+        Collider2D hit = Physics2D.OverlapPoint(worldPosition);
+
+        Debug.Log("hitti=" + hit);
+        if (hit!=null)
+        {
+            bool onko = hit.transform == transform;
+            Debug.Log("onko=" + onko);
+        }
+
+        if (hit != null && hit.transform == transform)
+        {
+            _isDragging = true;
+            // Calculate offset between the object and touch/mouse position
+            _offset = transform.position - worldPosition;
+        }
+    }
+
+
+
+    private void MoveObject(Vector3 inputPosition)
+    {
+        // Offset the input position by 50 pixels to the right in screen space
+        float offsetti = 100;
+        Vector3 screenPositionWithOffset = new Vector3(inputPosition.x + offsetti, inputPosition.y, 0);
+
+        // Convert the offset screen position to world space
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
+
+        //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
+        //Vector3 te = new Vector3(50, 0, 0);
+
+        transform.position = worldPosition + _offset;
+
+
+
+    }
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        return mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10f));
+    }
+
     void FixedUpdate()
     {
 
@@ -379,6 +489,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
 
 
+        
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
@@ -533,6 +644,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             ad.AlusammusPlay();
 
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+
+            AmmusController aa = instanssi.GetComponent<AmmusController>();
+            aa.alus = this.gameObject;
+            aa.SetAluksenluoma(true);
+            aluksenluomienElossaOlevienAmmustenMaara++;
+
+
+
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             ammuOptioneilla();
 
@@ -578,9 +697,9 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
                 instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
-                instanssiBulletYlos.SendMessage("Alas", false);
+                //instanssiBulletYlos.SendMessage("Alas", false);
 
-                IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
+                IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
                 if (alas != null)
                 {
                     //instanssiBulletAlas.SendMessage("Alas", true);
@@ -630,7 +749,10 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         tallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
 
-
+    public void VahennaaluksenluomienElossaOlevienAmmustenMaaraa()
+    {
+        aluksenluomienElossaOlevienAmmustenMaara=aluksenluomienElossaOlevienAmmustenMaara-1;
+    }
 
 
     private void ammuOptioneilla()
@@ -649,12 +771,17 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 if (bulletPrefab==null)
                 {
                     Debug.Log("bulletti null");
+                    return;
                 }
                 if(obj==null)
                 {
                     Debug.Log("objekti null");
                 }
-                obj.ammuYloslaukaus(bulletPrefab);
+                else
+                {
+                    obj.ammuYloslaukaus(bulletPrefab);
+                }
+                
             }
         }
     }
@@ -673,7 +800,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
       //  Explode();
     }
 
-    private void asetaSijainti()
+    private void asetaSijainti2()
     {
         // Debug.Log(alamaksiminMaarittava);
 
@@ -728,6 +855,53 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         transform.position = pos;
 
     }
+
+
+    private void asetaSijainti()
+    {
+        if (mainCamera == null) mainCamera = Camera.main;
+        if (m_SpriteRenderer == null) m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        if (m_Rigidbody2D == null) m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+        float halfWidth = m_SpriteRenderer.bounds.extents.x;
+        float halfHeight = m_SpriteRenderer.bounds.extents.y;
+
+        float camHeight = mainCamera.orthographicSize;
+        float camWidth = mainCamera.aspect * mainCamera.orthographicSize;
+
+        Vector3 pos = transform.position;
+
+        // Calculate camera bounds
+        float minX = mainCamera.transform.position.x - camWidth;
+        float maxX = mainCamera.transform.position.x + camWidth;
+        float minY = mainCamera.transform.position.y - camHeight;
+        float maxY = mainCamera.transform.position.y + camHeight;
+
+        // Convert the 100-pixel screen-space width to world-space
+        float restrictedWidthInWorld = mainCamera.ScreenToWorldPoint(new Vector3(100.0f, 0)).x - mainCamera.ScreenToWorldPoint(Vector3.zero).x;
+
+        // Adjust the minimum X to account for the restricted area
+        float restrictedMinX = minX + restrictedWidthInWorld;
+
+        // Clamp X and Y within bounds, considering the restricted area
+        pos.x = Mathf.Clamp(pos.x, restrictedMinX + halfWidth, maxX - halfWidth);
+        pos.y = Mathf.Clamp(pos.y,
+                            Mathf.Max(minY + halfHeight, alamaksiminMaarittava.transform.position.y),
+                            ylamaksiminMaarittava != null
+                                ? Mathf.Min(maxY - halfHeight, ylamaksiminMaarittava.transform.position.y)
+                                : maxY - halfHeight);
+
+        // Reset velocity if hitting vertical boundaries
+        if (pos.y == alamaksiminMaarittava.transform.position.y ||
+            (ylamaksiminMaarittava != null && pos.y == ylamaksiminMaarittava.transform.position.y))
+        {
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
+        }
+
+        // Apply position
+        transform.position = pos;
+    }
+
 
     public void Explode()
     {
@@ -1043,7 +1217,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     private bool onkoAmmustenMaaraAlleMaksimin()
     {
         int maksimi = ammustenmaksimaaraProperty;
-        int nykymaara = palautaAmmustenMaara();
+       // int nykymaara = palautaAmmustenMaara();
+        int nykymaara = aluksenluomienElossaOlevienAmmustenMaara;
         return nykymaara < maksimi;
     }
 
