@@ -207,7 +207,7 @@ public class AlusController : BaseController, IExplodable
         ad = FindObjectOfType<AudioplayerController>();
         ad.TaustaMusiikkiPlay();
 
-        TeeOptioni();
+        //TeeOptioni();
 
 
 
@@ -340,7 +340,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
     public float turboviiveSekunneissa = 0.4f;
-    public float maksiminopeus = 0.08f;
+    public float maksiminopeusylosalas = 0.08f;
+
+
+    public float maksiminopeusvertikaalinen = 0.08f;
 
     public float kiihtyvyys = 0.05f;
 
@@ -399,7 +402,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         if (oikeaNappiPainettu)
         {
 
-            oikeanappipainettukestoaika += Time.deltaTime;
+            oikeanappipainettukestoaika += Time.fixedDeltaTime;
             if (oikeanappipainettukestoaika > turboviiveSekunneissa)
             {
                 xsuuntamuutos += (oikeanappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
@@ -428,7 +431,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
         if (ylosNappiPainettu)
         {
-            ylosnappipainettukestoaika += Time.deltaTime;
+            ylosnappipainettukestoaika += Time.fixedDeltaTime;
             if (ylosnappipainettukestoaika > turboviiveSekunneissa)
             {
                 ysuuntamuutos += (ylosnappipainettukestoaika - turboviiveSekunneissa) * kiihtyvyys;
@@ -447,7 +450,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
         if (alasNappiPainettu)
         {
-            alasnappipainettukestoaika += Time.deltaTime;// OLI AIEMMIN
+            //alasnappipainettukestoaika += Time.deltaTime;// OLI AIEMMIN
             alasnappipainettukestoaika += Time.fixedDeltaTime;
             if (alasnappipainettukestoaika > turboviiveSekunneissa)
             {
@@ -471,23 +474,23 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //Debug.Log("xsuuntamuutos=" + oikeanappipainettukestoaika);
 
 
-        if (xsuuntamuutos > maksiminopeus)
+        if (xsuuntamuutos > maksiminopeusvertikaalinen)
         {
-            xsuuntamuutos = maksiminopeus;
+            xsuuntamuutos = maksiminopeusvertikaalinen;
         }
-        if (xsuuntamuutos < -maksiminopeus)
+        if (xsuuntamuutos < -maksiminopeusvertikaalinen)
         {
-            xsuuntamuutos = -maksiminopeus;
+            xsuuntamuutos = -maksiminopeusvertikaalinen;
 
         }
 
-        if (ysuuntamuutos > maksiminopeus)
+        if (ysuuntamuutos > maksiminopeusylosalas)
         {
-            ysuuntamuutos = maksiminopeus;
+            ysuuntamuutos = maksiminopeusylosalas;
         }
-        if (ysuuntamuutos < -maksiminopeus)
+        if (ysuuntamuutos < -maksiminopeusylosalas)
         {
-            ysuuntamuutos = -maksiminopeus;
+            ysuuntamuutos = -maksiminopeusylosalas;
 
         }
 
@@ -643,6 +646,14 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             }
             if (missileUpCollected >= 1)
             {
+                if (bulletPrefab==null)
+                {
+                    Debug.Log("bulletti null");
+                }
+                if(obj==null)
+                {
+                    Debug.Log("objekti null");
+                }
                 obj.ammuYloslaukaus(bulletPrefab);
             }
         }
@@ -977,7 +988,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                  //   Debug.Log("speed()");
                     //vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
                     //vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
-                    maksiminopeus += vauhdinLisaysKunSpeedbonusOtettu;
+                    maksiminopeusylosalas += vauhdinLisaysKunSpeedbonusOtettu;
                     ammustenmaksimaaraProperty += ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
                     ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
 

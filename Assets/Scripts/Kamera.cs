@@ -21,7 +21,7 @@ public class Kamera : MonoBehaviour
 
 
         Vector3 skrolli = new Vector3(skrollimaara, 0f, 0f) * Time.deltaTime;
-        Debug.Log("skrolli=" + skrolli);
+        //Debug.Log("skrolli=" + skrolli);
 
         transform.position += skrolli;
         if (alus != null)

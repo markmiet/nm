@@ -33,26 +33,23 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
 
 	}
+
+	private float checkInterval = 0.3f;
+	private float nextCheckTime;
+
 	void Update ()
 	{
-		/*
-		if (tuhoa) {
-			Destroy (gameObject);
-		}
-		*/
-
-
-
-		float x =
-m_Rigidbody2D.velocity.x;
-		float y = m_Rigidbody2D.velocity.y;
-		float speed = m_Rigidbody2D.velocity.magnitude;
-		//Debug.Log("ammuksen nopeus=" + speed);
-
-		if (speed <= speedjonkaalletuhotaan)
+		if (Time.time >= nextCheckTime)
 		{
-			Debug.Log("liian hidas ammus tuhotaaan");
-			Destroy(gameObject);
+			nextCheckTime = Time.time + checkInterval;
+			float speed = m_Rigidbody2D.velocity.magnitude;
+			Debug.Log("speed="+speed);
+			if (speed <= speedjonkaalletuhotaan)
+			{
+				Debug.Log("Projectile too slow, destroying...");
+				//Destroy(gameObject);
+				Explode();
+			}
 		}
 		TuhoaJosVaarassaPaikassa(gameObject);
 	}

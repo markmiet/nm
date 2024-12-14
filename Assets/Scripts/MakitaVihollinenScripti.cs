@@ -40,10 +40,13 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
     private Vector2 boxsize;// = new Vector2(0, 0);
     public bool teebonus = false;
     private AudioplayerController ad;
+
+
     void Start()
     {
         ad = FindObjectOfType<AudioplayerController>();
         piipunboxit = GetComponentInChildren<BoxCollider2D>();
+
 
         m_Animator = GetComponent<Animator>();
 
@@ -214,7 +217,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         //Mathf.Rad2Deg;
 
 
-        float lisays = 0.0f;
+     
         float alusy = alusSpriteRenderer.bounds.center.y;
         float alusx = alusSpriteRenderer.bounds.center.x;
 
@@ -261,7 +264,10 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         float aika = Time.deltaTime;
         deltaaikojensumma += aika;
 
-        if (instanssi == null && deltaaikojensumma > ampumakertojenvalinenviive && m_SpriteRenderer.isVisible && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
+        if (instanssi == null && deltaaikojensumma > ampumakertojenvalinenviive 
+            /*&& m_SpriteRenderer.isVisible*/
+            && IsGameObjectVisible() 
+            && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
         {
             fireallowed = true;
 
@@ -297,9 +303,27 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
 
 
+     //   float angle = Mathf.Atan2(alusy - transform.position.y + lisays, alusx - transform.position.x) *
+// Mathf.Rad2Deg;
+
+        float angle = Mathf.Atan2(alusy - transform.position.y, alusx - transform.position.x) *
+Mathf.Rad2Deg;
+
+
+
+        //      float angle = Mathf.Atan2(alusy - piippuy,
+        //                            alusx - piippux) * Mathf.Rad2Deg;
+
+
+
+
+        /*
         float angle = Mathf.Atan2(alusy - transform.position.y + lisays, alusx - transform.position.x) *
  Mathf.Rad2Deg;
 
+        float ammusy = piipunboxit.bounds.center.y;
+        ammusx
+            */
 
 
         //if (m_Animator.GetBool("left"))
@@ -643,11 +667,29 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
             //        instanssi = Instantiate(ammusPrefab, new Vector3(
             //m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.5f, 0), Quaternion.identity);
 
-            instanssi = Instantiate(ammusPrefab, new Vector3(
-    ammusx, ammusy + lisays, 0), Quaternion.identity);
+
+            float piippux =
+piipunboxit.gameObject.transform.position.x;
+
+            float piippuy =
+            piipunboxit.gameObject.transform.position.y + 0.5f;
+
+            Vector3 localpos3 = piipunboxit.gameObject.transform.localPosition;
+            Vector3 pos = piipunboxit.gameObject.transform.position;
+            float lisays = 0.2f;
+            Vector3 ammusvektori =
+            new Vector3(
+       ammusx, ammusy + lisays, 0);
 
 
-            instanssi.transform.parent = gameObject.transform;
+                instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
+
+   //     instanssi = Instantiate(ammusPrefab, new Vector3(
+   // piippux,piippuy, 0), Quaternion.identity);
+
+
+
+          //  instanssi.transform.parent = gameObject.transform;
             /*
 
             float pysty = alus.transform.position.y - transform.position.y;
@@ -670,7 +712,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
             */
 
 
-            Vector2 vv = palautaAmmuksellaVelocityVector(alus, ampumisenkokonaisvoima);
+            Vector2 vv = palautaAmmuksellaVelocityVector(alus, ampumisenkokonaisvoima, ammusvektori);
 
             instanssi.GetComponent<Rigidbody2D>().velocity = vv;
 
@@ -691,7 +733,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         firstime = false;
 
     }
-    public float ampumisenkokonaisvoima = 2.0f;
+    public float ampumisenkokonaisvoima = 5.0f;
 
 
 

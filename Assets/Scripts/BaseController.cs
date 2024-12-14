@@ -492,7 +492,7 @@ public class BaseController : MonoBehaviour
 
     //  private bool bonusjotehty = false;
 
-
+    /*
     public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
     {
         float pysty = alus.transform.position.y - transform.position.y;
@@ -526,6 +526,123 @@ public class BaseController : MonoBehaviour
         vv.Scale(new Vector2(4.0f, 4.0f));
         return vv;
     }
+
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
+    {
+        // Extract the positions of the shooter and target
+        SpriteRenderer alusSpriteRenderer = alus.GetComponent<SpriteRenderer>();
+
+        float alusy = alusSpriteRenderer.bounds.center.y; // Target center (y)
+        float alusx = alusSpriteRenderer.bounds.center.x; // Target center (x)
+
+        float ammusx = transform.position.x; // Shooter position (x)
+        float ammusy = transform.position.y; // Shooter position (y)
+
+        // Calculate direction vector to the target
+        Vector2 direction = new Vector2(alusx - ammusx, alusy - ammusy);
+        direction.Normalize(); // Normalize to unit vector
+
+        // Scale the direction by the shooting force
+        Vector2 velocityVector = direction * ampumisevoimakkuus;
+
+        return velocityVector; // Return the velocity vector
+    }
+    */
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
+    {
+        Kamera k=Camera.main.GetComponent<Kamera>();
+     
+
+        if (alus == null) return Vector2.zero; // Return zero vector if target is null
+
+        // Current positions
+        Vector3 shooterPosition = transform.position;
+        Vector3 alusPosition = alus.transform.position;
+
+        // Distance to target
+        Vector3 directionToAlus = alusPosition - shooterPosition;
+
+        // Bullet travel time (time = distance / speed)
+        float distance = directionToAlus.magnitude;
+        float travelTime = distance / ampumisevoimakkuus;
+
+        // Predict future position of the target
+        Vector3 futureAlusPosition = alusPosition + new Vector3(k.skrollimaara * travelTime, 0f, 0f);
+
+        // Adjust direction to aim at the predicted position
+        Vector3 adjustedDirection = (futureAlusPosition - shooterPosition).normalized;
+
+        // Calculate the velocity vector for the bullet
+        Vector2 velocityVector = new Vector2(adjustedDirection.x, adjustedDirection.y) * ampumisevoimakkuus;
+
+        return velocityVector;
+
+    }
+
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus,GameObject objektijostasijaintilasketaan)
+    {
+        Kamera k = Camera.main.GetComponent<Kamera>();
+
+
+        if (alus == null) return Vector2.zero; // Return zero vector if target is null
+
+        // Current positions
+        Vector3 shooterPosition = objektijostasijaintilasketaan.transform.position;
+        Vector3 alusPosition = alus.transform.position;
+
+        // Distance to target
+        Vector3 directionToAlus = alusPosition - shooterPosition;
+
+        // Bullet travel time (time = distance / speed)
+        float distance = directionToAlus.magnitude;
+        float travelTime = distance / ampumisevoimakkuus;
+
+        // Predict future position of the target
+        Vector3 futureAlusPosition = alusPosition + new Vector3(k.skrollimaara * travelTime, 0f, 0f);
+
+        // Adjust direction to aim at the predicted position
+        Vector3 adjustedDirection = (futureAlusPosition - shooterPosition).normalized;
+
+        // Calculate the velocity vector for the bullet
+        Vector2 velocityVector = new Vector2(adjustedDirection.x, adjustedDirection.y) * ampumisevoimakkuus;
+
+        return velocityVector;
+
+    }
+
+
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus, Vector3 shooterPosition)
+    {
+        Kamera k = Camera.main.GetComponent<Kamera>();
+
+
+        if (alus == null) return Vector2.zero; // Return zero vector if target is null
+
+        // Current positions
+     //   Vector3 shooterPosition = objektijostasijaintilasketaan.transform.position;
+        Vector3 alusPosition = alus.transform.position;
+
+        // Distance to target
+        Vector3 directionToAlus = alusPosition - shooterPosition;
+
+        // Bullet travel time (time = distance / speed)
+        float distance = directionToAlus.magnitude;
+        float travelTime = distance / ampumisevoimakkuus;
+
+        // Predict future position of the target
+        Vector3 futureAlusPosition = alusPosition + new Vector3(k.skrollimaara * travelTime, 0f, 0f);
+
+        // Adjust direction to aim at the predicted position
+        Vector3 adjustedDirection = (futureAlusPosition - shooterPosition).normalized;
+
+        // Calculate the velocity vector for the bullet
+        Vector2 velocityVector = new Vector2(adjustedDirection.x, adjustedDirection.y) * ampumisevoimakkuus;
+
+        return velocityVector;
+
+    }
+
+
 
     public GameObject PalautaAlus()
     {
@@ -832,5 +949,25 @@ public class BaseController : MonoBehaviour
         }
     }
     */
+
+    public bool IsGameObjectVisible()
+    {
+        if (Camera.main == null) return false; // Ensure there is a main camera
+
+        // Get the main camera
+        Camera mainCamera = Camera.main;
+
+        // Convert the target's position to viewport coordinates
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
+
+        // Check if the target is within the camera's viewport
+        bool isVisible = viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                         viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                         viewportPosition.z > 0; // Ensure it's in front of the camera
+
+        return isVisible;
+    }
+
+
 
 }
