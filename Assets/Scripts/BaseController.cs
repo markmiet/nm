@@ -787,14 +787,19 @@ public class BaseController : MonoBehaviour
                 sliceObject.AddComponent<BoxCollider2D>();
                 p.size = new Vector2(0.1f, 0.1f);
                                 
-             
+                             sliceObject.transform.position = new Vector3(
+                    -0.2f +
+                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
+                        -0.2f +
+      transform.position.y +
+      y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
                 */
 
                 sliceObject.transform.position = new Vector3(
                     -0.2f +
                     transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
-                        -0.2f +
+                        -0.1f +
       transform.position.y +
       y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 

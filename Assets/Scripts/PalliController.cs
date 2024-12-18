@@ -65,6 +65,14 @@ public class PalliController : BaseController, IExplodable
         {
             boostParticles.Stop();
         }
+        /*
+        if (tuliPartikkelit != null && tuliPartikkelit.isPlaying)
+        {
+            tuliPartikkelit.Stop();
+        }
+        */
+        
+
 
         boxsize = new Vector2(m_SpriteRenderer.size.x, m_SpriteRenderer.size.y);
         rb.simulated = false;
@@ -82,6 +90,8 @@ public class PalliController : BaseController, IExplodable
     void Update()
 
     {
+
+        /*
         //nykyinenosuminenmaara;
         Color color = m_SpriteRenderer.color;
         color.a = PalautaFadeArvo();
@@ -89,13 +99,16 @@ public class PalliController : BaseController, IExplodable
         m_SpriteRenderer.color = color;
 
         float startAlpha = m_SpriteRenderer.color.a;
+
+
+        */
         //  Debug.Log("alpha=" + startAlpha);
 
         TuhoaJosVaarassaPaikassa(gameObject);
 
 
     }
-
+    public float vahimmaismaarafadelle = 0.2f;
     private float PalautaFadeArvo()
     {
         //1.0 originelli
@@ -103,7 +116,7 @@ public class PalliController : BaseController, IExplodable
         //0.1 näkyy jotain
         float alkuper = 1.0f;
         float vah = alkuper - nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
-        return vah + 0.1f;
+        return vah + vahimmaismaarafadelle;
 
     }
 
@@ -120,6 +133,10 @@ public class PalliController : BaseController, IExplodable
     private bool onkohypynsuuntavasemmalleKyseHyppytyypista2 = false;
 
     public ParticleSystem boostParticles; // Particle system for the rocket flames
+
+
+
+    public ParticleSystem tuliPartikkelit; //tuliPartikkelit
 
 
     public float hyppyjenValinenViive = 2.0f;
@@ -794,6 +811,7 @@ public class PalliController : BaseController, IExplodable
 
     void OnBecameInvisible()
     {
+        //MJM 18.12.2023 OTA POIS KOMMENTEISTA
         Destroy(gameObject);
 
         /*
@@ -918,8 +936,25 @@ public class PalliController : BaseController, IExplodable
 
 
     public GameObject explosion;
+    public float gravitymodifiermuutoskunammusosuu = 0.1f;
+
+    //lahto on -1
     public void Explode()
     {
+        /*
+        if (!tuliPartikkelit.isPlaying)
+        {
+            tuliPartikkelit.Play();
+        }
+        */
+
+
+        // tuliPartikkelit.gravityModifier
+        var mainModule = tuliPartikkelit.main;
+        float currentGravityModifier = mainModule.gravityModifier.constant;
+        float uusiarvo = currentGravityModifier - gravitymodifiermuutoskunammusosuu;
+
+        mainModule.gravityModifier = uusiarvo;
         nykyinenosuminenmaara += 1.0f;
         if (nykyinenosuminenmaara>=osumiemaarajokaTarvitaanRajahdykseen)
         {
@@ -928,14 +963,25 @@ public class PalliController : BaseController, IExplodable
     }
 
 
+
+
+
+    public int rajaytysrows = 4;
+    public int rajaytyscols = 4;
+
+    public float rajaytysvoima = 2f;
+    public float rajaytyskestoaika = 0.8f;
+
     public void ExplodeOikeasti()
     {
         ad.ExplodePlay();
 
 
-          GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        RajaytaSprite(gameObject, 3, 3, 2.0f, 1.0f);
-        Destroy(explosionIns,1.0f);
+        //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+        //RajaytaSprite(gameObject, 5, 5, 4.0f, 1.5f);
+        RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
+
+        // Destroy(explosionIns,1.0f);
         Destroy(gameObject);
 
 

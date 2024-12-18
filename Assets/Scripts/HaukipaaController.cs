@@ -57,7 +57,7 @@ public class HaukipaaController : BaseController, IExplodable
         Destroy(jointi);
         Ammu();
     }
-
+    public float ampumisenvoimakkuus = 4.0f;
     public void Ammu()
     {
         //ampu
@@ -70,7 +70,7 @@ public class HaukipaaController : BaseController, IExplodable
             //GameObject instantiate()
             GameObject alus = PalautaAlus();
 
-            Vector2 vv = palautaAmmuksellaVelocityVector(alus, 2.0f);
+            Vector2 vv = palautaAmmuksellaVelocityVector(alus, ampumisenvoimakkuus);
 
             HaukiSilmaController h=
             haukisilma.GetComponent<HaukiSilmaController>();

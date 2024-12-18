@@ -69,7 +69,6 @@ public class AmmusController : BaseController, IExplodable {
 
 	public float nopeusjonkaalleTuhoutuu = 0.2f;
 
-	private bool tuhoa = false;
 	public void Update ()
 	{
 
@@ -176,9 +175,13 @@ public class AmmusController : BaseController, IExplodable {
         {
 			return;
         }
-		
 
-		if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
+		if (col.collider.tag.Contains("tiilivihollinen"))
+		{
+			Explode();
+		}
+
+		else	if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
 		{
 			tormattyviholliseen = true;
 		//	Debug.Log("explodeeeeeeeeeeeeeeeee ");
@@ -201,7 +204,6 @@ public class AmmusController : BaseController, IExplodable {
                 {
 					Debug.Log("vihollinen ja explode mutta ei ookkaan "+ col.collider.tag);
                 }
-				tuhoa = true;
 				Explode();
 			}
 			else
@@ -222,7 +224,7 @@ public class AmmusController : BaseController, IExplodable {
 		//Debug.Log ("OnBecameInvisible");
 		// Destroy the enemy
 		//tuhoa = true;
-
+		//Explode();
 		Destroy (gameObject);
 	}
 
@@ -230,12 +232,19 @@ public class AmmusController : BaseController, IExplodable {
 	{
 		//GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 	//	Destroy(explosionIns, 1.0f);
-		RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
+		RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
 
 		Destroy(gameObject);
 	}
 
-    /*
+	public int rajaytysrows = 3;
+	public int rajaytyscols = 3;
+
+	public float rajaytysvoima = 5.0f;
+	public float rajaytyskestoaika = 1.0f;
+
+
+	/*
 	bool IsVisibleFrom2 (this Renderer parent, Camera camera)
 	{
 		Plane [] planes = GeometryUtility.CalculateFrustumPlanes (camera);
@@ -245,7 +254,7 @@ public class AmmusController : BaseController, IExplodable {
 
 
 
-    /*
+	/*
 	public void Explode(float viive)
     {
 		Destroy(gameObject);
@@ -262,7 +271,7 @@ public class AmmusController : BaseController, IExplodable {
 	*/
 
 
-    public void OnDestroy()
+	public void OnDestroy()
     {
         if (aluksenluoma && alus!=null)
         {
