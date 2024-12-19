@@ -23,6 +23,14 @@ public class AmmusController : BaseController, IExplodable {
 	private bool aluksenluoma = false;
 	public GameObject alus;
 
+
+	public GameObject option;
+
+	public void SetOption(GameObject p_option )
+    {
+		option = p_option;
+	}
+
 	public void SetAluksenluoma(bool arvo)
     {
 		aluksenluoma = arvo;
@@ -278,6 +286,19 @@ public class AmmusController : BaseController, IExplodable {
 			//aluscontrollerin 
 			alus.GetComponent<AlusController>().VahennaaluksenluomienElossaOlevienAmmustenMaaraa();
         }
+		else if (option!=null)
+        {
+			if (option.GetComponent<OptionController>() != null) {
+				option.GetComponent<OptionController>().VahennOptionLuomienElossaOlevienAmmustenMaaraa();
+
+			}
+			else
+            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+						Debug.Log("mitaa");
+			}
+
+		}
     }
 
 

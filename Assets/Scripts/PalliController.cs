@@ -54,6 +54,9 @@ public class PalliController : BaseController, IExplodable
     private AudioplayerController ad;
     void Start()
     {
+        //eli osalle hemmetin moiset liekit
+
+
         ad = FindObjectOfType<AudioplayerController>();
         //   mainCamera = Camera.main;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -193,15 +196,25 @@ public class PalliController : BaseController, IExplodable
         return m_SpriteRenderer.isVisible;
     }
 
- 
-
 
     public void FixedUpdate()
     {
 
         if (alusGameObject != null)
         {
-  
+
+            float delta = Time.deltaTime;
+            deltojensumma += delta;
+
+            if (deltojensumma>2)
+            {
+                Ammu();
+                deltojensumma = 0;
+
+            }
+
+
+           
 
             /*
             if (!OnkoOkToimia())
@@ -809,10 +822,16 @@ public class PalliController : BaseController, IExplodable
     public LayerMask layerMask;
 
 
+    public bool tuhoaJosOnBecameInvisible = true;
+
     void OnBecameInvisible()
     {
         //MJM 18.12.2023 OTA POIS KOMMENTEISTA
-        Destroy(gameObject);
+        if (tuhoaJosOnBecameInvisible)
+        {
+            Destroy(gameObject);
+        }
+      // 
 
         /*
         if (gameObject==null)

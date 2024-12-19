@@ -12,6 +12,10 @@ public class Kamera : MonoBehaviour
     void Start()
     {
         y = alus.transform.position.y;
+        if (alus!=null)
+        {
+            alus.transform.position = new Vector3(transform.position.x, y, 0);
+        }
     }
 
     // Update is called once per frame

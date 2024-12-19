@@ -217,7 +217,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         //Mathf.Rad2Deg;
 
 
-     
+
         float alusy = alusSpriteRenderer.bounds.center.y;
         float alusx = alusSpriteRenderer.bounds.center.x;
 
@@ -264,9 +264,9 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         float aika = Time.deltaTime;
         deltaaikojensumma += aika;
 
-        if (instanssi == null && deltaaikojensumma > ampumakertojenvalinenviive 
+        if (instanssi == null && deltaaikojensumma > ampumakertojenvalinenviive
             /*&& m_SpriteRenderer.isVisible*/
-            && IsGameObjectVisible() 
+            && IsGameObjectVisible()
             && alusSpriteRenderer.bounds.max.y + m_SpriteRenderer.size.y > m_SpriteRenderer.bounds.min.y)
         {
             fireallowed = true;
@@ -303,8 +303,8 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
 
 
-     //   float angle = Mathf.Atan2(alusy - transform.position.y + lisays, alusx - transform.position.x) *
-// Mathf.Rad2Deg;
+        //   float angle = Mathf.Atan2(alusy - transform.position.y + lisays, alusx - transform.position.x) *
+        // Mathf.Rad2Deg;
 
         float angle = Mathf.Atan2(alusy - transform.position.y, alusx - transform.position.x) *
 Mathf.Rad2Deg;
@@ -682,14 +682,14 @@ piipunboxit.gameObject.transform.position.x;
        ammusx, ammusy + lisays, 0);
 
 
-                instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
+            instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
 
-   //     instanssi = Instantiate(ammusPrefab, new Vector3(
-   // piippux,piippuy, 0), Quaternion.identity);
+            //     instanssi = Instantiate(ammusPrefab, new Vector3(
+            // piippux,piippuy, 0), Quaternion.identity);
 
 
 
-          //  instanssi.transform.parent = gameObject.transform;
+            //  instanssi.transform.parent = gameObject.transform;
             /*
 
             float pysty = alus.transform.position.y - transform.position.y;
@@ -778,7 +778,7 @@ piipunboxit.gameObject.transform.position.x;
         ad.ExplodePlay();
 
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        RajaytaSprite(gameObject, 3, 3, 2.0f,1.2f); 
+        RajaytaSprite(gameObject, 3, 3, 2.0f, 1.2f);
         Destroy(explosionIns, 1.0f);
         Destroy(gameObject);
 
@@ -791,18 +791,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         {
             TeeBonus(bonus, v3, boxsize, 1);
         }
-    
+
 
     }
 
 
+    public bool tuhoaJosOnBecameInvisible = true;
 
     void OnBecameInvisible()
     {
-        //Debug.Log ("OnBecameInvisible");
-        // Destroy the enemy
-        //tuhoa = true;
-
-        Destroy(gameObject);
+        //MJM 18.12.2023 OTA POIS KOMMENTEISTA
+        if (tuhoaJosOnBecameInvisible)
+        {
+            Destroy(gameObject);
+        }
     }
+
 }

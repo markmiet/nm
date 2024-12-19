@@ -99,4 +99,17 @@ public class HaukiController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+
+
+    public bool tuhoaJosOnBecameInvisible = true;
+
+    void OnBecameInvisible()
+    {
+        //MJM 18.12.2023 OTA POIS KOMMENTEISTA
+        if (tuhoaJosOnBecameInvisible)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

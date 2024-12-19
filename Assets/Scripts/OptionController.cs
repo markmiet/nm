@@ -37,6 +37,13 @@ public class OptionController : MonoBehaviour
 
 
     }
+
+    private int PalautaAmmustenMaksimimaara()
+    {
+        return aluscontroller.ammustenmaksimaaraProperty;
+
+    }
+
     //public Transform player; // Reference to the player's spaceship
 
 
@@ -102,19 +109,41 @@ public class OptionController : MonoBehaviour
 
     }
 
+    private bool OnkoAmmustenMaaraAlleMaksimin()
+    {
+        int maksimi = PalautaAmmustenMaksimimaara();
+        // int nykymaara = palautaAmmustenMaara();
+        int nykymaara = aluksenluomienElossaOlevienAmmustenMaara;
+        return nykymaara < maksimi;
+    }
 
     public void ammuNormilaukaus(GameObject ammusPrefab)
     {
-        Vector3 v3 =
-new Vector3(0.1f +
-m_Rigidbody2D.position.x  , m_Rigidbody2D.position.y, 0);
 
-        GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
-        // instanssi.
- //       instanssi.tag = "optionammustag";tama kommentoitu
+        if (OnkoAmmustenMaaraAlleMaksimin())
+        {
+            Vector3 v3 =
+    new Vector3(0.1f +
+    m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
-        instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+            // instanssi.
+            //       instanssi.tag = "optionammustag";tama kommentoitu
+
+            instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            AmmusController ac = instanssi.GetComponent<AmmusController>();
+            ac.SetOption(this.gameObject);
+            aluksenluomienElossaOlevienAmmustenMaara++;
+        }
     }
+    private int aluksenluomienElossaOlevienAmmustenMaara = 0;
+    public void VahennOptionLuomienElossaOlevienAmmustenMaaraa()
+    {
+        aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara - 1;
+    }
+
+
+
     GameObject instanssiBulletAlas;
     GameObject instanssiBulletYlos;
 

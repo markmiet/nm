@@ -1248,4 +1248,30 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         return IsReloading;
     }
 
+
+    void OnParticleTrigger()
+    {
+        // Debug.Log($"OnParticleTrigger hit: {other.name}");
+        Debug.Log("OnParticleTrigger");
+        // Add your collision handling logic here
+    }
+
+    /*
+
+    void OnParticleCollision(GameObject other)
+    {
+        // Check if the object that collided is a Particle System
+        ParticleSystem particleSystem = other.GetComponent<ParticleSystem>();
+
+      
+
+        if (particleSystem != null)
+        {
+            Debug.Log("particleSystem.name=" + particleSystem.name);
+            Debug.Log("Particle collided with " + gameObject.name);
+            // Additional logic here
+        }
+    }
+    */
+
 }

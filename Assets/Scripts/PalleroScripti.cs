@@ -294,13 +294,16 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
     }
 
+
+    public bool tuhoaJosOnBecameInvisible = true;
+
     void OnBecameInvisible()
     {
-        //Debug.Log ("OnBecameInvisible");
-        // Destroy the enemy
-        //tuhoa = true;
-
-  //      Destroy(gameObject);
+        //MJM 18.12.2023 OTA POIS KOMMENTEISTA
+        if (tuhoaJosOnBecameInvisible)
+        {
+            Destroy(gameObject);
+        }
     }
 
 

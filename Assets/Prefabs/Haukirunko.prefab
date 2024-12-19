@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionForce: 10
+  ampumisenvoimakkuus: 4
 --- !u!61 &795967804638468929
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -993,7 +994,7 @@ MonoBehaviour:
   keskievarotatemax: 35
   keskievarotatemin: -35
   rotatetimeseconds: 1
-  liikex: -0.2
+  liikex: -1.5
   liikey: 1
   swayAmount: 0.5
   swaySpeed: 1

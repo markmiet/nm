@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
-	private bool tuhoa = false;
+
 
 	private Rigidbody2D m_Rigidbody2D;
 
@@ -12,6 +12,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 	void Start ()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
 	}
 
 	// Update is called once per frame
@@ -95,7 +96,6 @@ col.gameObject.GetComponent<IExplodable>();
 		}
 		else if (col.collider.CompareTag("tiilivihollinentag"))
 		{
-			tuhoa = true;
 			//Destroy(gameObject);
 			Explode();
 
@@ -118,14 +118,15 @@ col.gameObject.GetComponent<IExplodable>();
 			//Destroy(gameObject);
 			//Explode();
 
-		} else {
-			tuhoa = true;
-		}
+		} 
 	}
 
+
+	public float alivetimeRajahdyksenJalkeen = 0.5f;
 	public void Explode()
 	{
-		RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
+		//0.5f
+		RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
 
 		Destroy(gameObject);
 	}
