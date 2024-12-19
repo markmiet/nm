@@ -57,6 +57,7 @@ col.gameObject.GetComponent<AlusController>();
                 //kuumaa
                 // o.Explode();
                 Debug.Log("OnTriggerEnter2D Still in trigger: ");
+                o.Savua();
             }
             
         }
@@ -76,6 +77,8 @@ col.gameObject.GetComponent<AlusController>();
                 //kuumaa
                 // o.Explode();
                 Debug.Log("OnTriggerStay2D Still in trigger: ");
+
+                o.Savua();
             }
 
         }

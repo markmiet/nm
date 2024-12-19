@@ -72,14 +72,14 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 		//      Debug.Log("tagi=" + col.collider.tag);
 		if (col.collider.CompareTag("alustag")) {
 			//Destroy (col.gameObject);
-			Debug.Log("game over");
+			//Debug.Log("game over");
 
-			Animator aa = col.gameObject.GetComponent<Animator>();
+			//Animator aa = col.gameObject.GetComponent<Animator>();
 			// aa.SetBool("explode", true);
 			//  tuhoa = true;
 			//Destroy(gameObject, 0.2f);
 
-			// Destroy(gameObject,2f);
+			Explode();
 
 			// col.gameObject.SendMessage("Explode");
 

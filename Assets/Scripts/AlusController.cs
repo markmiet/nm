@@ -169,10 +169,19 @@ public class AlusController : BaseController, IExplodable
 
 
     private AudioplayerController ad;
+
+
+    private ParticleSystem particleSystem;
     void Start()
     {
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+        if (particleSystem.isPlaying)
+        {
+            particleSystem.Stop();
+        }
+
         //  audiosourcetaustamusiikki.Play();
-     //   Application.targetFrameRate = 45;
+        //   Application.targetFrameRate = 45;
         // Application.targetFrameRate = 10; // For example, cap to 60 FPS
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
@@ -242,6 +251,30 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             Debug.Log("ei ole controlleria");
         }
     }
+
+    public float gravitymodifiermuutoskunammusosuu = 0.01f;
+
+
+    public float gravitynminimi =- 0.2f;
+
+    public void Savua()
+    {
+        if (!particleSystem.isPlaying)
+        {
+            particleSystem.Play();
+        }
+
+        var mainModule = particleSystem.main;
+        float currentGravityModifier = mainModule.gravityModifier.constant;
+        float uusiarvo = currentGravityModifier - gravitymodifiermuutoskunammusosuu;
+        if (uusiarvo> gravitynminimi)
+        {
+
+            mainModule.gravityModifier = uusiarvo;
+        }
+        //mitäs sitten kun savuttaa
+    }
+
 
 
     private List<BonusButtonController> bbc = new List<BonusButtonController>();
@@ -928,11 +961,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         
         Time.timeScale = 0f;
         */
-        GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(explosionIns, 1.0f);
+       // GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+       // Destroy(explosionIns, 1.0f);
        // Debug.Log("gameover");
 
         ad.ExplodePlay();
+        Savua();
 
         // audiosourceexplode.Play();
     }
