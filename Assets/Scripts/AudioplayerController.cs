@@ -32,6 +32,13 @@ public class AudioplayerController : MonoBehaviour
         taustamusiikki.Play();
     }
 
+    public void TaustaMusiikkiStop()
+    {
+        taustamusiikki.loop = true;
+        taustamusiikki.Stop();
+    }
+
+
     public void AlusammusPlay()
     {
         alusammus.Play();

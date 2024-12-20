@@ -5135,7 +5135,7 @@ MonoBehaviour:
   boxsizeylhaalla: {x: 0.1, y: 0.1}
   boxsizekeskella: {x: 0.5, y: 0.3}
   boxsizelaidatalhaalla: {x: 0.6, y: 10}
-  boxsizealhaalla: {x: 0.3, y: 0.15}
+  boxsizealhaalla: {x: 0.4, y: 0.15}
   vasenylaboxcenter: {x: -0.2, y: 0.4}
   oikeaylaboxcenter: {x: 0.2, y: 0.4}
   vasenboxcenter: {x: -0.4, y: 0.05}
@@ -5155,17 +5155,23 @@ MonoBehaviour:
   vahimmaismaarafadelle: 0.2
   boostParticles: {fileID: 8014632376814700969}
   tuliPartikkelit: {fileID: 379417082609184509}
-  hyppyjenValinenViive: 3
+  hyppyjenValinenViive: 0.5
   erominimissaanJottaLiikutaan: 0.4
-  jumpForce: 6
-  moveSpeed: 1
+  motorspeedvaikuttaaliikkumisnopeuteen: 280
+  jumpForceEiKaytossa: 5
+  hypynmoveSpeed: 1
+  hyppyvoimankerroinLoikataanYlos: 2.6
+  hyppyvoimanlisaysyxLoikataanYlos: 4.6
+  hyppaaaykonyliyxaloituskohta: 0
+  tagilistaJoitaTutkitaanaukonylihyppaamisessa:
+  - tiili
   hypppaaylostutkinnanmaara: 8
   xsuunnanjakomaara: 2
   delay: 0.3
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  tuhoaJosOnBecameInvisible: 1
+  tuhoaJosOnBecameInvisible: 0
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
   gravitymodifiermuutoskunammusosuu: 0.03

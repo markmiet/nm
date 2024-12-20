@@ -1011,6 +1011,31 @@ public class BaseController : MonoBehaviour
         }
     }
 
+
+
+    public bool IsOffScreen()
+    {
+        // Convert the world position of the bullet to viewport space
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+
+        // Check if the bullet is outside the camera's visible area
+        if (viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 || viewportPosition.y > 1)
+        {
+            return true;  // Bullet is off-screen
+        }
+
+        return false;  // Bullet is within the screen bounds
+    }
+
+    public void TuhoaJosEiKamerassa(GameObject go)
+    {
+        if (IsOffScreen())
+        {
+            Destroy(go);
+        }
+    }
+
+
     /*
     public void IgnoreChildCollisions(Transform parent)
     {

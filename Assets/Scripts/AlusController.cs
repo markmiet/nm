@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class AlusController : BaseController, IExplodable
@@ -225,7 +226,8 @@ public class AlusController : BaseController, IExplodable
 
         //TeeOptioni();
 
-
+        GameObject myObject = GameObject.Find("QuitButtonKaytossa");
+        myObject.GetComponent<Image>().enabled = false;
 
 
     }
@@ -283,6 +285,24 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     void Update()
     {
 
+
+        if (Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
+        {
+            Debug.Log("pausepressed");
+            TogglePause();
+        }
+
+        if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
+        {
+            Debug.Log("Application would quit now.");
+            Application.Quit();
+        }
+
+        if (isPaused)
+        {
+            return;
+        }
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -332,11 +352,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float moveDirectionUp= moveUpInputActionReference.action.ReadValue<float>();
 
 
-        if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
-        {
-            Debug.Log("Application would quit now.");
-            Application.Quit();
-        }
+
 
         m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
 
@@ -417,10 +433,62 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             BonusButtonPressed();
         }
 
+
+
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
 
         tallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
+    private bool isPaused = false;
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            GameObject myObject = GameObject.Find("PauseButtonKaytossa");
+            PauseButtonControlleri s = myObject.GetComponent<PauseButtonControlleri>();
+            s.setPauseImage(false);
+
+            ResumeGame();
+        }
+        else
+        {
+        
+            GameObject myObject = GameObject.Find("PauseButtonKaytossa");
+            PauseButtonControlleri s=myObject.GetComponent<PauseButtonControlleri>();
+            s.setPauseImage(true);
+            PauseGameAction();
+
+
+        }
+    }
+
+    void PauseGameAction()
+    {
+        Time.timeScale = 0f; // Stop game time
+        isPaused = true;
+        // Optional: Show pause menu UI
+        ad.TaustaMusiikkiStop();
+
+        GameObject myObject = GameObject.Find("QuitButtonKaytossa");
+        myObject.GetComponent<Image>().enabled = true;
+
+
+    }
+
+    void ResumeGame()
+    {
+        Time.timeScale = 1f; // Resume game time
+        isPaused = false;
+        // Optional: Hide pause menu UI
+
+        ad.TaustaMusiikkiPlay();
+        GameObject myObject = GameObject.Find("QuitButtonKaytossa");
+        myObject.GetComponent<Image>().enabled = false;
+    }
+
+
+
     public float turboviiveSekunneissa = 0.4f;
     public float maksiminopeusylosalas = 0.08f;
 
@@ -519,6 +587,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void FixedUpdate()
     {
+
+        if (isPaused)
+        {
+            return;
+        }
 
         if (gameover)
         {
@@ -690,6 +763,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //audiosourcelaukaus.
             //    audiosourcelaukaus.Play();
             ad.AlusammusPlay();
+            
 
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
 
@@ -971,9 +1045,6 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         // audiosourceexplode.Play();
     }
 
-
-
-    public float rotationSpeed = 50.0f;
 
     /*
     void OnDrawGizmosSelected()

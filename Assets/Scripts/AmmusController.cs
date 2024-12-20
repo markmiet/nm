@@ -109,6 +109,7 @@ public class AmmusController : BaseController, IExplodable {
 		}
 
 		TuhoaJosVaarassaPaikassa(gameObject);
+		TuhoaJosEiKamerassa(gameObject);
 
 		/*
 		if ( !m_Renderer.isVisible) {
@@ -155,6 +156,8 @@ public class AmmusController : BaseController, IExplodable {
 		*/
 
 	}
+
+
 
 
 	private float annaRandomiKulmaAmmukselleTormayksenJalkeen ()

@@ -150,6 +150,8 @@ public class PalliController : BaseController, IExplodable
 
     public float erominimissaanJottaLiikutaan = 0.4f;
 
+    public float motorspeedvaikuttaaliikkumisnopeuteen = 250.0f;
+
     private bool OnkoOkLiikkua(float ero)
     {
         return ero > erominimissaanJottaLiikutaan &&  m_SpriteRenderer.isVisible;
@@ -305,7 +307,7 @@ public class PalliController : BaseController, IExplodable
                     if (!onkoTiiliVasemmalla && onkoTiiliVasemmallaAlhaalla && !onkoPallovasemmalla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
-                        motor.motorSpeed = -180;  // Negative for clockwise rotation
+                        motor.motorSpeed = -motorspeedvaikuttaaliikkumisnopeuteen;  // Negative for clockwise rotation
 
                         wheelJoint.motor = motor;
                     }
@@ -329,7 +331,7 @@ public class PalliController : BaseController, IExplodable
                     if (!onkoTiiliOikealla && onkoTiiliOikeallaAlhaalla && !onkoPalloOikealla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
-                        motor.motorSpeed = 180;  // Negative for clockwise rotation
+                        motor.motorSpeed = motorspeedvaikuttaaliikkumisnopeuteen;  // Negative for clockwise rotation
                         wheelJoint.motor = motor;
                     }
                     else
@@ -390,7 +392,7 @@ public class PalliController : BaseController, IExplodable
 
                 if (!onkohypynsuuntavasemmalleKyseHyppytyypista1 && !onkoTiiliOikeallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya)
                 {
-                    rb.velocity = new Vector2(moveSpeed, rb.velocity.y);//oikealle
+                    rb.velocity = new Vector2(hypynmoveSpeed, rb.velocity.y);//oikealle
                                                                         //hyppy1
                                                                         //oikea
                                                                         // if (onkoTiiliOikealla)
@@ -400,7 +402,7 @@ public class PalliController : BaseController, IExplodable
                 }
                 else if (onkohypynsuuntavasemmalleKyseHyppytyypista1 && !OnkoTiiliVasemmallaLahellaTutkitaanHypynAikanaVoidaankoSinnePainSiirtya())
                 {
-                    rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);//vasen
+                    rb.velocity = new Vector2(-hypynmoveSpeed, rb.velocity.y);//vasen
                                                                          //hyppy1
                                                                          //oikea
                                                                          // if (onkoTiiliOikealla)
@@ -493,8 +495,8 @@ public class PalliController : BaseController, IExplodable
         return ylos;
     }
 
-    public float jumpForce = 5f;  // Vertical force applied to jump
-    public float moveSpeed = 2f;  // Horizontal movement speed
+    public float jumpForceEiKaytossa = 5f;  // Vertical force applied to jump
+    public float hypynmoveSpeed = 2f;  // Horizontal movement speed
 
     Vector2 aloituspiste = Vector2.zero;
     private void LoikkaaYlos(bool tiilionoikealla)
@@ -521,9 +523,9 @@ public class PalliController : BaseController, IExplodable
                 bool onkotiiliatuossakohti = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizekeskella, aloituspiste, layerMask);
                 if (!onkotiiliatuossakohti)
                 {
-                    float voima = jumpForce;
+                    float voima = jumpForceEiKaytossa;
                     float lisays = 0.0f;
-                    voima = 2.34f * yx + 4.5f;
+                    voima = hyppyvoimankerroinLoikataanYlos * yx + hyppyvoimanlisaysyxLoikataanYlos;
 
                     //Debug.Log("voima=" + voima + " yx=" + yx);
 
@@ -542,6 +544,12 @@ public class PalliController : BaseController, IExplodable
 
     }
 
+    //2.34
+    public float hyppyvoimankerroinLoikataanYlos = 2.5f;//2.34
+    public float hyppyvoimanlisaysyxLoikataanYlos = 4.5f;//4.5
+
+    public float hyppaaaykonyliyxaloituskohta = 0.0f;
+    public string[] tagilistaJoitaTutkitaanaukonylihyppaamisessa;
 
     private void LoikkaaAukonYli(bool aukkoOnOikealla)
     {
@@ -550,7 +558,7 @@ public class PalliController : BaseController, IExplodable
         {
 
 
-            for (float yx = 0; yx < hypppaaylostutkinnanmaara; yx += 0.01f)
+            for (float yx = hyppaaaykonyliyxaloituskohta; yx < hypppaaylostutkinnanmaara; yx += 0.01f)
             {
                 if (aukkoOnOikealla)
                 {
@@ -569,11 +577,12 @@ public class PalliController : BaseController, IExplodable
                     onkohypynsuuntavasemmalleKyseHyppytyypista2 = true;
                 }
 
-                bool onkotiiliatuossakohti = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaan, boxsizealhaalla, aloituspiste, layerMask);
+
+    bool onkotiiliatuossakohti = onkoTagiaBoxissaErikoisversio(tagilistaJoitaTutkitaanaukonylihyppaamisessa, boxsizealhaalla, aloituspiste, layerMask);
                 if (onkotiiliatuossakohti)
                 {
                     //laskeutusmispaikka löytyi
-                    float voima = jumpForce;
+                    float voima = jumpForceEiKaytossa;
                     float lisays = 0.0f;
                     voima = 2.34f * yx + 4.4f;
 
@@ -615,8 +624,8 @@ public class PalliController : BaseController, IExplodable
 
     private void LoikkaaVasemmalle()
     {
-        rb.velocity = new Vector2(moveSpeed, rb.velocity.y);//oikealle
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);//ylös
+        rb.velocity = new Vector2(hypynmoveSpeed, rb.velocity.y);//oikealle
+        rb.velocity = new Vector2(rb.velocity.x, jumpForceEiKaytossa);//ylös
     }
 
     IEnumerator ApplyVelocityWithDelay(float viive)
@@ -626,7 +635,7 @@ public class PalliController : BaseController, IExplodable
 
         // Apply the velocity to the Rigidbody2D
         // rb.velocity = velocity;
-        rb.velocity = new Vector2(moveSpeed, rb.velocity.y);//oikealle
+        rb.velocity = new Vector2(hypynmoveSpeed, rb.velocity.y);//oikealle
     }
 
 
