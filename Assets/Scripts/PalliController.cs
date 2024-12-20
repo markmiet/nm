@@ -84,7 +84,12 @@ public class PalliController : BaseController, IExplodable
         {
             alusGameObject = obstacles;
         }
+
+
+        Color color = m_SpriteRenderer.color;
+        gvarinalkutilanne = color.g;
     }
+    
 
     //   public float rotationSpeed = 90f; // Degrees per second
 
@@ -110,7 +115,12 @@ public class PalliController : BaseController, IExplodable
         TuhoaJosVaarassaPaikassa(gameObject);
 
 
+
     }
+
+
+
+
     public float vahimmaismaarafadelle = 0.2f;
     private float PalautaFadeArvo()
     {
@@ -967,6 +977,22 @@ public class PalliController : BaseController, IExplodable
     public float gravitymodifiermuutoskunammusosuu = 0.1f;
 
     //lahto on -1
+    float gvarinalkutilanne;
+
+    float gvarinlopputilanne = 0.0f;
+
+    private float PalautaGvari()
+    {
+        float prosentti = nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
+
+        float ero = gvarinalkutilanne - gvarinlopputilanne;
+        float summaerosta = ero * prosentti;
+
+        float arvo= gvarinalkutilanne-summaerosta;
+        return arvo;
+
+    }
+
     public void Explode()
     {
         /*
@@ -974,6 +1000,18 @@ public class PalliController : BaseController, IExplodable
         {
             tuliPartikkelit.Play();
         }
+        */
+        /*
+        float alkuper = 1.0f;
+        float vah = alkuper - nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
+        return vah + vahimmaismaarafadelle;
+*/
+
+
+        /*
+        Color color = m_SpriteRenderer.color;
+        color.r = 0.5f;
+        m_SpriteRenderer.color = color;
         */
 
 
@@ -984,6 +1022,16 @@ public class PalliController : BaseController, IExplodable
 
         mainModule.gravityModifier = uusiarvo;
         nykyinenosuminenmaara += 1.0f;
+
+                Color color = m_SpriteRenderer.color;
+        //color.r = r;
+        //color.g = g;
+        //color.b = b;
+
+        color.g = PalautaGvari();
+
+        m_SpriteRenderer.color = color;
+
         if (nykyinenosuminenmaara>=osumiemaarajokaTarvitaanRajahdykseen)
         {
             ExplodeOikeasti();
