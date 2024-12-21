@@ -8,6 +8,9 @@ public class PallovihollinensavuController : MonoBehaviour
     private ParticleSystem particleSystem;
     private BoxCollider2D boxCollider;
     // Start is called before the first frame update
+
+
+
     void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();
@@ -56,7 +59,7 @@ col.gameObject.GetComponent<AlusController>();
             {
                 //kuumaa
                 // o.Explode();
-                Debug.Log("OnTriggerEnter2D Still in trigger: ");
+         //       Debug.Log("OnTriggerEnter2D Still in trigger: ");
                 o.Savua();
             }
             
@@ -76,7 +79,7 @@ col.gameObject.GetComponent<AlusController>();
             {
                 //kuumaa
                 // o.Explode();
-                Debug.Log("OnTriggerStay2D Still in trigger: ");
+       //         Debug.Log("OnTriggerStay2D Still in trigger: ");
 
                 o.Savua();
             }
@@ -87,7 +90,7 @@ col.gameObject.GetComponent<AlusController>();
 
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("Exited trigger: " + other.name);
+     //   Debug.Log("Exited trigger: " + other.name);
     }
 
 

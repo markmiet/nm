@@ -173,6 +173,11 @@ public class AlusController : BaseController, IExplodable
 
 
     private ParticleSystem particleSystem;
+
+
+    public float maksimimaaradamageajokakestetaan = 100.0f;
+    public float damagenmaara = 0.0f;
+    public float damagenmaarakunammusosuus = 1.0f;
     void Start()
     {
         particleSystem = GetComponentInChildren<ParticleSystem>();
@@ -228,7 +233,8 @@ public class AlusController : BaseController, IExplodable
 
         GameObject myObject = GameObject.Find("QuitButtonKaytossa");
         myObject.GetComponent<Image>().enabled = false;
-
+        Color color = m_SpriteRenderer.color;
+        gvarinalkutilanne = color.g;
 
     }
 
@@ -259,6 +265,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public float gravitynminimi =- 0.2f;
 
+
+    public float damagemaarakasvastatuskunsavutaan = 5.0f;
     public void Savua()
     {
         if (!particleSystem.isPlaying)
@@ -275,7 +283,40 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             mainModule.gravityModifier = uusiarvo;
         }
         //mitäs sitten kun savuttaa
+
+
+        Color color = m_SpriteRenderer.color;
+        //color.r = r;
+        //color.g = g;
+        //color.b = b;
+        damagenmaara += damagemaarakasvastatuskunsavutaan;
+        color.g = PalautaGvari();
+
+        m_SpriteRenderer.color = color;
+
     }
+
+    float gvarinalkutilanne;
+
+    float gvarinlopputilanne = 0.0f;
+
+    private float PalautaGvari()
+    {
+        float prosentti = damagenmaara / maksimimaaradamageajokakestetaan;
+
+        float ero = gvarinalkutilanne - gvarinlopputilanne;
+        float summaerosta = ero * prosentti;
+
+        float arvo = gvarinalkutilanne - summaerosta;
+        return arvo;
+
+    }
+
+
+    //public float maksimimaaradamageajokakestetaan = 100.0f;
+    //public float damagenmaara = 0.0f;
+    //public float damagenmaarakunammusosuus = 1.0f;
+
 
 
 
@@ -429,7 +470,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus") )
         {
-            Debug.Log("BonusButtonPressed");
+         //   Debug.Log("BonusButtonPressed");
             BonusButtonPressed();
         }
 
@@ -535,11 +576,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // Check if the input position overlaps a 2D collider
         Collider2D hit = Physics2D.OverlapPoint(worldPosition);
 
-        Debug.Log("hitti=" + hit);
+      //  Debug.Log("hitti=" + hit);
         if (hit!=null)
         {
             bool onko = hit.transform == transform;
-            Debug.Log("onko=" + onko);
+       //     Debug.Log("onko=" + onko);
         }
 
         if (hit != null && hit.transform == transform)
@@ -1042,6 +1083,21 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         ad.ExplodePlay();
         Savua();
 
+        if (damagenmaara>=maksimimaaradamageajokakestetaan)
+        {
+
+            Vector3 vektori =
+new Vector3(
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+
+            GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
+            Destroy(instanssiOption, 10);
+            damagenmaara = 0;
+        }
+
+
+
+
         // audiosourceexplode.Play();
     }
 
@@ -1128,11 +1184,16 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         if (col.collider.tag.Contains("vihollinen"))
         {
- 
+            damagenmaara += 100;
             Explode();
-
+         
         }
-
+        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi"))
+        {
+            damagenmaara += maksimimaaradamageajokakestetaan;
+            Explode();
+       
+        }
         /*
      if (col.collider.tag == "tiilitag")
      {

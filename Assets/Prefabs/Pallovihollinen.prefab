@@ -4993,7 +4993,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 1
@@ -5136,9 +5136,12 @@ MonoBehaviour:
   boxsizekeskella: {x: 0.5, y: 0.3}
   boxsizelaidatalhaalla: {x: 0.6, y: 10}
   boxsizealhaalla: {x: 0.4, y: 0.15}
+  hatahypynkestoaika: 2
   vasenylaboxcenter: {x: -0.2, y: 0.4}
   oikeaylaboxcenter: {x: 0.2, y: 0.4}
   vasenboxcenter: {x: -0.4, y: 0.05}
+  ammustavartevasenboxcenter: {x: -0.9, y: 0.01}
+  boxsizekeskellaammustavartevasen: {x: 2, y: 0.65}
   oikeaboxcenter: {x: 0.4, y: 0.05}
   vasenalaboxcenter: {x: -0.35, y: -5.3}
   oikeaalaboxcenter: {x: 0.35, y: -5.3}
@@ -5151,15 +5154,18 @@ MonoBehaviour:
   tagilistaJoitaTutkitaan:
   - tiili
   - vihollinen
-  osumiemaarajokaTarvitaanRajahdykseen: 50
+  osumiemaarajokaTarvitaanRajahdykseen: 20
+  alkuperainentulipartikkeliGravitymodifier: 0
   vahimmaismaarafadelle: 0.2
   boostParticles: {fileID: 8014632376814700969}
   tuliPartikkelit: {fileID: 379417082609184509}
   hyppyjenValinenViive: 0.5
-  erominimissaanJottaLiikutaan: 0.4
+  erominimissaanJottaLiikutaan: 0
   motorspeedvaikuttaaliikkumisnopeuteen: 280
   jumpForceEiKaytossa: 5
   hypynmoveSpeed: 1
+  hatahypynvoimakorkeussuunnassa: 10
+  hatahypynvoimahorisontaalisessasuunnassa: 0
   hyppyvoimankerroinLoikataanYlos: 2.6
   hyppyvoimanlisaysyxLoikataanYlos: 4.6
   hyppaaaykonyliyxaloituskohta: 0
@@ -5168,6 +5174,8 @@ MonoBehaviour:
   hypppaaylostutkinnanmaara: 8
   xsuunnanjakomaara: 2
   delay: 0.3
+  aluksenammuksentagilista:
+  - ammustag
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -5318,7 +5326,7 @@ PrefabInstance:
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: -0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

@@ -959,7 +959,13 @@ public class BaseController : MonoBehaviour
 
     GameObject alamaksimi = null;
 
+
     public void TuhoaJosVaarassaPaikassa(GameObject go)
+    {
+        TuhoaJosVaarassaPaikassa(go, true);
+    }
+
+        public void TuhoaJosVaarassaPaikassa(GameObject go,bool tuhoaJosLiianKorkeallaKameraanverrattuna)
     {
 
         if (alamaksimi==null)
@@ -973,7 +979,7 @@ public class BaseController : MonoBehaviour
         float koko = Camera.main.orthographicSize;
         
 
-        if (y>ykamera+koko+1.0f || y<ykamera-koko-1.0f)
+        if  (tuhoaJosLiianKorkeallaKameraanverrattuna && (   y >ykamera+koko+1.0f || y<ykamera-koko-1.0f ))
         {
             Destroy(go);
             return;

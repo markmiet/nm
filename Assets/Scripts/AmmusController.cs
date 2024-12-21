@@ -24,6 +24,8 @@ public class AmmusController : BaseController, IExplodable {
 	public GameObject alus;
 
 
+	public bool tuhoaylipaansa = true;
+
 	public GameObject option;
 
 	public void SetOption(GameObject p_option )
@@ -101,11 +103,12 @@ public class AmmusController : BaseController, IExplodable {
 		}
 		*/
 		float speed = m_Rigidbody2D.velocity.magnitude;
-		Debug.Log("alusammuksen nopeus=" + speed);
+	//	Debug.Log("alusammuksen nopeus=" + speed);
 
 		if (speed <= nopeusjonkaalleTuhoutuu)
 		{
-			Destroy(gameObject);
+			if (tuhoaylipaansa)
+				Destroy(gameObject);
 		}
 
 		TuhoaJosVaarassaPaikassa(gameObject);
@@ -170,6 +173,7 @@ public class AmmusController : BaseController, IExplodable {
 	}
 	private bool tormattyviholliseen = false;
 
+
 	void OnCollisionEnter2D (Collision2D col)
 	{
 
@@ -189,6 +193,7 @@ public class AmmusController : BaseController, IExplodable {
 
 		if (col.collider.tag.Contains("tiilivihollinen"))
 		{
+			if (tuhoaylipaansa)
 			Explode();
 		}
 
@@ -207,19 +212,20 @@ public class AmmusController : BaseController, IExplodable {
 				if (o!=null)
                 {
 
-					Debug.Log("	rajahdys.Play() kuuluuko");
+				//	Debug.Log("	rajahdys.Play() kuuluuko");
 					
 					o.Explode();
 				}
 				else
                 {
-					Debug.Log("vihollinen ja explode mutta ei ookkaan "+ col.collider.tag);
+				//	Debug.Log("vihollinen ja explode mutta ei ookkaan "+ col.collider.tag);
                 }
-				Explode();
+				if (tuhoaylipaansa)
+					Explode();
 			}
 			else
             {
-				Debug.Log("gameobjekcti null");
+			//	Debug.Log("gameobjekcti null");
 
             }
 			

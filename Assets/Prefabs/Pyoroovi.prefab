@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773159f5bc1cb4d438f55f096d71bb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 45
+  torqueAmount: 10000
 --- !u!50 &8437075026246705182
 Rigidbody2D:
   serializedVersion: 4
@@ -202,13 +202,13 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7566267309869930444}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 2569ed191898bf8f98df95618075ee69, type: 2}
   m_IncludeLayers:
@@ -220,4 +220,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 3

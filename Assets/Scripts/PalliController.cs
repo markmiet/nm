@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PalliController : BaseController, IExplodable
+public class PalliController : BaseController, IExplodable, IDamagedable
 {
     public Vector2 boxsizeylhaalla = new Vector2(2.0f, 2.0f);  // Size of the box
     public Vector2 boxsizekeskella = new Vector2(2.0f, 0.1f);  // Size of the box
     public Vector2 boxsizelaidatalhaalla = new Vector2(2.0f, 0.1f);  // Size of the box
     public Vector2 boxsizealhaalla = new Vector2(2.0f, 0.1f);  // Size of the box
-
+    public float hatahypynkestoaika = 2.0f;
 
     public Vector2 vasenylaboxcenter = Vector2.zero;
     public Vector2 oikeaylaboxcenter = Vector2.zero;
 
     public Vector2 vasenboxcenter = Vector2.zero;
+
+
+
+    public Vector2 ammustavartevasenboxcenter = Vector2.zero;
+    public Vector2 boxsizekeskellaammustavartevasen = new Vector2(2.0f, 0.1f);  // Size of the box
+
+
     public Vector2 oikeaboxcenter = Vector2.zero;
 
 
@@ -52,10 +59,12 @@ public class PalliController : BaseController, IExplodable
     private float nykyinenosuminenmaara = 0.0f;
     private Vector2 boxsize;// = new Vector2(0, 0);
     private AudioplayerController ad;
+
+    private float hyppyjenalkuperainenviive=0.0f;
     void Start()
     {
         //eli osalle hemmetin moiset liekit
-
+        hyppyjenalkuperainenviive = hyppyjenValinenViive;
 
         ad = FindObjectOfType<AudioplayerController>();
         //   mainCamera = Camera.main;
@@ -88,7 +97,11 @@ public class PalliController : BaseController, IExplodable
 
         Color color = m_SpriteRenderer.color;
         gvarinalkutilanne = color.g;
+
+        tuliPartikkelit.gravityModifier = alkuperainentulipartikkeliGravitymodifier;
+
     }
+    public float alkuperainentulipartikkeliGravitymodifier = 0.0f;
     
 
     //   public float rotationSpeed = 90f; // Degrees per second
@@ -112,7 +125,7 @@ public class PalliController : BaseController, IExplodable
         */
         //  Debug.Log("alpha=" + startAlpha);
 
-        TuhoaJosVaarassaPaikassa(gameObject);
+        TuhoaJosVaarassaPaikassa(gameObject,false);
 
 
 
@@ -207,6 +220,28 @@ public class PalliController : BaseController, IExplodable
     {
         return m_SpriteRenderer.isVisible;
     }
+    private bool hatahyppykesken = false;
+    private float hatahypynsuoritusajankohta = 0.0f;
+
+
+    bool IsInLeftSide(GameObject obj)
+    {
+        // Convert the object's world position to viewport position
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(obj.transform.position);
+
+        // Check if the object is within the left 10% of the camera's view
+        if (viewportPosition.x >= 0 && viewportPosition.x <= 0.4f)
+        {
+            // Also ensure the object is within the vertical bounds of the screen
+            if (viewportPosition.y >= 0 && viewportPosition.y <= 1)
+            {
+                // Ensure the object is in front of the camera
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
     public void FixedUpdate()
@@ -250,9 +285,17 @@ public class PalliController : BaseController, IExplodable
             float x = transform.position.x;
             if (alusx < x)
             {
-                vasemmalle = true;
-
+                bool onkopalleronruudunvasemmassareunassa = IsInLeftSide(gameObject);
+                if (!onkopalleronruudunvasemmassareunassa)
+                {
+                    vasemmalle = true;
+                }  
             }
+            //10% alue ruudusta 
+
+
+
+
 
             float ero = Mathf.Abs(alusx - x);
 
@@ -288,6 +331,21 @@ public class PalliController : BaseController, IExplodable
 
             //bool onkohyppy2ohi = OnkoHyppytyyppi2Ohi();
 
+            bool aluksenammusvasemmalla=OnkoAluksenammusVasemmalla();
+
+            bool palloovioikealla = OnkoPyorivaPalloOviOikealla();
+            bool palloovivasemmalla = OnkoPyorivaPalloOviVasemmalla();
+
+            if (palloovioikealla || palloovivasemmalla)
+            {
+                hyppyjenValinenViive = 100f;
+            }
+            else
+            {
+                hyppyjenValinenViive = hyppyjenalkuperainenviive;
+
+            }
+
             if (onkoTiiliPallonAlla)
             {
                 hyppymenossaTyyppi2 = false;
@@ -297,7 +355,33 @@ public class PalliController : BaseController, IExplodable
                     boostParticles.Stop();
                 }
 
+                if (aluksenammusvasemmalla && !hatahyppykesken)
+                {
+                //    Debug.Log("aluksen ammus lahenee");
 
+                    LoikkaaHatahyyppy();
+                   // rb.velocity = new Vector2(0.0f, rb.velocity.y);
+                    boostParticles.Play();
+                    hatahyppykesken = true;
+                    hatahypynsuoritusajankohta = Time.realtimeSinceStartup;
+                    return;
+
+                }
+            }
+
+            if (hatahyppykesken)
+            {
+                float nykyaika = Time.realtimeSinceStartup; ;
+                if (nykyaika- hatahypynsuoritusajankohta>= hatahypynkestoaika)
+                {
+                    hatahyppykesken = false;
+                }
+            }
+
+
+            if (hatahyppykesken)
+            {
+                return;
             }
 
 
@@ -509,6 +593,28 @@ public class PalliController : BaseController, IExplodable
     public float hypynmoveSpeed = 2f;  // Horizontal movement speed
 
     Vector2 aloituspiste = Vector2.zero;
+
+    public float hatahypynvoimakorkeussuunnassa = 10.0f;
+    public float hatahypynvoimahorisontaalisessasuunnassa = -5f;
+
+
+    private void LoikkaaHatahyyppy()
+    {
+
+        if (Time.realtimeSinceStartup - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
+        {
+           // float voima = hyppyvoimankerroinLoikataanYlos * yx + hyppyvoimanlisaysyxLoikataanYlos
+            rb.velocity = new Vector2(hatahypynvoimahorisontaalisessasuunnassa, hatahypynvoimakorkeussuunnassa);
+            hyppymenossaTyyppi1 = false;
+            hyppymenossaTyyppi2 = false;
+
+
+        hypynkestotyyppi1 = 0.0f;
+            viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
+            boostParticles.Play();
+        }
+    }
+
     private void LoikkaaYlos(bool tiilionoikealla)
     {
 
@@ -680,6 +786,9 @@ public class PalliController : BaseController, IExplodable
     */
 
 
+    
+
+
     void OnDrawGizmos()
     {
 
@@ -698,6 +807,11 @@ public class PalliController : BaseController, IExplodable
         Gizmos.DrawWireCube((Vector2)transform.position + oikeaboxcenter, boxsizekeskella);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube((Vector2)transform.position + vasenboxcenter, boxsizekeskella);
+
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube((Vector2)transform.position + ammustavartevasenboxcenter, boxsizekeskellaammustavartevasen);
+
 
 
         //kulmat
@@ -783,6 +897,28 @@ public class PalliController : BaseController, IExplodable
     }
 
 
+    private bool OnkoPyorivaPalloOviOikealla()
+    {
+
+        string[] tagit = new string[1];
+        tagit[0] = "pyoroovivihollinentag";
+
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagit, boxsizekeskella, oikeaboxcenter);
+        return onkotiilioikeallaAlhaalla;
+    }
+    private bool OnkoPyorivaPalloOviVasemmalla()
+    {
+
+        string[] tagit = new string[1];
+        tagit[0] = "pyoroovivihollinentag";
+
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(tagit, boxsizekeskella, vasenboxcenter);
+        return onkotiilioikeallaAlhaalla;
+    }
+
+    
+
+
     private bool OnkoMakitaOikealla()
     {
 
@@ -800,6 +936,20 @@ public class PalliController : BaseController, IExplodable
         return onkotiilioikeallaAlhaalla;
 
     }
+
+    public string[] aluksenammuksentagilista;
+
+    private bool OnkoAluksenammusVasemmalla()
+    {
+
+ 
+
+        bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(aluksenammuksentagilista, boxsizekeskella, vasenboxcenter);
+        return onkotiilioikeallaAlhaalla;
+
+     }
+
+
 
     private bool OnkoTiiliVasemmallaYlhaalla()
     {
@@ -938,7 +1088,13 @@ public class PalliController : BaseController, IExplodable
 
         foreach (string name in tagit)
         {
+
+           // Physics2D.OverlapBoxAll
+
+            //Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f);
+
             Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
+
 
             if (cs != null && cs.Length > 0)
             {
@@ -962,7 +1118,47 @@ public class PalliController : BaseController, IExplodable
         return false;
 
     }
-    
+
+    public bool onkoTagiaBoxissaErikoisversio(string[] tagit, Vector2 boxsize, Vector2 boxlocation)
+    {
+        //string aa = "pallovihollinenexplodetag";
+
+        foreach (string name in tagit)
+        {
+
+            // Physics2D.OverlapBoxAll
+
+            //Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f);
+
+            Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f);
+
+
+            if (cs != null && cs.Length > 0)
+            {
+                foreach (Collider2D c in cs)
+                {
+                    if (c.gameObject == this.gameObject)
+                    {
+
+                    }
+                    else if (c.gameObject.tag.Contains(name))
+                    {
+                        //  bool onko = IsInView((Vector2)transform.position + boxlocation);
+                        //  return onko;
+                        return true;
+                    }
+                }
+            }
+
+
+        }
+        return false;
+
+    }
+
+
+
+
     bool IsInView(Vector2 worldPosition)
     {
   
@@ -993,27 +1189,18 @@ public class PalliController : BaseController, IExplodable
 
     }
 
+    public void AiheutaDamagea(float damagemaara)
+    {
+        TeeDamaget(damagemaara);
+    }
+
     public void Explode()
     {
-        /*
-        if (!tuliPartikkelit.isPlaying)
-        {
-            tuliPartikkelit.Play();
-        }
-        */
-        /*
-        float alkuper = 1.0f;
-        float vah = alkuper - nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
-        return vah + vahimmaismaarafadelle;
-*/
+        TeeDamaget(1.0f);
+    }
 
-
-        /*
-        Color color = m_SpriteRenderer.color;
-        color.r = 0.5f;
-        m_SpriteRenderer.color = color;
-        */
-
+    private void TeeDamaget(float damage)
+    {
 
         // tuliPartikkelit.gravityModifier
         var mainModule = tuliPartikkelit.main;
@@ -1021,26 +1208,20 @@ public class PalliController : BaseController, IExplodable
         float uusiarvo = currentGravityModifier - gravitymodifiermuutoskunammusosuu;
 
         mainModule.gravityModifier = uusiarvo;
-        nykyinenosuminenmaara += 1.0f;
+        nykyinenosuminenmaara += damage;
 
-                Color color = m_SpriteRenderer.color;
-        //color.r = r;
-        //color.g = g;
-        //color.b = b;
+        Color color = m_SpriteRenderer.color;
+
 
         color.g = PalautaGvari();
 
         m_SpriteRenderer.color = color;
 
-        if (nykyinenosuminenmaara>=osumiemaarajokaTarvitaanRajahdykseen)
+        if (nykyinenosuminenmaara >= osumiemaarajokaTarvitaanRajahdykseen)
         {
             ExplodeOikeasti();
         }
     }
-
-
-
-
 
     public int rajaytysrows = 4;
     public int rajaytyscols = 4;

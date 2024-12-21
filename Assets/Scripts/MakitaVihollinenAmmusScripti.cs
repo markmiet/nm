@@ -44,15 +44,18 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 		{
 			nextCheckTime = Time.time + checkInterval;
 			float speed = m_Rigidbody2D.velocity.magnitude;
-			Debug.Log("speed="+speed);
+		//	Debug.Log("speed="+speed);
 			if (speed <= speedjonkaalletuhotaan)
 			{
-				Debug.Log("Projectile too slow, destroying...");
+			//	Debug.Log("Projectile too slow, destroying...");
 				//Destroy(gameObject);
 				Explode();
+				return;
 			}
+
 		}
 		TuhoaJosVaarassaPaikassa(gameObject);
+		TuhoaJosEiKamerassa(gameObject);
 	}
 
 

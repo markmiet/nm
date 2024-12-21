@@ -73,7 +73,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
 
     }
 
-
+    public float damagemaarajokaaiheutetaan = 5.0f;
     void OnCollisionEnter2D(Collision2D col)
     {
         //  Debug.Log("alaosa collidoi");
@@ -123,16 +123,28 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             // col.gameObject.SendMessage("Explode");
             if (col.gameObject != null)
             {
-                IExplodable o =
-col.gameObject.GetComponent<IExplodable>();
-                if (o != null)
+
+                IDamagedable damageMahdollinen= col.gameObject.GetComponent<IDamagedable>();
+                if (damageMahdollinen!=null)
                 {
-                    o.Explode();
+                    damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
                 }
                 else
                 {
-                    Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+
+                    IExplodable o =
+    col.gameObject.GetComponent<IExplodable>();
+                    if (o != null)
+                    {
+                        o.Explode();
+                    }
+                    else
+                    {
+                        Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                    }
                 }
+
+
             }
 
 

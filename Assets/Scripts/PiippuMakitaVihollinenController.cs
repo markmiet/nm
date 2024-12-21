@@ -24,7 +24,7 @@ public class PiippuMakitaVihollinenController : MonoBehaviour
 
         if (col.CompareTag("alustag"))
         {
-            Debug.Log("OnTriggerEnter2D estaPyoriminen(true) ");
+      //      Debug.Log("OnTriggerEnter2D estaPyoriminen(true) ");
             col.gameObject.SendMessage("Explode");
         }
 
