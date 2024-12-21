@@ -480,7 +480,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         tallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
-    private bool isPaused = false;
+    public bool isPaused = false;
 
     public void TogglePause()
     {
@@ -1181,19 +1181,23 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         collision = true;
         //explodetag
-
-        if (col.collider.tag.Contains("vihollinen"))
-        {
-            damagenmaara += 100;
-            Explode();
-         
-        }
-        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi"))
+        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             Explode();
-       
         }
+        else if (col.collider.tag.Contains("pallovihollinen"))
+        {
+            damagenmaara += maksimimaaradamageajokakestetaan;
+            Explode();
+        }
+        else if (col.collider.tag.Contains("vihollinen"))
+        {
+            damagenmaara += 100;
+            Explode();
+        }
+
+        
         /*
      if (col.collider.tag == "tiilitag")
      {

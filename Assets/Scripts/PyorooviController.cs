@@ -32,18 +32,24 @@ public class PyorooviController : MonoBehaviour
     }
     void Update()
     {
- //       if (!OnkoOkLiikkua())
- //       {
- //           return;
- //       }
+
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.AddTorque(torqueAmount);
+    
+    //       if (!OnkoOkLiikkua())
+    //       {
+    //           return;
+    //       }
     //    float rotationAmount = rotationSpeed * Time.deltaTime;
 
-        // Apply the rotation around the Y-axis (you can change the axis as needed)
-        //transform.Rotate(0, 0, rotationAmount);
-   
+    // Apply the rotation around the Y-axis (you can change the axis as needed)
+    //transform.Rotate(0, 0, rotationAmount);
 
 
-    }
+
+}
     public void FixedUpdate()
     {
        

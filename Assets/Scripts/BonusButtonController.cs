@@ -26,6 +26,10 @@ public class BonusButtonController : MonoBehaviour
         MissileUp,
         Option
     }
+    //taka-ammus jolla voi siis tukkia pallon tulemisen
+    //se force field
+    //laser
+
 
 
 
