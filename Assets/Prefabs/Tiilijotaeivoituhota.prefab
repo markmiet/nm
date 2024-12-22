@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6013417310056060052}
   - component: {fileID: 2145369534388414121}
   m_Layer: 10
-  m_Name: Tiilijonkavoituhota
+  m_Name: Tiilijotaeivoituhota
   m_TagString: laatikkovihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,16 +103,16 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0e43cc00d109971008c2172361214ced, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &6013417310056060052
 BoxCollider2D:

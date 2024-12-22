@@ -67,7 +67,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
 	//	Destroy (gameObject);
 	}
-
+	public float damagemaarajokaaiheutetaan = 1.0f;
 
 	void OnCollisionEnter2D(Collision2D col)
 	{
@@ -86,11 +86,13 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
 			// col.gameObject.SendMessage("Explode");
 
-			IExplodable o =
-col.gameObject.GetComponent<IExplodable>();
+			IDamagedable o =
+col.gameObject.GetComponent<IDamagedable>();
 			if (o != null)
 			{
-				o.Explode();
+				o.AiheutaDamagea(damagemaarajokaaiheutetaan);
+
+
 			}
 			else
 			{

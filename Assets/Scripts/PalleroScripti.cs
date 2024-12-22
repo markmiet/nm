@@ -311,19 +311,21 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
     {
         if (col.CompareTag("alustag"))
         {
-            Debug.Log("OnTriggerEnter2D estaPyoriminen(true) ");
-          //  col.gameObject.SendMessage("Explode");
+
+
 
             IExplodable o =
 col.gameObject.GetComponent<IExplodable>();
             if (o != null)
             {
+
                 o.Explode();
             }
             else
             {
-              //  Debug.Log("alus ja explode mutta ei ookkaan " + col.GetComponent<Collider>().tag);
+                //		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
             }
+
         }
         else if (col.CompareTag("ammustag"))
         {

@@ -1077,6 +1077,20 @@ public class BaseController : MonoBehaviour
 
         return isVisible;
     }
+    AlusController ac = null;
+
+    public AlusController PalautaAlusController()
+    {
+        if (ac==null)
+        {
+            ac = FindObjectOfType<AlusController>();
+        }
+        return ac;
+    }
+    public float PalautaAluksenMaksimiDamage()
+    {
+        return PalautaAlusController().maksimimaaradamageajokakestetaan;
+    }
 
 
 

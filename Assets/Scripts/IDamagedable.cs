@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IDamagedable
 {
     // Start is called before the first frame update
-    void AiheutaDamagea(float damagemaara);
+    void AiheutaDamagea(float damagemaara);//tagissa sana damage
 
 }

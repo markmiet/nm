@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class AlusController : BaseController, IExplodable
+public class AlusController : BaseController,  IDamagedable, IExplodable
 {
 
 
@@ -180,6 +181,8 @@ public class AlusController : BaseController, IExplodable
     public float damagenmaarakunammusosuus = 1.0f;
     void Start()
     {
+       
+
         particleSystem = GetComponentInChildren<ParticleSystem>();
         if (particleSystem.isPlaying)
         {
@@ -335,8 +338,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
         {
-            Debug.Log("Application would quit now.");
-            Application.Quit();
+          //  Debug.Log("Application would quit now.");
+
+            //Application.Quit();
+            Debug.Log("Level1");
+
+            SceneManager.LoadScene("StartMenu");
+            return;
+
         }
 
         if (isPaused)
@@ -1066,7 +1075,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     }
 
 
-    public void Explode()
+    public void ExplodeTarvittaesssa()
     {
         /*
         
@@ -1080,26 +1089,40 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
        // Destroy(explosionIns, 1.0f);
        // Debug.Log("gameover");
 
-        ad.ExplodePlay();
         Savua();
-
         if (damagenmaara>=maksimimaaradamageajokakestetaan)
         {
 
-            Vector3 vektori =
+            Explode();
+        }
+        // audiosourceexplode.Play();
+        PaivitaDamagePalkkia();
+    }
+    private void PaivitaDamagePalkkia()
+    {
+        //jos se on liikaa niin eikun gameoveria
+    }
+
+    public void Explode()
+    {
+        ad.ExplodePlay();
+        Vector3 vektori =
 new Vector3(
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
-            GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
-            Destroy(instanssiOption, 10);
-            damagenmaara = 0;
-        }
-
-
-
-
-        // audiosourceexplode.Play();
+        GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
+        Destroy(instanssiOption, 10);
+        damagenmaara = maksimimaaradamageajokakestetaan;
+        PaivitaDamagePalkkia();
     }
+
+
+        public void AiheutaDamagea(float damagemaara)
+    {
+        damagenmaara += damagemaara;
+        ExplodeTarvittaesssa();
+    }
+
 
 
     /*
@@ -1178,23 +1201,24 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        //haukisilmavihollinenexplodetag
 
         collision = true;
         //explodetag
-        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
+        if (  col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
-            Explode();
+            ExplodeTarvittaesssa();
         }
         else if (col.collider.tag.Contains("pallovihollinen"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
-            Explode();
+            ExplodeTarvittaesssa();
         }
         else if (col.collider.tag.Contains("vihollinen"))
         {
             damagenmaara += 100;
-            Explode();
+            ExplodeTarvittaesssa();
         }
 
         
@@ -1443,5 +1467,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
     }
     */
+
+
+
 
 }

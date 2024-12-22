@@ -24,8 +24,6 @@ public class AmmusController : BaseController, IExplodable {
 	public GameObject alus;
 
 
-	public bool tuhoaylipaansa = true;
-
 	public GameObject option;
 
 	public void SetOption(GameObject p_option )
@@ -107,7 +105,7 @@ public class AmmusController : BaseController, IExplodable {
 
 		if (speed <= nopeusjonkaalleTuhoutuu)
 		{
-			if (tuhoaylipaansa)
+		
 				Destroy(gameObject);
 		}
 
@@ -174,6 +172,8 @@ public class AmmusController : BaseController, IExplodable {
 	private bool tormattyviholliseen = false;
 
 
+	public float damagemaarajokaaiheutataan = 1.0f;
+
 	void OnCollisionEnter2D (Collision2D col)
 	{
 
@@ -193,7 +193,6 @@ public class AmmusController : BaseController, IExplodable {
 
 		if (col.collider.tag.Contains("tiilivihollinen"))
 		{
-			if (tuhoaylipaansa)
 			Explode();
 		}
 
@@ -204,6 +203,7 @@ public class AmmusController : BaseController, IExplodable {
 
 			if (col.gameObject!=null)
             {
+				/*
 				//Debug.Log("gameobjektin tagi=" + col.gameObject.tag);
 				
 				//col.gameObject.SendMessage("Explode");
@@ -222,6 +222,28 @@ public class AmmusController : BaseController, IExplodable {
                 }
 				if (tuhoaylipaansa)
 					Explode();
+				*/
+
+				IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+				if (damageMahdollinen != null)
+				{
+					damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+				}
+				else
+				{
+
+					IExplodable o =
+	col.gameObject.GetComponent<IExplodable>();
+					if (o != null)
+					{
+						o.Explode();
+					}
+					else
+					{
+						Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+					}
+				}
+
 			}
 			else
             {

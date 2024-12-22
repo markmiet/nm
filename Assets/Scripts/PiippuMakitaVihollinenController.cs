@@ -15,7 +15,7 @@ public class PiippuMakitaVihollinenController : MonoBehaviour
     {
         
     }
-
+    public float damagemaarajokaaiheutetaan = 1.0f;
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -24,9 +24,23 @@ public class PiippuMakitaVihollinenController : MonoBehaviour
 
         if (col.CompareTag("alustag"))
         {
-      //      Debug.Log("OnTriggerEnter2D estaPyoriminen(true) ");
-            col.gameObject.SendMessage("Explode");
+
+            IDamagedable o =
+col.gameObject.GetComponent<IDamagedable>();
+            if (o != null)
+            {
+                o.AiheutaDamagea(damagemaarajokaaiheutetaan);
+
+
+            }
+            else
+            {
+                //		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
+            }
         }
+
+
+
 
     }
 }

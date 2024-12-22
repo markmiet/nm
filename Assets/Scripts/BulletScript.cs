@@ -78,7 +78,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     {
         //  Debug.Log("alaosa collidoi");
 
-        if (col.collider.tag.Contains("tiili"))
+        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
         {
 
             //  col.otherCollider

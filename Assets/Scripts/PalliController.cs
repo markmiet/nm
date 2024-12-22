@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PalliController : BaseController, IExplodable, IDamagedable
+public class PalliController : BaseController,  IDamagedable
 {
     public Vector2 boxsizeylhaalla = new Vector2(2.0f, 2.0f);  // Size of the box
     public Vector2 boxsizekeskella = new Vector2(2.0f, 0.1f);  // Size of the box
@@ -1194,10 +1194,10 @@ public class PalliController : BaseController, IExplodable, IDamagedable
         TeeDamaget(damagemaara);
     }
 
-    public void Explode()
-    {
-        TeeDamaget(1.0f);
-    }
+   // public void Explode()
+  //  {
+  //      TeeDamaget(1.0f);
+  //  }
 
     private void TeeDamaget(float damage)
     {
