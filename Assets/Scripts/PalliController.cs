@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PalliController : BaseController,  IDamagedable
 {
+    public bool katossa;
     public Vector2 boxsizeylhaalla = new Vector2(2.0f, 2.0f);  // Size of the box
     public Vector2 boxsizekeskella = new Vector2(2.0f, 0.1f);  // Size of the box
     public Vector2 boxsizelaidatalhaalla = new Vector2(2.0f, 0.1f);  // Size of the box
@@ -226,23 +227,27 @@ public class PalliController : BaseController,  IDamagedable
 
     bool IsInLeftSide(GameObject obj)
     {
-        // Convert the object's world position to viewport position
-        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(obj.transform.position);
 
-        // Check if the object is within the left 10% of the camera's view
-        if (viewportPosition.x >= 0 && viewportPosition.x <= 0.4f)
-        {
-            // Also ensure the object is within the vertical bounds of the screen
-            if (viewportPosition.y >= 0 && viewportPosition.y <= 1)
+            // Convert the object's world position to viewport position
+            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(obj.transform.position);
+
+            // Check if the object is within the left 10% of the camera's view
+            if (viewportPosition.x >= 0 && viewportPosition.x <= 0.4f)
             {
-                // Ensure the object is in front of the camera
-                return true;
+                // Also ensure the object is within the vertical bounds of the screen
+                if (viewportPosition.y >= 0 && viewportPosition.y <= 1)
+                {
+                    // Ensure the object is in front of the camera
+                    return true;
+                }
             }
-        }
+
+        
 
         return false;
     }
 
+    public float torqueForce = 10f;
 
     public void FixedUpdate()
     {
@@ -260,7 +265,10 @@ public class PalliController : BaseController,  IDamagedable
 
             }
 
-
+            if (katossa)
+            {
+                Debug.Log("katossa ollaan");
+            }
            
 
             /*
@@ -401,9 +409,16 @@ public class PalliController : BaseController,  IDamagedable
                     if (!onkoTiiliVasemmalla && onkoTiiliVasemmallaAlhaalla && !onkoPallovasemmalla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
-                        motor.motorSpeed = -motorspeedvaikuttaaliikkumisnopeuteen;  // Negative for clockwise rotation
+                      //  motor.motorSpeed = -motorspeedvaikuttaaliikkumisnopeuteen;  // Negative for clockwise rotation
 
-                        wheelJoint.motor = motor;
+                      
+                            motor.motorSpeed = -motorspeedvaikuttaaliikkumisnopeuteen;
+                        
+
+                   //     wheelJoint.motor = motor;
+
+                        rb.AddTorque(-torqueForce);
+
                     }
                     else
                     {
@@ -425,8 +440,13 @@ public class PalliController : BaseController,  IDamagedable
                     if (!onkoTiiliOikealla && onkoTiiliOikeallaAlhaalla && !onkoPalloOikealla)
                     {
                         JointMotor2D motor = wheelJoint.motor;
-                        motor.motorSpeed = motorspeedvaikuttaaliikkumisnopeuteen;  // Negative for clockwise rotation
-                        wheelJoint.motor = motor;
+                
+                            motor.motorSpeed = motorspeedvaikuttaaliikkumisnopeuteen;
+                        
+                        
+                   //     wheelJoint.motor = motor;
+
+                        rb.AddTorque(torqueForce);
                     }
                     else
                     {
