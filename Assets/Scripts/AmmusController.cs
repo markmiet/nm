@@ -59,7 +59,7 @@ public class AmmusController : BaseController, IExplodable {
 
 		firstime = false;
 	}
-	*/
+	
 
 	private bool TuhoaJosKameranAlla()
 	{
@@ -74,7 +74,7 @@ public class AmmusController : BaseController, IExplodable {
 
 
 	}
-
+	*/
 	public float nopeusjonkaalleTuhoutuu = 0.2f;
 
 	public void Update ()
@@ -250,7 +250,7 @@ public class AmmusController : BaseController, IExplodable {
 			//	Debug.Log("gameobjekcti null");
 
             }
-			
+			Explode();
 		}
 
 		//Explode(0.0f);

@@ -21,6 +21,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
 	public float speedjonkaalletuhotaan = 0.5f;
 
+	/*
 	private bool TuhoaJosKameranAlla()
 	{
 		bool alla = IsObjectDownOfCamera(gameObject);
@@ -34,6 +35,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
 
 	}
+	*/
 
 	private float checkInterval = 0.3f;
 	private float nextCheckTime;

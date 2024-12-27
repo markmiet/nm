@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1536140881072054400}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
-  m_LocalScale: {x: 0.06, y: 0.10000005, z: 1}
+  m_LocalPosition: {x: 0, y: -0.5999985, z: 0}
+  m_LocalScale: {x: 0.06, y: 0.10000007, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2812339386002314722}
@@ -4861,8 +4861,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 653656707641999392}
   - {fileID: 7483280684619519742}
+  - {fileID: 653656707641999392}
   m_Father: {fileID: 8626132257536797591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6201689638447569240
@@ -5132,7 +5132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9993b0d086e101b47b6ef33dadc19c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  katossa: 0
   boxsizeylhaalla: {x: 0.1, y: 0.1}
   boxsizekeskella: {x: 0.5, y: 0.3}
   boxsizelaidatalhaalla: {x: 0.6, y: 10}
@@ -5164,6 +5163,7 @@ MonoBehaviour:
   hyppyjenValinenViive: 0.5
   erominimissaanJottaLiikutaan: 0
   motorspeedvaikuttaaliikkumisnopeuteen: 280
+  torqueForce: 10
   jumpForceEiKaytossa: 5
   hypynmoveSpeed: 1
   hatahypynvoimakorkeussuunnassa: 10
@@ -5369,17 +5369,17 @@ PrefabInstance:
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

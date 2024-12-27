@@ -13,7 +13,7 @@ public class TiilijonkavoituhotaController : BaseController /*, IExplodable*/
     // Update is called once per frame
     void Update()
     {
-        
+        TuhoaJosVaarassaPaikassa(gameObject);
     }
     public float explosionForce = 10f; // Base force magnitude
 

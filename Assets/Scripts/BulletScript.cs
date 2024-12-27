@@ -88,7 +88,9 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             //eli jos törmäävä osa on tämä capsulocollider niin tuhoa 
             if (collider != null)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                Explode();
+
             }
             else
             {
@@ -148,7 +150,9 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             }
 
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Explode();
+
 
             //Destroy (col.gameObject);
 
@@ -178,7 +182,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
 
     public void Explode()
     {
-       // RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
+     //   RajaytaSprite(gameObject, 4, 4, 1.0f, 0.3f);
         Destroy(gameObject);
     }
 

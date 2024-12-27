@@ -126,8 +126,8 @@ GameObject:
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 974177201031621125}
   m_Layer: 10
-  m_Name: Eripallovihollinen
-  m_TagString: pallovihollinenexplodetag
+  m_Name: Eripallovihollinenammus
+  m_TagString: eripallovihollinenammusexplode
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5, y: -48.36, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 653656707641999392}
@@ -164,7 +164,7 @@ Rigidbody2D:
   m_Mass: 5
   m_LinearDrag: 1
   m_AngularDrag: 1
-  m_GravityScale: -10
+  m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 2569ed191898bf8f98df95618075ee69, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -208,9 +208,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0024523735, y: 0.009838343}
+  m_Offset: {x: -0.00084400177, y: 0.009838343}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.13540411
 --- !u!212 &4927679625259037937
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -252,7 +252,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 042873403d49b4a4a8b20b234c2ccc89, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1ef5e678c77d1e949aa033ecc0860080, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -292,13 +292,13 @@ MonoBehaviour:
   oikeayla2center: {x: 0, y: 0}
   vasenyla2center: {x: 0, y: 0}
   boxsizeyla2: {x: 2, y: 0.1}
-  bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
-  ammus: {fileID: 7639041830807167212, guid: 1539c4ef212ab314a840dd8d01007941, type: 3}
+  bonus: {fileID: 0}
+  ammus: {fileID: 5157698805627988775, guid: 0b69256f831892d4f980bb61be614c7c, type: 3}
   tagilistaJoitaTutkitaan: []
   osumiemaarajokaTarvitaanRajahdykseen: 1
   erominimissaanJottaLiikutaan: 0.4
   leftsidetutkinnanmaara: 0.4
-  torqueForce: 10
+  torqueForce: -1
   ammuntasykli: 3
   aluksenammuksentagilista: []
   layerMask:
@@ -312,10 +312,9 @@ MonoBehaviour:
   rajaytyscols: 4
   rajaytysvoima: 2
   rajaytyskestoaika: 0.8
-  ampumisenvoimakkuus: 4
+  ampumisenvoimakkuus: 3
   pieninmahdollinenAikaValiAmpumisissa: 2
-  ammu: 1
-  ampumiskohdanmiinustus: 0.5
+  ammu: 0
 --- !u!1001 &8248400944725571975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -452,7 +451,7 @@ PrefabInstance:
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0.1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -467,12 +466,12 @@ PrefabInstance:
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.060000006
+      value: 0.03000001
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.060000006
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

@@ -82,6 +82,13 @@ public class BaseController : MonoBehaviour
 
     }
 
+    public bool OnkoOkToimia(GameObject go)
+    {
+        SpriteRenderer spriterrend= GetSpriteRenderer(go);
+
+        return spriterrend.isVisible;
+    }
+
 
     public bool onkoliikkunutVasemmalle(Vector3 worldPosition, int positionumeroJohonVerrataan, bool muutaworldpositionScreenpositionin, float vaadittavaero)
     {
@@ -730,17 +737,93 @@ public class BaseController : MonoBehaviour
 
     }
 
-    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime)
+    public void RajaytaSpriteUUsi(GameObject go, int rows, int columns, float explosionForce, float alivetime)
     {
-
         Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
 
         // Get the original sprite's texture
         Texture2D texture = originalSprite.texture;
 
-        // Calculate the width and height of each slice
+        // Calculate slice dimensions
         int sliceWidth = texture.width / columns;
         int sliceHeight = texture.height / rows;
+
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                // Create slice rectangle
+                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
+
+                // Create sprite from the slice
+                Sprite newSprite = Sprite.Create(
+                    texture,
+                    sliceRect,
+                    new Vector2(0.5f, 0.5f), // Pivot
+                    originalSprite.pixelsPerUnit
+                );
+
+                // Create GameObject for the slice
+                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
+                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                sr.sprite = newSprite;
+
+                // Add Rigidbody2D for physics
+                Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
+                pieceRigidbody.gravityScale = 0.5f;
+
+                // Optional: Add BoxCollider2D for physics interaction
+                BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
+                collider.size = new Vector2(sliceWidth / originalSprite.pixelsPerUnit, sliceHeight / originalSprite.pixelsPerUnit);
+
+                // Position the slice
+                sliceObject.transform.position = new Vector3(
+                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
+                    transform.position.y + y * sliceHeight / originalSprite.pixelsPerUnit,
+                    0
+                );
+
+                // Apply random force and torque
+                Vector2 randomDirection = Random.insideUnitCircle.normalized;
+                float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
+                pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
+                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
+
+                // Destroy slice after a given time
+                Destroy(sliceObject, alivetime);
+            }
+        }
+
+        // Optionally destroy the original GameObject
+        Destroy(go);
+    }
+
+
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime)
+    {
+
+        Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
+
+
+       
+        // Get the original sprite's texture
+        Texture2D texture = originalSprite.texture;
+   //     Vector3 scale = go.transform.localScale;
+
+        // Calculate the width and height of each slice
+        float sliceWidth = texture.width / columns;
+        float sliceHeight = texture.height / rows;
+
+
+       // sliceWidth = sliceWidth * scale.x;
+       // sliceHeight = sliceHeight * scale.y;
+
+     //   SpriteRenderer srSpriteRenderer =
+     //   go.GetComponent<SpriteRenderer>();
+     //   sliceWidth= srSpriteRenderer.size.x / columns;
+     //   sliceHeight = srSpriteRenderer.size.y / rows; 
+
+
 
         // Create a list to store the sliced sprites
         List<Sprite> slicedSprites = new List<Sprite>();
@@ -833,6 +916,7 @@ public class BaseController : MonoBehaviour
         //  Debug.Log("Slicing completed. Number of slices: " + slicedSprites.Count);
 
     }
+
     public void IgnoreChildCollisions(Transform parent)
     {
 
@@ -960,6 +1044,10 @@ public class BaseController : MonoBehaviour
     GameObject alamaksimi = null;
 
 
+    private static int tarkistuskertojenmaara = 100;//suoritusyky syistä tarkistetaan vain joka 100 kerta
+
+    private int tarkistuslaskuri=0;
+
     public void TuhoaJosVaarassaPaikassa(GameObject go)
     {
         TuhoaJosVaarassaPaikassa(go, true);
@@ -968,10 +1056,21 @@ public class BaseController : MonoBehaviour
         public void TuhoaJosVaarassaPaikassa(GameObject go,bool tuhoaJosLiianKorkeallaKameraanverrattuna)
     {
 
-        if (alamaksimi==null)
+        if (alamaksimi == null)
         {
             alamaksimi = GameObject.FindWithTag("alamaksiminmaarittavatag");
         }
+        tarkistuslaskuri++;
+
+        if (tarkistuslaskuri< tarkistuskertojenmaara)
+        {
+            return;
+        }
+        tarkistuslaskuri = 0;
+
+
+
+
        
 
         float y = go.transform.position.y;
@@ -997,14 +1096,15 @@ public class BaseController : MonoBehaviour
   
        */
 
-        if (IsObjectLeftOfCamera(go, 50.0f))
+        if (IsObjectLeftOfCamera(go, 10.0f))
         {
        //     Debug.Log("object left of camerea" + go);
             Destroy(go);
             return;
         }
         float objectHeight = 0.0f;
-        SpriteRenderer renderer = go.GetComponent<SpriteRenderer>();
+        SpriteRenderer renderer = GetSpriteRenderer(go);
+
         if (renderer != null)
         {
             objectHeight = renderer.bounds.size.y; // Half height for top/bottom calculation
@@ -1016,8 +1116,17 @@ public class BaseController : MonoBehaviour
             Destroy(go);
         }
     }
+    private SpriteRenderer renderer = null;
 
 
+    private SpriteRenderer GetSpriteRenderer(GameObject go)
+    {
+        if (renderer == null)
+        {
+            renderer = go.GetComponent<SpriteRenderer>();
+        }
+        return renderer;
+    }
 
     public bool IsOffScreen()
     {

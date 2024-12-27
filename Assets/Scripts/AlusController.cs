@@ -6,9 +6,39 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class AlusController : BaseController,  IDamagedable, IExplodable
+public class AlusController : BaseController, IDamagedable, IExplodable
 {
+    public float gravitymodifiermuutoskunammusosuu = 0.01f;
 
+
+    public float gravitynminimi = -0.2f;
+
+
+    public float damagemaarakasvastatuskunsavutaan = 5.0f;
+
+    public float turboviiveSekunneissa = 0.4f;
+    public float maksiminopeusylosalas = 0.08f;
+
+
+    public float maksiminopeusvertikaalinen = 0.08f;
+
+    public float kiihtyvyys = 0.05f;
+
+    private float oikeanappipainettukestoaika = 0.0f;
+
+    private float vasennappipainettukestoaika = 0.0f;
+
+
+    private float ylosnappipainettukestoaika = 0.0f;
+    private float alasnappipainettukestoaika = 0.0f;
+
+    public float perusnopeus = 0.05f;
+
+
+    float deltaaikojensumma = 0f;
+
+    private Vector3 _offset; // Erotus aluksen ja kosketuksen välillä
+    private bool _isDragging = false;
 
 
     public float optiotfollowDistance = 0.5f; // Distance behind the player
@@ -109,6 +139,7 @@ public class AlusController : BaseController,  IDamagedable, IExplodable
 
     public GameObject debugloota;
 
+    /*
     public Vector3 palautaViimeinenSijaintiScreenpositioneissa(int optionjarjestysnumero)
     {
 
@@ -117,8 +148,9 @@ public class AlusController : BaseController,  IDamagedable, IExplodable
         return base.palautaScreenpositioneissa(optioidenmaksimaara * 8 - optionjarjestysnumero * 8);
 
     }
+    */
     //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
-    private void tallennaSijaintiSailytaVainKymmenenViimeisinta()
+    private void TallennaSijaintiSailytaVainKymmenenViimeisinta()
     {
         base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 8, true, true, debugloota);
         if (true)
@@ -179,9 +211,12 @@ public class AlusController : BaseController,  IDamagedable, IExplodable
     public float maksimimaaradamageajokakestetaan = 100.0f;
     public float damagenmaara = 0.0f;
     public float damagenmaarakunammusosuus = 1.0f;
+
+
+    private BoxCollider2D boxCollider2D;
     void Start()
     {
-       
+
 
         particleSystem = GetComponentInChildren<ParticleSystem>();
         if (particleSystem.isPlaying)
@@ -238,7 +273,7 @@ public class AlusController : BaseController,  IDamagedable, IExplodable
         myObject.GetComponent<Image>().enabled = false;
         Color color = m_SpriteRenderer.color;
         gvarinalkutilanne = color.g;
-
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     private void TeeOptioni()
@@ -263,13 +298,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
     }
 
-    public float gravitymodifiermuutoskunammusosuu = 0.01f;
 
-
-    public float gravitynminimi =- 0.2f;
-
-
-    public float damagemaarakasvastatuskunsavutaan = 5.0f;
     public void Savua()
     {
         if (!particleSystem.isPlaying)
@@ -280,7 +309,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         var mainModule = particleSystem.main;
         float currentGravityModifier = mainModule.gravityModifier.constant;
         float uusiarvo = currentGravityModifier - gravitymodifiermuutoskunammusosuu;
-        if (uusiarvo> gravitynminimi)
+        if (uusiarvo > gravitynminimi)
         {
 
             mainModule.gravityModifier = uusiarvo;
@@ -328,6 +357,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     // Update is called once per frame
     void Update()
     {
+        if (gameover)
+        {
+            return;
+        }
 
 
         if (Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
@@ -338,7 +371,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
         {
-          //  Debug.Log("Application would quit now.");
+            //  Debug.Log("Application would quit now.");
 
             //Application.Quit();
             Debug.Log("Level1");
@@ -397,19 +430,19 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         Vector2 moveDirection = moveInputActionReference.action.ReadValue<Vector2>();
 
 
-        float moveDirectionAlas  =moveDownInputActionReference.action.ReadValue<float>();
+        float moveDirectionAlas = moveDownInputActionReference.action.ReadValue<float>();
 
-        float moveDirectionUp= moveUpInputActionReference.action.ReadValue<float>();
+        float moveDirectionUp = moveUpInputActionReference.action.ReadValue<float>();
 
 
 
 
         m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
 
-        
+
 
         float nappiHorizontal = Input.GetAxisRaw("Horizontal");
-        if (nappiHorizontal==0.0f)
+        if (nappiHorizontal == 0.0f)
         {
             nappiHorizontal = moveDirection.x;
         }
@@ -432,7 +465,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float nappiVertical = Input.GetAxisRaw("Vertical");
         if (nappiVertical == 0.0f)
         {
-             nappiVertical = moveDirection.y;
+            nappiVertical = moveDirection.y;
         }
 
         // float nappiVertical = moveDirection.y;
@@ -464,7 +497,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //CrossPlatformInputManager.GetButton
 
-        if (autofire  || Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButton("Jump"))
+        if (autofire || Input.GetKey(KeyCode.Space) || CrossPlatformInputManager.GetButton("Jump"))
         {
             //Shoot ();
             //		Debug.Log ("space painettu " );
@@ -477,9 +510,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             spaceNappiaPainettu = false;
         }
 
-        if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus") )
+        if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus"))
         {
-         //   Debug.Log("BonusButtonPressed");
+            //   Debug.Log("BonusButtonPressed");
             BonusButtonPressed();
         }
 
@@ -487,7 +520,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
 
-        tallennaSijaintiSailytaVainKymmenenViimeisinta();
+        TallennaSijaintiSailytaVainKymmenenViimeisinta();
     }
     public bool isPaused = false;
 
@@ -503,9 +536,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
         else
         {
-        
+
             GameObject myObject = GameObject.Find("PauseButtonKaytossa");
-            PauseButtonControlleri s=myObject.GetComponent<PauseButtonControlleri>();
+         
+            PauseButtonControlleri s = myObject.GetComponent<PauseButtonControlleri>();
             s.setPauseImage(true);
             PauseGameAction();
 
@@ -539,29 +573,6 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
 
-    public float turboviiveSekunneissa = 0.4f;
-    public float maksiminopeusylosalas = 0.08f;
-
-
-    public float maksiminopeusvertikaalinen = 0.08f;
-
-    public float kiihtyvyys = 0.05f;
-
-    private float oikeanappipainettukestoaika = 0.0f;
-
-    private float vasennappipainettukestoaika = 0.0f;
-
-
-    private float ylosnappipainettukestoaika = 0.0f;
-    private float alasnappipainettukestoaika = 0.0f;
-
-    public float perusnopeus = 0.05f;
-
-
-    float deltaaikojensumma = 0f;
-
-    private Vector3 _offset; // Erotus aluksen ja kosketuksen välillä
-    private bool _isDragging = false;
 
 
     /*
@@ -577,19 +588,22 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
     }
 */
+
+    public Vector2 sormipaikkakerto = new Vector2(1.3f, 1.3f);
+
     private void CheckIfTouched(Vector3 inputPosition)
     {
         // Convert input position to world space
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
-
+        /*
         // Check if the input position overlaps a 2D collider
         Collider2D hit = Physics2D.OverlapPoint(worldPosition);
 
-      //  Debug.Log("hitti=" + hit);
-        if (hit!=null)
+        //  Debug.Log("hitti=" + hit);
+        if (hit != null)
         {
             bool onko = hit.transform == transform;
-       //     Debug.Log("onko=" + onko);
+            //     Debug.Log("onko=" + onko);
         }
 
         if (hit != null && hit.transform == transform)
@@ -598,6 +612,27 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             // Calculate offset between the object and touch/mouse position
             _offset = transform.position - worldPosition;
         }
+        */
+        Vector2 boxSize = boxCollider2D.size * transform.localScale;
+
+        boxSize = boxSize * sormipaikkakerto;
+
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(worldPosition, boxSize, LayerMask.GetMask("keskilayer"));
+
+        foreach (Collider2D collider in colliders)
+        {
+            //
+            if (collider.gameObject.tag.Contains("alustag"))
+            {
+                _isDragging = true;
+                // Calculate offset between the object and touch/mouse position
+                _offset = collider.gameObject.transform.position - worldPosition;
+
+                break;
+            }
+        }
+        
+
     }
 
 
@@ -605,44 +640,245 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void MoveObject(Vector3 inputPosition)
     {
-  //      float ero = Vector3.Distance(inputPosition, viimeisin);
-    //    Debug.Log("hiiriero=" + ero);
-       // if (ero>20.0f)
-       // {
-         //   viimeisin = inputPosition;
-            // Offset the input position by 50 pixels to the right in screen space
-            float offsetti = 100;
-            Vector3 screenPositionWithOffset = new Vector3(inputPosition.x + offsetti, inputPosition.y, 0);
+        //      float ero = Vector3.Distance(inputPosition, viimeisin);
+        //    Debug.Log("hiiriero=" + ero);
+        // if (ero>20.0f)
+        // {
+        //   viimeisin = inputPosition;
+        // Offset the input position by 50 pixels to the right in screen space
+        float offsetti = 100;
+        Vector2 screenPositionWithOffset = new Vector2(inputPosition.x + offsetti, inputPosition.y);
 
-            // Convert the offset screen position to world space
-            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
+        // Convert the offset screen position to world space
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
 
-            //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
-            //Vector3 te = new Vector3(50, 0, 0);
+        //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
+        //Vector3 te = new Vector3(50, 0, 0);
 
-            transform.position = worldPosition + _offset;
-//        }
+        Vector2 yritys = worldPosition + _offset; ;
+        // transform.position = worldPosition + _offset;
+        TryMove(yritys);
+
+        //        }
+    }
+
+
+    void TryMove2(Vector2 targetPosition)
+    {
+        // Perform a raycast to detect collision
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, targetPosition - (Vector2)transform.position, Vector2.Distance(transform.position, targetPosition));
+
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+
+        // Use the size of the collider to determine the distance
+        float distance = Vector2.Distance(transform.position, targetPosition);
+
+        Vector2 colliderSize = boxCollider2D.size * transform.localScale; // Adjust for local scale
+
+        // Perform a raycast using the size of the collider
+        RaycastHit2D hit = Physics2D.BoxCast(
+            transform.position,
+            colliderSize,
+            0f,
+            direction,
+            distance
+        );
+
+        bool onko = onkoTagiaBoxissa("tiili", boxCollider2D.size * transform.localScale, targetPosition, LayerMask.NameToLayer("keskilayer"));
+        Collider2D[] cs = Physics2D.OverlapBoxAll(targetPosition, boxCollider2D.size, LayerMask.NameToLayer("keskilayer"));
+        if (cs != null && cs.Length > 0)
+        {
+            foreach (Collider2D c in cs)
+            {
+                // Debug.Log("tagi=" + c.gameObject.tag);
+                if (c.gameObject == this.gameObject)
+                {
+
+                }
+                else if (c.gameObject.transform.parent == this.gameObject.transform)
+                {
+
+                }
+                else if (c.gameObject.tag.Contains("tiili"))
+                {
+                    return;
+                }
+            }
+        }
+        /*
+        if (hit != null && hit.collider != null)
+        {
+            Debug.Log("hittag="+ hit.collider.gameObject.tag);
+        }
+
+
+        //else if (c.gameObject.tag.Contains(name))
+        if (hit!=null && hit.collider != null && hit.collider.gameObject.tag.Contains("tiili"))
+        {
+            Debug.Log("Blocked by tilemap!");
+            return; // Prevent movement if blocked by a tile with the tag "tiili"
+        }
+
+        // Move towards the target position
+        //rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime));
+        */
+        //transform.position = targetPosition;
+
+
+        m_Rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime));
+
+    }
+
+
+    void TryMoveOldi(Vector2 targetPosition)
+    {
+        // Perform a raycast to detect collision
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, targetPosition - (Vector2)transform.position, Vector2.Distance(transform.position, targetPosition));
+
+        Vector2 boxSize = boxCollider2D.size * transform.localScale;
+
+
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(targetPosition, boxSize, LayerMask.GetMask("keskilayer"));
+
+        if (colliders != null && colliders.Length > 0)
+        {
+            foreach (Collider2D collider in colliders)
+            {
+                // Skip self
+                if (collider.gameObject == this.gameObject)
+                    continue;
+
+                // Skip child objects of this GameObject
+                if (collider.transform.parent == this.transform)
+                    continue;
+
+                // Check if the object has the "tiili" tag and block movement if so
+                if (collider.gameObject.tag.Contains("tiili"))
+                {
+                    Debug.Log("Movement blocked by object with tag 'tiili'");
+                    return;
+                }
+            }
+        }
+
+
+        m_Rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime));
+
+    }
+
+    public Vector2 kerto=new Vector2(1.2f, 1.2f);
+
+    void TryMove(Vector2 targetPosition)
+    {
+        // Calculate the direction and total distance to move
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        float totalDistance = Vector2.Distance(transform.position, targetPosition);
+
+        // Step size for progressive movement checks
+        float stepSize = 0.01f; // Adjust for precision (smaller values are more precise but slower)
+
+        Vector2 currentPosition = transform.position;
+        Vector2 boxSize = boxCollider2D.size * transform.localScale;
+
+        boxSize = boxSize * kerto;
+        bool rajayta = false;
+        // Incrementally check for collisions along the path
+        for (float traveled = 0; traveled < totalDistance; traveled += stepSize)
+        {
+            // Calculate the next step position
+            Vector2 nextPosition = currentPosition + direction * stepSize;
+
+            // Perform an OverlapBox check at the next position
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(nextPosition, boxSize, LayerMask.GetMask("keskilayer"));
+
+            bool isBlocked = false;
+            foreach (Collider2D collider in colliders)
+            {
+                //
+                if (collider.gameObject.tag.Contains("tiili") ||  collider.gameObject.tag.Contains("laatikkovihollinen"))
+                {
+                    isBlocked = true;
+                    break;
+                }
+            }
+
+            // Stop movement if a collision is detected
+            if (isBlocked)
+            {
+                Debug.Log("Movement blocked before reaching the target.");
+                rajayta = true;
+                break;
+            }
+
+            // Update currentPosition to the next step
+            currentPosition = nextPosition;
+        }
 
 
 
+        //    m_Rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime));
+
+
+
+        if (rajayta)
+        {
+            Vector2 kohta = Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime);
+            transform.position = kohta;
+            damagenmaara += maksimimaaradamageajokakestetaan;
+            ExplodeTarvittaesssa();
+        }
+        else
+        {
+            Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = kohta;
+        }
 
 
     }
 
+
+
+    public float moveSpeed = 50f;
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 mousePosition = Input.mousePosition;
         return mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10f));
     }
 
+    public void SiirryGameOverJalkeiseenTilaan()
+    {
+        Debug.Log("Level1");
+
+        SceneManager.LoadScene("StartMenu");
+        return;
+    }
+
+
     void FixedUpdate()
     {
+
+        if (gameover)
+        {
+            //gameoverinajankohta = Time.realtimeSinceStartup;
+            float aikanyt = Time.realtimeSinceStartup;
+
+            if (aikanyt- gameoverinajankohta>aikamaarajokajatketaangameoverinjalkeen)
+            {
+                Time.timeScale = 0;
+                SiirryGameOverJalkeiseenTilaan();
+            }
+           
+            return;
+
+        }
+
 
         if (isPaused)
         {
             return;
         }
 
+        /*
         if (gameover)
         {
             GameObject instanssi = Instantiate(gameoverPrefab, new Vector3(10.1f +
@@ -650,7 +886,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //  instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 
             Destroy(instanssi, 1);
+            return;
         }
+        */
 
 
         if (m_Animator.GetBool("explode"))
@@ -660,7 +898,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
 
 
-        
+
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
@@ -781,7 +1019,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
 
-        asetaSijainti();
+        AsetaSijainti();
 
         if (ysuuntamuutos > 0.0f)
         {
@@ -802,7 +1040,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         deltaaikojensumma += aika;
 
-        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive && onkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
+        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive && OnkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
         {
             //	if (!ammusInstantioitiinviimekerralla) {
             Vector3 v3 =
@@ -813,7 +1051,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //audiosourcelaukaus.
             //    audiosourcelaukaus.Play();
             ad.AlusammusPlay();
-            
+
 
             GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
 
@@ -825,7 +1063,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
-            ammuOptioneilla();
+            AmmuOptioneilla();
 
             ammusinstantioitiin = true;
             deltaaikojensumma = 0;
@@ -835,55 +1073,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             //alas tippuva
             // missileDownCollected
-            if (missileDownCollected >= 1 && instanssiBulletAlas == null)
-            {
+            InstantioiBulletAlasTarvittaessa();
 
+            InstantioiBulletYlosTarvittaessa();
 
-                Vector3 v3alas =
-new Vector3(0.1f +
-m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y +0.0f, 0);
-
-
-
-                instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
-                IAlas alas= instanssiBulletAlas.GetComponent<IAlas>();
-                if (alas!=null)
-                {
-                    //instanssiBulletAlas.SendMessage("Alas", true);
-                    alas.Alas(true);
-                    instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
-                    instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-                }
-
-            }
-
-
-            if (missileUpCollected >= 1 && instanssiBulletYlos == null)
-            {
-
-
-                Vector3 v3ylos =
-    new Vector3(0.1f +
-    m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
-
-
-
-                instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
-                //instanssiBulletYlos.SendMessage("Alas", false);
-
-                IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
-                if (alas != null)
-                {
-                    //instanssiBulletAlas.SendMessage("Alas", true);
-                    alas.Alas(false);
-                }
-
-                    instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
-
-                instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
-
-            }
-            //	}
         }
         ammusInstantioitiinviimekerralla = ammusinstantioitiin;
 
@@ -892,46 +1085,77 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         {
 
             TeeOptioni();
-            /*
-            Vector3 vektori =
-    new Vector3(
-    m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
-
-
-            GameObject instanssiOption = Instantiate(instanssiOption1, vektori, Quaternion.identity);
-            //  instanssiOption.transform.SetParent(transform);
-
-
-            OptionController myScript = instanssiOption.GetComponent<OptionController>();
-            if (myScript != null)
-            {
-                myScript.jarjestysnro = nykyinenoptioidenmaara;
-                optionControllerit.Add(myScript);
-            }
-            else
-            {
-                Debug.Log("ei ole controlleria");
-            }
-
-            //    instanssiOption.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
-            */
             teeOptionPallukka = false;
         }
 
-       
+
+    }
+
+    private void InstantioiBulletAlasTarvittaessa()
+    {
+        if (missileDownCollected >= 1 && instanssiBulletAlas == null)
+        {
+
+
+            Vector3 v3alas =
+new Vector3(0.1f +
+m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
+
+
+
+            instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
+            IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
+            if (alas != null)
+            {
+                //instanssiBulletAlas.SendMessage("Alas", true);
+                alas.Alas(true);
+                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
+                instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            }
+
+        }
+    }
+
+    private void InstantioiBulletYlosTarvittaessa()
+    {
+        if (missileUpCollected >= 1 && instanssiBulletYlos == null)
+        {
+
+
+            Vector3 v3ylos =
+new Vector3(0.1f +
+m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
+
+
+
+            instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
+            //instanssiBulletYlos.SendMessage("Alas", false);
+
+            IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
+            if (alas != null)
+            {
+                //instanssiBulletAlas.SendMessage("Alas", true);
+                alas.Alas(false);
+            }
+
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
+
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
+
+        }
     }
 
     public void VahennaaluksenluomienElossaOlevienAmmustenMaaraa()
     {
-        aluksenluomienElossaOlevienAmmustenMaara=aluksenluomienElossaOlevienAmmustenMaara-1;
+        aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara - 1;
     }
 
 
-    private void ammuOptioneilla()
+    private void AmmuOptioneilla()
     {
         foreach (OptionController obj in optionControllerit)
         {
-         //   obj.gameObject.transform.position
+            //   obj.gameObject.transform.position
             // Set the position
             obj.ammuNormilaukaus(ammusPrefab);
             if (missileDownCollected >= 1)
@@ -940,12 +1164,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             }
             if (missileUpCollected >= 1)
             {
-                if (bulletPrefab==null)
+                if (bulletPrefab == null)
                 {
                     Debug.Log("bulletti null");
                     return;
                 }
-                if(obj==null)
+                if (obj == null)
                 {
                     Debug.Log("objekti null");
                 }
@@ -953,7 +1177,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 {
                     obj.ammuYloslaukaus(bulletPrefab);
                 }
-                
+
             }
         }
     }
@@ -969,7 +1193,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         // asetaSijainti();
 
-      //  Explode();
+        //  Explode();
     }
 
     private void asetaSijainti2()
@@ -1029,7 +1253,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     }
 
 
-    private void asetaSijainti()
+    private void AsetaSijainti()
     {
         if (mainCamera == null) mainCamera = Camera.main;
         if (m_SpriteRenderer == null) m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -1085,12 +1309,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         
         Time.timeScale = 0f;
         */
-       // GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-       // Destroy(explosionIns, 1.0f);
-       // Debug.Log("gameover");
+        // GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+        // Destroy(explosionIns, 1.0f);
+        // Debug.Log("gameover");
 
         Savua();
-        if (damagenmaara>=maksimimaaradamageajokakestetaan)
+        if (damagenmaara >= maksimimaaradamageajokakestetaan)
         {
 
             Explode();
@@ -1102,22 +1326,51 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         //jos se on liikaa niin eikun gameoveria
     }
+    public float aikamaarajokajatketaangameoverinjalkeen = 5.0f;
+
+    private float gameoverinajankohta;
 
     public void Explode()
     {
-        ad.ExplodePlay();
-        Vector3 vektori =
-new Vector3(
-m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+      
 
-        GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
-        Destroy(instanssiOption, 10);
-        damagenmaara = maksimimaaradamageajokakestetaan;
-        PaivitaDamagePalkkia();
+        if (!gameover)
+        {
+            Time.timeScale = 0.1f;
+            damagenmaara = maksimimaaradamageajokakestetaan;
+            ad.ExplodePlay();
+            Vector3 vektori =
+    new Vector3(
+    m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+
+           // GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
+
+            GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
+            RajaytaSprite(gameObject, 4, 4, 1, aikamaarajokajatketaangameoverinjalkeen);
+            m_SpriteRenderer.enabled = false;
+
+          //  Destroy(instanssiOption, 10);
+           
+            PaivitaDamagePalkkia();
+
+            //TogglePause();
+
+            GameObject myObject = GameObject.Find("PauseButtonKaytossa");
+            Image spriteRenderer = myObject.GetComponent<Image>();
+
+            //Image image = GetComponent<Image>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.enabled = false; // Hides the sprite
+            }
+            gameoverinajankohta= Time.realtimeSinceStartup;
+           
+            
+        }
+        gameover = true;
     }
 
-
-        public void AiheutaDamagea(float damagemaara)
+    public void AiheutaDamagea(float damagemaara)
     {
         damagenmaara += damagemaara;
         ExplodeTarvittaesssa();
@@ -1158,7 +1411,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 {
 
                 }
-                else if (c.gameObject.tag == "tiilitag")
+                else if (c.gameObject.tag.Contains("tiili"))
                 {
                     return true;
                 }
@@ -1196,16 +1449,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
         */
 
-    bool collision = false;
 
 
     void OnCollisionEnter2D(Collision2D col)
     {
         //haukisilmavihollinenexplodetag
 
-        collision = true;
         //explodetag
-        if (  col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
+        if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             ExplodeTarvittaesssa();
@@ -1221,7 +1472,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             ExplodeTarvittaesssa();
         }
 
-        
+
         /*
      if (col.collider.tag == "tiilitag")
      {
@@ -1257,7 +1508,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     void OnCollisionStay2D(Collision2D col)
     {
         //   Debug.Log("on OnCollisionStay ");
-        collision = false;
+
     }
 
 
@@ -1265,18 +1516,27 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     {
         //    Debug.Log("on collision exit");
 
-        collision = false;
+
     }
 
 
 
-    //void OnDrawGizmos()
-    //{
-    //    // Draws a 5 unit long red line in front of the object
-    //    Gizmos.color = Color.red;
-    //    Vector3 direction = transform.TransformDirection(Vector3.forward) * 50;
-    //    Gizmos.DrawRay(transform.position, direction);
-    //}
+
+
+    void OnDrawGizmos()
+    {
+        //    // Draws a 5 unit long red line in front of the object
+        //    Gizmos.color = Color.red;
+        //    Vector3 direction = transform.TransformDirection(Vector3.forward) * 50;
+        //    Gizmos.DrawRay(transform.position, direction);
+
+        if (boxCollider2D != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(transform.position, boxCollider2D.size * transform.localScale* sormipaikkakerto);
+        }
+
+    }
 
 
 
@@ -1294,7 +1554,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public void BonusCollected()
     {
-     //   audiosourcebonus.Play();
+        //   audiosourcebonus.Play();
 
         //Debug.Log("BonusCollected aluksella");
 
@@ -1350,7 +1610,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         foreach (BonusButtonController btc in bbc)
         {
-           // Debug.Log("order=" + btc.order + " selected=" + btc.selected);
+            // Debug.Log("order=" + btc.order + " selected=" + btc.selected);
 
 
         }
@@ -1368,7 +1628,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 asetakaikkieiselectoiduiksi = true;
                 if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Speed))
                 {
-                 //   Debug.Log("speed()");
+                    //   Debug.Log("speed()");
                     //vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
                     //vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
                     maksiminopeusylosalas += vauhdinLisaysKunSpeedbonusOtettu;
@@ -1400,13 +1660,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                     }
                     else
                     {
-                //        Debug.Log("nykyinenoptioidenmaara="+ nykyinenoptioidenmaara);
+                        //        Debug.Log("nykyinenoptioidenmaara="+ nykyinenoptioidenmaara);
                     }
                 }
             }
             else
             {
-              //  Debug.Log("painettu bonusta, mutta selectoitu jo kaytetty");
+                //  Debug.Log("painettu bonusta, mutta selectoitu jo kaytetty");
             }
         }
         if (asetakaikkieiselectoiduiksi)
@@ -1423,17 +1683,17 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         return GameObject.FindGameObjectsWithTag("ammustag").Length;
 
     }
-    private bool onkoAmmustenMaaraAlleMaksimin()
+    private bool OnkoAmmustenMaaraAlleMaksimin()
     {
         int maksimi = ammustenmaksimaaraProperty;
-       // int nykymaara = palautaAmmustenMaara();
+        // int nykymaara = palautaAmmustenMaara();
         int nykymaara = aluksenluomienElossaOlevienAmmustenMaara;
         return nykymaara < maksimi;
     }
 
     float reloadEndTime = 0f;
     float reloadTimer = 3f;
-    private bool onkoRealoadMenossa()
+    private bool OnkoRealoadMenossa()
     {
         bool IsReloading = Time.time < reloadEndTime;
         // bool CanShoot => !IsReloading; // other conditions...

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PyorooviController : MonoBehaviour
+public class PyorooviController : BaseController
 {
 
     private SpriteRenderer m_SpriteRenderer;
@@ -47,7 +47,7 @@ public class PyorooviController : MonoBehaviour
     // Apply the rotation around the Y-axis (you can change the axis as needed)
     transform.Rotate(0, 0, rotationAmount);
 
-
+        TuhoaJosVaarassaPaikassa(gameObject);
 
 }
     public void FixedUpdate()

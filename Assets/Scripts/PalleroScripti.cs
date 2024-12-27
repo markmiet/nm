@@ -150,6 +150,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
 
     public float liikevasemmalle = -0.1f;//oli 
+    public float liikepystysuunta = 0.1f;
 
     void FixedUpdate()
     {
@@ -218,11 +219,17 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         {
             if (meneeylospain)
             {
-                m_Rigidbody2D.velocity = new Vector2(0.75f, 0.75f);
+                //m_Rigidbody2D.velocity = new Vector2(0.75f, 0.75f);
+                m_Rigidbody2D.velocity = new Vector2(liikevasemmalle, liikepystysuunta);
+
+
+
             }
             else
             {
-                m_Rigidbody2D.velocity = new Vector2(0.75f, -0.75f);
+                //m_Rigidbody2D.velocity = new Vector2(0.75f, -0.75f);
+                m_Rigidbody2D.velocity = new Vector2(liikevasemmalle, -liikepystysuunta);
+                
             }
 
             oikeayloskertojenmaara++;

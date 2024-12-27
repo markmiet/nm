@@ -568,6 +568,7 @@ public class HaukirunkoController : BaseController, IExplodable
 
         Destroy(gameObject);
     }
+    /*
     private bool TuhoaJosKameranAlla()
     {
         bool alla = IsObjectDownOfCamera(gameObject);
@@ -581,4 +582,5 @@ public class HaukirunkoController : BaseController, IExplodable
 
 
     }
+    */
 }
