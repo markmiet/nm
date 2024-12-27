@@ -8,6 +8,22 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class AlusController : BaseController, IDamagedable, IExplodable
 {
+    //ensinnäkin gameobjecti jolla voi säätää kameran nopeutta
+
+    //toisekseen joku gameobjekti jolla voi tehdä näitä savepointteja
+
+
+    public int elamienmaara = 0;
+    public int score=0;//tälle se 
+    public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
+
+
+
+    public float maksimimaaradamageajokakestetaan = 100.0f;
+    public float damagenmaara = 0.0f;
+    public float damagenmaarakunammusosuus = 1.0f;
+
+
     public float gravitymodifiermuutoskunammusosuu = 0.01f;
 
 
@@ -208,11 +224,6 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private ParticleSystem particleSystem;
 
 
-    public float maksimimaaradamageajokakestetaan = 100.0f;
-    public float damagenmaara = 0.0f;
-    public float damagenmaarakunammusosuus = 1.0f;
-
-
     private BoxCollider2D boxCollider2D;
     void Start()
     {
@@ -386,6 +397,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             return;
         }
 
+
+        if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus"))
+        {
+            //   Debug.Log("BonusButtonPressed");
+            BonusButtonPressed();
+        }
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -510,11 +528,6 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             spaceNappiaPainettu = false;
         }
 
-        if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus"))
-        {
-            //   Debug.Log("BonusButtonPressed");
-            BonusButtonPressed();
-        }
 
 
 

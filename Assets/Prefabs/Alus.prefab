@@ -13,8 +13,10 @@ GameObject:
   - component: {fileID: 3294481396978785094}
   - component: {fileID: 3294481396978785095}
   - component: {fileID: 3362095348282915404}
-  - component: {fileID: 4189346558496513917}
   - component: {fileID: 2965408277044486811}
+  - component: {fileID: 5111871381262296735}
+  - component: {fileID: 3561119158831789725}
+  - component: {fileID: 3432093839195414364}
   m_Layer: 9
   m_Name: Alus
   m_TagString: alustag
@@ -34,7 +36,8 @@ Transform:
   m_LocalPosition: {x: -3.64, y: -3.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4129683153705185143}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3294481396978785088
@@ -101,16 +104,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f905085a7c9e2e08cf1ac0c0c09213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedbonusbutton: {fileID: 0}
-  missilebonusbutton: {fileID: 0}
+  gravitymodifiermuutoskunammusosuu: 0.001
+  gravitynminimi: -0.2
+  damagemaarakasvastatuskunsavutaan: 5
+  turboviiveSekunneissa: 0.35
+  maksiminopeusylosalas: 0.9
+  maksiminopeusvertikaalinen: 0.9
+  kiihtyvyys: 0.1
+  perusnopeus: 0.03
+  optiotfollowDistance: 0.5
+  optiotmoveSpeed: 3
+  moveInputActionReference: {fileID: -163088749877713209, guid: afe8efbff0e5b6f49ac0bb5317835f2a,
+    type: 3}
+  moveDownInputActionReference: {fileID: -3930929667323696693, guid: afe8efbff0e5b6f49ac0bb5317835f2a,
+    type: 3}
+  moveUpInputActionReference: {fileID: 714824166933178405, guid: afe8efbff0e5b6f49ac0bb5317835f2a,
+    type: 3}
+  autofire: 1
   ammustenmaksimaaraProperty: 1
-  ampumakertojenvalinenviive: 0.6
-  ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu: -0.2
-  ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu: 3
+  ampumakertojenvalinenviive: 0.01
+  ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu: 0
+  ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu: 1
   nykyinenoptioidenmaara: 0
-  optioidenmaksimaara: 3
+  optioidenmaksimaara: 5
   joystick: {fileID: 0}
-  explosion: {fileID: 7737871024420907965, guid: be71e788f53224193a965fdf655875ed,
+  explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
   ammusPrefab: {fileID: 9057892473094562812, guid: eb03189b9a8660376b2e58982102e80b,
     type: 3}
@@ -120,14 +138,18 @@ MonoBehaviour:
     type: 3}
   instanssiOption1: {fileID: 5525969137987615723, guid: e658a5da25aa37a43b0d31df13cf8c05,
     type: 3}
+  debugloota: {fileID: 0}
   vauhdinLisaysKunSpeedbonusOtettu: 0.01
-  turboviiveSekunneissa: 0.4
-  maksiminopeus: 0.06
-  kiihtyvyys: 0.05
-  perusnopeus: 0.03
+  maksimimaaradamageajokakestetaan: 1000
+  damagenmaara: 0
+  damagenmaarakunammusosuus: 1
+  isPaused: 0
+  sormipaikkakerto: {x: 1.6, y: 1.6}
+  kerto: {x: 1, y: 1}
+  moveSpeed: 15
   alamaksiminMaarittava: {fileID: 0}
   ylamaksiminMaarittava: {fileID: 0}
-  rotationSpeed: 50
+  aikamaarajokajatketaangameoverinjalkeen: 7
 --- !u!50 &3294481396978785095
 Rigidbody2D:
   serializedVersion: 4
@@ -176,8 +198,84 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &4189346558496513917
-PolygonCollider2D:
+--- !u!61 &2965408277044486811
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294481396978785091}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0029666424, y: 0.00042887032}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.32}
+    newSize: {x: 0.64, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.63724947, y: 0.28450492}
+  m_EdgeRadius: 0
+--- !u!114 &5111871381262296735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294481396978785091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: afe8efbff0e5b6f49ac0bb5317835f2a,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!61 &3561119158831789725
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -208,7 +306,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.002131611, y: 0.000000014901161}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -218,37 +316,17 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.32, y: -0.0030870568}
-      - {x: 0.32, y: 0.0033016466}
-      - {x: 0.24181652, y: 0.030072689}
-      - {x: 0.21176171, y: 0.035193205}
-      - {x: 0.19426942, y: 0.04439187}
-      - {x: 0.13726854, y: 0.057913065}
-      - {x: 0.07562383, y: 0.08767757}
-      - {x: -0.18873808, y: 0.07658997}
-      - {x: -0.29232264, y: 0.15922189}
-      - {x: -0.32, y: 0.15696612}
-      - {x: -0.3115363, y: 0.03736615}
-      - {x: -0.30901223, y: -0.047349602}
-      - {x: -0.31748578, y: -0.15853849}
-      - {x: -0.27666378, y: -0.15727901}
-      - {x: -0.26622868, y: -0.13565922}
-      - {x: -0.113818884, y: -0.07983208}
-      - {x: -0.049215555, y: -0.06372118}
-      - {x: 0.08063152, y: -0.05821403}
-      - {x: 0.28856516, y: -0.025879677}
-      - {x: 0.32214743, y: -0.010674266}
-  m_UseDelaunayMesh: 0
---- !u!61 &2965408277044486811
-BoxCollider2D:
+  serializedVersion: 2
+  m_Size: {x: 0.63573676, y: 0.28802386}
+  m_EdgeRadius: 0
+--- !u!70 &3432093839195414364
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294481396978785091}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -270,19 +348,123 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.32}
-    newSize: {x: 0.64, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.0011534115, y: -0.014984684}
+  m_Size: {x: 0.6446163, y: 0.2504834}
+  m_Direction: 1
+--- !u!1001 &4593384454965639495
+PrefabInstance:
+  m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.32}
-  m_EdgeRadius: 0
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3294481396978785089}
+    m_Modifications:
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 738304999498640311, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_Name
+      value: AlusSavu
+      objectReference: {fileID: 0}
+    - target: {fileID: 738304999498640311, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 983131896023335952, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 983131896023335952, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: InitialModule.gravitySource
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 983131896023335952, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 983131896023335952, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944834007713157200, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: da9724ac4b4eadf42b8640eb86cff225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a8faa155b08a8554f84bde27e2b5f4af, type: 3}
+--- !u!4 &4129683153705185143 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 500302125663000112, guid: a8faa155b08a8554f84bde27e2b5f4af,
+    type: 3}
+  m_PrefabInstance: {fileID: 4593384454965639495}
+  m_PrefabAsset: {fileID: 0}
