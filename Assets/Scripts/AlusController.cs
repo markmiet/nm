@@ -21,7 +21,6 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     public float maksimimaaradamageajokakestetaan = 100.0f;
     public float damagenmaara = 0.0f;
-    public float damagenmaarakunammusosuus = 1.0f;
 
 
     public float gravitymodifiermuutoskunammusosuu = 0.01f;
@@ -285,7 +284,12 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         Color color = m_SpriteRenderer.color;
         gvarinalkutilanne = color.g;
         boxCollider2D = GetComponent<BoxCollider2D>();
+
+        damagemittariController=damageMittari.GetComponent<DamagemittariController>();
     }
+    public GameObject damageMittari;
+    private DamagemittariController damagemittariController;
+
 
     private void TeeOptioni()
     {
@@ -310,34 +314,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
 
 
-    public void Savua()
-    {
-        if (!particleSystem.isPlaying)
-        {
-            particleSystem.Play();
-        }
 
-        var mainModule = particleSystem.main;
-        float currentGravityModifier = mainModule.gravityModifier.constant;
-        float uusiarvo = currentGravityModifier - gravitymodifiermuutoskunammusosuu;
-        if (uusiarvo > gravitynminimi)
-        {
-
-            mainModule.gravityModifier = uusiarvo;
-        }
-        //mitäs sitten kun savuttaa
-
-
-        Color color = m_SpriteRenderer.color;
-        //color.r = r;
-        //color.g = g;
-        //color.b = b;
-        damagenmaara += damagemaarakasvastatuskunsavutaan;
-        color.g = PalautaGvari();
-
-        m_SpriteRenderer.color = color;
-
-    }
 
     float gvarinalkutilanne;
 
@@ -651,6 +628,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     //Vector3 viimeisin = Vector3.zero;
 
+    public float offsettisormenjaaluksenvalilla = 200.0f;
+
     private void MoveObject(Vector3 inputPosition)
     {
         //      float ero = Vector3.Distance(inputPosition, viimeisin);
@@ -659,8 +638,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // {
         //   viimeisin = inputPosition;
         // Offset the input position by 50 pixels to the right in screen space
-        float offsetti = 100;
-        Vector2 screenPositionWithOffset = new Vector2(inputPosition.x + offsetti, inputPosition.y);
+        //float offsetti = 100;
+        Vector2 screenPositionWithOffset = new Vector2(inputPosition.x + offsettisormenjaaluksenvalilla, inputPosition.y);
 
         // Convert the offset screen position to world space
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
@@ -838,7 +817,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             Vector2 kohta = Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime);
             transform.position = kohta;
             damagenmaara += maksimimaaradamageajokakestetaan;
-            ExplodeTarvittaesssa();
+            PaivitaDamagePalkkia();
         }
         else
         {
@@ -1311,60 +1290,54 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         transform.position = pos;
     }
 
-
+    /*
     public void ExplodeTarvittaesssa()
     {
-        /*
-        
-  
-        Destroy(gameObject, 0.1f);
-        gameover = true;
-        
-        Time.timeScale = 0f;
-        */
+ 
         // GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         // Destroy(explosionIns, 1.0f);
         // Debug.Log("gameover");
 
-        Savua();
+      //  Savua();
         if (damagenmaara >= maksimimaaradamageajokakestetaan)
         {
 
             Explode();
         }
         // audiosourceexplode.Play();
-        PaivitaDamagePalkkia();
+     //   PaivitaDamagePalkkia();
     }
+    */
     private void PaivitaDamagePalkkia()
     {
         //jos se on liikaa niin eikun gameoveria
+        damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
+
+        TeeGameOver();
+
+        
+
     }
-    public float aikamaarajokajatketaangameoverinjalkeen = 5.0f;
-
-    private float gameoverinajankohta;
-
-    public void Explode()
+    private void TeeGameOver()
     {
-      
-
-        if (!gameover)
+        if (!gameover && damagenmaara>= maksimimaaradamageajokakestetaan)
         {
             Time.timeScale = 0.1f;
-            damagenmaara = maksimimaaradamageajokakestetaan;
+
             ad.ExplodePlay();
             Vector3 vektori =
     new Vector3(
     m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
-           // GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
+            // GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
 
             GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
             RajaytaSprite(gameObject, 4, 4, 1, aikamaarajokajatketaangameoverinjalkeen);
             m_SpriteRenderer.enabled = false;
 
-          //  Destroy(instanssiOption, 10);
-           
-            PaivitaDamagePalkkia();
+            //  Destroy(instanssiOption, 10);
+
+
 
             //TogglePause();
 
@@ -1376,20 +1349,60 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             {
                 spriteRenderer.enabled = false; // Hides the sprite
             }
-            gameoverinajankohta= Time.realtimeSinceStartup;
-           
-            
+            gameoverinajankohta = Time.realtimeSinceStartup;
+
+            gameover = true;
         }
-        gameover = true;
+       
+    }
+
+    public float aikamaarajokajatketaangameoverinjalkeen = 5.0f;
+
+    private float gameoverinajankohta;
+
+    public void Explode()
+    {
+        damagenmaara = maksimimaaradamageajokakestetaan;
+        PaivitaDamagePalkkia();
+
     }
 
     public void AiheutaDamagea(float damagemaara)
     {
         damagenmaara += damagemaara;
-        ExplodeTarvittaesssa();
+       // ExplodeTarvittaesssa();
+        PaivitaDamagePalkkia();
     }
 
+    public void Savua()
+    {
+        if (!particleSystem.isPlaying)
+        {
+            particleSystem.Play();
+        }
 
+        var mainModule = particleSystem.main;
+        float currentGravityModifier = mainModule.gravityModifier.constant;
+        float uusiarvo = currentGravityModifier - gravitymodifiermuutoskunammusosuu;
+        if (uusiarvo > gravitynminimi)
+        {
+
+            mainModule.gravityModifier = uusiarvo;
+        }
+        //mitäs sitten kun savuttaa
+
+
+        Color color = m_SpriteRenderer.color;
+        //color.r = r;
+        //color.g = g;
+        //color.b = b;
+        damagenmaara += damagemaarakasvastatuskunsavutaan;
+        color.g = PalautaGvari();
+
+        m_SpriteRenderer.color = color;
+        PaivitaDamagePalkkia();
+
+    }
 
     /*
     void OnDrawGizmosSelected()
@@ -1472,17 +1485,21 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
-            ExplodeTarvittaesssa();
+            //ExplodeTarvittaesssa();
+            PaivitaDamagePalkkia();
         }
         else if (col.collider.tag.Contains("pallovihollinen"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
-            ExplodeTarvittaesssa();
+            //ExplodeTarvittaesssa();
+            PaivitaDamagePalkkia();
         }
         else if (col.collider.tag.Contains("vihollinen"))
         {
             damagenmaara += 100;
-            ExplodeTarvittaesssa();
+            //ExplodeTarvittaesssa();
+            PaivitaDamagePalkkia();
+
         }
 
 
