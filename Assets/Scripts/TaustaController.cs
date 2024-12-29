@@ -40,6 +40,9 @@ public class TaustaController : BaseController
       //  Debug.Log("aksaa=" + transform.position.x);
         transform.position = new Vector2(transform.position.x+xsaato, ysaato);
         tilemap = GetComponent<Tilemap>();
+       // GetComponent<TilemapRenderer>().sortingOrder = -3;
+       // GetComponent<TilemapRenderer>().sortingLayerName = "KeskiLayer";
+
         if (tilemap != null)
         {
             //Debug.Log("Tilemap found.");
@@ -82,6 +85,7 @@ public class TaustaController : BaseController
                     {
                         //0,1,2,3
                         int tiili = Random.Range(0, tile.Length);
+
                         tilemap.SetTile(tilePosition, tile[tiili]);
                         edellisellaluotiin = true;
                     }
