@@ -1318,9 +1318,11 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         
 
     }
+    public bool demomode = true;
+
     private void TeeGameOver()
     {
-        if (!gameover && damagenmaara>= maksimimaaradamageajokakestetaan)
+        if (!demomode && !gameover && damagenmaara>= maksimimaaradamageajokakestetaan)
         {
             Time.timeScale = 0.1f;
 

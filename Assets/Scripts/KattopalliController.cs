@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KattopalliController : BaseController,  IExplodable
+public class KattopalliController : BaseController, IExplodable
 {
 
     //ei hypi
@@ -62,7 +62,10 @@ public class KattopalliController : BaseController,  IExplodable
     private Vector2 boxsize;// = new Vector2(0, 0);
     private AudioplayerController ad;
 
-    private bool onkoammus;
+    public bool onkoammus;
+
+    public int ampumistenmaksimimaara = 1;
+    private int montakoonammuttu = 0;
 
     void Start()
     {
@@ -82,6 +85,7 @@ public class KattopalliController : BaseController,  IExplodable
 
         alusGameObject = PalautaAlus();
 
+        /*
         if (gameObject.tag.Contains("ammus"))
         {
             onkoammus = true;
@@ -90,10 +94,11 @@ public class KattopalliController : BaseController,  IExplodable
         {
             onkoammus = false;
         }
+        */
 
 
     }
-    
+
 
     //   public float rotationSpeed = 90f; // Degrees per second
 
@@ -129,29 +134,33 @@ public class KattopalliController : BaseController,  IExplodable
 
     private bool OnkoOkLiikkua(float ero)
     {
-        return ero > erominimissaanJottaLiikutaan &&  m_SpriteRenderer.isVisible;
+        return ero > erominimissaanJottaLiikutaan && m_SpriteRenderer.isVisible;
     }
 
 
     public float leftsidetutkinnanmaara = 0.4f;
+
+
+    public float elamisenmaksimiaikajosammus = 10.0f;
+
     bool IsInLeftSide(GameObject obj)
     {
 
-            // Convert the object's world position to viewport position
-            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(obj.transform.position);
+        // Convert the object's world position to viewport position
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(obj.transform.position);
 
-            // Check if the object is within the left 10% of the camera's view
-            if (viewportPosition.x >= 0 && viewportPosition.x <= leftsidetutkinnanmaara)
+        // Check if the object is within the left 10% of the camera's view
+        if (viewportPosition.x >= 0 && viewportPosition.x <= leftsidetutkinnanmaara)
+        {
+            // Also ensure the object is within the vertical bounds of the screen
+            if (viewportPosition.y >= 0 && viewportPosition.y <= 1)
             {
-                // Also ensure the object is within the vertical bounds of the screen
-                if (viewportPosition.y >= 0 && viewportPosition.y <= 1)
-                {
-                    // Ensure the object is in front of the camera
-                    return true;
-                }
+                // Ensure the object is in front of the camera
+                return true;
             }
+        }
 
-        
+
 
         return false;
     }
@@ -161,6 +170,10 @@ public class KattopalliController : BaseController,  IExplodable
 
     public float ammuntasykli = 3.0f;
     private float deltojensumma = 0.0f;
+
+    public float nukkumisaikajosammus = 1.0f;
+    private float deltojensummaliikkumis = -3.0f;
+
     public void FixedUpdate()
     {
 
@@ -170,13 +183,45 @@ public class KattopalliController : BaseController,  IExplodable
             {
                 return;
             }
-            float delta = Time.deltaTime;
-            deltojensumma += delta;
 
-           // if (deltojensumma> ammuntasykli)
-           // {
+
+            if (onkoammus)
+            {
+                float delta = Time.deltaTime;
+                deltojensumma += delta;
+                deltojensummaliikkumis += delta;
+                if (deltojensumma > elamisenmaksimiaikajosammus)
+                {
+                    Explode();
+                    return;
+
+                }
+                /*
+                 * tässä pitäisi olla se että alkuun voi
+                if (deltojensummaliikkumis< nukkumisaikajosammus)
+                {
+                    return;
+                }
+                deltojensummaliikkumis = 0.0f;
+                */
+
+            }
+            else
+            {
                 Ammu();
-                deltojensumma = 0;
+            }
+            /*
+            if (onkoammus && deltojensumma >= 5.0f)
+            {
+                return;
+            }
+            */
+
+
+            // if (deltojensumma> ammuntasykli)
+            // {
+
+            //deltojensumma = 0;
 
             //}
 
@@ -191,11 +236,11 @@ public class KattopalliController : BaseController,  IExplodable
             float x = transform.position.x;
             if (alusx < x)
             {
-            //    bool onkopalleronruudunvasemmassareunassa = IsInLeftSide(gameObject);
-            //    if (!onkopalleronruudunvasemmassareunassa)
-            //    {
-                    vasemmalle = true;
-            //    }  
+                //    bool onkopalleronruudunvasemmassareunassa = IsInLeftSide(gameObject);
+                //    if (!onkopalleronruudunvasemmassareunassa)
+                //    {
+                vasemmalle = true;
+                //    }  
             }
             //10% alue ruudusta 
 
@@ -204,7 +249,7 @@ public class KattopalliController : BaseController,  IExplodable
 
 
             float ero = Mathf.Abs(alusx - x);
-
+            /*
             bool onkoTiiliPallonAlla = OnkoTiiliPallonAlla();
 
             bool onkoTiiliVasemmallaAlhaalla = OnkoTiiliVasemmallaAlhaalla();
@@ -241,7 +286,7 @@ public class KattopalliController : BaseController,  IExplodable
 
             bool palloovioikealla = OnkoPyorivaPalloOviOikealla();
             bool palloovivasemmalla = OnkoPyorivaPalloOviVasemmalla();
-
+            */
             if (OnkoOkLiikkua(ero))
             {
                 if (vasemmalle)
@@ -373,7 +418,7 @@ public class KattopalliController : BaseController,  IExplodable
     */
 
 
-    
+
 
 
     void OnDrawGizmos()
@@ -494,7 +539,7 @@ public class KattopalliController : BaseController,  IExplodable
         return onkotiilioikeallaAlhaalla;
     }
 
-    
+
 
 
     private bool OnkoMakitaOikealla()
@@ -520,12 +565,12 @@ public class KattopalliController : BaseController,  IExplodable
     private bool OnkoAluksenammusVasemmalla()
     {
 
- 
+
 
         bool onkotiilioikeallaAlhaalla = onkoTagiaBoxissaErikoisversio(aluksenammuksentagilista, boxsizekeskella, vasenboxcenter);
         return onkotiilioikeallaAlhaalla;
 
-     }
+    }
 
 
 
@@ -578,7 +623,7 @@ public class KattopalliController : BaseController,  IExplodable
         {
             Destroy(gameObject);
         }
-      // 
+        // 
 
         /*
         if (gameObject==null)
@@ -621,12 +666,12 @@ public class KattopalliController : BaseController,  IExplodable
 
     private void OnBecameVisible()
     {
-        
+
     }
 
     bool IsObjectRightOfCamera(Camera cam, Transform objTransform)
     {
-        if (objTransform==null)
+        if (objTransform == null)
         {
             return false;
         }
@@ -645,7 +690,7 @@ public class KattopalliController : BaseController,  IExplodable
         string[] tagit = new string[1];
         tagit[0] = "pallovihollinenexplodetag";
 
-       
+
         bool ret = onkoTagiaBoxissaErikoisversio(tagit, boxsizekeskella, vasenboxcenter, layerMask);
         return ret;
     }
@@ -660,7 +705,7 @@ public class KattopalliController : BaseController,  IExplodable
         return ret;
     }
 
-    
+
     public bool onkoTagiaBoxissaErikoisversio(string[] tagit, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
         //string aa = "pallovihollinenexplodetag";
@@ -668,7 +713,7 @@ public class KattopalliController : BaseController,  IExplodable
         foreach (string name in tagit)
         {
 
-           // Physics2D.OverlapBoxAll
+            // Physics2D.OverlapBoxAll
 
             //Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f);
 
@@ -685,8 +730,8 @@ public class KattopalliController : BaseController,  IExplodable
                     }
                     else if (c.gameObject.tag.Contains(name))
                     {
-                      //  bool onko = IsInView((Vector2)transform.position + boxlocation);
-                      //  return onko;
+                        //  bool onko = IsInView((Vector2)transform.position + boxlocation);
+                        //  return onko;
                         return true;
                     }
                 }
@@ -740,7 +785,7 @@ public class KattopalliController : BaseController,  IExplodable
 
     bool IsInView(Vector2 worldPosition)
     {
-  
+
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPosition);
         return viewportPoint.x >= 0 && viewportPoint.x <= 1 &&
                viewportPoint.y >= 0 && viewportPoint.y <= 1;
@@ -763,7 +808,7 @@ public class KattopalliController : BaseController,  IExplodable
         float ero = gvarinalkutilanne - gvarinlopputilanne;
         float summaerosta = ero * prosentti;
 
-        float arvo= gvarinalkutilanne-summaerosta;
+        float arvo = gvarinalkutilanne - summaerosta;
         return arvo;
 
     }
@@ -786,30 +831,37 @@ public class KattopalliController : BaseController,  IExplodable
 
     public void ExplodeOikeasti()
     {
-        ad.ExplodePlay();
 
-
-        //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        //RajaytaSprite(gameObject, 5, 5, 4.0f, 1.5f);
-        RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
-
-        // Destroy(explosionIns,1.0f);
-        Destroy(gameObject);
-
-
-        Vector3 v3 =
-new Vector3(
-rb.position.x, rb.position.y, 0);
 
         //  Instantiate(bonus, v3, Quaternion.identity)
         int bonusmaara = 1;
         if (!ammus)
         {
+            ad.ExplodePlay();
+
+
+            //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+            //RajaytaSprite(gameObject, 5, 5, 4.0f, 1.5f);
+            RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
+
+            // Destroy(explosionIns,1.0f);
+            Destroy(gameObject);
+
+
+            Vector3 v3 =
+    new Vector3(
+    rb.position.x, rb.position.y, 0);
             TeeBonus(bonus, v3, boxsize, bonusmaara);
         }
-          
+        else
+        {
+            GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(explosionIns, 1.0f);
+            Destroy(gameObject);
+        }
 
-        
+
+
 
 
     }
@@ -823,10 +875,10 @@ rb.position.x, rb.position.y, 0);
     public float ampumiskohdanmiinustus = 0.5f;
     public void Ammu()
     {
-        if (ammu)
+        if (!onkoammus && ammu && montakoonammuttu < ampumistenmaksimimaara)
         {
             float aikanyt = Time.time;
-            if (aikanyt- viimeksiAmmuttu> pieninmahdollinenAikaValiAmpumisissa)
+            if (aikanyt - viimeksiAmmuttu > pieninmahdollinenAikaValiAmpumisissa)
             {
                 Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
 
@@ -835,6 +887,9 @@ rb.position.x, rb.position.y, 0);
 
                 GameObject instanssi = Instantiate(ammus, new Vector3(
          transform.position.x, transform.position.y - ampumiskohdanmiinustus, 0), Quaternion.identity);
+
+
+
 
                 /*
                 Vector3 belowPosition = transform.position + transform.TransformDirection(Vector3.down * -1.0f);
@@ -855,6 +910,8 @@ rb.position.x, rb.position.y, 0);
                 instanssi.GetComponent<Rigidbody2D>().velocity = ve;
                 viimeksiAmmuttu = Time.time;
 
+                montakoonammuttu++;
+
             }
         }
 
@@ -864,10 +921,12 @@ rb.position.x, rb.position.y, 0);
     {
         if (onkoammus)
         {
+            /*
             if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
             {
                 Explode();
             }
+            */
 
         }
     }

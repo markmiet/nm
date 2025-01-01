@@ -125,9 +125,10 @@ GameObject:
   - component: {fileID: 2870186539411993996}
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 974177201031621125}
+  - component: {fileID: 904847137763141498}
   m_Layer: 10
   m_Name: Eripallovihollinenammus
-  m_TagString: eripallovihollinenammusexplode
+  m_TagString: eripallovihollinenbulletexplode
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +143,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5, y: -48.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -0.8, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 653656707641999392}
@@ -172,9 +173,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!58 &2870186539411993996
 CircleCollider2D:
@@ -183,7 +184,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7639041830807167212}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -208,9 +209,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00084400177, y: 0.009838343}
+  m_Offset: {x: -0.014261305, y: 0.030725718}
   serializedVersion: 2
-  m_Radius: 0.13540411
+  m_Radius: 0.23602176
 --- !u!212 &4927679625259037937
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -252,7 +253,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1ef5e678c77d1e949aa033ecc0860080, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c81931d7d30791147a07c571608726a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -296,10 +297,14 @@ MonoBehaviour:
   ammus: {fileID: 5157698805627988775, guid: 0b69256f831892d4f980bb61be614c7c, type: 3}
   tagilistaJoitaTutkitaan: []
   osumiemaarajokaTarvitaanRajahdykseen: 1
+  onkoammus: 1
+  ampumistenmaksimimaara: 1
   erominimissaanJottaLiikutaan: 0.4
   leftsidetutkinnanmaara: 0.4
-  torqueForce: -1
+  elamisenmaksimiaikajosammus: 20
+  torqueForce: -5
   ammuntasykli: 3
+  nukkumisaikajosammus: 1
   aluksenammuksentagilista: []
   layerMask:
     serializedVersion: 2
@@ -315,6 +320,42 @@ MonoBehaviour:
   ampumisenvoimakkuus: 3
   pieninmahdollinenAikaValiAmpumisissa: 2
   ammu: 0
+  ampumiskohdanmiinustus: 0.5
+--- !u!70 &904847137763141498
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639041830807167212}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.008407831, y: 0.016067505}
+  m_Size: {x: 0.5202055, y: 0.5838623}
+  m_Direction: 0
 --- !u!1001 &8248400944725571975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -337,6 +378,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pallosavu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -426,7 +472,7 @@ PrefabInstance:
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -442,6 +488,21 @@ PrefabInstance:
         type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.2554176
+      objectReference: {fileID: 0}
+    - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.1389319
+      objectReference: {fileID: 0}
+    - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.93207544
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -496,17 +557,17 @@ PrefabInstance:
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8893049859868768679, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

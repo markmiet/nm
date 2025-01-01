@@ -62,10 +62,15 @@ public class PalliController : BaseController,  IDamagedable
     private AudioplayerController ad;
 
     private float hyppyjenalkuperainenviive=0.0f;
+
+    private Camera maincamera;
+    private Kamera kamera;
     void Start()
     {
         //eli osalle hemmetin moiset liekit
         hyppyjenalkuperainenviive = hyppyjenValinenViive;
+        maincamera = Camera.main;
+        kamera=maincamera.GetComponent<Kamera>();
 
         ad = FindObjectOfType<AudioplayerController>();
         //   mainCamera = Camera.main;
@@ -239,6 +244,11 @@ public class PalliController : BaseController,  IDamagedable
     public float leftsidetutkinnanmaara = 0.4f;
     bool IsInLeftSide(GameObject obj)
     {
+        if (kamera.skrollimaara==0.0f)
+        {
+            return false;//eli kun ollaan pysähdyksissä niin ignorataan tämä
+        }
+
 
             // Convert the object's world position to viewport position
             Vector3 viewportPosition = Camera.main.WorldToViewportPoint(obj.transform.position);
