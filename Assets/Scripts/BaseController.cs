@@ -798,8 +798,16 @@ public class BaseController : MonoBehaviour
         Destroy(go);
     }
 
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
+       )
+    {
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime,-1,false);
 
-    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime)
+    }
+    
+
+        public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime, 
+            float sirpalemass,bool teerigitbody)
     {
 
         Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
@@ -852,6 +860,8 @@ public class BaseController : MonoBehaviour
                 // Optionally, instantiate a GameObject with the new sprite in the scene
                 /**/
                 GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
+                sliceObject.layer = go.layer;
+
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
                 sr.sprite = newSprite;
                 //Debug.0lo0ff000ddddddddtagi=" + sliceObject.tag);
@@ -864,20 +874,28 @@ public class BaseController : MonoBehaviour
                 sliceObject.AddComponent<Rigidbody2D>();
                 pieceRigidbody.gravityScale = 0.5f;
                 pieceRigidbody.simulated = true;
+                if (sirpalemass!=-1)
+                {
+                    pieceRigidbody.mass = sirpalemass;
+                }
 
-                /*
-                BoxCollider2D p =
-                sliceObject.AddComponent<BoxCollider2D>();
-                p.size = new Vector2(0.1f, 0.1f);
-                                
-                             sliceObject.transform.position = new Vector3(
-                    -0.2f +
-                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
-                        -0.2f +
-      transform.position.y +
-      y * sliceHeight / originalSprite.pixelsPerUnit, 0);
+                if (teerigitbody)
+                {
 
-                */
+                    BoxCollider2D p =
+                    sliceObject.AddComponent<BoxCollider2D>();
+                    p.size = new Vector2(0.1f, 0.1f);
+                }
+
+                /*        
+                     sliceObject.transform.position = new Vector3(
+            -0.2f +
+            transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
+                -0.2f +
+transform.position.y +
+y * sliceHeight / originalSprite.pixelsPerUnit, 0);
+
+        */
 
                 sliceObject.transform.position = new Vector3(
                     -0.2f +
@@ -899,14 +917,24 @@ public class BaseController : MonoBehaviour
                 Vector3 randomDirection = Random.insideUnitSphere.normalized;
 
                 // Apply force in that direction with random strength
+                /*
                 float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
                 pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
+
+                */
+                //float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
+                float randomForce = explosionForce;
+
+                pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
+
 
                 // Optionally, add random torque for rotation
 
                 pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
 
-                Destroy(sliceObject, 0.3f);
+                //Destroy(sliceObject, 0.3f);
+                Destroy(sliceObject, alivetime);
+
                 //  Instantiate(sliceObject);
 
             }

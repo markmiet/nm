@@ -17,10 +17,19 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     }
 
     public float nopeusjonkaalleTuhoutuu = 0.2f;
+
+    public float maksimiAikajonkavoiollaElossa = 10.0f;
+    private float eloaika = 0.0f;
     // Update is called once per frame
     void Update()
     {
         TuhoaJosVaarassaPaikassa(gameObject);
+        eloaika += Time.deltaTime;
+        if (eloaika>=maksimiAikajonkavoiollaElossa)
+        {
+            Explode();
+        }
+
     }
     private void FixedUpdate()
     {
@@ -89,7 +98,9 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             if (collider != null)
             {
                 //Destroy(gameObject);
-                Explode();
+               // Explode();
+
+                ExplodeLiukutormayksenJalkeen();
 
             }
             else
@@ -177,7 +188,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
         // Destroy the enemy
         //tuhoa = true;
 
-        Destroy(gameObject);
+     //   Destroy(gameObject);
     }
 
     public void Explode()
@@ -185,5 +196,53 @@ public class BulletScript : BaseController,  IExplodable, IAlas
      //   RajaytaSprite(gameObject, 4, 4, 1.0f, 0.3f);
         Destroy(gameObject);
     }
+
+    public float force = 1;
+    public float alive = 2;
+    public float massa = 1;
+    public int rows = 5;
+    public int cols = 5;
+    public GameObject explosion;
+    public float explosionlivetime = 1.0f;
+
+    public bool rajaytasprite = true;
+    public bool teexplosion=true;
+    public void ExplodeLiukutormayksenJalkeen()
+    {
+        if (rajaytasprite)
+        {
+            RajaytaSprite(gameObject, rows, cols, force, alive, massa, true);
+        }
+        
+        /* 
+          Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, affectedLayers);
+
+          foreach (Collider2D collider in colliders)
+          {
+              Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+
+              if (rb != null)
+              {
+                  // Calculate direction from the explosion center to the object
+                  Vector2 direction = (rb.position - (Vector2)transform.position).normalized;
+
+                  // Apply force to the Rigidbody2D
+                  rb.AddForce(direction * explosionForce);
+              }
+          }
+
+       */
+
+
+        if (teexplosion)
+        {
+            GameObject instanssi = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(instanssi, explosionlivetime);
+        }
+
+
+        Destroy(gameObject);
+    }
+
 
 }

@@ -581,6 +581,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public Vector2 sormipaikkakerto = new Vector2(1.3f, 1.3f);
 
+    public LayerMask sormenlayermaski;
+
     private void CheckIfTouched(Vector3 inputPosition)
     {
         // Convert input position to world space
@@ -607,7 +609,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         boxSize = boxSize * sormipaikkakerto;
 
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(worldPosition, boxSize, LayerMask.GetMask("keskilayer"));
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(worldPosition, boxSize, sormenlayermaski);
 
         foreach (Collider2D collider in colliders)
         {
@@ -617,6 +619,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 _isDragging = true;
                 // Calculate offset between the object and touch/mouse position
                 _offset = collider.gameObject.transform.position - worldPosition;
+               // _offset = new Vector3(+100, 0, 0);
+
 
                 break;
             }
@@ -632,6 +636,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void MoveObject(Vector3 inputPosition)
     {
+
+
+        /*
         //      float ero = Vector3.Distance(inputPosition, viimeisin);
         //    Debug.Log("hiiriero=" + ero);
         // if (ero>20.0f)
@@ -646,8 +653,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
         //Vector3 te = new Vector3(50, 0, 0);
+        Vector2 yritys = worldPosition + _offset; 
 
-        Vector2 yritys = worldPosition + _offset; ;
+        */
+        
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x+400, inputPosition.y, 0));
+
+        Vector2 yritys = new Vector2(worldPosition.x, worldPosition.y);
+
+
+        //        Vector2 yritys = worldPosition + _offset;
+        //      Vector2 yritys = worldPosition + _offset;
+
+
+
         // transform.position = worldPosition + _offset;
         TryMove(yritys);
 
@@ -781,7 +800,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             Vector2 nextPosition = currentPosition + direction * stepSize;
 
             // Perform an OverlapBox check at the next position
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(nextPosition, boxSize, LayerMask.GetMask("keskilayer"));
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(nextPosition, boxSize, sormenlayermaski);
 
             bool isBlocked = false;
             foreach (Collider2D collider in colliders)

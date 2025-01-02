@@ -271,10 +271,16 @@ public class AmmusController : BaseController, IExplodable {
 	{
 		//GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 	//	Destroy(explosionIns, 1.0f);
-		RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
+		if (rajaytaspriteexplodenjalkeenpistatamatrueksi)
+        {
+			RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
+		}
 
+		//ammuksen massa oli 0.06
 		Destroy(gameObject);
 	}
+
+	public bool rajaytaspriteexplodenjalkeenpistatamatrueksi = false;
 
 	public int rajaytysrows = 3;
 	public int rajaytyscols = 3;
