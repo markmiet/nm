@@ -4315,7 +4315,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384067071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -12556,7 +12556,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -80, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13450,6 +13450,16 @@ PrefabInstance:
       objectReference: {fileID: 495316404}
     - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
+      propertyPath: tormayskoko.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: tormayskoko.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
       propertyPath: sormipaikkakerto.x
       value: 2
       objectReference: {fileID: 0}
@@ -13457,6 +13467,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sormipaikkakerto.y
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: offsetmaaraProsentti
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
@@ -13478,10 +13493,35 @@ PrefabInstance:
       propertyPath: offsettisormenjaaluksenvalilla
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: erikoisalueenoikeareunaProsentti
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: offsetvalueprocentsOffScreenWidth
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: ruudunvasemmanreunansuojaalueProsentti
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294481396978785094, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: offsetvalueprocentsOffScreenWidthInRightSide
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3294481396978785095, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
       propertyPath: m_Mass
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3362095348282915404, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3432093839195414364, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
@@ -13511,7 +13551,7 @@ PrefabInstance:
     - target: {fileID: 3561119158831789725, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
       propertyPath: m_Size.y
-      value: 0.1161342
+      value: 0.152102
       objectReference: {fileID: 0}
     - target: {fileID: 3561119158831789725, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
@@ -13521,7 +13561,7 @@ PrefabInstance:
     - target: {fileID: 3561119158831789725, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
       propertyPath: m_Offset.y
-      value: 0.010450259
+      value: 0.0037062764
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2965408277044486811, guid: 6de5a79242d8055cfaa4ee75beee2ef2, type: 3}
@@ -29137,7 +29177,7 @@ Transform:
   m_GameObject: {fileID: 1383880358}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -100, y: -3.8, z: 3.067026}
+  m_LocalPosition: {x: -80, y: -6, z: 3.067026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

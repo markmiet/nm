@@ -14,7 +14,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
     public int elamienmaara = 0;
-    public int score=0;//tälle se 
+    public int score = 0;//tälle se 
     public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
 
 
@@ -224,9 +224,10 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
     private BoxCollider2D boxCollider2D;
+    private bool android;
     void Start()
     {
-
+        android = Application.platform == RuntimePlatform.Android;
 
         particleSystem = GetComponentInChildren<ParticleSystem>();
         if (particleSystem.isPlaying)
@@ -285,8 +286,20 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         gvarinalkutilanne = color.g;
         boxCollider2D = GetComponent<BoxCollider2D>();
 
-        damagemittariController=damageMittari.GetComponent<DamagemittariController>();
+        damagemittariController = damageMittari.GetComponent<DamagemittariController>();
+
+
+
+
+
+
     }
+
+    float minX;
+    float maxX;
+    float minY;
+    float maxY;
+
     public GameObject damageMittari;
     private DamagemittariController damagemittariController;
 
@@ -342,6 +355,21 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private List<BonusButtonController> bbc = new List<BonusButtonController>();
 
+
+    private void OnkoAndroidi()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            Debug.Log("android");
+
+        }
+        else
+        {
+            Debug.Log("EI OLE android");
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -349,7 +377,6 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         {
             return;
         }
-
 
         if (Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
         {
@@ -381,6 +408,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             BonusButtonPressed();
         }
 
+
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -403,20 +432,28 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 case UnityEngine.TouchPhase.Ended:
                     _isDragging = false;
                     break;
+
+                case UnityEngine.TouchPhase.Stationary:
+                    if (_isDragging)
+                    {
+                        MoveObject(touchPosition);
+                    }
+                    break;
             }
         }
         // Handle mouse input for PC testing
-        else if (Input.GetMouseButtonDown(0))
+        else if (!android && Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Input.mousePosition;
             CheckIfTouched(mousePosition);
         }
-        else if (Input.GetMouseButton(0) && _isDragging)
+        else if (!android && Input.GetMouseButton(0) && _isDragging)
         {
             MoveObject(Input.mousePosition);
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (!android && Input.GetMouseButtonUp(0))
         {
+            //     Debug.Log("Input.GetMouseButtonUp(0)");
             _isDragging = false;
         }
 
@@ -432,7 +469,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
 
-        m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
+        //    m_Rigidbody2D.velocity = new Vector2(0.0f, 0.0f);
 
 
 
@@ -528,7 +565,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         {
 
             GameObject myObject = GameObject.Find("PauseButtonKaytossa");
-         
+
             PauseButtonControlleri s = myObject.GetComponent<PauseButtonControlleri>();
             s.setPauseImage(true);
             PauseGameAction();
@@ -585,6 +622,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void CheckIfTouched(Vector3 inputPosition)
     {
+        //  Debug.Log("CheckIfTouched");
+
         // Convert input position to world space
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
         /*
@@ -619,165 +658,241 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 _isDragging = true;
                 // Calculate offset between the object and touch/mouse position
                 _offset = collider.gameObject.transform.position - worldPosition;
-               // _offset = new Vector3(+100, 0, 0);
+                // _offset = new Vector3(+100, 0, 0);
 
 
                 break;
             }
         }
-        
+
 
     }
 
 
     //Vector3 viimeisin = Vector3.zero;
 
-    public float offsettisormenjaaluksenvalilla = 200.0f;
+    //public float offsettisormenjaaluksenvalilla = 200.0f;
 
-    private void MoveObject(Vector3 inputPosition)
+    //   public float sormenoffsettiprosenteissaRuudunleveydesta = 10.0f;
+
+    //  private float offsetvalue = 100.0f;
+   // public float offsetvalueprocentsOffScreenWidth = 10.0f;
+
+
+  //  public float offsetvalueprocentsOffScreenWidthInRightSide = 100.0f;
+    
+ //   float offsetvalue;
+
+ //   float offsetvalueRight;
+
+
+ //   public float offsetprocentvalueup = 0.0f;
+
+
+//    public float offsetkertokorjain = 0.5f;
+
+ //   public float offsetinkerto = 2.0f;
+
+
+
+
+
+    public float ruudunvasemmanreunansuojaalueProsentti = 5.0f;
+    public float erikoisalueenoikeareunaProsentti = 15f;
+    public float offsetmaaraProsentti = 10;
+
+
+    private void MoveObject(Vector3 screenpositionSormen)
     {
+        //offsetvalue = Screen.width * (offsetvalueprocentsOffScreenWidth / 100f);
+        float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
+        float erikoisalueenoikeareuna = Screen.width * erikoisalueenoikeareunaProsentti / 100.0f;
+        float offsetmaara = Screen.width * offsetmaaraProsentti / 100.0f;
+
+        Vector3 screeni;
+
+        if (screenpositionSormen.x <= ruudunvasemmanreunansuojaalue)
+        {
+            screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
+            screeni = screenpositionSormen;
+
+        }
+        else if (screenpositionSormen.x > ruudunvasemmanreunansuojaalue && screenpositionSormen.x <= erikoisalueenoikeareuna)
+        {
+            //prosenttilaseknta
+            float erikoisalueenleveys = (erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue);
+            float sormisiirrettynavasemmalle = screenpositionSormen.x - ruudunvasemmanreunansuojaalue;
+            float erikoisaluemaksimisiirrettyvasemmalle = erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue;
+
+            float prossa = sormisiirrettynavasemmalle / erikoisaluemaksimisiirrettyvasemmalle;
+            float offsettiprosentilla = offsetmaara * prossa;
+            screeni = new Vector3(screenpositionSormen.x + offsettiprosentilla, screenpositionSormen.y, 0);
 
 
-        /*
-        //      float ero = Vector3.Distance(inputPosition, viimeisin);
-        //    Debug.Log("hiiriero=" + ero);
-        // if (ero>20.0f)
-        // {
-        //   viimeisin = inputPosition;
-        // Offset the input position by 50 pixels to the right in screen space
-        //float offsetti = 100;
-        Vector2 screenPositionWithOffset = new Vector2(inputPosition.x + offsettisormenjaaluksenvalilla, inputPosition.y);
-
-        // Convert the offset screen position to world space
-        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPositionWithOffset);
-
-        //Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, 0));
-        //Vector3 te = new Vector3(50, 0, 0);
-        Vector2 yritys = worldPosition + _offset; 
-
-        */
-        
-        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x+400, inputPosition.y, 0));
-
-        Vector2 yritys = new Vector2(worldPosition.x, worldPosition.y);
-
-
-        //        Vector2 yritys = worldPosition + _offset;
-        //      Vector2 yritys = worldPosition + _offset;
-
-
+        }
+        else
+        {
+            screeni = new Vector3(screenpositionSormen.x + offsetmaara, screenpositionSormen.y, 0);
+        }
+        Vector2 yritysWorldpoint = RajoitaMoveaPalautaWorldPoint(screeni);
 
         // transform.position = worldPosition + _offset;
-        TryMove(yritys);
+        TryMove(yritysWorldpoint);
 
-        //        }
     }
 
-
-    void TryMove2(Vector2 targetPosition)
+    private Vector2 RajoitaMoveaPalautaWorldPoint(Vector3 screeni)
     {
-        // Perform a raycast to detect collision
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, targetPosition - (Vector2)transform.position, Vector2.Distance(transform.position, targetPosition));
+        float spriteWidth = m_SpriteRenderer.bounds.size.x;
+        float spriteHeight = m_SpriteRenderer.bounds.size.y;
 
-        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        minX = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).x + spriteWidth / 2;
+        maxX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, mainCamera.nearClipPlane)).x - spriteWidth / 2;
+        minY = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).y + spriteHeight / 2;
+        maxY = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane)).y - spriteHeight / 2;
 
-        // Use the size of the collider to determine the distance
-        float distance = Vector2.Distance(transform.position, targetPosition);
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screeni);
 
-        Vector2 colliderSize = boxCollider2D.size * transform.localScale; // Adjust for local scale
 
-        // Perform a raycast using the size of the collider
-        RaycastHit2D hit = Physics2D.BoxCast(
-            transform.position,
-            colliderSize,
-            0f,
-            direction,
-            distance
-        );
+        float clampedX = Mathf.Clamp(worldPosition.x, minX, maxX);
+        float clampedY = Mathf.Clamp(worldPosition.y, minY, maxY);
 
-        bool onko = onkoTagiaBoxissa("tiili", boxCollider2D.size * transform.localScale, targetPosition, LayerMask.NameToLayer("keskilayer"));
-        Collider2D[] cs = Physics2D.OverlapBoxAll(targetPosition, boxCollider2D.size, LayerMask.NameToLayer("keskilayer"));
-        if (cs != null && cs.Length > 0)
+
+        Vector2 yritys = new Vector2(clampedX, clampedY);
+
+        if (alamaksiminMaarittava != null)
         {
-            foreach (Collider2D c in cs)
+            if (yritys.y < alamaksiminMaarittava.transform.position.y)
             {
-                // Debug.Log("tagi=" + c.gameObject.tag);
-                if (c.gameObject == this.gameObject)
-                {
-
-                }
-                else if (c.gameObject.transform.parent == this.gameObject.transform)
-                {
-
-                }
-                else if (c.gameObject.tag.Contains("tiili"))
-                {
-                    return;
-                }
+                yritys.y = alamaksiminMaarittava.transform.position.y;
             }
         }
+        if (ylamaksiminMaarittava != null)
+        {
+            if (yritys.y > ylamaksiminMaarittava.transform.position.y)
+            {
+                yritys.y = ylamaksiminMaarittava.transform.position.y;
+            }
+        }
+
+        return yritys;
+    }
+
+    private void AsetaSijainti(Vector2 transformposition)
+    {
+        //Vector3 worldPosition = mainCamera.WorldToScreenPoint(transformposition);
+        Vector3 screenpositionSormen = Camera.main.WorldToScreenPoint(transformposition);
+        float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
+
+        Vector2 screeni;
+        if (screenpositionSormen.x <= ruudunvasemmanreunansuojaalue)
+        {
+            screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
+            screeni = new Vector2(screenpositionSormen.x, screenpositionSormen.y);
+
+        }
+        else
+        {
+            screeni = Camera.main.WorldToScreenPoint(transformposition);
+        }
+        Vector2 rajoitettuWorldpoint = RajoitaMoveaPalautaWorldPoint(screeni);
+        //Vector2 worldi = Camera.main.ScreenToWorldPoint(screeni);
+        TryMove(rajoitettuWorldpoint);
+        //transform.position = rajoitettuWorldpoint;
+
         /*
-        if (hit != null && hit.collider != null)
+        if (true)
+            return;
+
+        if (mainCamera == null) mainCamera = Camera.main;
+        if (m_SpriteRenderer == null) m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        if (m_Rigidbody2D == null) m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+        float halfWidth = m_SpriteRenderer.bounds.extents.x;
+        float halfHeight = m_SpriteRenderer.bounds.extents.y;
+
+        float camHeight = mainCamera.orthographicSize;
+        float camWidth = mainCamera.aspect * mainCamera.orthographicSize;
+
+        Vector3 pos = transform.position;
+
+        // Calculate camera bounds
+        float minX = mainCamera.transform.position.x - camWidth;
+        float maxX = mainCamera.transform.position.x + camWidth;
+        float minY = mainCamera.transform.position.y - camHeight;
+        float maxY = mainCamera.transform.position.y + camHeight;
+
+        // Convert the 100-pixel screen-space width to world-space
+
+        float offsetvalue = Screen.width * (offsetvalueprocentsOffScreenWidth / 100f);
+
+        // float offsetvalue = cameraWidth * (offsetvalueprocentsOffScreenWidth / 100f);
+
+
+        //  Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x + offsetvalue, inputPosition.y, 0));
+
+
+        float restrictedWidthInWorld = mainCamera.ScreenToWorldPoint(new Vector3(offsetvalue, 0)).x - mainCamera.ScreenToWorldPoint(Vector3.zero).x;
+
+        // Adjust the minimum X to account for the restricted area
+        float restrictedMinX = minX + restrictedWidthInWorld;
+
+        // Clamp X and Y within bounds, considering the restricted area
+        // pos.x = Mathf.Clamp(pos.x, restrictedMinX + halfWidth, maxX - halfWidth); OLI KAYTOSS
+
+      
+        pos.y = Mathf.Clamp(pos.y,
+                            Mathf.Max(minY + halfHeight, alamaksiminMaarittava.transform.position.y),
+                            ylamaksiminMaarittava != null
+                                ? Mathf.Min(maxY - halfHeight, ylamaksiminMaarittava.transform.position.y)
+                                : maxY - halfHeight);
+    
+
+
+        // Reset velocity if hitting vertical boundaries
+        if (pos.y == alamaksiminMaarittava.transform.position.y ||
+            (ylamaksiminMaarittava != null && pos.y == ylamaksiminMaarittava.transform.position.y))
         {
-            Debug.Log("hittag="+ hit.collider.gameObject.tag);
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
         }
 
-
-        //else if (c.gameObject.tag.Contains(name))
-        if (hit!=null && hit.collider != null && hit.collider.gameObject.tag.Contains("tiili"))
-        {
-            Debug.Log("Blocked by tilemap!");
-            return; // Prevent movement if blocked by a tile with the tag "tiili"
-        }
-
-        // Move towards the target position
-        //rb.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime));
+        // Apply position
+        transform.position = pos;
         */
-        //transform.position = targetPosition;
-
-
-        m_Rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime));
-
     }
 
 
-    void TryMoveOldi(Vector2 targetPosition)
+
+    void OnDrawGizmos()
     {
-        // Perform a raycast to detect collision
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, targetPosition - (Vector2)transform.position, Vector2.Distance(transform.position, targetPosition));
+        //    // Draws a 5 unit long red line in front of the object
+        //    Gizmos.color = Color.red;
+        //    Vector3 direction = transform.TransformDirection(Vector3.forward) * 50;
+        //    Gizmos.DrawRay(transform.position, direction);
 
-        Vector2 boxSize = boxCollider2D.size * transform.localScale;
-
-
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(targetPosition, boxSize, LayerMask.GetMask("keskilayer"));
-
-        if (colliders != null && colliders.Length > 0)
+        if (boxCollider2D != null)
         {
-            foreach (Collider2D collider in colliders)
-            {
-                // Skip self
-                if (collider.gameObject == this.gameObject)
-                    continue;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(transform.position, boxCollider2D.size * transform.localScale * sormipaikkakerto);
 
-                // Skip child objects of this GameObject
-                if (collider.transform.parent == this.transform)
-                    continue;
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(transform.position, boxCollider2D.size * transform.localScale);
 
-                // Check if the object has the "tiili" tag and block movement if so
-                if (collider.gameObject.tag.Contains("tiili"))
-                {
-                    Debug.Log("Movement blocked by object with tag 'tiili'");
-                    return;
-                }
-            }
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(tormayskohta, tormayskoko);
+
+
         }
 
-
-        m_Rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime));
-
     }
 
-    public Vector2 kerto=new Vector2(1.2f, 1.2f);
+    public Vector2 tormayskoko = new Vector2(0.1f, 01f);
+
+    private Vector2 tormayskohta = Vector2.zero;
+
+
+
+    public Vector2 kerto = new Vector2(1.2f, 1.2f);
 
     void TryMove(Vector2 targetPosition)
     {
@@ -789,9 +904,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float stepSize = 0.01f; // Adjust for precision (smaller values are more precise but slower)
 
         Vector2 currentPosition = transform.position;
-        Vector2 boxSize = boxCollider2D.size * transform.localScale;
+        //Vector2 boxSize = boxCollider2D.size * transform.localScale;
+        //boxSize = boxSize / 10;
+        //boxSize = boxSize * kerto;
+        Vector2 boxSize = tormayskoko;
 
-        boxSize = boxSize * kerto;
         bool rajayta = false;
         // Incrementally check for collisions along the path
         for (float traveled = 0; traveled < totalDistance; traveled += stepSize)
@@ -806,8 +923,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             foreach (Collider2D collider in colliders)
             {
                 //
-                if (collider.gameObject.tag.Contains("tiili") ||  collider.gameObject.tag.Contains("laatikkovihollinen"))
+                if (collider.gameObject.tag.Contains("tiili") || collider.gameObject.tag.Contains("laatikkovihollinen"))
                 {
+                    tormayskohta = nextPosition;
                     isBlocked = true;
                     break;
                 }
@@ -873,12 +991,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //gameoverinajankohta = Time.realtimeSinceStartup;
             float aikanyt = Time.realtimeSinceStartup;
 
-            if (aikanyt- gameoverinajankohta>aikamaarajokajatketaangameoverinjalkeen)
+            if (aikanyt - gameoverinajankohta > aikamaarajokajatketaangameoverinjalkeen)
             {
                 Time.timeScale = 0;
                 SiirryGameOverJalkeiseenTilaan();
             }
-           
+
             return;
 
         }
@@ -1028,9 +1146,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         // Debug.Log("xuusntam=" + xsuuntamuutos);
 
-        transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
+       // transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
 
-        AsetaSijainti();
+        AsetaSijainti(new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos));
 
         if (ysuuntamuutos > 0.0f)
         {
@@ -1207,126 +1325,9 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         //  Explode();
     }
 
-    private void asetaSijainti2()
-    {
-        // Debug.Log(alamaksiminMaarittava);
 
-        // Vector3 
-
-        // screenPosition = Camera.main.WorldToScreenPoint(alamaksiminMaarittava.transform.position);
-
-        //screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
-
-        float halfWidth = m_SpriteRenderer.bounds.extents.x;
-        float halfHeight = m_SpriteRenderer.bounds.extents.y;
-
-
-        float camHeight = mainCamera.orthographicSize;
-        float camWidth = mainCamera.aspect * mainCamera.orthographicSize;
-
-
-        Vector3 pos = transform.position;
-
-        // Calculate the bounds based on the camera size
-        float minX = mainCamera.transform.position.x - camWidth;
-        float maxX = mainCamera.transform.position.x + camWidth;
-        float minY = mainCamera.transform.position.y - camHeight;
-        float maxY = mainCamera.transform.position.y + camHeight;
-
-        // Clamp the position to restrict the GameObject within the camera bounds
-        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
-
-
-
-        pos.x = Mathf.Clamp(pos.x, minX + halfWidth, maxX - halfWidth);
-        pos.y = Mathf.Clamp(pos.y, minY + halfHeight, maxY - halfHeight);
-
-        if (pos.y < alamaksiminMaarittava.transform.position.y)
-        {
-            pos.y = alamaksiminMaarittava.transform.position.y;
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
-        }
-
-        if (ylamaksiminMaarittava != null)
-        {
-            if (pos.y > ylamaksiminMaarittava.transform.position.y)
-            {
-                pos.y = ylamaksiminMaarittava.transform.position.y;
-                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
-            }
-        }
-
-
-        // Apply the clamped position back to the GameObject
-        transform.position = pos;
-
-    }
-
-
-    private void AsetaSijainti()
-    {
-        if (mainCamera == null) mainCamera = Camera.main;
-        if (m_SpriteRenderer == null) m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        if (m_Rigidbody2D == null) m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
-        float halfWidth = m_SpriteRenderer.bounds.extents.x;
-        float halfHeight = m_SpriteRenderer.bounds.extents.y;
-
-        float camHeight = mainCamera.orthographicSize;
-        float camWidth = mainCamera.aspect * mainCamera.orthographicSize;
-
-        Vector3 pos = transform.position;
-
-        // Calculate camera bounds
-        float minX = mainCamera.transform.position.x - camWidth;
-        float maxX = mainCamera.transform.position.x + camWidth;
-        float minY = mainCamera.transform.position.y - camHeight;
-        float maxY = mainCamera.transform.position.y + camHeight;
-
-        // Convert the 100-pixel screen-space width to world-space
-        float restrictedWidthInWorld = mainCamera.ScreenToWorldPoint(new Vector3(100.0f, 0)).x - mainCamera.ScreenToWorldPoint(Vector3.zero).x;
-
-        // Adjust the minimum X to account for the restricted area
-        float restrictedMinX = minX + restrictedWidthInWorld;
-
-        // Clamp X and Y within bounds, considering the restricted area
-        pos.x = Mathf.Clamp(pos.x, restrictedMinX + halfWidth, maxX - halfWidth);
-        pos.y = Mathf.Clamp(pos.y,
-                            Mathf.Max(minY + halfHeight, alamaksiminMaarittava.transform.position.y),
-                            ylamaksiminMaarittava != null
-                                ? Mathf.Min(maxY - halfHeight, ylamaksiminMaarittava.transform.position.y)
-                                : maxY - halfHeight);
-
-        // Reset velocity if hitting vertical boundaries
-        if (pos.y == alamaksiminMaarittava.transform.position.y ||
-            (ylamaksiminMaarittava != null && pos.y == ylamaksiminMaarittava.transform.position.y))
-        {
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0.0f);
-        }
-
-        // Apply position
-        transform.position = pos;
-    }
-
-    /*
-    public void ExplodeTarvittaesssa()
-    {
- 
-        // GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        // Destroy(explosionIns, 1.0f);
-        // Debug.Log("gameover");
-
-      //  Savua();
-        if (damagenmaara >= maksimimaaradamageajokakestetaan)
-        {
-
-            Explode();
-        }
-        // audiosourceexplode.Play();
-     //   PaivitaDamagePalkkia();
-    }
-    */
+    
+    
     private void PaivitaDamagePalkkia()
     {
         //jos se on liikaa niin eikun gameoveria
@@ -1334,14 +1335,14 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         TeeGameOver();
 
-        
+
 
     }
     public bool demomode = true;
 
     private void TeeGameOver()
     {
-        if (!demomode && !gameover && damagenmaara>= maksimimaaradamageajokakestetaan)
+        if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
             Time.timeScale = 0.1f;
 
@@ -1374,7 +1375,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             gameover = true;
         }
-       
+
     }
 
     public float aikamaarajokajatketaangameoverinjalkeen = 5.0f;
@@ -1391,7 +1392,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     public void AiheutaDamagea(float damagemaara)
     {
         damagenmaara += damagemaara;
-       // ExplodeTarvittaesssa();
+        // ExplodeTarvittaesssa();
         PaivitaDamagePalkkia();
     }
 
@@ -1424,19 +1425,6 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         PaivitaDamagePalkkia();
 
     }
-
-    /*
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(0.75f, 0.0f, 0.0f, 0.75f);
-
-        // Convert the local coordinate values into world
-        // coordinates for the matrix transformation.
-        Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-    }
-    */
-
     private bool OnkoSeinaOikealla()
     {
 
@@ -1472,31 +1460,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
 
-    /*
-     * //If the Fire1 button is pressed, a projectile
-    //will be Instantiated every 0.5 seconds.
-
-    using UnityEngine;
-    using System.Collections;
-
-    public class Example : MonoBehaviour
-    {
-        public GameObject projectile;
-        public float fireRate = 0.5f;
-        private float nextFire = 0.0f;
-
-        void Update()
-        {
-            if (Input.GetButton("Fire1") && Time.time > nextFire)
-            {
-                nextFire = Time.time + fireRate;
-                Instantiate(projectile, transform.position, transform.rotation);
-            }
-        }
-    }
-        */
-
-
+    
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -1523,114 +1487,27 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         }
 
-
-        /*
-     if (col.collider.tag == "tiilitag")
-     {
-
-         Explode();
-
-         //Destroy (col.gameObject);
-
-     }
-     else if (col.collider.tag == "pallerospritetag")
-     {
-
-         Explode();
-
-         //Destroy (col.gameObject);
-
-     }
-
-     else if (col.collider.tag == "makitavihollinentag")
-     {
-
-         Explode();
-
-         //Destroy (col.gameObject);
-
-     }
-     */
-
-
-    }
-
-
-    void OnCollisionStay2D(Collision2D col)
-    {
-        //   Debug.Log("on OnCollisionStay ");
-
-    }
-
-
-    void OnCollisionExit2D(Collision2D col)
-    {
-        //    Debug.Log("on collision exit");
-
-
     }
 
 
 
 
 
-    void OnDrawGizmos()
-    {
-        //    // Draws a 5 unit long red line in front of the object
-        //    Gizmos.color = Color.red;
-        //    Vector3 direction = transform.TransformDirection(Vector3.forward) * 50;
-        //    Gizmos.DrawRay(transform.position, direction);
-
-        if (boxCollider2D != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(transform.position, boxCollider2D.size * transform.localScale* sormipaikkakerto);
-        }
-
-    }
 
 
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    // Draws a 5 unit long red line in front of the object
-    //    Gizmos.color = Color.red;
-    //    Vector3 direction = transform.TransformDirection(Vector3.forward) * 50;
-    //    Gizmos.DrawRay(transform.position, direction);
-    //}
-    //se raycasti tee sillä
-    //tai sitten ammuskärki oma gameobjecti joka on se neliö
 
 
 
     public void BonusCollected()
     {
-        //   audiosourcebonus.Play();
 
-        //Debug.Log("BonusCollected aluksella");
-
-        //olemme koskeneet bonukseen
-
-        //    public BonusButtonController.Bonusbuttontype speedbonusbutton;
-        //    public BonusButtonController.Bonusbuttontype missilebonusbutton;
-
-        //bool valittu=  speedbonusbutton.
-        //     speedbonusbutton
-
-
-        // BonusButtonController[] bs = (BonusButtonController[])FindObjectsOfType(typeof(BonusButtonController));
-        /*      */
 
 
         //siinä on nyt järjestyksessä
         int selectedIndex = -1;
         foreach (BonusButtonController btc in bbc)
         {
-            // do whatever with each 'enemy' here
-            // Debug.Log(""+btc.order+ " btc.selected=" +btc.selected.ToString() + " btc.used= " + btc.used.ToString);
-
-
-            //Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
             if (btc.selected)
             {
                 selectedIndex = btc.order;
@@ -1729,28 +1606,13 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         }
 
     }
-    private int palautaAmmustenMaara()
-    {
-        return GameObject.FindGameObjectsWithTag("ammustag").Length;
 
-    }
     private bool OnkoAmmustenMaaraAlleMaksimin()
     {
         int maksimi = ammustenmaksimaaraProperty;
         // int nykymaara = palautaAmmustenMaara();
         int nykymaara = aluksenluomienElossaOlevienAmmustenMaara;
         return nykymaara < maksimi;
-    }
-
-    float reloadEndTime = 0f;
-    float reloadTimer = 3f;
-    private bool OnkoRealoadMenossa()
-    {
-        bool IsReloading = Time.time < reloadEndTime;
-        // bool CanShoot => !IsReloading; // other conditions...
-        reloadEndTime = Time.time + reloadTimer;
-
-        return IsReloading;
     }
 
 
@@ -1761,23 +1623,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         // Add your collision handling logic here
     }
 
-    /*
 
-    void OnParticleCollision(GameObject other)
-    {
-        // Check if the object that collided is a Particle System
-        ParticleSystem particleSystem = other.GetComponent<ParticleSystem>();
-
-      
-
-        if (particleSystem != null)
-        {
-            Debug.Log("particleSystem.name=" + particleSystem.name);
-            Debug.Log("Particle collided with " + gameObject.name);
-            // Additional logic here
-        }
-    }
-    */
 
 
 

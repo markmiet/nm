@@ -1229,6 +1229,38 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         return PalautaAlusController().maksimimaaradamageajokakestetaan;
     }
 
+    public float GetSpriteScreenWidth(SpriteRenderer m_SpriteRenderer, Camera mainCamera)
+    {
+        // Get the bounds of the SpriteRenderer in world space
+        Bounds spriteBounds = m_SpriteRenderer.bounds;
+
+        // Convert the left and right edges of the bounds to screen space
+        Vector3 leftEdgeScreen = mainCamera.WorldToScreenPoint(new Vector3(spriteBounds.min.x, spriteBounds.center.y, 0));
+        Vector3 rightEdgeScreen = mainCamera.WorldToScreenPoint(new Vector3(spriteBounds.max.x, spriteBounds.center.y, 0));
+
+        // Calculate the width in screen space
+        float screenWidth = rightEdgeScreen.x - leftEdgeScreen.x;
+
+        return screenWidth;
+    }
+
+    public float GetSpriteScreenHeight(SpriteRenderer m_SpriteRenderer, Camera mainCamera)
+    {
+        // Get the bounds of the SpriteRenderer in world space
+        Bounds spriteBounds = m_SpriteRenderer.bounds;
+
+        // Convert the left and right edges of the bounds to screen space
+        Vector3 leftEdgeScreen = mainCamera.WorldToScreenPoint(new Vector3(spriteBounds.min.x, spriteBounds.center.y, 0));
+        Vector3 rightEdgeScreen = mainCamera.WorldToScreenPoint(new Vector3(spriteBounds.max.x, spriteBounds.center.y, 0));
+
+        // Calculate the width in screen space
+        //  float screenWidth = rightEdgeScreen.x - leftEdgeScreen.x;
+
+        float screenHeight = rightEdgeScreen.y - leftEdgeScreen.y;
+
+        // return screenHeight;
+        return leftEdgeScreen.y;
+    }
 
 
 }
