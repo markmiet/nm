@@ -1305,6 +1305,10 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
             instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
+
+            // instanssiBulletAlas.gameObject.transform.rotation = Quaternion.Euler(0, 0, 90.0f);
+
+
             IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
             if (alas != null)
             {
