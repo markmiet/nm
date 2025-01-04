@@ -23,7 +23,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     // Update is called once per frame
     void Update()
     {
-        TuhoaJosVaarassaPaikassa(gameObject);
+        TuhoaJosVaarassaPaikassa(gameObject,true,true);
         eloaika += Time.deltaTime;
         if (eloaika>=maksimiAikajonkavoiollaElossa)
         {
@@ -66,7 +66,9 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     }
 
 
+    public float liukumisenjalkeinengravity = 20.0f;
 
+    public float liukumisnopeus = 6.0f;
     public void Liu()
     {
         // Debug.Log("liukuuuuuuu");
@@ -75,7 +77,15 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             liukuu = true;
             if (m_Rigidbody2D != null)
             {
-                m_Rigidbody2D.velocity = new Vector2(6, 0);
+                m_Rigidbody2D.velocity = new Vector2(liukumisnopeus, 0);
+            }
+            if (alas)
+            {
+                m_Rigidbody2D.gravityScale = liukumisenjalkeinengravity;
+            }
+            else
+            {
+                m_Rigidbody2D.gravityScale = -liukumisenjalkeinengravity;
             }
 
         }

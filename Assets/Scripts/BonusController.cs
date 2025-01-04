@@ -47,9 +47,41 @@ public class BonusController : BaseController
     }
 
     bool onkoAlukseenJoTormatty = false;
-
-    void OnCollisionEnter2D(Collision2D col)
+    public void OnTriggerEnter2D(Collider2D col)
     {
+        
+      //  Debug.Log($"This object's collider: {col.collider.name}");
+      //  Debug.Log($"Other object's collider: {col.otherCollider.name}");
+        if (!onkoAlukseenJoTormatty && col.CompareTag("alustag"))
+        {
+            onkoAlukseenJoTormatty = true;
+
+            RajaytaSprite(gameObject, 3, 3, 2.0f, 1f);
+            Destroy(this.gameObject);
+            ad.BonusPlay();
+
+            AlusController myScript = col.gameObject.GetComponent<AlusController>();
+            if (myScript != null)
+            {
+                myScript.BonusCollected();
+
+            }
+            else
+            {
+                Debug.Log("aluscontrollerin skripti oli null");
+            }
+
+        }
+    }
+
+    /*
+
+            void OnCollisionEnter2D(Collision2D col)
+    {
+
+        Debug.Log($"This object's collider: {col.collider.name}");
+        Debug.Log($"Other object's collider: {col.otherCollider.name}");
+
         if (onkoAlukseenJoTormatty)
         {
             Debug.Log("on mahdollista");
@@ -62,36 +94,38 @@ public class BonusController : BaseController
 
         if (col.collider.tag == "alustag")
         {
-    
+
             onkoAlukseenJoTormatty = true;
 
             // col.otherCollider.gameObject.SendMessage
             // col.otherCollider.gameObject.SendMessage("BonusCollected");
             ad.BonusPlay();
-            RajaytaSprite(gameObject, 3, 3, 2.0f, 2f);
-            Destroy(this.gameObject);
+
             AlusController myScript = col.otherCollider.gameObject.GetComponent<AlusController>();
-            if (myScript!=null)
+            if (myScript != null)
             {
                 myScript.BonusCollected();
-                
+
             }
             else
             {
-              //  Debug.Log("aluscontrollerin skripti oli null");
+                Debug.Log("aluscontrollerin skripti oli null");
             }
+
+            RajaytaSprite(gameObject, 3, 3, 2.0f, 2f);
+            Destroy(this.gameObject);
 
             //  Debug.Log("on bonustaaaaaaaaa ");
 
-         //   Debug.Log("bonus keratty");
+            //   Debug.Log("bonus keratty");
 
             //pitää 
 
-           // col.otherCollider
+            // col.otherCollider
 
 
         }
 
-
     }
+    */
 }

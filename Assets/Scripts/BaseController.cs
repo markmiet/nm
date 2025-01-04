@@ -84,7 +84,7 @@ public class BaseController : MonoBehaviour
 
     public bool OnkoOkToimia(GameObject go)
     {
-        SpriteRenderer spriterrend= GetSpriteRenderer(go);
+        SpriteRenderer spriterrend = GetSpriteRenderer(go);
 
         return spriterrend.isVisible;
     }
@@ -206,7 +206,7 @@ public class BaseController : MonoBehaviour
     }
 
 
-    public void TallennaSijaintiSailytaVainNkplViimeisinta(int maxCount, bool useScreenPosition, bool saveUniqueValuesOnly,GameObject go)
+    public void TallennaSijaintiSailytaVainNkplViimeisinta(int maxCount, bool useScreenPosition, bool saveUniqueValuesOnly, GameObject go)
     {
         // Get the current world position of the GameObject
         Vector3 worldPosition = transform.position;
@@ -240,9 +240,9 @@ public class BaseController : MonoBehaviour
             //  }
 
             float ero = Vector3.Distance(lastPosition, positionToSave);
-            if (go!=null)
+            if (go != null)
             {
-            //    go.GetComponent<TextMesh>().text = "ero=" + ero;
+                //    go.GetComponent<TextMesh>().text = "ero=" + ero;
             }
 
             if (!saveUniqueValuesOnly)
@@ -253,7 +253,7 @@ public class BaseController : MonoBehaviour
             {
                 //if (ero > threshold)
                 //{
-                  
+
                 //}
 
                 if (!Vector3.Equals(lastPosition, positionToSave))
@@ -631,8 +631,8 @@ public class BaseController : MonoBehaviour
     */
     public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
     {
-        Kamera k=Camera.main.GetComponent<Kamera>();
-     
+        Kamera k = Camera.main.GetComponent<Kamera>();
+
 
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
 
@@ -660,7 +660,7 @@ public class BaseController : MonoBehaviour
 
     }
 
-    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus,GameObject objektijostasijaintilasketaan)
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus, GameObject objektijostasijaintilasketaan)
     {
         Kamera k = Camera.main.GetComponent<Kamera>();
 
@@ -700,7 +700,7 @@ public class BaseController : MonoBehaviour
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
 
         // Current positions
-     //   Vector3 shooterPosition = objektijostasijaintilasketaan.transform.position;
+        //   Vector3 shooterPosition = objektijostasijaintilasketaan.transform.position;
         Vector3 alusPosition = alus.transform.position;
 
         // Distance to target
@@ -801,35 +801,35 @@ public class BaseController : MonoBehaviour
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
        )
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime,-1,false);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false);
 
     }
-    
 
-        public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime, 
-            float sirpalemass,bool teerigitbody)
+
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+        float sirpalemass, bool teerigitbody)
     {
 
         Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
 
 
-       
+
         // Get the original sprite's texture
         Texture2D texture = originalSprite.texture;
-   //     Vector3 scale = go.transform.localScale;
+        //     Vector3 scale = go.transform.localScale;
 
         // Calculate the width and height of each slice
         float sliceWidth = texture.width / columns;
         float sliceHeight = texture.height / rows;
 
 
-       // sliceWidth = sliceWidth * scale.x;
-       // sliceHeight = sliceHeight * scale.y;
+        // sliceWidth = sliceWidth * scale.x;
+        // sliceHeight = sliceHeight * scale.y;
 
-     //   SpriteRenderer srSpriteRenderer =
-     //   go.GetComponent<SpriteRenderer>();
-     //   sliceWidth= srSpriteRenderer.size.x / columns;
-     //   sliceHeight = srSpriteRenderer.size.y / rows; 
+        //   SpriteRenderer srSpriteRenderer =
+        //   go.GetComponent<SpriteRenderer>();
+        //   sliceWidth= srSpriteRenderer.size.x / columns;
+        //   sliceHeight = srSpriteRenderer.size.y / rows; 
 
 
 
@@ -872,9 +872,12 @@ public class BaseController : MonoBehaviour
                 /*   */
                 Rigidbody2D pieceRigidbody =
                 sliceObject.AddComponent<Rigidbody2D>();
-                pieceRigidbody.gravityScale = 0.5f;
+                //pieceRigidbody.gravityScale = 0.5f;
+                //pieceRigidbody.gravityScale = 0.5f;
+                pieceRigidbody.gravityScale = 0.0f;
+
                 pieceRigidbody.simulated = true;
-                if (sirpalemass!=-1)
+                if (sirpalemass != -1)
                 {
                     pieceRigidbody.mass = sirpalemass;
                 }
@@ -1058,12 +1061,12 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         if (isVisible)
         {
-          //  Debug.Log("The object is within the visible Y range of the camera.");
+            //  Debug.Log("The object is within the visible Y range of the camera.");
             return true;
         }
         else
         {
-          //  Debug.Log("The object is outside the visible Y range of the camera.");
+            //  Debug.Log("The object is outside the visible Y range of the camera.");
             return false;
         }
     }
@@ -1074,14 +1077,19 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     private static int tarkistuskertojenmaara = 100;//suoritusyky syistä tarkistetaan vain joka 100 kerta
 
-    private int tarkistuslaskuri=0;
+    private int tarkistuslaskuri = 0;
 
     public void TuhoaJosVaarassaPaikassa(GameObject go)
     {
-        TuhoaJosVaarassaPaikassa(go, true);
+        TuhoaJosVaarassaPaikassa(go, true, false);
     }
 
-        public void TuhoaJosVaarassaPaikassa(GameObject go,bool tuhoaJosLiianKorkeallaKameraanverrattuna)
+    public void TuhoaJosVaarassaPaikassa(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna)
+    {
+        TuhoaJosVaarassaPaikassa(go, tuhoaJosLiianKorkeallaKameraanverrattuna, false);
+    }
+
+    public void TuhoaJosVaarassaPaikassa(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna, bool tuhoajosoikeallakameraanverrattuna)
     {
 
         if (alamaksimi == null)
@@ -1090,7 +1098,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         }
         tarkistuslaskuri++;
 
-        if (tarkistuslaskuri< tarkistuskertojenmaara)
+        if (tarkistuslaskuri < tarkistuskertojenmaara)
         {
             return;
         }
@@ -1099,14 +1107,14 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
 
 
-       
+
 
         float y = go.transform.position.y;
         float ykamera = Camera.main.transform.position.y;
         float koko = Camera.main.orthographicSize;
-        
 
-        if  (tuhoaJosLiianKorkeallaKameraanverrattuna && (   y >ykamera+koko+1.0f || y<ykamera-koko-1.0f ))
+
+        if (tuhoaJosLiianKorkeallaKameraanverrattuna && (y > ykamera + koko + 1.0f || y < ykamera - koko - 1.0f))
         {
             Destroy(go);
             return;
@@ -1126,10 +1134,22 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         if (IsObjectLeftOfCamera(go, 10.0f))
         {
-       //     Debug.Log("object left of camerea" + go);
+            //     Debug.Log("object left of camerea" + go);
             Destroy(go);
             return;
         }
+        if (tuhoajosoikeallakameraanverrattuna)
+        {
+            if (IsObjectRightOfCamera(Camera.main, go.transform))
+            {
+                Destroy(go);
+                return;
+            }
+        }
+
+
+
+
         float objectHeight = 0.0f;
         SpriteRenderer renderer = GetSpriteRenderer(go);
 
@@ -1139,7 +1159,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         }
 
 
-        if (y + objectHeight < alamaksimi.transform.position.y )
+        if (y + objectHeight < alamaksimi.transform.position.y)
         {
             Destroy(go);
         }
@@ -1218,7 +1238,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public AlusController PalautaAlusController()
     {
-        if (ac==null)
+        if (ac == null)
         {
             ac = FindObjectOfType<AlusController>();
         }

@@ -660,7 +660,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 _offset = collider.gameObject.transform.position - worldPosition;
                 // _offset = new Vector3(+100, 0, 0);
 
-
+                kosketuksenaloitusaika = Time.realtimeSinceStartup;
                 break;
             }
         }
@@ -676,45 +676,70 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     //   public float sormenoffsettiprosenteissaRuudunleveydesta = 10.0f;
 
     //  private float offsetvalue = 100.0f;
-   // public float offsetvalueprocentsOffScreenWidth = 10.0f;
+    // public float offsetvalueprocentsOffScreenWidth = 10.0f;
 
 
-  //  public float offsetvalueprocentsOffScreenWidthInRightSide = 100.0f;
-    
- //   float offsetvalue;
+    //  public float offsetvalueprocentsOffScreenWidthInRightSide = 100.0f;
 
- //   float offsetvalueRight;
+    //   float offsetvalue;
 
-
- //   public float offsetprocentvalueup = 0.0f;
+    //   float offsetvalueRight;
 
 
-//    public float offsetkertokorjain = 0.5f;
+    //   public float offsetprocentvalueup = 0.0f;
 
- //   public float offsetinkerto = 2.0f;
+
+    //    public float offsetkertokorjain = 0.5f;
+
+    //   public float offsetinkerto = 2.0f;
 
 
 
 
 
     public float ruudunvasemmanreunansuojaalueProsentti = 5.0f;
+
     public float erikoisalueenoikeareunaProsentti = 15f;
     public float offsetmaaraProsentti = 10;
-
+    public float offsetprosentinminimi = 0.0f;
 
     private void MoveObject(Vector3 screenpositionSormen)
     {
+        float spriteWidth = m_SpriteRenderer.bounds.size.x;
+        float spriteHeight = m_SpriteRenderer.bounds.size.y;
+        Bounds bounds = m_SpriteRenderer.bounds;
+        Vector3 worldBottomLeft = new Vector3(bounds.min.x, bounds.min.y, bounds.center.z);
+        Vector3 worldTopRight = new Vector3(bounds.max.x, bounds.max.y, bounds.center.z);
+
+        // Convert world space corners to screen space
+        Vector3 screenBottomLeft = Camera.main.WorldToScreenPoint(worldBottomLeft);
+        Vector3 screenTopRight = Camera.main.WorldToScreenPoint(worldTopRight);
+
+        // Calculate width and height in screen space
+        float screenWidth = screenTopRight.x - screenBottomLeft.x;
+        float screenHeight = screenTopRight.y - screenBottomLeft.y;
+
+
         //offsetvalue = Screen.width * (offsetvalueprocentsOffScreenWidth / 100f);
         float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
         float erikoisalueenoikeareuna = Screen.width * erikoisalueenoikeareunaProsentti / 100.0f;
         float offsetmaara = Screen.width * offsetmaaraProsentti / 100.0f;
 
+        float offsetmaaraminimi = Screen.width * offsetprosentinminimi / 100.0f;
+
+
         Vector3 screeni;
 
         if (screenpositionSormen.x <= ruudunvasemmanreunansuojaalue)
         {
-            screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
+            //screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
+            //screeni = screenpositionSormen;
+
+            screenpositionSormen.x = ruudunvasemmanreunansuojaalue+ offsetmaaraminimi;
             screeni = screenpositionSormen;
+
+
+
 
         }
         else if (screenpositionSormen.x > ruudunvasemmanreunansuojaalue && screenpositionSormen.x <= erikoisalueenoikeareuna)
@@ -725,9 +750,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             float erikoisaluemaksimisiirrettyvasemmalle = erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue;
 
             float prossa = sormisiirrettynavasemmalle / erikoisaluemaksimisiirrettyvasemmalle;
-            float offsettiprosentilla = offsetmaara * prossa;
-            screeni = new Vector3(screenpositionSormen.x + offsettiprosentilla, screenpositionSormen.y, 0);
 
+
+            float offsettiprosentilla = offsetmaara * prossa;
+            if (offsettiprosentilla < offsetmaaraminimi)
+            {
+                offsettiprosentilla = offsetmaaraminimi;
+            }
+            
+            screeni = new Vector3(screenpositionSormen.x + offsettiprosentilla, screenpositionSormen.y, 0);
 
         }
         else
@@ -884,6 +915,27 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         }
 
+        float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
+        float erikoisalueenoikeareuna = Screen.width * erikoisalueenoikeareunaProsentti / 100.0f;
+        float offsetmaara = Screen.width * offsetmaaraProsentti / 100.0f;
+
+        /*
+        float minXkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).x;
+        float maxXkamera = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, mainCamera.nearClipPlane)).x;
+        float minYkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).y;
+        float maxYkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane)).y;
+        */
+        Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(ruudunvasemmanreunansuojaalue, 0, Camera.main.nearClipPlane));
+        Vector3 worldEnd = Camera.main.ScreenToWorldPoint(new Vector3(ruudunvasemmanreunansuojaalue, Screen.height, Camera.main.nearClipPlane));
+
+        Gizmos.DrawLine(worldStart, worldEnd);
+
+        Gizmos.color = Color.cyan;
+        Vector3 worldStart2 = Camera.main.ScreenToWorldPoint(new Vector3(erikoisalueenoikeareuna, 0, Camera.main.nearClipPlane));
+        Vector3 worldEnd2 = Camera.main.ScreenToWorldPoint(new Vector3(erikoisalueenoikeareuna, Screen.height, Camera.main.nearClipPlane));
+
+        Gizmos.DrawLine(worldStart2, worldEnd2);
+
     }
 
     public Vector2 tormayskoko = new Vector2(0.1f, 01f);
@@ -894,6 +946,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public Vector2 kerto = new Vector2(1.2f, 1.2f);
 
+    public float stepSizeTrytomove = 0.02f;
+
+    public float aikakosketuksestajolloinmovespeedonHitaampi = 2.0f;
+
+    private float kosketuksenaloitusaika = 0.0f;
+    public float movespeedkerroinalussa = 0.5f;
     void TryMove(Vector2 targetPosition)
     {
         // Calculate the direction and total distance to move
@@ -901,7 +959,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float totalDistance = Vector2.Distance(transform.position, targetPosition);
 
         // Step size for progressive movement checks
-        float stepSize = 0.01f; // Adjust for precision (smaller values are more precise but slower)
+        float stepSize = stepSizeTrytomove; // Adjust for precision (smaller values are more precise but slower)
 
         Vector2 currentPosition = transform.position;
         //Vector2 boxSize = boxCollider2D.size * transform.localScale;
@@ -949,16 +1007,30 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
 
+    //public float aikakosketuksestajolloinmovespeedonHitaampi = 1.0f;
+
+    //private float kosketuksenaloitusaika = 0.0f;
+
+        float nykyaika = Time.realtimeSinceStartup;
+
+        float movespeedjotakaytetaan = moveSpeed;
+        float erotus = nykyaika - kosketuksenaloitusaika;
+        if (erotus< aikakosketuksestajolloinmovespeedonHitaampi)
+        {
+            movespeedjotakaytetaan = movespeedkerroinalussa*moveSpeed;
+        }
+
+
         if (rajayta)
         {
-            Vector2 kohta = Vector2.MoveTowards(transform.position, currentPosition, moveSpeed * Time.deltaTime);
+            Vector2 kohta = Vector2.MoveTowards(transform.position, currentPosition, movespeedjotakaytetaan * Time.deltaTime);
             transform.position = kohta;
             damagenmaara += maksimimaaradamageajokakestetaan;
             PaivitaDamagePalkkia();
         }
         else
         {
-            Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
             transform.position = kohta;
         }
 
@@ -1146,7 +1218,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         // Debug.Log("xuusntam=" + xsuuntamuutos);
 
-       // transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
+        // transform.position = new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos);
 
         AsetaSijainti(new Vector2(transform.position.x + xsuuntamuutos, transform.position.y + ysuuntamuutos));
 
@@ -1227,7 +1299,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
             Vector3 v3alas =
-new Vector3(0.1f +
+new Vector3(bulletinalkuxoffsetti +
 m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
 
 
@@ -1238,8 +1310,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
             {
                 //instanssiBulletAlas.SendMessage("Alas", true);
                 alas.Alas(true);
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, -bulletinalkuvelocityy);
+                instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = bulletingravityscale;
             }
 
         }
@@ -1252,7 +1324,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
             Vector3 v3ylos =
-new Vector3(0.1f +
+new Vector3(bulletinalkuxoffsetti +
 m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
 
 
@@ -1267,13 +1339,16 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 alas.Alas(false);
             }
 
-            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
 
-            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -bulletingravityscale;
 
         }
     }
+    public float bulletingravityscale = 2.0f;
 
+    public float bulletinalkuvelocityy = 2.0f;
+    public float bulletinalkuxoffsetti = -0.4f;
     public void VahennaaluksenluomienElossaOlevienAmmustenMaaraa()
     {
         aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara - 1;
@@ -1326,8 +1401,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     }
 
 
-    
-    
+
+
     private void PaivitaDamagePalkkia()
     {
         //jos se on liikaa niin eikun gameoveria
@@ -1460,7 +1535,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
 
-    
+
 
     void OnCollisionEnter2D(Collision2D col)
     {
