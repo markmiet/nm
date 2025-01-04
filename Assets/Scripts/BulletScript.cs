@@ -13,8 +13,9 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
-
+        android = OnkoAndroidi();
     }
+    private bool android;
 
     public float nopeusjonkaalleTuhoutuu = 0.2f;
 
@@ -23,7 +24,11 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     // Update is called once per frame
     void Update()
     {
-        TuhoaJosVaarassaPaikassa(gameObject,true,true);
+        if (!android)
+        {
+            TuhoaJosVaarassaPaikassa(gameObject,true,true);
+        }
+
         eloaika += Time.deltaTime;
         if (eloaika>=maksimiAikajonkavoiollaElossa)
         {
@@ -78,15 +83,16 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             if (m_Rigidbody2D != null)
             {
                 m_Rigidbody2D.velocity = new Vector2(liukumisnopeus, 0);
+                if (alas)
+                {
+                    m_Rigidbody2D.gravityScale = liukumisenjalkeinengravity;
+                }
+                else
+                {
+                    m_Rigidbody2D.gravityScale = -liukumisenjalkeinengravity;
+                }
             }
-            if (alas)
-            {
-                m_Rigidbody2D.gravityScale = liukumisenjalkeinengravity;
-            }
-            else
-            {
-                m_Rigidbody2D.gravityScale = -liukumisenjalkeinengravity;
-            }
+     
 
         }
 
@@ -197,8 +203,11 @@ public class BulletScript : BaseController,  IExplodable, IAlas
         //Debug.Log ("OnBecameInvisible");
         // Destroy the enemy
         //tuhoa = true;
-
-     //   Destroy(gameObject);
+        if (android)
+        {
+            Destroy(gameObject);
+        }
+      
     }
 
     public void Explode()

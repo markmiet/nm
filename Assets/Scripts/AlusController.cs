@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -290,15 +291,31 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
 
+        GameObject foundObject = GameObject.Find("Ruudunkeskiteksti");
+        keskellaTextMeshProUGUI = foundObject.GetComponent<TextMeshProUGUI>();
 
-
-
+        GameObject foundObject2 = GameObject.Find("Ruudunvasenylakulmateksti");
+        ruudunvasenylakulmatekstiTextMeshProUGUI = foundObject2.GetComponent<TextMeshProUGUI>();
     }
+
+    TextMeshProUGUI keskellaTextMeshProUGUI;
+
+    TextMeshProUGUI ruudunvasenylakulmatekstiTextMeshProUGUI;
 
     float minX;
     float maxX;
     float minY;
     float maxY;
+
+    public void SetkeskellaTextMeshProUGUI(string text)
+    {
+        keskellaTextMeshProUGUI.text = text;
+    }
+    public void SetruudunvasenylakulmatekstiTextMeshProUGUI(string text)
+    {
+        ruudunvasenylakulmatekstiTextMeshProUGUI.text = text;
+    }
+
 
     public GameObject damageMittari;
     private DamagemittariController damagemittariController;
@@ -400,7 +417,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         {
             return;
         }
-
+        PaivitaStoptime();
 
         if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus"))
         {
@@ -660,7 +677,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 _offset = collider.gameObject.transform.position - worldPosition;
                 // _offset = new Vector3(+100, 0, 0);
 
-                kosketuksenaloitusaika = Time.realtimeSinceStartup;
+                kosketuksenaloitusaika = Time.time;
                 break;
             }
         }
@@ -735,7 +752,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
             //screeni = screenpositionSormen;
 
-            screenpositionSormen.x = ruudunvasemmanreunansuojaalue+ offsetmaaraminimi;
+            screenpositionSormen.x = ruudunvasemmanreunansuojaalue + offsetmaaraminimi;
             screeni = screenpositionSormen;
 
 
@@ -757,7 +774,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             {
                 offsettiprosentilla = offsetmaaraminimi;
             }
-            
+
             screeni = new Vector3(screenpositionSormen.x + offsettiprosentilla, screenpositionSormen.y, 0);
 
         }
@@ -946,7 +963,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public Vector2 kerto = new Vector2(1.2f, 1.2f);
 
-    public float stepSizeTrytomove = 0.02f;
+    //public float stepSizeTrytomove = 0.02f;
 
     public float aikakosketuksestajolloinmovespeedonHitaampi = 2.0f;
 
@@ -954,6 +971,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     public float movespeedkerroinalussa = 0.5f;
     void TryMove(Vector2 targetPosition)
     {
+
+        /* turhaa
         // Calculate the direction and total distance to move
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
         float totalDistance = Vector2.Distance(transform.position, targetPosition);
@@ -1000,6 +1019,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             // Update currentPosition to the next step
             currentPosition = nextPosition;
         }
+        */
 
 
 
@@ -1007,32 +1027,33 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
 
-    //public float aikakosketuksestajolloinmovespeedonHitaampi = 1.0f;
+        //public float aikakosketuksestajolloinmovespeedonHitaampi = 1.0f;
 
-    //private float kosketuksenaloitusaika = 0.0f;
+        //private float kosketuksenaloitusaika = 0.0f;
 
-        float nykyaika = Time.realtimeSinceStartup;
+        float nykyaika = Time.time;
 
         float movespeedjotakaytetaan = moveSpeed;
         float erotus = nykyaika - kosketuksenaloitusaika;
-        if (erotus< aikakosketuksestajolloinmovespeedonHitaampi)
+        if (erotus < aikakosketuksestajolloinmovespeedonHitaampi)
         {
-            movespeedjotakaytetaan = movespeedkerroinalussa*moveSpeed;
+            movespeedjotakaytetaan = movespeedkerroinalussa * moveSpeed;
         }
 
-
+        /*
         if (rajayta)
         {
-            Vector2 kohta = Vector2.MoveTowards(transform.position, currentPosition, movespeedjotakaytetaan * Time.deltaTime);
+            Vector2 kohta = Vector2.MoveTowards(transform.position, tormayskohta, movespeedjotakaytetaan * Time.deltaTime);
             transform.position = kohta;
             damagenmaara += maksimimaaradamageajokakestetaan;
             PaivitaDamagePalkkia();
         }
         else
         {
-            Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
-            transform.position = kohta;
-        }
+            */
+        Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
+        transform.position = kohta;
+        //}
 
 
     }
@@ -1060,7 +1081,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         if (gameover)
         {
-            //gameoverinajankohta = Time.realtimeSinceStartup;
+            //gameoverinajankohta = Time.time;
             float aikanyt = Time.realtimeSinceStartup;
 
             if (aikanyt - gameoverinajankohta > aikamaarajokajatketaangameoverinjalkeen)
@@ -1419,11 +1440,24 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     }
     public bool demomode = true;
 
+
+    public float gameoverinjalkeintimescale = 0.1f;
     private void TeeGameOver()
     {
-        if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
+        if (demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
-            Time.timeScale = 0.1f;
+            Vector3 vektori =
+new Vector3(
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+            GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
+        }
+        
+        else if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
+        {
+
+            SetkeskellaTextMeshProUGUI("Game over");
+
+            Time.timeScale = gameoverinjalkeintimescale;
 
             ad.ExplodePlay();
             Vector3 vektori =
@@ -1702,7 +1736,16 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         // Add your collision handling logic here
     }
 
+    private bool cameraolipysahtynytviimeksi = false;
+    public void PaivitaStoptime()
+    {
+        Kamera k = mainCamera.GetComponent<Kamera>();
+        string aika = k.PalautaOdotusAikaKunnesLiikkuu();
 
+        SetruudunvasenylakulmatekstiTextMeshProUGUI(aika);
+
+
+    }
 
 
 

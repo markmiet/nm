@@ -391,7 +391,7 @@ public class PalliController : BaseController,  IDamagedable
                    // rb.velocity = new Vector2(0.0f, rb.velocity.y);
                     boostParticles.Play();
                     hatahyppykesken = true;
-                    hatahypynsuoritusajankohta = Time.realtimeSinceStartup;
+                    hatahypynsuoritusajankohta = Time.time;
                     return;
 
                 }
@@ -399,7 +399,7 @@ public class PalliController : BaseController,  IDamagedable
 
             if (hatahyppykesken)
             {
-                float nykyaika = Time.realtimeSinceStartup; ;
+                float nykyaika = Time.time; ;
                 if (nykyaika- hatahypynsuoritusajankohta>= hatahypynkestoaika)
                 {
                     hatahyppykesken = false;
@@ -639,7 +639,7 @@ public class PalliController : BaseController,  IDamagedable
     private void LoikkaaHatahyyppy()
     {
 
-        if (Time.realtimeSinceStartup - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
+        if (Time.time - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
         {
            // float voima = hyppyvoimankerroinLoikataanYlos * yx + hyppyvoimanlisaysyxLoikataanYlos
             rb.velocity = new Vector2(hatahypynvoimahorisontaalisessasuunnassa, hatahypynvoimakorkeussuunnassa);
@@ -648,7 +648,7 @@ public class PalliController : BaseController,  IDamagedable
 
 
         hypynkestotyyppi1 = 0.0f;
-            viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
+            viimeisenhypynaloitusajankohta = Time.time;
             boostParticles.Play();
         }
     }
@@ -656,7 +656,7 @@ public class PalliController : BaseController,  IDamagedable
     private void LoikkaaYlos(bool tiilionoikealla)
     {
 
-        if(Time.realtimeSinceStartup - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
+        if(Time.time - hyppyjenValinenViive > viimeisenhypynaloitusajankohta)
         {
             for (float yx = 0; yx < hypppaaylostutkinnanmaara; yx += 0.01f)
             {
@@ -687,7 +687,7 @@ public class PalliController : BaseController,  IDamagedable
                     rb.velocity = new Vector2(rb.velocity.x, voima);
                     hyppymenossaTyyppi1 = true;
                     hypynkestotyyppi1 = 0.0f;
-                    viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
+                    viimeisenhypynaloitusajankohta = Time.time;
                     boostParticles.Play();
                   // Ammu();
 
@@ -708,7 +708,7 @@ public class PalliController : BaseController,  IDamagedable
     private void LoikkaaAukonYli(bool aukkoOnOikealla)
     {
  
-        if (Time.realtimeSinceStartup- hyppyjenValinenViive> viimeisenhypynaloitusajankohta )
+        if (Time.time - hyppyjenValinenViive> viimeisenhypynaloitusajankohta )
         {
 
 
@@ -761,7 +761,7 @@ public class PalliController : BaseController,  IDamagedable
                     hyppymenossaTyyppi2 = true;
                     hypynkestotyyppi2 = 0.0f;
 
-                    viimeisenhypynaloitusajankohta = Time.realtimeSinceStartup;
+                    viimeisenhypynaloitusajankohta = Time.time;
 
                     boostParticles.Play();
 
@@ -1308,7 +1308,7 @@ rb.position.x, rb.position.y, 0);
     {
         if (ammu)
         {
-            float aikanyt = Time.realtimeSinceStartup;
+            float aikanyt = Time.time;
             if (aikanyt- viimeksiAmmuttu> pieninmahdollinenAikaValiAmpumisissa)
             {
                 Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
@@ -1324,7 +1324,7 @@ rb.position.x, rb.position.y, 0);
                 //   p.alusGameObject = alusGameObject;
 
                 instanssi.GetComponent<Rigidbody2D>().velocity = ve;
-                viimeksiAmmuttu = Time.realtimeSinceStartup;
+                viimeksiAmmuttu = Time.time;
 
             }
         }

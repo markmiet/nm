@@ -1075,7 +1075,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     GameObject alamaksimi = null;
 
 
-    private static int tarkistuskertojenmaara = 100;//suoritusyky syistä tarkistetaan vain joka 100 kerta
+    private static int tarkistuskertojenmaara = 10;//suoritusyky syistä tarkistetaan vain joka 100 kerta
 
     private int tarkistuslaskuri = 0;
 
@@ -1197,7 +1197,21 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             Destroy(go);
         }
     }
+    public bool OnkoAndroidi()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+           // Debug.Log("android");
+            return true;
 
+        }
+        else
+        {
+         //   Debug.Log("EI OLE android");
+            return false;
+
+        }
+    }
 
     /*
     public void IgnoreChildCollisions(Transform parent)

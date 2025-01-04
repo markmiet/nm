@@ -27,6 +27,8 @@ public class Kamera : MonoBehaviour
 
     // Update is called once per frame
     float stopinaloitusaika = 0.0f;
+
+    int paljonkopitaavielaodottaa = -1;
     void Update()
     {
         //   gameObject.transform.position.Set(alus.transform.position.x, alus.transform.position.y, gameObject.transform.position.z);
@@ -46,16 +48,19 @@ public class Kamera : MonoBehaviour
             {
                 if (stopinaloitusaika == 0.0f)
                 {
-                    stopinaloitusaika = Time.realtimeSinceStartup;
-
+                    stopinaloitusaika = Time.time;
+                    paljonkopitaavielaodottaa = (int)stoptime;
                 }
 
-                if (Time.realtimeSinceStartup - stopinaloitusaika > stoptime)
+                if (Time.time - stopinaloitusaika > stoptime)
                 {
                     stop = false;
+                    paljonkopitaavielaodottaa = -1;
                 }
                 else
                 {
+                    float odotusaika = stopinaloitusaika + stoptime - Time.time;
+                    paljonkopitaavielaodottaa = (int)odotusaika;
                     xscr = 0.0f;
                 }
 
@@ -80,6 +85,15 @@ public class Kamera : MonoBehaviour
 
     public GameObject cameraInfo;
 
-
+    public string PalautaOdotusAikaKunnesLiikkuu()
+    {
+        if (paljonkopitaavielaodottaa>=0)
+        {
+            return ""+paljonkopitaavielaodottaa;
+        }
+        {
+            return "";
+        }
+    }
 
 }
