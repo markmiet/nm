@@ -395,7 +395,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             return;
         }
 
-        if (!isPaused && ( Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause")))
+        if ( Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
         {
             Debug.Log("pausepressed");
             TogglePause();

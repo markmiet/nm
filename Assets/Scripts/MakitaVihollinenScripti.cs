@@ -41,7 +41,21 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
     public bool teebonus = false;
     private AudioplayerController ad;
 
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        // Draw the object's name in the Scene view
+        Gizmos.color = Color.white; // Set the text color
+        Vector3 position = transform.position; // Get the object's position
 
+        // Display the name above the object in the Scene view
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.yellow;
+        style.alignment = TextAnchor.MiddleCenter;
+
+        UnityEditor.Handles.Label(position + Vector3.up * 1.5f, gameObject.name, style);
+#endif
+    }
     void Start()
     {
         ad = FindObjectOfType<AudioplayerController>();
