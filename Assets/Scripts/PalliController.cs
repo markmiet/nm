@@ -1311,21 +1311,27 @@ rb.position.x, rb.position.y, 0);
             float aikanyt = Time.time;
             if (aikanyt- viimeksiAmmuttu> pieninmahdollinenAikaValiAmpumisissa)
             {
-                Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
+                Vector3 ampumispaikka =
+                new Vector3(
+         transform.position.x, transform.position.y + 1.0f, 0);
+                if (VoikoVihollinenAmpua(ampumispaikka))
+                {
 
-                //GameObject Instantiate(ammus);
+                    Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus, ampumispaikka);
+
+                    //GameObject Instantiate(ammus);
 
 
 
-                GameObject instanssi = Instantiate(ammus, new Vector3(
-         transform.position.x, transform.position.y + 1.0f, 0), Quaternion.identity);
+                    GameObject instanssi = Instantiate(ammus, ampumispaikka, Quaternion.identity);
 
-                //   PalliController p = instanssi.GetComponent<PalliController>();
-                //   p.alusGameObject = alusGameObject;
+                    //   PalliController p = instanssi.GetComponent<PalliController>();
+                    //   p.alusGameObject = alusGameObject;
 
-                instanssi.GetComponent<Rigidbody2D>().velocity = ve;
-                viimeksiAmmuttu = Time.time;
+                    instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+                    viimeksiAmmuttu = Time.time;
 
+                }
             }
         }
 

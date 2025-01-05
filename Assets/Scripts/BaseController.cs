@@ -629,12 +629,17 @@ public class BaseController : MonoBehaviour
         return velocityVector; // Return the velocity vector
     }
     */
-    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
+
+
+
+        public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
     {
         Kamera k = Camera.main.GetComponent<Kamera>();
 
 
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
+
+
 
         // Current positions
         Vector3 shooterPosition = transform.position;
@@ -659,6 +664,62 @@ public class BaseController : MonoBehaviour
         return velocityVector;
 
     }
+
+    public bool OnkoVihollisenJaAluksenValillaTiilia()
+    {
+        return OnkoVihollisenJaAluksenValillaTiilia(Vector3.zero);
+    }
+
+
+        public bool OnkoVihollisenJaAluksenValillaTiilia(Vector3 shooterPositionpara )
+    {
+        Vector3 shooterPosition;
+        if (shooterPositionpara != Vector3.zero)
+        {
+            shooterPosition = transform.position;
+        }
+        else
+        {
+            shooterPosition = shooterPositionpara;
+        }
+        //tarkistetaan osuuko seinaan
+        //Vector3 shooterPosition = transform.position;
+        Debug.Log("shooterPosition=" + shooterPosition);
+        Vector3 alusPosition = PalautaAlus().transform.position;
+
+        // Distance to target
+        //Vector3 directionToAlus = alusPosition - shooterPosition;
+        float distance = Vector3.Distance(shooterPosition, alusPosition);
+        Vector3 direction = (alusPosition - shooterPosition).normalized;
+
+        RaycastHit2D[] hitsit = Physics2D.RaycastAll(transform.position, direction, distance);
+        if (hitsit != null & hitsit.Length > 0)
+        {
+            foreach (RaycastHit2D hit in hitsit)
+            {
+                if (hit.collider != null)
+                {
+                    if (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("laatikkovihollinen"))
+                    {
+                        Debug.Log("osutaan tiileen");
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool VoikoVihollinenAmpua(Vector3 shooterPositionpara)
+    {
+        return !OnkoVihollisenJaAluksenValillaTiilia(shooterPositionpara);
+    }
+    public bool VoikoVihollinenAmpua( )
+    {
+        return !OnkoVihollisenJaAluksenValillaTiilia(Vector3.zero);
+    }
+
 
     public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus, GameObject objektijostasijaintilasketaan)
     {
@@ -723,17 +784,22 @@ public class BaseController : MonoBehaviour
 
     }
 
-
+    private GameObject alustieto;
 
     public GameObject PalautaAlus()
     {
+        if (alustieto != null)
+        {
+            return alustieto;
+        }
+
         GameObject[] allObstacles = GameObject.FindGameObjectsWithTag("alustag");
         foreach (GameObject obstacles in allObstacles)
         {
-            GameObject alus = obstacles;
-            return alus;
+            alustieto = obstacles;
+            break;
         }
-        return null;
+        return alustieto;
 
     }
 

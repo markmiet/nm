@@ -682,39 +682,44 @@ piipunboxit.gameObject.transform.position.x;
        ammusx, ammusy + lisays, 0);
 
 
-            instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
+            if (VoikoVihollinenAmpua(ammusvektori)) {
+                instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
 
-            //     instanssi = Instantiate(ammusPrefab, new Vector3(
-            // piippux,piippuy, 0), Quaternion.identity);
-
-
-
-            //  instanssi.transform.parent = gameObject.transform;
-            /*
-
-            float pysty = alus.transform.position.y - transform.position.y;
-            float vaaka = alus.transform.position.x - transform.position.x;
-
-            float suhdeluku = pysty / vaaka;
-
-            float kokonaisvoima = 2f;
-
-            float vaakavoima = kokonaisvoima * suhdeluku;
-            float pystyvoima = kokonaisvoima - vaakavoima;
+                //     instanssi = Instantiate(ammusPrefab, new Vector3(
+                // piippux,piippuy, 0), Quaternion.identity);
 
 
-            //           float angle = Mathf.Atan2(alusSpriteRenderer.bounds.center.y - m_SpriteRenderer.bounds.center.y, alusSpriteRenderer.bounds.center.x - m_SpriteRenderer.bounds.center.x) *
-            //Mathf.Rad2Deg;
+
+                //  instanssi.transform.parent = gameObject.transform;
+                /*
+
+                float pysty = alus.transform.position.y - transform.position.y;
+                float vaaka = alus.transform.position.x - transform.position.x;
+
+                float suhdeluku = pysty / vaaka;
+
+                float kokonaisvoima = 2f;
+
+                float vaakavoima = kokonaisvoima * suhdeluku;
+                float pystyvoima = kokonaisvoima - vaakavoima;
 
 
-            Vector2 vv = new Vector2(alusx - ammusx,
-               alusy - ammusy + lisays);
-            */
+                //           float angle = Mathf.Atan2(alusSpriteRenderer.bounds.center.y - m_SpriteRenderer.bounds.center.y, alusSpriteRenderer.bounds.center.x - m_SpriteRenderer.bounds.center.x) *
+                //Mathf.Rad2Deg;
 
 
-            Vector2 vv = palautaAmmuksellaVelocityVector(alus, ampumisenkokonaisvoima, ammusvektori);
+                Vector2 vv = new Vector2(alusx - ammusx,
+                   alusy - ammusy + lisays);
+                */
 
-            instanssi.GetComponent<Rigidbody2D>().velocity = vv;
+
+                Vector2 vv = palautaAmmuksellaVelocityVector(alus, ampumisenkokonaisvoima, ammusvektori);
+
+                instanssi.GetComponent<Rigidbody2D>().velocity = vv;
+
+
+            }
+
 
 
         }

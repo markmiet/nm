@@ -880,13 +880,27 @@ public class KattopalliController : BaseController, IExplodable
             float aikanyt = Time.time;
             if (aikanyt - viimeksiAmmuttu > pieninmahdollinenAikaValiAmpumisissa)
             {
-                Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus);
+                Vector3 ampumisenkohta =
+                new Vector3(
+         transform.position.x, transform.position.y - ampumiskohdanmiinustus, 0);
+
+
+                if (!VoikoVihollinenAmpua(ampumisenkohta))
+                {
+                    // viimeksiAmmuttu = Time.time;//jotta ei tuliteta koko aikaa
+                    viimeksiAmmuttu= Time.time;
+                    return;
+                }
+
+                
+
+                Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus, ampumisenkohta);
+
 
                 //GameObject Instantiate(ammus);
 
 
-                GameObject instanssi = Instantiate(ammus, new Vector3(
-         transform.position.x, transform.position.y - ampumiskohdanmiinustus, 0), Quaternion.identity);
+                GameObject instanssi = Instantiate(ammus, ampumisenkohta, Quaternion.identity);
 
 
 

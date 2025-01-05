@@ -395,13 +395,16 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             return;
         }
 
-        if (Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
+        if (!isPaused && ( Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause")))
         {
             Debug.Log("pausepressed");
             TogglePause();
         }
 
-        if (Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit"))
+        if (isPaused && (
+
+
+            Input.GetKey("escape") || CrossPlatformInputManager.GetButtonDown("Quit")))
         {
             //  Debug.Log("Application would quit now.");
 
