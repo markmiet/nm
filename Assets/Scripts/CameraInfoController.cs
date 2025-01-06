@@ -26,7 +26,24 @@ public class CameraInfoController : MonoBehaviour
 
         if (onko)
         {
-            kamera.cameraInfo = this.gameObject;
+            GameObject olemassa =
+            kamera.cameraInfo;
+            if (olemassa!=null)
+            {
+                bool onkotoinen=IsObjectInCameraView(olemassa.transform.position);
+                if (!onkotoinen)
+                {
+                    kamera.cameraInfo = this.gameObject;
+                }
+                else if (transform.position.x>olemassa.transform.position.x)
+                {
+                    kamera.cameraInfo = this.gameObject;
+                }
+            }
+            else
+            {
+                kamera.cameraInfo = this.gameObject;
+            }
         }
     }
 

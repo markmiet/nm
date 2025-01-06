@@ -873,6 +873,8 @@ public class KattopalliController : BaseController, IExplodable
     public bool ammu = false;
 
     public float ampumiskohdanmiinustus = 0.5f;
+
+    public bool ampuukoVaikkaAluseinakyvissa = true;
     public void Ammu()
     {
         if (!onkoammus && ammu && montakoonammuttu < ampumistenmaksimimaara)
@@ -884,14 +886,14 @@ public class KattopalliController : BaseController, IExplodable
                 new Vector3(
          transform.position.x, transform.position.y - ampumiskohdanmiinustus, 0);
 
-
-                if (!VoikoVihollinenAmpua(ampumisenkohta))
+                
+                if (!ampuukoVaikkaAluseinakyvissa && !VoikoVihollinenAmpua(ampumisenkohta))
                 {
                     // viimeksiAmmuttu = Time.time;//jotta ei tuliteta koko aikaa
                     viimeksiAmmuttu= Time.time;
                     return;
                 }
-
+               
                 
 
                 Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus, ampumisenkohta);

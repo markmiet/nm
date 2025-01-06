@@ -162,11 +162,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 1
   m_LinearDrag: 1
   m_AngularDrag: 1
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 2569ed191898bf8f98df95618075ee69, type: 2}
+  m_GravityScale: -0.5
+  m_Material: {fileID: 6200000, guid: 0cb77231a430b454fb792ff7ffcc3943, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -301,8 +301,8 @@ MonoBehaviour:
   ampumistenmaksimimaara: 1
   erominimissaanJottaLiikutaan: 0.4
   leftsidetutkinnanmaara: 0.4
-  elamisenmaksimiaikajosammus: 20
-  torqueForce: -3
+  elamisenmaksimiaikajosammus: 15
+  torqueForce: 1
   ammuntasykli: 3
   nukkumisaikajosammus: 1
   aluksenammuksentagilista: []
@@ -321,6 +321,7 @@ MonoBehaviour:
   pieninmahdollinenAikaValiAmpumisissa: 2
   ammu: 0
   ampumiskohdanmiinustus: 0.5
+  ampuukoVaikkaAluseinakyvissa: 1
 --- !u!70 &904847137763141498
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

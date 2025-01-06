@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
@@ -62,13 +61,14 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     private int aluksenluomienElossaOlevienAmmustenMaara;
 
+    /*
     public InputActionReference moveInputActionReference;
 
 
     public InputActionReference moveDownInputActionReference;
 
     public InputActionReference moveUpInputActionReference;
-
+    */
 
     public bool autofire;
     //  public GameObject speedbonusbutton;
@@ -87,7 +87,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public int optioidenmaksimaara;
 
 
-    public Joystick joystick;
+ //   public Joystick joystick;
 
     public GameObject explosion;
 
@@ -478,14 +478,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
 
 
-
+        /*
         Vector2 moveDirection = moveInputActionReference.action.ReadValue<Vector2>();
 
 
         float moveDirectionAlas = moveDownInputActionReference.action.ReadValue<float>();
 
         float moveDirectionUp = moveUpInputActionReference.action.ReadValue<float>();
-
+        */
 
 
 
@@ -496,7 +496,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float nappiHorizontal = Input.GetAxisRaw("Horizontal");
         if (nappiHorizontal == 0.0f)
         {
-            nappiHorizontal = moveDirection.x;
+           // nappiHorizontal = moveDirection.x;
         }
 
         //float nappiHorizontal = moveDirection.x;
@@ -505,19 +505,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         oikeaNappiPainettu = (nappiHorizontal > 0.0f); // > 0 for right, < 0 for left
         vasenNappiPainettu = (nappiHorizontal < 0.0f);
 
+        /*
         if (!oikeaNappiPainettu)
             oikeaNappiPainettu = (joystick.Horizontal > 0.1f);
 
 
         if (!vasenNappiPainettu)
             vasenNappiPainettu = (joystick.Horizontal < -0.1f);
-
+        */
 
 
         float nappiVertical = Input.GetAxisRaw("Vertical");
         if (nappiVertical == 0.0f)
         {
-            nappiVertical = moveDirection.y;
+         //   nappiVertical = moveDirection.y;
         }
 
         // float nappiVertical = moveDirection.y;
@@ -533,13 +534,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         ylosNappiPainettu = nappiVertical > 0; // > 0 for right, < 0 for left
         alasNappiPainettu = nappiVertical < 0;
 
-
+        /*
         if (!ylosNappiPainettu)
             ylosNappiPainettu = (joystick.Vertical > 0.1f);
 
         if (!alasNappiPainettu)
             alasNappiPainettu = (joystick.Vertical < -0.1f);
-
+*/
         //spaceNappiaPainettu = Input.GetButton ("Jump");
         //spaceNappiAlhaalla = Input.GetButtonDown ("Jump");
         //spaceNappiYlhaalla = Input.GetButtonUp ("Jump");
@@ -1453,6 +1454,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 new Vector3(
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
+            damagenmaara = 0.0f;
         }
         
         else if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)

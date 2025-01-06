@@ -684,7 +684,7 @@ public class BaseController : MonoBehaviour
         }
         //tarkistetaan osuuko seinaan
         //Vector3 shooterPosition = transform.position;
-        Debug.Log("shooterPosition=" + shooterPosition);
+     //   Debug.Log("shooterPosition=" + shooterPosition);
         Vector3 alusPosition = PalautaAlus().transform.position;
 
         // Distance to target
@@ -772,6 +772,9 @@ public class BaseController : MonoBehaviour
         float travelTime = distance / ampumisevoimakkuus;
 
         // Predict future position of the target
+
+        //EI TOIMI OK KUN KAMERAPOSITION ON 1.25
+
         Vector3 futureAlusPosition = alusPosition + new Vector3(k.skrollimaara * travelTime, 0f, 0f);
 
         // Adjust direction to aim at the predicted position
