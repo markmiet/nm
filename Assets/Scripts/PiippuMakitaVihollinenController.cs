@@ -24,18 +24,27 @@ public class PiippuMakitaVihollinenController : MonoBehaviour
 
         if (col.CompareTag("alustag"))
         {
-
-            IDamagedable o =
-col.gameObject.GetComponent<IDamagedable>();
-            if (o != null)
+            IExplodable ex = col.gameObject.GetComponent<IExplodable>();
+            if (ex != null)
             {
-                o.AiheutaDamagea(damagemaarajokaaiheutetaan);
-
-
+                ex.Explode();
             }
             else
             {
-                //		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
+
+
+                IDamagedable o =
+col.gameObject.GetComponent<IDamagedable>();
+                if (o != null)
+                {
+                    o.AiheutaDamagea(damagemaarajokaaiheutetaan);
+
+
+                }
+                else
+                {
+                    //		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
+                }
             }
         }
 

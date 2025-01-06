@@ -87,19 +87,27 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 			Explode();
 
 			// col.gameObject.SendMessage("Explode");
-
-			IDamagedable o =
-col.gameObject.GetComponent<IDamagedable>();
-			if (o != null)
-			{
-				o.AiheutaDamagea(damagemaarajokaaiheutetaan);
-
-
-			}
+			IExplodable ex = col.gameObject.GetComponent<IExplodable>();
+			if (ex!=null)
+            {
+				ex.Explode();
+            }
 			else
-			{
-		//		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
+            {
+				IDamagedable o =
+col.gameObject.GetComponent<IDamagedable>();
+				if (o != null)
+				{
+					o.AiheutaDamagea(damagemaarajokaaiheutetaan);
+
+
+				}
+				else
+				{
+					//		Debug.Log("alus ja explode mutta ei ookkaan " + col.collider.tag);
+				}
 			}
+
 		}
 		else if (col.collider.CompareTag("tiilivihollinentag"))
 		{
