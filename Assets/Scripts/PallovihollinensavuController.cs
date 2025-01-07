@@ -9,7 +9,7 @@ public class PallovihollinensavuController : MonoBehaviour
     private BoxCollider2D boxCollider;
     // Start is called before the first frame update
 
-
+    public float savungamadeMaara = 0.1f;
 
     void Start()
     {
@@ -61,8 +61,10 @@ col.gameObject.GetComponent<AlusController>();
                 // o.Explode();
          //       Debug.Log("OnTriggerEnter2D Still in trigger: ");
                 o.Savua();
+          //      o.AiheutaDamagea(savungamadeMaara);
+
             }
-            
+
         }
        
     }
@@ -79,9 +81,11 @@ col.gameObject.GetComponent<AlusController>();
             {
                 //kuumaa
                 // o.Explode();
-       //         Debug.Log("OnTriggerStay2D Still in trigger: ");
+                //         Debug.Log("OnTriggerStay2D Still in trigger: ");
 
-                o.Savua();
+                   o.Savua();
+               // o.AiheutaDamagea(savungamadeMaara);
+
             }
 
         }

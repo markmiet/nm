@@ -39,10 +39,10 @@ public class BonusButtonController : MonoBehaviour
 
 
     public int order;
-
+    private Image image;
     void Start()
     {
-
+        image = GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class BonusButtonController : MonoBehaviour
     {
         if (selected)
         {
-            GetComponent<Image>().color = Color.yellow;
+            image.color = Color.yellow;
 
             if (usedcount>= maxusedCount)
             {

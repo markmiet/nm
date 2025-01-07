@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -168,7 +169,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
     private void TallennaSijaintiSailytaVainKymmenenViimeisinta()
     {
-        base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 8, true, true, debugloota);
+       // base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 8, true, true, debugloota);
         if (true)
         {
             return;
@@ -1448,6 +1449,8 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     public float gameoverinjalkeintimescale = 0.1f;
     private void TeeGameOver()
     {
+
+
         if (demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
             Vector3 vektori =

@@ -16,12 +16,12 @@ public class Kamera : MonoBehaviour
         if (alus != null)
         {
             float ero = alus.transform.position.x - transform.position.x;
-            if (Mathf.Abs(ero)>8)
+            if (Mathf.Abs(ero) > 8)
             {
                 alus.transform.position = new Vector3(transform.position.x, y, 0);
             }
 
-           
+
         }
     }
 
@@ -87,9 +87,9 @@ public class Kamera : MonoBehaviour
 
     public string PalautaOdotusAikaKunnesLiikkuu()
     {
-        if (paljonkopitaavielaodottaa>=0)
+        if (paljonkopitaavielaodottaa >= 0)
         {
-            return ""+paljonkopitaavielaodottaa;
+            return "" + paljonkopitaavielaodottaa;
         }
         {
             return "";

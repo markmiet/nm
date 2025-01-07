@@ -209,7 +209,7 @@ public class BaseController : MonoBehaviour
     public void TallennaSijaintiSailytaVainNkplViimeisinta(int maxCount, bool useScreenPosition, bool saveUniqueValuesOnly, GameObject go)
     {
         // Get the current world position of the GameObject
-        Vector3 worldPosition = transform.position;
+        Vector3 worldPosition = go.transform.position;
 
         // Convert to screen position if required
         Vector3 positionToSave = useScreenPosition
@@ -1029,6 +1029,29 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             {
                 Physics.IgnoreCollision(childColliders[i], childColliders[j]);
 
+            }
+        }
+    }
+
+
+    public void IgnoreCollisions(List<GameObject> lista)
+    {
+        if (lista==null || lista.Count==0)
+        {
+            return;
+        }
+        foreach(GameObject go in lista) {
+            Collider[] childColliders = go.GetComponents<Collider>();
+            foreach (GameObject go2 in lista)
+            {
+                Collider[] childColliders2 = go2.GetComponents<Collider>();
+                foreach (Collider c in childColliders)
+                {
+                    foreach (Collider c2 in childColliders2)
+                    {
+                        Physics.IgnoreCollision(c,c2);
+                    }
+                }
             }
         }
     }

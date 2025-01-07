@@ -21,8 +21,15 @@ public class SiivetController : BaseController, IExplodable
     public float perusrotatetimeseconds = 2.0f;//sekkaa
     public float nopeusx = -0.01f;
     public float nopeusy = 0.01f;
-
+    public float eroalukseen = 1.0f;
     private GameObject alus;
+
+    public float sinfrequency = 2f;
+    public float sinamplitude = 0.5f;
+
+    private Vector2 fixedColliderSize;
+
+    private BoxCollider2D boxCollider;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,7 +37,19 @@ public class SiivetController : BaseController, IExplodable
         aloituslocalposition = transform.localPosition;
         alus = PalautaAlus();
 
+        boxCollider = GetComponent<BoxCollider2D>();
 
+        // Ensure the BoxCollider2D is found
+        if (boxCollider != null)
+        {
+            // Set the BoxCollider2D size to the fixed size
+          //  boxCollider.size = fixedColliderSize;
+            fixedColliderSize = boxCollider.size;
+        }
+        else
+        {
+            Debug.LogError("No BoxCollider2D found on this GameObject!");
+        }
     }
 
     // Update is called once per frame
@@ -38,18 +57,21 @@ public class SiivetController : BaseController, IExplodable
     {
         if (spriteRenderer.isVisible)
         {
-            rotationTime += Time.deltaTime;
-            float t = Mathf.PingPong(rotationTime / rotatetimeseconds, 1f);
-            float currentRotationsiivet = Mathf.Lerp(siivetrotatemin, siivetrotatemax, t);
 
-            perusrotationTime += Time.deltaTime;
-            t = Mathf.PingPong(perusrotationTime / perusrotatetimeseconds, 1f);
-            float currentRotationperus = Mathf.Lerp(perusrotatemin, perusrotatemax, t);
+            if (boxCollider != null)
+            {
+          //      boxCollider.size = fixedColliderSize;
+            }
+            float delta = Time.deltaTime;
 
+            rotationTime += delta;
+            float currentRotationsiivet = CalculatePingPongRotation(siivetrotatemin, siivetrotatemax, rotationTime, rotatetimeseconds);
 
+            perusrotationTime += delta;
+            float currentRotationperus = CalculatePingPongRotation(perusrotatemin, perusrotatemax, perusrotationTime, perusrotatetimeseconds);
 
-            transform.localRotation = Quaternion.Euler(currentRotationsiivet, 0, currentRotationperus);  // Z-axis rotation (for 2D)
-                                                                                                         //  haukisiivet.transform.localPosition = uusloca;
+            transform.localRotation = Quaternion.Euler(currentRotationsiivet, 0, currentRotationperus);
+
             float nykykorkeus = PalautaSiipienKorkeus();
             float originelli = peruskokoysuunnassa;
             float erotus = originelli - nykykorkeus;
@@ -59,34 +81,50 @@ public class SiivetController : BaseController, IExplodable
             //transform.localPosition = uusloca;
             PyoritaZsuunnassa();
 
+            MoveTowardsAlus(delta);
 
-            Vector3 directionToAlus = alus.transform.position - transform.position;
-
-            float y = transform.position.y;
-            //if (directionToAlus.x<0)
-            //{
-                if (directionToAlus.y == 0)
-                {
-
-                }
-                else if (directionToAlus.y>0)
-                {
-                    y += nopeusy;
-                }
-                else
-                {
-                    y -= nopeusy;
-                }
-            //}
-            transform.position = new Vector2(transform.position.x + nopeusx, y);
-            
         }
 
    
     }
+
+    private void MoveTowardsAlus(float delta)
+    {
+        if (alus == null) return;
+
+        // Directional movement towards 'alus'
+        Vector3 directionToAlus = alus.transform.position - transform.position;
+
+        // Vertical adjustment based on distance to 'alus'
+        float yAdjustment = 0f;
+        if (Mathf.Abs(directionToAlus.y) >= eroalukseen)
+        {
+            yAdjustment = directionToAlus.y > 0 ? nopeusy : -nopeusy;
+        }
+
+        // Sinusoidal movement along the y-axis
+
+        float sinYMovement = Mathf.Sin(rotationTime * sinfrequency) * sinamplitude;
+
+        if (!tormatty)
+        {
+            transform.position += new Vector3(delta * nopeusx, delta * (yAdjustment + sinYMovement), 0f);
+        }
+
+        // Apply movement
+       
+    }
+
+
     private void PyoritaZsuunnassa()
     {
 
+    }
+
+    float CalculatePingPongRotation(float min, float max, float time, float duration)
+    {
+        float t = Mathf.PingPong(time / duration, 1f);
+        return Mathf.Lerp(min, max, t);
     }
 
     private float PalautaSiipienKorkeus()
@@ -99,4 +137,28 @@ public class SiivetController : BaseController, IExplodable
         RajaytaSprite(gameObject, 3, 3, 3, 1);
         Destroy(gameObject);
     }
+
+    private bool tormatty = false;
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        //haukisilmavihollinenexplodetag
+
+        //explodetag
+        if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") ||
+            col.collider.tag.Contains("laatikkovihollinenexplodetag"))
+        {
+            tormatty = true;
+        }
+        else if (col.collider.tag.Contains("pallovihollinen"))
+        {
+            tormatty = true;
+        }
+        else if (col.collider.tag.Contains("vihollinen"))
+        {
+            tormatty = true;
+
+        }
+
+    }
+
 }
