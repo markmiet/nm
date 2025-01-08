@@ -10,27 +10,51 @@ public class PallerokokonaisuusController : BaseController
     public float moveSpeed = 1f; // Speed of the leader
 
     private float elapsedTime = 0f; // Tracks time for movement phases
-    private enum MovementPhase { MoveLeft, MoveDown,MoveUp, Stop }
-    private MovementPhase currentPhase = MovementPhase.MoveLeft;
-    private Vector3 leaderDirection = Vector3.left; // Initial direction of the leader
+    public enum MovementPhase { MoveLeft, MoveRight, MoveDown, MoveUp, Stop, MoveLeftUp,MoveLeftDown }
+    private MovementPhase currentPhase;
+    private Vector3 leaderDirection = Vector3.zero; // Initial direction of the leader
     private List<GameObject> followers = new List<GameObject>();
     private Queue<Vector3> positions = new Queue<Vector3>();
 
     public int positionDelay = 100; // Delay in position units between followers
 
-    public float xsekuntienmaara = 5.0f;
-    public float ysekuntienmaara = 2.0f;
-    private bool alaspain;
+   // public float xsekuntienmaara = 5.0f;
+   // public float ysekuntienmaara = 2.0f;
+   // private bool alaspain;
     public float offsetttiminneluodaan = 1.0f;
     private SpriteRenderer sp;
-    public bool suorakulmainenliikkuminen = true;
+  //  public bool suorakulmainenliikkuminen = true;
+
+    public MovementPhase[] patternMovementPhase;
+    private int movennumero = 0;
+    public float[] movekesto;
     private void Start()
     {
         sp = GetComponent<SpriteRenderer>();
         sp.enabled = false;
+        currentPhase= MovementPhase.MoveLeft;
     }
 
+    private void Randomize()
+    {
+        if (movekesto==null || movekesto.Length!= patternMovementPhase.Length)
+        {
+            for (int i = 0; i < movekesto.Length; i++)
+            {
+                movekesto[i] = 1;
+            }
+        }
+        float randomNumber = Random.Range(1- randomisointiprossa, 1+ randomisointiprossa);
+        //randomisoidaan kestoaika vahan niin 
+        for (int i=0;i<movekesto.Length;i++)
+        {
+            movekesto[i] = movekesto[i] * randomNumber;
+        }
+    }
+    public float randomisointiprossa = 0.25f;
+
     private bool tehty = false;
+
 
     private void Tee()
     {
@@ -39,12 +63,18 @@ public class PallerokokonaisuusController : BaseController
         for (int i = 0; i < numberOfFollowers; i++)
         {
             GameObject obj = Instantiate(prefab, uusi, Quaternion.identity); // Start on the right
-            obj.GetComponent<NmpalleroController>().setPallerokokonaisuusController(this);
+            NmpalleroController aa = obj.GetComponent<NmpalleroController>();
+            if (aa!=null)
+            {
+                aa.setPallerokokonaisuusController(this);
+            }
+            
 
             followers.Add(obj);
         }
-        alaspain = IsInUpperPartOfScreen(gameObject);
+        //alaspain = IsInUpperPartOfScreen(gameObject);
         IgnoreCollisions(followers);
+        Randomize();
         tehty = true; 
     }
 
@@ -87,8 +117,81 @@ public class PallerokokonaisuusController : BaseController
         return kaikkiammuttu;
     }
 
- 
+    private MovementPhase Palautaseuraava()
+    {
+        return patternMovementPhase[movennumero];
+    }
+
     private void MoveLeader()
+    {
+
+        int maksimimove = movekesto.Length;
+        float mk = movekesto[movennumero];
+        if (elapsedTime >= mk)
+        {
+            elapsedTime = 0f;
+            movennumero++;
+        }
+
+        if (movennumero>= maksimimove)
+        {
+            movennumero = 0;
+        }
+        mk = movekesto[movennumero];
+
+        currentPhase = patternMovementPhase[movennumero];
+        GameObject leader = followers[0];
+
+        // Update movement phase based on elapsed time
+        switch (currentPhase)
+        {
+            case MovementPhase.MoveLeft:
+                 leaderDirection = Vector3.left;
+     
+                break;
+            case MovementPhase.MoveRight:
+                leaderDirection = Vector3.right;
+
+                break;
+            case MovementPhase.MoveDown:
+                    leaderDirection = Vector3.down; // Stop movement
+
+                break;
+
+            case MovementPhase.MoveUp:
+                leaderDirection = Vector3.up; // Stop movement
+                break;
+            case MovementPhase.MoveLeftDown:
+                leaderDirection = new Vector3(-1, -1, 0);
+                break;
+
+            case MovementPhase.MoveLeftUp:
+                leaderDirection = new Vector3(-1, 1, 0);
+                break;
+
+            case MovementPhase.Stop:
+                return; // No more movement
+        }
+
+        // Move the leader and track time
+        leader.transform.position += leaderDirection * moveSpeed * Time.deltaTime;
+        elapsedTime += Time.deltaTime;
+
+        // Save the leader's position
+        positions.Enqueue(leader.transform.position);
+
+        // Limit the queue size to store only necessary positions
+
+        int maxQueueSize = (numberOfFollowers) * positionDelay;
+        while (positions.Count > maxQueueSize)
+        {
+            positions.Dequeue();
+
+        }
+    }
+
+    /*
+    private void MoveLeaderSimple()
     {
    
         GameObject leader = followers[0];
@@ -159,24 +262,6 @@ public class PallerokokonaisuusController : BaseController
         // Move the leader and track time
         leader.transform.position += leaderDirection * moveSpeed * Time.deltaTime;
         elapsedTime += Time.deltaTime;
-        /*
-        if (maara>= viivepositioissa * numberOfFollowers - 1)
-        {
-            base.TallennaSijaintiSailytaVainNkplViimeisinta(viivepositioissa * numberOfFollowers - 1,
-                false, false, leader);
-
-            for (int i = 1; i < numberOfFollowers; i++)
-            {
-                Vector3 pal = base.palautaScreenpositioneissa((i - 1) * viivepositioissa);
-                if (pal != Vector3.zero)
-                {
-                    followers[i].transform.position = pal;
-                }
-
-            }
-        }
-        */
-
 
         // Save the leader's position
           positions.Enqueue(leader.transform.position);
@@ -187,10 +272,10 @@ public class PallerokokonaisuusController : BaseController
         while (positions.Count > maxQueueSize)
         { 
             positions.Dequeue();
-           // int koko = positions.Count;
-           // Debug.Log("koko="+koko);
+
         }
     }
+    */
 
     private void UpdateFollowers()
     {
@@ -204,8 +289,11 @@ public class PallerokokonaisuusController : BaseController
              
                 //Vector3 targetPosition = positions.ToArray()[positions.Count - 1 - index];
                 Vector3 targetPosition = positions.ToArray()[ index];
-
-                followers[i].transform.position = targetPosition;
+                if (followers[i]!=null)
+                {
+                    followers[i].transform.position = targetPosition;
+                }
+                
             }
         }
     }

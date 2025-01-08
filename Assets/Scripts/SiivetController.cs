@@ -30,6 +30,20 @@ public class SiivetController : BaseController, IExplodable
     private Vector2 fixedColliderSize;
 
     private BoxCollider2D boxCollider;
+
+    private void Randomize()
+    {
+        float randomNumber = Random.Range(1 - randomisointiprossa, 1 + randomisointiprossa);
+        sinfrequency = sinfrequency * randomNumber;
+        sinamplitude = sinamplitude * randomNumber;
+
+        nopeusx= nopeusx * randomNumber;
+        nopeusy= nopeusy * randomNumber;
+
+    }
+    public float randomisointiprossa = 0.10f;
+
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -50,6 +64,7 @@ public class SiivetController : BaseController, IExplodable
         {
             Debug.LogError("No BoxCollider2D found on this GameObject!");
         }
+        Randomize();
     }
 
     // Update is called once per frame

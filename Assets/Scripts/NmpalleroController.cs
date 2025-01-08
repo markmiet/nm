@@ -6,7 +6,7 @@ public class NmpalleroController : BaseController
 {
     // Start is called before the first frame update
     private SpriteRenderer sp;
-    private CircleCollider2D bd;
+    private Collider2D[] bd;
     private PallerokokonaisuusController pc;
     public GameObject bonusprefab;
 
@@ -18,7 +18,7 @@ public class NmpalleroController : BaseController
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
-        bd = GetComponent<CircleCollider2D>();
+        bd = GetComponents<Collider2D>();
 
     }
 
@@ -69,17 +69,24 @@ col.gameObject.GetComponent<IExplodable>();
         bool onkokaikkiammuttu = pc.TarkistaOnkoAmmuttu();
 
         sp.enabled = false;
-        bd.enabled = false;
+        foreach(Collider2D c in bd)
+        {
+            c.enabled = false;
+        }
+       
         bool onkokaikkiammuttunyt = pc.TarkistaOnkoAmmuttu();
 
         if (!onkokaikkiammuttu && onkokaikkiammuttunyt)
         {
             Vector2 boxsize = new Vector2(sp.size.x, sp.size.y);
             Vector2 pos = transform.position;
-
-            TeeBonus(bonusprefab, pos, boxsize,  1);
+            if (bonusprefab!=null)
+            {
+                TeeBonus(bonusprefab, pos, boxsize, 1);
+            }
+            
         }
-        RajaytaSprite(gameObject, 3, 3, 1.0f, 1.0f);
+        RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
       //  Destroy(gameObject);
     }
 }
