@@ -37,8 +37,8 @@ public class SiivetController : BaseController, IExplodable
         sinfrequency = sinfrequency * randomNumber;
         sinamplitude = sinamplitude * randomNumber;
 
-        nopeusx= nopeusx * randomNumber;
-        nopeusy= nopeusy * randomNumber;
+        nopeusx = nopeusx * randomNumber;
+        nopeusy = nopeusy * randomNumber;
 
     }
     public float randomisointiprossa = 0.10f;
@@ -57,7 +57,7 @@ public class SiivetController : BaseController, IExplodable
         if (boxCollider != null)
         {
             // Set the BoxCollider2D size to the fixed size
-          //  boxCollider.size = fixedColliderSize;
+            //  boxCollider.size = fixedColliderSize;
             fixedColliderSize = boxCollider.size;
         }
         else
@@ -75,7 +75,7 @@ public class SiivetController : BaseController, IExplodable
 
             if (boxCollider != null)
             {
-          //      boxCollider.size = fixedColliderSize;
+                //      boxCollider.size = fixedColliderSize;
             }
             float delta = Time.deltaTime;
 
@@ -97,10 +97,10 @@ public class SiivetController : BaseController, IExplodable
             PyoritaZsuunnassa();
 
             MoveTowardsAlus(delta);
-
+            Vaista(delta);
         }
 
-   
+
     }
 
     private void MoveTowardsAlus(float delta)
@@ -121,15 +121,102 @@ public class SiivetController : BaseController, IExplodable
 
         float sinYMovement = Mathf.Sin(rotationTime * sinfrequency) * sinamplitude;
 
-        if (!tormatty)
-        {
+     //   if (!tormatty)
+       // {
             transform.position += new Vector3(delta * nopeusx, delta * (yAdjustment + sinYMovement), 0f);
-        }
+       // }
 
         // Apply movement
-       
+
+    }
+    public int rayCount = 5; // Number of rays to cast
+    private void Vaista(float delta)
+    {
+        Bounds bounds = boxCollider.bounds;
+        float top = bounds.max.y  ;
+        float bottom = bounds.min.y;
+        /*
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.left, rayDistance, collisionLayer);
+        foreach (RaycastHit2D hit in hits)
+        {
+          
+            if (hit.collider != null)
+            {
+                Debug.Log("Collider detected on the left: " + hit.collider.name);
+                if (hit.collider.gameObject != gameObject && (
+                    hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
+                {
+                    Debug.Log("Collider detected on the left: " + hit.collider.name);
+                    // Change direction (e.g., move right instead)
+                    moveDirection = Vector2.up;
+                    transform.Translate(moveDirection * speed * Time.deltaTime);
+                    break;
+                }
+            }
+            else
+            {
+                // Continue moving left if no collider detected
+                //  moveDirection = Vector2.left;
+            }
+        }
+        */
+
+        for (int i = 0; i < rayCount; i++)
+        {
+            // Calculate the position of the ray along the vertical axis
+            float t = (float)i / (rayCount - 1); // Normalized position between 0 and 1
+            Vector2 rayOrigin = new Vector2(transform.position.x, Mathf.Lerp(top, bottom, t));
+
+            bool obstfoun = false;
+            // Cast the ray
+            RaycastHit2D[] hits  = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Visualize the ray in the Scene view
+                Debug.DrawRay(rayOrigin, Vector2.left * rayDistance, Color.red);
+
+                /*
+                col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") ||
+            col.collider.tag.Contains("laatikkovihollinenexplodetag"
+            */
+                // Check if a relevant obstacle was detected
+                if (hit.collider != null && hit.collider.gameObject != gameObject &&
+                    (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
+                {
+                    Debug.Log("Obstacle detected at: " + hit.collider.name);
+                    Vector3 moveDirection = new Vector3(delta * -nopeusx, 2 *nopeusy* delta,0 );
+                    //transform.Translate(moveDirection * speed * Time.deltaTime);
+                    //transform.Translate(moveDirection * speed * Time.deltaTime);
+                    transform.position += moveDirection;
+                    obstfoun = true;
+                    break; // Stop checking further rays once an obstacle is found
+                }
+            }
+            if (obstfoun)
+            {
+                break;
+            }
+        }
+
+
+        // Move the GameObject
     }
 
+
+    public float speed = 5f; // Movement speed
+    public float rayDistance = 0.5f; // Distance of the raycast
+    public LayerMask collisionLayer; // Layers to detect collisions
+
+  //  private Vector2 moveDirection = Vector2.left;
+
+    /*
+    void OnDrawGizmos()
+    {
+        // Visualize the raycast in the Scene view
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3)(Vector2.left * rayDistance));
+    }
+    */
 
     private void PyoritaZsuunnassa()
     {
