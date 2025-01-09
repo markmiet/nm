@@ -10,7 +10,7 @@ public class PallerokokonaisuusController : BaseController
     public float moveSpeed = 1f; // Speed of the leader
 
     private float elapsedTime = 0f; // Tracks time for movement phases
-    public enum MovementPhase { MoveLeft, MoveRight, MoveDown, MoveUp, Stop, MoveLeftUp,MoveLeftDown }
+    public enum MovementPhase { MoveLeft, MoveRight, MoveDown, MoveUp, Stop, MoveLeftUp,MoveLeftDown, Sin }
     private MovementPhase currentPhase;
     private Vector3 leaderDirection = Vector3.zero; // Initial direction of the leader
     private List<GameObject> followers = new List<GameObject>();
@@ -28,6 +28,13 @@ public class PallerokokonaisuusController : BaseController
     public MovementPhase[] patternMovementPhase;
     private int movennumero = 0;
     public float[] movekesto;
+    public float sinfrequency = 2f;
+    public float sinamplitude = 0.5f;
+    private float rotationTime = 0f;       // Timer to control the rotation
+   // public float rotatetimeseconds = 2.0f;//sekkaa
+
+  //  public float nopeusx = -0.01f;
+  //  public float nopeusy = 0.01f;
     private void Start()
     {
         sp = GetComponent<SpriteRenderer>();
@@ -50,6 +57,10 @@ public class PallerokokonaisuusController : BaseController
         {
             movekesto[i] = movekesto[i] * randomNumber;
         }
+
+
+        sinfrequency = sinfrequency * randomNumber;
+        sinamplitude = sinamplitude * randomNumber;
     }
     public float randomisointiprossa = 0.25f;
 
@@ -96,11 +107,15 @@ public class PallerokokonaisuusController : BaseController
 
     public void OnBecameInvisible()
     {
-        Destroy(gameObject);
+       
         foreach (GameObject c in followers)
         {
-            Destroy(c);
+            if (c != null)
+            {
+                Destroy(c);
+            }
         }
+        Destroy(gameObject);
     }
     public bool TarkistaOnkoAmmuttu()
     {
@@ -122,9 +137,16 @@ public class PallerokokonaisuusController : BaseController
         return patternMovementPhase[movennumero];
     }
 
+    float CalculatePingPongRotation(float min, float max, float time, float duration)
+    {
+        float t = Mathf.PingPong(time / duration, 1f);
+        return Mathf.Lerp(min, max, t);
+    }
+
     private void MoveLeader()
     {
-
+        float delta = Time.deltaTime;
+        rotationTime += delta;
         int maksimimove = movekesto.Length;
         float mk = movekesto[movennumero];
         if (elapsedTime >= mk)
@@ -145,28 +167,57 @@ public class PallerokokonaisuusController : BaseController
         // Update movement phase based on elapsed time
         switch (currentPhase)
         {
-            case MovementPhase.MoveLeft:
-                 leaderDirection = Vector3.left;
-     
+            case MovementPhase.Sin:
+
+                float sinYMovement = Mathf.Sin(rotationTime * sinfrequency) * sinamplitude;
+
+
+                //    transform.position += new Vector3(-1, delta * ( sinYMovement), 0f);
+
+
+                //  leaderDirection = Vector3.zero;
+
+                leaderDirection = new Vector3(-1, delta * (sinYMovement), 0f);
+
+
                 break;
+            
+            case MovementPhase.MoveLeft:
+                leaderDirection = Vector3.left;
+                rotationTime = 0;
+
+
+                break;
+
             case MovementPhase.MoveRight:
                 leaderDirection = Vector3.right;
+
+                rotationTime = 0;
 
                 break;
             case MovementPhase.MoveDown:
                     leaderDirection = Vector3.down; // Stop movement
 
+                rotationTime = 0;
+
                 break;
 
             case MovementPhase.MoveUp:
                 leaderDirection = Vector3.up; // Stop movement
+                rotationTime = 0;
+
+
                 break;
             case MovementPhase.MoveLeftDown:
                 leaderDirection = new Vector3(-1, -1, 0);
+                rotationTime = 0;
+
                 break;
 
             case MovementPhase.MoveLeftUp:
                 leaderDirection = new Vector3(-1, 1, 0);
+                rotationTime = 0;
+
                 break;
 
             case MovementPhase.Stop:
@@ -174,9 +225,11 @@ public class PallerokokonaisuusController : BaseController
         }
 
         // Move the leader and track time
-        leader.transform.position += leaderDirection * moveSpeed * Time.deltaTime;
-        elapsedTime += Time.deltaTime;
 
+            leader.transform.position += leaderDirection * moveSpeed * Time.deltaTime;
+          
+        
+        elapsedTime += Time.deltaTime;
         // Save the leader's position
         positions.Enqueue(leader.transform.position);
 
@@ -189,6 +242,8 @@ public class PallerokokonaisuusController : BaseController
 
         }
     }
+
+
 
     /*
     private void MoveLeaderSimple()
@@ -277,7 +332,7 @@ public class PallerokokonaisuusController : BaseController
     }
     */
 
-    private void UpdateFollowers()
+                    private void UpdateFollowers()
     {
         // Update each follower's position based on the queue
         for (int i = 1; i < numberOfFollowers; i++)

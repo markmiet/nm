@@ -526,6 +526,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -684,6 +689,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1661,6 +1671,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2805,6 +2820,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3393,6 +3413,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (33)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4938,6 +4963,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5153,7 +5183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &349651851
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5230,6 +5260,8 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &349651853
 Transform:
@@ -5576,6 +5608,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5781,6 +5818,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6080,7 +6122,7 @@ GameObject:
   - component: {fileID: 410181383}
   - component: {fileID: 410181382}
   m_Layer: 10
-  m_Name: Pallerokokonaisuusalas
+  m_Name: Pallerokokonaisuussin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6152,16 +6194,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3550328174410917367, guid: 4da83c8f7b78c914a89c0605bfe4f736, type: 3}
   numberOfFollowers: 6
-  moveSpeed: 2.5
-  positionDelay: 10
-  offsetttiminneluodaan: 5
-  patternMovementPhase: 0000000002000000050000000100000002000000
+  moveSpeed: 2
+  positionDelay: 20
+  offsetttiminneluodaan: 10
+  patternMovementPhase: 0000000007000000
   movekesto:
-  - 1
-  - 0.5
-  - 1
-  - 0.5
-  - 0.5
+  - 0.1
+  - 20
+  sinfrequency: 2
+  sinamplitude: 60
   randomisointiprossa: 0.25
 --- !u!4 &410181384
 Transform:
@@ -6172,7 +6213,7 @@ Transform:
   m_GameObject: {fileID: 410181381}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -81.39, y: 1.05, z: 0}
+  m_LocalPosition: {x: -86.04, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10056,6 +10097,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (35)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14207,7 +14253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alus: {fileID: 384067071}
-  skrollimaara: 1.5
+  skrollimaara: 1.25
   cameraInfo: {fileID: 0}
 --- !u!20 &519420031
 Camera:
@@ -14549,6 +14595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16354,6 +16405,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16421,6 +16477,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16665,6 +16726,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17075,6 +17141,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17142,6 +17213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (40)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17685,7 +17761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &778095973
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17762,6 +17838,8 @@ MonoBehaviour:
   - 1
   - 0.5
   - 0.5
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &778095975
 Transform:
@@ -18539,6 +18617,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19228,11 +19311,125 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 636db82ee5f35de479f24acdeb3e9acb, type: 3}
+--- !u!1 &915211928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915211931}
+  - component: {fileID: 915211930}
+  - component: {fileID: 915211929}
+  m_Layer: 10
+  m_Name: Pallerokokonaisuussin (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &915211929
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915211928}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: bca01f32284ca02429f84897b28822e8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.64, y: 0.64}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &915211930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915211928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866ab0bbc1659bb4c8445ce0a2c26996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3550328174410917367, guid: 4da83c8f7b78c914a89c0605bfe4f736, type: 3}
+  numberOfFollowers: 6
+  moveSpeed: 2
+  positionDelay: 20
+  offsetttiminneluodaan: 10
+  patternMovementPhase: 0000000007000000
+  movekesto:
+  - 0.1
+  - 20
+  sinfrequency: 2
+  sinamplitude: 60
+  randomisointiprossa: 0.25
+--- !u!4 &915211931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915211928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -83.19, y: 1.77, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &916564125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8626132257536797591, guid: ee7e3d1373326e1449e007d9eb0bbba7,
@@ -21953,6 +22150,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (29)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22020,6 +22222,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22412,7 +22619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1038580023
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22489,6 +22696,8 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &1038580025
 Transform:
@@ -22786,6 +22995,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23306,6 +23520,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23541,6 +23760,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23712,6 +23936,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23779,6 +24008,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24442,6 +24676,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (32)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24756,6 +24995,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (37)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26175,6 +26419,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26616,6 +26865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32902,6 +33156,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32924,7 +33183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1390824859
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33001,6 +33260,8 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &1390824861
 Transform:
@@ -33360,6 +33621,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33519,6 +33785,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (44)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33586,6 +33857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34947,6 +35223,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35129,6 +35410,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36142,6 +36428,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -36983,7 +37274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1811855304
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37060,6 +37351,8 @@ MonoBehaviour:
   - 1
   - 0.5
   - 0.5
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &1811855306
 Transform:
@@ -37139,6 +37432,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (43)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37161,7 +37459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1827798649
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37238,6 +37536,8 @@ MonoBehaviour:
   - 1
   - 0.5
   - 0.5
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &1827798651
 Transform:
@@ -37673,6 +37973,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39415,6 +39720,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39880,6 +40190,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40045,6 +40360,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40595,6 +40915,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40992,6 +41317,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -41387,6 +41717,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -41507,7 +41842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2130375664
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41584,6 +41919,8 @@ MonoBehaviour:
   - 1
   - 0.5
   - 0.5
+  sinfrequency: 2
+  sinamplitude: 0.5
   randomisointiprossa: 0.25
 --- !u!4 &2130375666
 Transform:
@@ -41790,6 +42127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Siivet (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -42504,6 +42846,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Siivet
       objectReference: {fileID: 0}
+    - target: {fileID: 4429820925521456841, guid: 636db82ee5f35de479f24acdeb3e9acb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -42754,6 +43101,7 @@ SceneRoots:
   - {fileID: 1214172791}
   - {fileID: 294493213}
   - {fileID: 410181384}
+  - {fileID: 915211931}
   - {fileID: 349651853}
   - {fileID: 1390824861}
   - {fileID: 1038580025}
