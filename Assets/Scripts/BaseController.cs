@@ -5,8 +5,10 @@ using UnityEngine;
 public class BaseController : MonoBehaviour
 {
     // Start is called before the first frame update
+
     void Start()
     {
+
 
     }
     // Update is called once per frame
@@ -632,7 +634,7 @@ public class BaseController : MonoBehaviour
 
 
 
-        public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
+    public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
     {
         Kamera k = Camera.main.GetComponent<Kamera>();
 
@@ -671,7 +673,7 @@ public class BaseController : MonoBehaviour
     }
 
 
-        public bool OnkoVihollisenJaAluksenValillaTiilia(Vector3 shooterPositionpara )
+    public bool OnkoVihollisenJaAluksenValillaTiilia(Vector3 shooterPositionpara)
     {
         Vector3 shooterPosition;
         if (shooterPositionpara != Vector3.zero)
@@ -684,7 +686,7 @@ public class BaseController : MonoBehaviour
         }
         //tarkistetaan osuuko seinaan
         //Vector3 shooterPosition = transform.position;
-     //   Debug.Log("shooterPosition=" + shooterPosition);
+        //   Debug.Log("shooterPosition=" + shooterPosition);
         Vector3 alusPosition = PalautaAlus().transform.position;
 
         // Distance to target
@@ -715,7 +717,7 @@ public class BaseController : MonoBehaviour
     {
         return !OnkoVihollisenJaAluksenValillaTiilia(shooterPositionpara);
     }
-    public bool VoikoVihollinenAmpua( )
+    public bool VoikoVihollinenAmpua()
     {
         return !OnkoVihollisenJaAluksenValillaTiilia(Vector3.zero);
     }
@@ -1036,11 +1038,12 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public void IgnoreCollisions(List<GameObject> lista)
     {
-        if (lista==null || lista.Count==0)
+        if (lista == null || lista.Count == 0)
         {
             return;
         }
-        foreach(GameObject go in lista) {
+        foreach (GameObject go in lista)
+        {
             Collider[] childColliders = go.GetComponents<Collider>();
             foreach (GameObject go2 in lista)
             {
@@ -1049,7 +1052,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 {
                     foreach (Collider c2 in childColliders2)
                     {
-                        Physics.IgnoreCollision(c,c2);
+                        Physics.IgnoreCollision(c, c2);
                     }
                 }
             }
@@ -1293,13 +1296,13 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-           // Debug.Log("android");
+            // Debug.Log("android");
             return true;
 
         }
         else
         {
-         //   Debug.Log("EI OLE android");
+            //   Debug.Log("EI OLE android");
             return false;
 
         }
@@ -1388,5 +1391,265 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         return leftEdgeScreen.y;
     }
 
+    public (float, float) GetFromAllColliders()
+    {
+        float top = 0;
+        float bottom = 0;
+        Collider2D[] ccs = GetComponents<Collider2D>();
+        foreach (Collider2D c in ccs)
+        {
+            Bounds bounds = c.bounds;
+            float maxy = bounds.max.y;
+            float miny = bounds.min.y;
+
+            if (maxy > top)
+            {
+                top = maxy;
+            }
+            if (miny < bottom)
+            {
+                bottom = miny;
+            }
+
+
+        }
+        //   top = top * 0.7f;
+        //   bottom = bottom * 0.7f;
+        top = top * 0.5f;
+        bottom = bottom * 0.5f;
+        return (top, bottom);
+    }
+    (float, float) GetSpriteRendererMinMaxY()
+    {
+        SpriteRenderer sp = GetComponent<SpriteRenderer>();
+
+        if (sp != null)
+        {
+            Bounds bounds = sp.bounds;
+
+            // Extract min and max Y values
+            float minY = bounds.min.y;
+            float maxY = bounds.max.y;
+
+            return (minY, maxY);
+        }
+        else
+        {
+            return (0, 0);
+        }
+    }
+
+
+    public bool OnkoVasemmallaVaistettavaa(int rayCount, float rayDistance, LayerMask collisionLayer)
+    {
+        (float top, float bottom) = GetFromAllColliders();
+
+        // (float top, float bottom) = GetSpriteRendererMinMaxY();
+        top += 0.5f;
+        bottom -= 0.5f;
+
+        float ero = top - bottom;
+
+        float step = ero / rayCount;
+
+        for (float i = bottom; i < top; i += step)
+        {
+            // Calculate the position of the ray along the vertical axis
+            float t = (float)i / (rayCount - 1); // Normalized position between 0 and 1
+            //Vector2 rayOrigin = new Vector2(transform.position.x, Mathf.Lerp(top, bottom, t));
+            //Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y+i);
+            //Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y+i);
+
+            //Vector2 rayOrigin = new Vector2(transform.position.x, i);
+
+            Vector2 rayOrigin = new Vector2(transform.position.x+2, i);
+
+
+
+
+            // Cast the ray
+            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Visualize the ray in the Scene view
+                Debug.DrawRay(rayOrigin, Vector2.left * rayDistance, Color.red);
+                // Check if a relevant obstacle was detected
+                if (hit.collider != null && hit.collider.gameObject != gameObject &&
+                    (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
+                {
+                 //   Debug.Log("Obstacle detected at: " + hit.collider.name);
+
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    float CalculateMoveUpDistance(Camera camera, Vector3 objectPosition)
+    {
+        // Get the camera's top Y bound in world space
+        float camHeight = camera.orthographicSize * 2f; // Total height of the camera in world space
+        float camTop = camera.transform.position.y + camHeight / 2f;
+
+        // Calculate the distance to move the object up so it's outside the camera's view
+        float distanceToMoveUp = (camTop - objectPosition.y); // Adding a small buffer (e.g., 0.1) to ensure it's outside
+
+        return distanceToMoveUp;
+    }
+
+
+    float CalculateMoveDownDistance(Camera camera, Vector3 objectPosition)
+    {
+        // Get the camera's bottom Y bound in world space
+        float camHeight = camera.orthographicSize * 2f; // Total height of the camera in world space
+        float camBottom = camera.transform.position.y - camHeight / 2f;
+
+        // Calculate the distance to move the object down so it's outside the camera's view
+        float distanceToMoveDown = (objectPosition.y - camBottom); // Adding a small buffer (e.g., 0.1) to ensure it's outside
+
+        return distanceToMoveDown;
+    }
+    public bool OlisikoylhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer)
+    {
+        float yloskulunmaksi = CalculateMoveUpDistance(Camera.main, transform.position);
+        (float top, float bottom) = GetFromAllColliders();
+        top = top + yloskulunmaksi;
+        float ero = top - bottom;
+
+        float step = ero / rayCount;
+
+        for (float i = bottom; i < top; i += step)
+        {
+            // Calculate the position of the ray along the vertical axis
+            float t = (float)i / (rayCount - 1); // Normalized position between 0 and 1
+            //Vector2 rayOrigin = new Vector2(transform.position.x, Mathf.Lerp(top, top+ yloskulunmaksi, t));
+            Vector2 rayOrigin = new Vector2(transform.position.x, i);
+            // Cast the ray
+            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            bool onkoosumaa = false;
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Visualize the ray in the Scene view
+                Debug.DrawRay(rayOrigin, Vector2.left * rayDistance, Color.green);
+                // Check if a relevant obstacle was detected
+                if (hit.collider != null && hit.collider.gameObject != gameObject &&
+                    (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
+                {
+                   // Debug.Log("Obstacle detected at: " + hit.collider.name);
+
+                    onkoosumaa = true;
+                    break;
+                }
+            }
+            if (!onkoosumaa)
+            {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public bool OlisikoalhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer)
+    {
+        float yloskulunmaksi = CalculateMoveDownDistance(Camera.main, transform.position);
+        (float top, float bottom) = GetFromAllColliders();
+        bottom = bottom - yloskulunmaksi;
+        float ero = top - bottom;
+
+        float step = ero / rayCount;
+
+        for (float i = bottom; i < top; i += step)
+        {
+            // Calculate the position of the ray along the vertical axis
+            float t = (float)i / (rayCount - 1); // Normalized position between 0 and 1
+            //Vector2 rayOrigin = new Vector2(transform.position.x, Mathf.Lerp(top, top+ yloskulunmaksi, t));
+            Vector2 rayOrigin = new Vector2(transform.position.x, i);
+            // Cast the ray
+            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            bool onkoosumaa = false;
+            foreach (RaycastHit2D hit in hits)
+            {
+                // Visualize the ray in the Scene view
+                Debug.DrawRay(rayOrigin, Vector2.left * rayDistance, Color.green);
+                // Check if a relevant obstacle was detected
+                if (hit.collider != null && hit.collider.gameObject != gameObject &&
+                    (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
+                {
+                 //   Debug.Log("Obstacle detected at: " + hit.collider.name);
+
+                    onkoosumaa = true;
+                    break;
+                }
+            }
+            if (!onkoosumaa)
+            {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+    public void VaistaAlas(float delta, float nopeusy)
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y - nopeusy * delta, 0);
+
+    }
+
+    public void VaistaPystysuunnassa(float delta, float nopeusy)
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y + nopeusy * delta, 0);
+
+    }
+
+    private int rayCount = 5;
+    private float rayDistance = 5f; // Distance of the raycast
+
+    private float vaistonopeus = 3.0f;
+
+
+
+
+    public void Vaista(float delta, LayerMask collisionLayer)
+    {
+        bool vasen = OnkoVasemmallaVaistettavaa(rayCount, rayDistance, collisionLayer);
+        Debug.Log("vasen=" + vasen);
+
+        if (vasen)
+        {
+            bool ylos =
+                OlisikoylhaallaVaistotilaa(rayCount, rayDistance, collisionLayer);
+
+            //Debug.Log("ylos=" + ylos);
+            if (ylos)
+            {
+                VaistaPystysuunnassa(delta, vaistonopeus);
+
+            }
+            else
+            {
+                bool alas = OlisikoalhaallaVaistotilaa(rayCount, rayDistance, collisionLayer);
+              //  Debug.Log("alas=" + alas);
+                if (alas)
+                {
+
+                    VaistaPystysuunnassa(delta, -vaistonopeus);
+                }
+                else
+                {
+                    //  transform.position = new Vector3(transform.position.x + 2.1f, transform.position.y, 0);
+                    // Rigidbody2D v = GetComponent<Rigidbody2D>();
+                    // v.gravityScale = -1.0f;
+
+                    transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, 0);
+                }
+            }
+        }
+
+    }
 
 }

@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5cf4385b99140a4f8736b6b516411d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pc: {fileID: 0}
   bonusprefab: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468,
     type: 3}
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1024

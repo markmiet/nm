@@ -9,7 +9,6 @@ public class NmpalleroController : BaseController
     private Collider2D[] bd;
     private PallerokokonaisuusController pc;
     public GameObject bonusprefab;
-
     public void setPallerokokonaisuusController(PallerokokonaisuusController p)
     {
         pc = p;
@@ -25,7 +24,7 @@ public class NmpalleroController : BaseController
     // Update is called once per frame
     void Update()
     {
-        
+ 
     }
     public void OnTriggerEnter2D(Collider2D col)
     {

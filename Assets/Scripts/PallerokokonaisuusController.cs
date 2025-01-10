@@ -31,10 +31,11 @@ public class PallerokokonaisuusController : BaseController
     public float sinfrequency = 2f;
     public float sinamplitude = 0.5f;
     private float rotationTime = 0f;       // Timer to control the rotation
-   // public float rotatetimeseconds = 2.0f;//sekkaa
+  //  public LayerMask collisionLayer;
+    // public float rotatetimeseconds = 2.0f;//sekkaa
 
-  //  public float nopeusx = -0.01f;
-  //  public float nopeusy = 0.01f;
+    //  public float nopeusx = -0.01f;
+    //  public float nopeusy = 0.01f;
     private void Start()
     {
         sp = GetComponent<SpriteRenderer>();
@@ -227,8 +228,8 @@ public class PallerokokonaisuusController : BaseController
         // Move the leader and track time
 
             leader.transform.position += leaderDirection * moveSpeed * Time.deltaTime;
-          
-        
+       // Vaista(delta, collisionLayer);
+
         elapsedTime += Time.deltaTime;
         // Save the leader's position
         positions.Enqueue(leader.transform.position);
