@@ -22,11 +22,23 @@ public class SkeletonController : BaseController, IExplodable
     public bool destroy = false;
 
     public GameObject explosion;
+
+    private float startingZRotation; // Store the initial Z rotation
+    private float rotationLimit;    // 10% of the starting rotation
+
+    [Range(0f, 100f)] // Slider in Inspector for easier adjustment
+    public float rotationPercentage = 30f; // Default percentage is 30%
+    public bool limitrotation = true;
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         sp.sprite = sprites[0];
+
+        startingZRotation = transform.rotation.eulerAngles.z;
+
+        // Calculate 10% of the starting Z rotation
+
     }
 
     public float spritechangetime = 1.0f;
@@ -40,7 +52,28 @@ public class SkeletonController : BaseController, IExplodable
         {
             return;
         }
+        rotationLimit = 360f * (rotationPercentage / 100f); // Percentage of the full rotation
+        float currentZRotation = NormalizeAngle(transform.rotation.eulerAngles.z);
 
+        // Calculate clamped rotation range
+        float minRotation = startingZRotation - rotationLimit / 2;
+        float maxRotation = startingZRotation + rotationLimit / 2;
+
+        // Clamp the Z rotation
+        float clampedZRotation = Mathf.Clamp(currentZRotation, minRotation, maxRotation);
+
+        // Apply the clamped rotation
+        if (limitrotation)
+        {
+            // Apply the clamped rotation
+            transform.rotation = Quaternion.Euler(
+                transform.rotation.eulerAngles.x,
+                transform.rotation.eulerAngles.y,
+                clampedZRotation
+            );
+
+
+        }
 
         kesto += Time.deltaTime;
 
@@ -57,9 +90,7 @@ public class SkeletonController : BaseController, IExplodable
         yhteensuuntaanliikkumisaika += Time.deltaTime;
         if (kesto >= spritechangetime)
         {
-            if (rajayta)
-                RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, true, -1.0f);
-
+ 
 
             if (sprites != null && sprites.Length > 0)
             {
@@ -201,7 +232,6 @@ public class SkeletonController : BaseController, IExplodable
     public int cols = 3;
     public float explosionforce = 0.5f;
     public float aliviteme = 0.5f;
-    public bool rajayta = false;
     public float sirpalemass = 1.0f;
 
     public float liikex = 0.1f;
@@ -213,7 +243,7 @@ public class SkeletonController : BaseController, IExplodable
     private float stoppauslaskuri = 0.0f;
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if (!stoppaa && (col.tag.Contains("vihollinen") || col.tag.Contains("tiili")))
+        if (!stoppaa && !col.tag.Contains("makitavihollinenammus") && (col.tag.Contains("vihollinen") || col.tag.Contains("tiili")))
         {
             stoppaa = true;
             stoppauslaskuri = 0.0f;
@@ -235,8 +265,20 @@ public class SkeletonController : BaseController, IExplodable
 
             }
         }
-    }
+        // Normalize angle to [-180, 180] range for consistent comparison
 
+
+    }
+    private float NormalizeAngle(float angle)
+    {
+        angle = angle % 360;
+        if (angle > 180)
+            angle -= 360;
+        else if (angle < -180)
+            angle += 360;
+
+        return angle;
+    }
 }
 
 

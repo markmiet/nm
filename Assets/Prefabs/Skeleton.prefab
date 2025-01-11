@@ -125,17 +125,18 @@ MonoBehaviour:
     type: 3}
   uusi: {fileID: 0}
   hitcount: 0
-  hitcoutneeded: 30
-  destroy: 0
+  hitcoutneeded: 20
+  destroy: 1
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  rotationPercentage: 9
+  limitrotation: 1
   spritechangetime: 0.01
   yhteensuuntaanliikkumisaikavaihtovali: 60
   rows: 20
   cols: 20
   explosionforce: 0.4
   aliviteme: 0.2
-  rajayta: 0
   sirpalemass: 11
   liikex: 2
   liikevasen: 1
@@ -152,7 +153,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0.1
   m_AngularDrag: 0.1
   m_GravityScale: 1
@@ -166,7 +167,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!61 &3795506969591193281
 BoxCollider2D:
   m_ObjectHideFlags: 0

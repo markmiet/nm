@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : BaseController,  IExplodable, IAlas
+public class BulletScript : BaseController, IExplodable, IAlas
 {
 
     public bool alas = true;
@@ -26,11 +26,11 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     {
         if (!android)
         {
-            TuhoaJosVaarassaPaikassa(gameObject,true,true);
+            TuhoaJosVaarassaPaikassa(gameObject, true, true);
         }
 
         eloaika += Time.deltaTime;
-        if (eloaika>=maksimiAikajonkavoiollaElossa)
+        if (eloaika >= maksimiAikajonkavoiollaElossa)
         {
             Explode();
         }
@@ -92,7 +92,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
                     m_Rigidbody2D.gravityScale = -liukumisenjalkeinengravity;
                 }
             }
-     
+
 
         }
 
@@ -114,7 +114,7 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             if (collider != null)
             {
                 //Destroy(gameObject);
-               // Explode();
+                // Explode();
 
                 ExplodeLiukutormayksenJalkeen();
 
@@ -152,26 +152,35 @@ public class BulletScript : BaseController,  IExplodable, IAlas
             // col.gameObject.SendMessage("Explode");
             if (col.gameObject != null)
             {
-
-                IDamagedable damageMahdollinen= col.gameObject.GetComponent<IDamagedable>();
-                if (damageMahdollinen!=null)
+                SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
+                if (sc != null)
                 {
-                    damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
+                    sc.Explode(col);
+
                 }
                 else
                 {
-
-                    IExplodable o =
-    col.gameObject.GetComponent<IExplodable>();
-                    if (o != null)
+                    IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+                    if (damageMahdollinen != null)
                     {
-                        o.Explode();
+                        damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
                     }
                     else
                     {
-                        Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                        IExplodable o =
+    col.gameObject.GetComponent<IExplodable>();
+                        if (o != null)
+                        {
+                            o.Explode();
+                        }
+                        else
+                        {
+                            Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                        }
                     }
                 }
+
+
 
 
             }
@@ -207,12 +216,12 @@ public class BulletScript : BaseController,  IExplodable, IAlas
         {
             Destroy(gameObject);
         }
-      
+
     }
 
     public void Explode()
     {
-     //   RajaytaSprite(gameObject, 4, 4, 1.0f, 0.3f);
+        //   RajaytaSprite(gameObject, 4, 4, 1.0f, 0.3f);
         Destroy(gameObject);
     }
 
@@ -225,14 +234,14 @@ public class BulletScript : BaseController,  IExplodable, IAlas
     public float explosionlivetime = 1.0f;
 
     public bool rajaytasprite = true;
-    public bool teexplosion=true;
+    public bool teexplosion = true;
     public void ExplodeLiukutormayksenJalkeen()
     {
         if (rajaytasprite)
         {
             RajaytaSprite(gameObject, rows, cols, force, alive, massa, true);
         }
-        
+
         /* 
           Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, affectedLayers);
 
