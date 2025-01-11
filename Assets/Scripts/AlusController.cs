@@ -1587,8 +1587,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     {
         //haukisilmavihollinenexplodetag
 
+      //  col.otherCollider tää on alus
+
         //explodetag
-        if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
+        if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") ||
+            col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
@@ -1602,7 +1605,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
         else if (col.collider.tag.Contains("vihollinen"))
         {
-            damagenmaara += 100;
+            damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
 

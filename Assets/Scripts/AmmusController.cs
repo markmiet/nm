@@ -201,6 +201,9 @@ public class AmmusController : BaseController, IExplodable {
 			tormattyviholliseen = true;
 		//	Debug.Log("explodeeeeeeeeeeeeeeeee ");
 
+
+
+
 			if (col.gameObject!=null)
             {
 				/*
@@ -223,25 +226,35 @@ public class AmmusController : BaseController, IExplodable {
 				if (tuhoaylipaansa)
 					Explode();
 				*/
+				SkeletonController sc=col.gameObject.GetComponent<SkeletonController>();
+				if (sc!=null)
+                {
+					sc.Explode(col);
 
-				IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
-				if (damageMahdollinen != null)
-				{
-					damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
 				}
 				else
-				{
+                {
 
-					IExplodable o =
-	col.gameObject.GetComponent<IExplodable>();
-					if (o != null)
+					IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+					if (damageMahdollinen != null)
 					{
-						o.Explode();
+						damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
 					}
 					else
 					{
-						//Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+
+						IExplodable o =
+		col.gameObject.GetComponent<IExplodable>();
+						if (o != null)
+						{
+							o.Explode();
+						}
+						else
+						{
+							//Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+						}
 					}
+
 				}
 
 			}

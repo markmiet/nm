@@ -62,7 +62,6 @@ public class KattopalliController : BaseController, IExplodable
     private Vector2 boxsize;// = new Vector2(0, 0);
     private AudioplayerController ad;
 
-    public bool onkoammus;
 
     public int ampumistenmaksimimaara = 1;
     private int montakoonammuttu = 0;
@@ -185,31 +184,9 @@ public class KattopalliController : BaseController, IExplodable
             }
 
 
-            if (onkoammus)
-            {
-                float delta = Time.deltaTime;
-                deltojensumma += delta;
-                deltojensummaliikkumis += delta;
-                if (deltojensumma > elamisenmaksimiaikajosammus)
-                {
-                    Explode();
-                    return;
-
-                }
-                /*
-                 * tässä pitäisi olla se että alkuun voi
-                if (deltojensummaliikkumis< nukkumisaikajosammus)
-                {
-                    return;
-                }
-                deltojensummaliikkumis = 0.0f;
-                */
-
-            }
-            else
-            {
+          
                 Ammu();
-            }
+            
             /*
             if (onkoammus && deltojensumma >= 5.0f)
             {
@@ -835,8 +812,7 @@ public class KattopalliController : BaseController, IExplodable
 
         //  Instantiate(bonus, v3, Quaternion.identity)
         int bonusmaara = 1;
-        if (!ammus)
-        {
+
             ad.ExplodePlay();
 
 
@@ -852,14 +828,6 @@ public class KattopalliController : BaseController, IExplodable
     new Vector3(
     rb.position.x, rb.position.y, 0);
             TeeBonus(bonus, v3, boxsize, bonusmaara);
-        }
-        else
-        {
-            GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(explosionIns, 1.0f);
-            Destroy(gameObject);
-        }
-
 
 
 
@@ -877,7 +845,7 @@ public class KattopalliController : BaseController, IExplodable
     public bool ampuukoVaikkaAluseinakyvissa = true;
     public void Ammu()
     {
-        if (!onkoammus && ammu && montakoonammuttu < ampumistenmaksimimaara)
+        if (ammu && montakoonammuttu < ampumistenmaksimimaara)
         {
             float aikanyt = Time.time;
             if (aikanyt - viimeksiAmmuttu > pieninmahdollinenAikaValiAmpumisissa)
@@ -900,10 +868,15 @@ public class KattopalliController : BaseController, IExplodable
 
 
                 //GameObject Instantiate(ammus);
-
+                //box
 
                 GameObject instanssi = Instantiate(ammus, ampumisenkohta, Quaternion.identity);
 
+                List<GameObject> lista = new List<GameObject>();
+                lista.Add(instanssi);
+                lista.Add(gameObject);
+
+                IgnoreCollisions(lista);
 
 
 
@@ -933,17 +906,14 @@ public class KattopalliController : BaseController, IExplodable
 
     }
 
+/*
     public void OnCollisionEnter2D(Collision2D col)
     {
         if (onkoammus)
         {
-            /*
-            if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
-            {
-                Explode();
-            }
-            */
+
 
         }
     }
+    */
 }

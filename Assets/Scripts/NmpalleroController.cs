@@ -65,6 +65,12 @@ col.gameObject.GetComponent<IExplodable>();
     }
     public void Explode()
     {
+        if (pc==null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         bool onkokaikkiammuttu = pc.TarkistaOnkoAmmuttu();
 
         sp.enabled = false;

@@ -73,7 +73,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 
 	void OnCollisionEnter2D(Collision2D col)
 	{
-
+		/*
 		//      Debug.Log("tagi=" + col.collider.tag);
 		if (col.collider.CompareTag("alustag")) {
 			//Destroy (col.gameObject);
@@ -109,7 +109,9 @@ col.gameObject.GetComponent<IDamagedable>();
 			}
 
 		}
-		else if (col.collider.CompareTag("tiilivihollinentag"))
+		else 
+		*/
+		if (col.collider.CompareTag("tiilivihollinentag"))
 		{
 			//Destroy(gameObject);
 			Explode();

@@ -55,6 +55,11 @@ public class CameraInfoController : MonoBehaviour
     public float stoptime;
 
 
+    public bool generoilisaavihollisia = false;
+    public GameObject vihollinenjokageneroidaan;
+    public int vihollismaaranrajaarvo = 1;
+    public float generointivali = 5.0f;
+
     private bool IsObjectInOrthographicView(Transform target, Camera camera)
     {
         Vector3 position = camera.WorldToScreenPoint(target.position);

@@ -529,7 +529,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9019045805720289250, guid: 0c8878f615f981c4ebabcd116300fec0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -537,10 +538,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5659856804225387352}
-    - targetCorrespondingSourceObject: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 653384295741999652}
   m_SourcePrefab: {fileID: 100100000, guid: 0c8878f615f981c4ebabcd116300fec0, type: 3}
 --- !u!4 &653656707641999392 stripped
 Transform:
@@ -599,17 +596,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20.061775, y: 27.330633}
   m_EdgeRadius: 0
---- !u!114 &653384295741999652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5502394393279407946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1b7affd8dd62a141a1a22c6c45afc07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  widthScaleFactor: 0.45
-  heightScaleFactor: 0.7

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8893049859868768679}
   - component: {fileID: 8591673085743044474}
   - component: {fileID: 3823809911303957598}
+  - component: {fileID: 9019045805720289250}
   m_Layer: 10
   m_Name: Pallovihollinensavu
   m_TagString: Untagged
@@ -4831,3 +4832,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &9019045805720289250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477803405969465037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b7affd8dd62a141a1a22c6c45afc07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savungamadeMaara: 0.1
+  widthScaleFactor: 0.5
+  heightScaleFactor: 0.6

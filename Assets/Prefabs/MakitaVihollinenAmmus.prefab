@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1267133359014167363}
   - component: {fileID: 2132718050068797262}
   - component: {fileID: 1803048764405262496}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: MakitaVihollinenAmmus
   m_TagString: makitavihollinenammusexplodetag
   m_Icon: {fileID: 0}
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedjonkaalletuhotaan: 0.3
+  damagemaarajokaaiheutetaan: 1
   alivetimeRajahdyksenJalkeen: 0.5
 --- !u!58 &1803048764405262496
 CircleCollider2D:

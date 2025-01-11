@@ -11,7 +11,6 @@ public class Kamera : MonoBehaviour
 
     public LayerMask layerMask;
     public int vihollismaaranrajaarvo = 4;
-    public GameObject[] luotavatviholliset;
     public float xsuunnanoffsettikamerasta=4.0f;
 
     // Start is called before the first frame update
@@ -71,6 +70,20 @@ public class Kamera : MonoBehaviour
                 }
 
             }
+            else
+            {
+                if (cameraInfo.GetComponent<CameraInfoController>().generoilisaavihollisia)
+                {
+                    GameObject go =
+                    cameraInfo.GetComponent<CameraInfoController>().vihollinenjokageneroidaan;
+
+                    int maara =
+                    cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
+                    float generointivali = cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
+
+                    GeneroiLisaaVihollisia(go,maara, generointivali);
+                }
+            }
 
             skrollimaara = xscr;
 
@@ -84,7 +97,7 @@ public class Kamera : MonoBehaviour
             alus.transform.position += skrolli;
 
         }
-        GeneroiLisaaVihollisia();
+       
 
     }
 
@@ -103,8 +116,8 @@ public class Kamera : MonoBehaviour
     }
 
     private float generointilaskuri = 0.0f;
-    public float generointivali = 5.0f;
-    private void GeneroiLisaaVihollisia()
+
+    private void GeneroiLisaaVihollisia(GameObject go,int  vihollismaaranrajaarvo, float generointivali)
     {
         generointilaskuri += Time.deltaTime;
         if (generointilaskuri>= generointivali)
@@ -113,19 +126,16 @@ public class Kamera : MonoBehaviour
             if (maara < vihollismaaranrajaarvo)
             {
                 Debug.Log("generoi lisaa vihollisia" + maara);
-                GeneroiViholinen();
+                GeneroiViholinen(go);
             }
             generointilaskuri = 0;
         }
 
 
     }
-    private void GeneroiViholinen()
+    private void GeneroiViholinen(GameObject go)
     {
-        if (luotavatviholliset!=null)
-        {
-            foreach (GameObject c in luotavatviholliset)
-            {
+
                 Vector2 boxsize = new Vector2(1.0f,1.0f);
                 Vector2 pos = transform.position;
 
@@ -137,10 +147,7 @@ public class Kamera : MonoBehaviour
 
                 Vector2 uus = new Vector2(topRight.x + xsuunnanoffsettikamerasta, transform.position.y);
 
-                GameObject instanssiOption = Instantiate(c, uus, Quaternion.identity);
-
-            }
-        }
+                GameObject instanssiOption = Instantiate(go, uus, Quaternion.identity);
     }
 
 

@@ -872,16 +872,25 @@ public class BaseController : MonoBehaviour
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
        )
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false,0);
 
+    }
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+    float sirpalemass, bool teerigitbody)
+    {
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f);
     }
 
 
-    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
-        float sirpalemass, bool teerigitbody)
+        public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+        float sirpalemass, bool teerigitbody,float ysaato)
     {
 
         Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
+        bool xflippi = GetComponent<SpriteRenderer>().flipX;
+        bool yflippi = GetComponent<SpriteRenderer>().flipY;
+
+ 
 
 
 
@@ -934,6 +943,9 @@ public class BaseController : MonoBehaviour
                 sliceObject.layer = go.layer;
 
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                sr.flipX = xflippi;
+                sr.flipY = yflippi;
+
                 sr.sprite = newSprite;
                 //Debug.0lo0ff000ddddddddtagi=" + sliceObject.tag);
 
@@ -970,13 +982,40 @@ transform.position.y +
 y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         */
-
+        
+                //3 on testi
                 sliceObject.transform.position = new Vector3(
                     -0.2f +
-                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
-                        -0.1f +
+                    transform.position.x  + x * sliceWidth / originalSprite.pixelsPerUnit,
+                        -0.1f +ysaato+
       transform.position.y +
       y * sliceHeight / originalSprite.pixelsPerUnit, 0);
+
+
+                //   sliceObject.transform.rotation.z=
+
+                float sourceZRotation = go.transform.rotation.eulerAngles.z;
+
+                /*
+                float zrotaatio =
+  go.transform.localRotation.z;
+                sliceObject.transform.localRotation = Quaternion.Euler(0, 0, zrotaatio);
+                */
+
+                Vector3 targetRotation = sliceObject.transform.rotation.eulerAngles;
+                targetRotation.z = sourceZRotation;
+                sliceObject.transform.rotation = Quaternion.Euler(targetRotation);
+
+
+                /*
+            sliceObject.transform.position = new Vector3(
+                -0.2f +
+                transform.position.x,
+                    -0.1f +
+  transform.position.y +
+  y * sliceHeight / originalSprite.pixelsPerUnit, 0);
+*/
+
 
                 /*    
                 Vector3 explosionCenter = new Vector3(transform.position.x, transform.position.y,0);
