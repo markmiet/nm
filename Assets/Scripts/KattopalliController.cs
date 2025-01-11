@@ -184,9 +184,9 @@ public class KattopalliController : BaseController, IExplodable
             }
 
 
-          
-                Ammu();
-            
+
+            Ammu();
+
             /*
             if (onkoammus && deltojensumma >= 5.0f)
             {
@@ -805,7 +805,7 @@ public class KattopalliController : BaseController, IExplodable
 
     public float rajaytysvoima = 2f;
     public float rajaytyskestoaika = 0.8f;
-
+    public bool teerajaytys = false;
     public void ExplodeOikeasti()
     {
 
@@ -813,21 +813,30 @@ public class KattopalliController : BaseController, IExplodable
         //  Instantiate(bonus, v3, Quaternion.identity)
         int bonusmaara = 1;
 
-            ad.ExplodePlay();
+        ad.ExplodePlay();
 
 
-            //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-            //RajaytaSprite(gameObject, 5, 5, 4.0f, 1.5f);
+        //  
+        //RajaytaSprite(gameObject, 5, 5, 4.0f, 1.5f);
+        if (teerajaytys)
+        {
             RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
+        }
+        if (explosion!=null)
+        {
+            GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
-            // Destroy(explosionIns,1.0f);
-            Destroy(gameObject);
+        }
+         
+
+        // Destroy(explosionIns,1.0f);
+        Destroy(gameObject);
 
 
-            Vector3 v3 =
-    new Vector3(
-    rb.position.x, rb.position.y, 0);
-            TeeBonus(bonus, v3, boxsize, bonusmaara);
+        Vector3 v3 =
+new Vector3(
+rb.position.x, rb.position.y, 0);
+        TeeBonus(bonus, v3, boxsize, bonusmaara);
 
 
 
@@ -854,15 +863,15 @@ public class KattopalliController : BaseController, IExplodable
                 new Vector3(
          transform.position.x, transform.position.y - ampumiskohdanmiinustus, 0);
 
-                
+
                 if (!ampuukoVaikkaAluseinakyvissa && !VoikoVihollinenAmpua(ampumisenkohta))
                 {
                     // viimeksiAmmuttu = Time.time;//jotta ei tuliteta koko aikaa
-                    viimeksiAmmuttu= Time.time;
+                    viimeksiAmmuttu = Time.time;
                     return;
                 }
-               
-                
+
+
 
                 Vector2 ve = palautaAmmuksellaVelocityVector(alusGameObject, ampumisenvoimakkuus, ampumisenkohta);
 
@@ -906,14 +915,14 @@ public class KattopalliController : BaseController, IExplodable
 
     }
 
-/*
-    public void OnCollisionEnter2D(Collision2D col)
-    {
-        if (onkoammus)
+    /*
+        public void OnCollisionEnter2D(Collision2D col)
         {
+            if (onkoammus)
+            {
 
 
+            }
         }
-    }
-    */
+        */
 }
