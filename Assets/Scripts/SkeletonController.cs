@@ -152,12 +152,14 @@ public class SkeletonController : BaseController, IExplodable
                 sp.sprite = sprites[spriteindeksi];
                 kesto = 0;
             }
+            /*
             if (vaihdasuuntaa && yhteensuuntaanliikkumisaika >= yhteensuuntaanliikkumisaikavaihtovali)
             {
                 liikevasen = !liikevasen;
                 yhteensuuntaanliikkumisaika = 0.0f;
                 sp.flipX = liikevasen;
             }
+            */
 
             //transform.position = new Vector3(transform.position.x + Time.deltaTime * liikex, transform.position.y, transform.position.z);
 
@@ -291,20 +293,21 @@ public class SkeletonController : BaseController, IExplodable
     public float sirpalemass = 1.0f;
     public float rajaytyksenysaato = 0.0f;
     public float liikex = 0.1f;
-    private bool stoppaa = false;
+    public bool stoppaa = false;
 
     public bool liikevasen = true;
 
     public float kuinkakaunstopataan = 2.0f;
-    private float stoppauslaskuri = 0.0f;
+    public float stoppauslaskuri = 0.0f;
 
-
+    /*
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (vaihdasuuntaa)
         {
             if (!stoppaa && !col.tag.Contains("makitavihollinenammus") && (col.tag.Contains("vihollinen") || col.tag.Contains("tiili")))
             {
+                Debug.Log("collider tagi=" + col.tag);
                 stoppaa = true;
                 stoppauslaskuri = 0.0f;
 
@@ -335,6 +338,16 @@ public class SkeletonController : BaseController, IExplodable
         }
 
     }
+    */
+    public void Tormatty(bool tormaysvasen)
+    {
+        if (vaihdasuuntaa)
+        {
+            liikevasen = !tormaysvasen;
+            sp.flipX = !tormaysvasen;
+        }
+    }
+
     private float NormalizeAngle(float angle)
     {
         angle = angle % 360;
@@ -345,6 +358,10 @@ public class SkeletonController : BaseController, IExplodable
 
         return angle;
     }
+
+    public BoxCollider2D leftCollider;  // Assign this in the Inspector
+    public BoxCollider2D rightCollider; // Assign this in the Inspector
+
 }
 
 

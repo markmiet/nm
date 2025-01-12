@@ -759,6 +759,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeletonpieni (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: 18e4b3cca4928304481dd83ee4c8ccaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3495,7 +3500,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -3727,6 +3732,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 382654685186149855, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 39aedb252692bfa499210da04d7a899a, type: 2}
+    - target: {fileID: 382654685186149855, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+        type: 3}
+      propertyPath: m_UsedByComposite
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 767338144735999169, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2242949222118948958, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: liikex
@@ -3740,12 +3760,17 @@ PrefabInstance:
     - target: {fileID: 2242949222118948958, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: hitcoutneeded
-      value: 1000
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2242949222118948958, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: rotationPercentage
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3009548194688134424, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -3762,13 +3787,20 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6b4877ee772cac5478355df5ed9d778f, type: 2}
-    - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+    - target: {fileID: 6444371908574089472, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
-      propertyPath: m_Mass
-      value: 4
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444371908574089472, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+        type: 3}
+      propertyPath: m_Simulated
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1682644948609576555, guid: ede5084df6e9a0847adfa0a18c4c0e0d, type: 3}
+    - {fileID: 3925891663818349251, guid: ede5084df6e9a0847adfa0a18c4c0e0d, type: 3}
+    - {fileID: 3009548194688134424, guid: ede5084df6e9a0847adfa0a18c4c0e0d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5504,7 +5536,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797109858965117204, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -14833,7 +14865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alus: {fileID: 384067071}
-  skrollimaara: 1.25
+  skrollimaara: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -14901,7 +14933,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35, y: 0, z: -1}
+  m_LocalPosition: {x: -20, y: 0, z: -1}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15725,12 +15757,12 @@ PrefabInstance:
     - target: {fileID: 3294481396978785089, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.81
+      value: -26
       objectReference: {fileID: 0}
     - target: {fileID: 3294481396978785089, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3294481396978785089, guid: 6de5a79242d8055cfaa4ee75beee2ef2,
         type: 3}
@@ -20990,7 +21022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &972088801
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22657,6 +22689,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeletonpieni (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: 18e4b3cca4928304481dd83ee4c8ccaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33645,6 +33682,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeletonpieni (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: 18e4b3cca4928304481dd83ee4c8ccaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34469,6 +34511,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeleton (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -35483,7 +35530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7473614472292437, guid: ede5084df6e9a0847adfa0a18c4c0e0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 7473614472292437, guid: ede5084df6e9a0847adfa0a18c4c0e0d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35534,7 +35581,7 @@ PrefabInstance:
     - target: {fileID: 2242949222118948958, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: hitcoutneeded
-      value: 1000
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2242949222118948958, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -36252,6 +36299,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeletonpieni
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: 18e4b3cca4928304481dd83ee4c8ccaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37820,7 +37872,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: fa5da0ac866e1324a9d8927066a458d5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3795506969591193281, guid: fa5da0ac866e1324a9d8927066a458d5,
         type: 3}
@@ -39000,7 +39052,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -39309,7 +39361,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -40462,7 +40514,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -40605,6 +40657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeletonpieni (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: 18e4b3cca4928304481dd83ee4c8ccaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41016,7 +41073,7 @@ PrefabInstance:
     - target: {fileID: 3148461829865913597, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6511875455453554975, guid: ede5084df6e9a0847adfa0a18c4c0e0d,
         type: 3}
@@ -43361,6 +43418,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeletonpieni (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148461829865913597, guid: 18e4b3cca4928304481dd83ee4c8ccaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
