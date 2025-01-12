@@ -872,39 +872,148 @@ public class BaseController : MonoBehaviour
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
        )
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false,0);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false,0,false,0.0f);
 
     }
-    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+
+    int RoundUpToMultipleOfFour(int value)
+    {
+        return (value + 3) & ~3; // Rounds up to the nearest multiple of 4
+    }
+    public static Texture2D ScaleTextureaaa(Texture2D source, int newWidth, int newHeight)
+    {
+        // Create a new empty texture with the desired dimensions
+        Texture2D scaledTexture = new Texture2D(newWidth, newHeight, source.format, false);
+
+        // Scale each pixel of the new texture based on the original texture
+        for (int y = 0; y < newHeight; y++)
+        {
+            for (int x = 0; x < newWidth; x++)
+            {
+                // Map the new texture's pixel to the original texture
+                float u = (float)x / (newWidth - 1); // U-coordinate (0 to 1)
+                float v = (float)y / (newHeight - 1); // V-coordinate (0 to 1)
+
+                // Get the pixel color from the source texture
+                Color pixelColor = source.GetPixelBilinear(u, v);
+
+                // Set the pixel in the new texture
+                scaledTexture.SetPixel(x, y, pixelColor);
+            }
+        }
+
+        // Apply changes to the new texture
+        scaledTexture.Apply();
+        
+        return scaledTexture;
+    }
+
+
+    // Cache for storing scaled textures
+    public static Dictionary<string, Texture2D> cachedTextures = new Dictionary<string, Texture2D>();
+
+    public static Texture2D ScaleTexture(Texture2D source, int newWidth, int newHeight)
+    {
+        if (source == null)
+            throw new System.ArgumentNullException("Source texture cannot be null.");
+
+        if (newWidth <= 0 || newHeight <= 0)
+            throw new System.ArgumentException("Texture dimensions must be greater than 0.");
+
+        // Create a unique key for the cache based on texture and dimensions
+        string cacheKey = $"{source.GetInstanceID()}_{newWidth}x{newHeight}";
+
+        // Check if the texture is already cached
+        if (cachedTextures.TryGetValue(cacheKey, out Texture2D cachedTexture))
+        {
+            Debug.Log("Using cached texture.");
+            return cachedTexture;
+        }
+
+        // Scale the texture if not in the cache
+        Texture2D scaledTexture = new Texture2D(newWidth, newHeight, source.format, false);
+
+        for (int y = 0; y < newHeight; y++)
+        {
+            for (int x = 0; x < newWidth; x++)
+            {
+                float u = (float)x / (newWidth - 1); // U-coordinate
+                float v = (float)y / (newHeight - 1); // V-coordinate
+                Color pixelColor = source.GetPixelBilinear(u, v);
+                scaledTexture.SetPixel(x, y, pixelColor);
+            }
+        }
+
+        scaledTexture.Apply();
+
+        // Cache the scaled texture
+        cachedTextures[cacheKey] = scaledTexture;
+
+        Debug.Log("Scaled texture created and cached.");
+        return scaledTexture;
+    }
+
+
+
+public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
     float sirpalemass, bool teerigitbody)
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f,false,0.0f);
     }
 
 
         public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
-        float sirpalemass, bool teerigitbody,float ysaato)
+        float sirpalemass, bool teeBoxcollider2d,float ysaato, bool skaalaatekstuuria,float gravityscale)
     {
+        SpriteRenderer s = GetComponent<SpriteRenderer>();
 
-        Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
-        bool xflippi = GetComponent<SpriteRenderer>().flipX;
-        bool yflippi = GetComponent<SpriteRenderer>().flipY;
+        if (rows<=1)
+        {
+            rows = 2;
+        }
+        if (columns <=1)
+        {
+            columns = 2;
+        }
 
- 
+
+
+        Sprite originalSprite = s.sprite;
+        bool xflippi =s.flipX;
+        bool yflippi =s.flipY;
+
+        float ymin=s.bounds.min.y;
+        float ymax = s.bounds.max.y;
+
+        float puolet = (ymax - ymin) / 2;
+
 
 
 
         // Get the original sprite's texture
         Texture2D texture = originalSprite.texture;
-        //     Vector3 scale = go.transform.localScale;
+
+
+        Vector3 scale = go.transform.localScale;
+        //sliceObject.transform.localScale = scale;
+
+        if (skaalaatekstuuria && scale != Vector3.one)
+        {
+            //tää on hidas ja textuurin asetuksissa pitää olla read/write ja compressio pois jotta toimii
+            int adjustedWidth = RoundUpToMultipleOfFour((int)(texture.width * scale.x));
+            int adjustedHeight = RoundUpToMultipleOfFour((int)(texture.height * scale.y));
+
+
+            texture = ScaleTexture(texture, adjustedWidth, adjustedHeight);
+        }
+
 
         // Calculate the width and height of each slice
         float sliceWidth = texture.width / columns;
+
         float sliceHeight = texture.height / rows;
 
 
-        // sliceWidth = sliceWidth * scale.x;
-        // sliceHeight = sliceHeight * scale.y;
 
         //   SpriteRenderer srSpriteRenderer =
         //   go.GetComponent<SpriteRenderer>();
@@ -925,14 +1034,18 @@ public class BaseController : MonoBehaviour
                 Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
 
                 // Create a new sprite from the slice
+                Vector2 pivot = originalSprite.pivot;
+                Vector2 normalizedPivot = pivot / originalSprite.rect.size;
                 Sprite newSprite = Sprite.Create(
                     texture,
                     sliceRect,
-                    new Vector2(0.5f, 0.5f),
+                    normalizedPivot,
+                   // new Vector2(0.5f, 0.5f),
                     //new Vector2(0.0f, 0.0f),
 
                     originalSprite.pixelsPerUnit
                 );
+                
 
                 // Store the new sprite in the list
                 slicedSprites.Add(newSprite);
@@ -945,8 +1058,9 @@ public class BaseController : MonoBehaviour
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
                 sr.flipX = xflippi;
                 sr.flipY = yflippi;
-
+                sr.sortingOrder = -10;
                 sr.sprite = newSprite;
+                
                 //Debug.0lo0ff000ddddddddtagi=" + sliceObject.tag);
 
 
@@ -957,7 +1071,7 @@ public class BaseController : MonoBehaviour
                 sliceObject.AddComponent<Rigidbody2D>();
                 //pieceRigidbody.gravityScale = 0.5f;
                 //pieceRigidbody.gravityScale = 0.5f;
-                pieceRigidbody.gravityScale = 0.0f;
+                pieceRigidbody.gravityScale = gravityscale;
 
                 pieceRigidbody.simulated = true;
                 if (sirpalemass != -1)
@@ -965,7 +1079,7 @@ public class BaseController : MonoBehaviour
                     pieceRigidbody.mass = sirpalemass;
                 }
 
-                if (teerigitbody)
+                if (teeBoxcollider2d)
                 {
 
                     BoxCollider2D p =
@@ -982,19 +1096,29 @@ transform.position.y +
 y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         */
-        
+                float korotus = (y * (sliceHeight / originalSprite.pixelsPerUnit));
+                Debug.Log("korotus =" + korotus);
+                Debug.Log("transform.position.y =" + transform.position.y);
+
                 //3 on testi
+                /*
                 sliceObject.transform.position = new Vector3(
                     -0.2f +
                     transform.position.x  + x * sliceWidth / originalSprite.pixelsPerUnit,
-                        -0.1f +ysaato+
-      transform.position.y +
-      y * sliceHeight / originalSprite.pixelsPerUnit, 0);
-
+                        +ysaato- puolet+
+      transform.position.y + korotus , transform.position.z);
+                */
+                sliceObject.transform.position = new Vector3(
+                    -0.2f +
+                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
+                        +ysaato -puolet+
+      transform.position.y + korotus, transform.position.z);
 
                 //   sliceObject.transform.rotation.z=
 
                 float sourceZRotation = go.transform.rotation.eulerAngles.z;
+
+                
 
                 /*
                 float zrotaatio =
@@ -1005,6 +1129,11 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 Vector3 targetRotation = sliceObject.transform.rotation.eulerAngles;
                 targetRotation.z = sourceZRotation;
                 sliceObject.transform.rotation = Quaternion.Euler(targetRotation);
+                /*
+                //MJM uusi
+                Vector3 scale = go.transform.localScale;
+                sliceObject.transform.localScale = scale;
+                */
 
 
                 /*
@@ -1036,6 +1165,8 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
                 */
                 //float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
+
+  
                 float randomForce = explosionForce;
 
                 pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
@@ -1044,7 +1175,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 // Optionally, add random torque for rotation
 
                 pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
-
+               
                 //Destroy(sliceObject, 0.3f);
                 Destroy(sliceObject, alivetime);
 

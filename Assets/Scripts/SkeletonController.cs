@@ -29,6 +29,9 @@ public class SkeletonController : BaseController, IExplodable
     [Range(0f, 100f)] // Slider in Inspector for easier adjustment
     public float rotationPercentage = 30f; // Default percentage is 30%
     public bool limitrotation = true;
+
+    public bool teeEfektia = true;
+    public bool vaihdasuuntaa = true;
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
@@ -46,6 +49,11 @@ public class SkeletonController : BaseController, IExplodable
     private int spriteindeksi = 0;
     private int step = 1;
     // Update is called once per frame
+
+
+    public float efektivali = 2.0f;
+    private float efektilaskuri = 0.0f;
+    public float rajahdysgravity = 0.5f;
     void Update()
     {
         if (!sp.isVisible)
@@ -74,6 +82,18 @@ public class SkeletonController : BaseController, IExplodable
 
 
         }
+        if (teeEfektia)
+        {
+            efektilaskuri += Time.deltaTime;
+            if (efektilaskuri >= efektivali)
+            {
+                RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, false,
+                    rajaytyksenysaato, true, rajahdysgravity);
+                efektilaskuri = 0;
+            }
+
+        }
+
 
         kesto += Time.deltaTime;
 
@@ -90,7 +110,7 @@ public class SkeletonController : BaseController, IExplodable
         yhteensuuntaanliikkumisaika += Time.deltaTime;
         if (kesto >= spritechangetime)
         {
- 
+
 
             if (sprites != null && sprites.Length > 0)
             {
@@ -110,7 +130,7 @@ public class SkeletonController : BaseController, IExplodable
                 sp.sprite = sprites[spriteindeksi];
                 kesto = 0;
             }
-            if (yhteensuuntaanliikkumisaika >= yhteensuuntaanliikkumisaikavaihtovali)
+            if (vaihdasuuntaa && yhteensuuntaanliikkumisaika >= yhteensuuntaanliikkumisaikavaihtovali)
             {
                 liikevasen = !liikevasen;
                 yhteensuuntaanliikkumisaika = 0.0f;
@@ -134,12 +154,19 @@ public class SkeletonController : BaseController, IExplodable
 
     public void Explode(Collision2D col)
     {
-       
+
 
         hitcount++;
         if (hitcount >= hitcoutneeded)
         {
-            RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false, -1.0f);
+            // RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false,
+            //     rajaytyksenysaato, true);
+            //   RajaytaSprite(gameObject, rows , cols , explosionforce , aliviteme , sirpalemass, false,
+            //rajaytyksenysaato, true);
+
+            RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, false,
+    rajaytyksenysaato, true, rajahdysgravity);
+
             if (lopullinenexplosion != null)
             {
                 GameObject instanssi = Instantiate(lopullinenexplosion, col.otherCollider.transform.position, Quaternion.identity);
@@ -150,7 +177,10 @@ public class SkeletonController : BaseController, IExplodable
                 GameObject instanssi2 = Instantiate(uusi, col.otherCollider.transform.position, Quaternion.identity);
             }
             if (destroy)
+            {
                 Destroy(gameObject);
+            }
+
             hitcount = 0;
         }
         else
@@ -193,7 +223,7 @@ public class SkeletonController : BaseController, IExplodable
         hitcount++;
         if (hitcount >= hitcoutneeded)
         {
-            RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false, -1.0f);
+            //     RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false, -1.0f,false);
             if (lopullinenexplosion != null)
             {
                 GameObject instanssi = Instantiate(lopullinenexplosion, transform.position, Quaternion.identity);
@@ -233,7 +263,7 @@ public class SkeletonController : BaseController, IExplodable
     public float explosionforce = 0.5f;
     public float aliviteme = 0.5f;
     public float sirpalemass = 1.0f;
-
+    public float rajaytyksenysaato = 0.0f;
     public float liikex = 0.1f;
     private bool stoppaa = false;
 
@@ -243,30 +273,38 @@ public class SkeletonController : BaseController, IExplodable
     private float stoppauslaskuri = 0.0f;
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if (!stoppaa && !col.tag.Contains("makitavihollinenammus") && (col.tag.Contains("vihollinen") || col.tag.Contains("tiili")))
+        if (vaihdasuuntaa)
         {
-            stoppaa = true;
-            stoppauslaskuri = 0.0f;
-
-            // Determine whether the trigger happened on the left or right side
-            if (liikevasen)
+            if (!stoppaa && !col.tag.Contains("makitavihollinenammus") && (col.tag.Contains("vihollinen") || col.tag.Contains("tiili")))
             {
-                Debug.Log("Triggered on the left side.");
-                Debug.Log("triggeri eventti");
-                liikevasen = false;
-                sp.flipX = false;
-            }
-            else
-            {
-                Debug.Log("Triggered on the right side.");
+                stoppaa = true;
+                stoppauslaskuri = 0.0f;
 
-                liikevasen = true;
-                sp.flipX = true;
+                // Determine whether the trigger happened on the left or right side
+                if (liikevasen)
+                {
+                    Debug.Log("Triggered on the left side.");
+                    Debug.Log("triggeri eventti");
+                    if (vaihdasuuntaa)
+                    {
+                        liikevasen = false;
+                        sp.flipX = false;
+                    }
 
+                }
+                else
+                {
+                    Debug.Log("Triggered on the right side.");
+                    if (vaihdasuuntaa)
+                    {
+                        liikevasen = true;
+                        sp.flipX = true;
+                    }
+
+                }
             }
+            // Normalize angle to [-180, 180] range for consistent comparison
         }
-        // Normalize angle to [-180, 180] range for consistent comparison
-
 
     }
     private float NormalizeAngle(float angle)
