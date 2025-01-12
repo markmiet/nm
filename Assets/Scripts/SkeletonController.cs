@@ -32,6 +32,8 @@ public class SkeletonController : BaseController, IExplodable
 
     public bool teeEfektia = true;
     public bool vaihdasuuntaa = true;
+
+    public bool ylosalaisin = false;
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
@@ -41,6 +43,13 @@ public class SkeletonController : BaseController, IExplodable
         startingZRotation = transform.rotation.eulerAngles.z;
 
         // Calculate 10% of the starting Z rotation
+
+        if (ylosalaisin)
+        {
+            rb.gravityScale = -1 * rb.gravityScale;
+            sp.flipY = !sp.flipY;
+            //liikevasen = !liikevasen;
+        }
 
     }
 
@@ -54,12 +63,25 @@ public class SkeletonController : BaseController, IExplodable
     public float efektivali = 2.0f;
     private float efektilaskuri = 0.0f;
     public float rajahdysgravity = 0.5f;
+
+
+    private void LaskeSpriteChangeTime()
+    {
+        float vauhti = Mathf.Abs(liikex);
+        //2=0.01
+        //1=0.02
+
+        spritechangetime = 0.02f / liikex;
+    }
+
     void Update()
     {
         if (!sp.isVisible)
         {
-            return;
+         //   return;
         }
+
+        LaskeSpriteChangeTime();
         rotationLimit = 360f * (rotationPercentage / 100f); // Percentage of the full rotation
         float currentZRotation = NormalizeAngle(transform.rotation.eulerAngles.z);
 
@@ -151,12 +173,16 @@ public class SkeletonController : BaseController, IExplodable
     private float yhteensuuntaanliikkumisaika = 0.0f;
 
     public float yhteensuuntaanliikkumisaikavaihtovali = 3.0f;
-
+    private bool rajaytetty = false;
     public void Explode(Collision2D col)
     {
-
+        if (rajaytetty)
+        {
+            return;
+        }
 
         hitcount++;
+        Debug.Log("hitcount=" + hitcount);
         if (hitcount >= hitcoutneeded)
         {
             // RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false,
@@ -180,7 +206,7 @@ public class SkeletonController : BaseController, IExplodable
             {
                 Destroy(gameObject);
             }
-
+            rajaytetty = true;
             hitcount = 0;
         }
         else
@@ -271,6 +297,8 @@ public class SkeletonController : BaseController, IExplodable
 
     public float kuinkakaunstopataan = 2.0f;
     private float stoppauslaskuri = 0.0f;
+
+
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (vaihdasuuntaa)
@@ -283,8 +311,8 @@ public class SkeletonController : BaseController, IExplodable
                 // Determine whether the trigger happened on the left or right side
                 if (liikevasen)
                 {
-                    Debug.Log("Triggered on the left side.");
-                    Debug.Log("triggeri eventti");
+                   // Debug.Log("Triggered on the left side.");
+                   // Debug.Log("triggeri eventti");
                     if (vaihdasuuntaa)
                     {
                         liikevasen = false;
@@ -294,7 +322,7 @@ public class SkeletonController : BaseController, IExplodable
                 }
                 else
                 {
-                    Debug.Log("Triggered on the right side.");
+                  //  Debug.Log("Triggered on the right side.");
                     if (vaihdasuuntaa)
                     {
                         liikevasen = true;

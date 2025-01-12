@@ -1097,8 +1097,8 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         */
                 float korotus = (y * (sliceHeight / originalSprite.pixelsPerUnit));
-                Debug.Log("korotus =" + korotus);
-                Debug.Log("transform.position.y =" + transform.position.y);
+               // Debug.Log("korotus =" + korotus);
+               // Debug.Log("transform.position.y =" + transform.position.y);
 
                 //3 on testi
                 /*

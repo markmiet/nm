@@ -1063,6 +1063,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
 
+    public float movespeedinKasvatussteppi = 1;
+    public void LisaaMoveSpeedia()
+    {
+        moveSpeed += movespeedinKasvatussteppi;
+    }
 
 
     public float moveSpeed = 50f;
@@ -1684,8 +1689,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                     //vauhtiOikeaMax += vauhdinLisaysKunSpeedbonusOtettu;
                     //vauhtiYlosMax += vauhdinLisaysKunSpeedbonusOtettu;
                     maksiminopeusylosalas += vauhdinLisaysKunSpeedbonusOtettu;
-                    ammustenmaksimaaraProperty += ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
-                    ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
+                    //ammustenmaksimaaraProperty += ammustenmaksimaaranLisaysKunSpeedBonusButtonOtettu;
+                    //ampumakertojenvalinenviive += ampujakertojenvalisenViiveenPienennysKunSpeedBonusButtonOtettu;
+
+                    LisaaMoveSpeedia();
+
 
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.MissileDown))

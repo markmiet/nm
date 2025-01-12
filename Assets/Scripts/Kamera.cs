@@ -33,7 +33,7 @@ public class Kamera : MonoBehaviour
     // Update is called once per frame
     float stopinaloitusaika = 0.0f;
 
-    int paljonkopitaavielaodottaa = -1;
+    public int paljonkopitaavielaodottaa = -1;
     void Update()
     {
         //   gameObject.transform.position.Set(alus.transform.position.x, alus.transform.position.y, gameObject.transform.position.z);

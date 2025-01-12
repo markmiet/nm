@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3795506969591193281}
   - component: {fileID: 3925891663818349251}
   m_Layer: 10
-  m_Name: Skeleton
+  m_Name: Skeletonpieni
   m_TagString: skeletonvihollinenexplode
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -94, y: -1.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5670cff32df718c4e8424e5e4fb3cf46, type: 2}
+  - {fileID: 2100000, guid: 5cd541080cf73ee4bbe682724bd0887b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
     type: 3}
   uusi: {fileID: 0}
   hitcount: 0
-  hitcoutneeded: 200
+  hitcoutneeded: 1
   destroy: 1
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
@@ -144,7 +144,7 @@ MonoBehaviour:
   aliviteme: 0.2
   sirpalemass: 11
   rajaytyksenysaato: 0
-  liikex: 2
+  liikex: 5
   liikevasen: 1
   kuinkakaunstopataan: 0.1
 --- !u!50 &6511875455453554975

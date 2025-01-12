@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2242949222118948958}
   - component: {fileID: 6511875455453554975}
   - component: {fileID: 3795506969591193281}
-  - component: {fileID: 3925891663818349251}
+  - component: {fileID: 2214296269903009854}
   m_Layer: 10
-  m_Name: Skeleton
+  m_Name: Skeletoniso
   m_TagString: skeletonvihollinenexplode
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -94, y: -1.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5670cff32df718c4e8424e5e4fb3cf46, type: 2}
+  - {fileID: 2100000, guid: 5cd541080cf73ee4bbe682724bd0887b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: b69bc50c7792a334a84be8b8e7da4930, type: 3}
   m_Color: {r: 0.6391954, g: 0.65047747, b: 0.7132075, a: 1}
   m_FlipX: 1
@@ -125,23 +125,23 @@ MonoBehaviour:
     type: 3}
   uusi: {fileID: 0}
   hitcount: 0
-  hitcoutneeded: 200
+  hitcoutneeded: 4000
   destroy: 1
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
   rotationPercentage: 6
   limitrotation: 1
-  teeEfektia: 0
-  vaihdasuuntaa: 1
+  teeEfektia: 1
+  vaihdasuuntaa: 0
   ylosalaisin: 0
   spritechangetime: 0.01
-  efektivali: 2
+  efektivali: 10
   rajahdysgravity: 0.5
   yhteensuuntaanliikkumisaikavaihtovali: 60
-  rows: 20
-  cols: 20
-  explosionforce: 0.4
-  aliviteme: 0.2
+  rows: 25
+  cols: 30
+  explosionforce: 3
+  aliviteme: 5
   sirpalemass: 11
   rajaytyksenysaato: 0
   liikex: 2
@@ -206,7 +206,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04524809, y: 0.0044066906}
+  m_Offset: {x: 0.016609102, y: -1.005547}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -217,10 +217,10 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0573142, y: 2.3257751}
+  m_Size: {x: 0.9335999, y: 0.22021818}
   m_EdgeRadius: 0
---- !u!70 &3925891663818349251
-CapsuleCollider2D:
+--- !u!60 &2214296269903009854
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -248,9 +248,86 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.026347803, y: 0.13154615}
-  m_Size: {x: 1.926808, y: 1.610527}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0.1}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2.4}
+    newSize: {x: 6.68, y: 3.74}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.29, y: -0.83}
+      - {x: -0.22999999, y: -0.68}
+      - {x: -0.11, y: -0.52}
+      - {x: -0.06, y: -0.099999994}
+      - {x: -0.01, y: 0}
+      - {x: 0.089999996, y: -0.14999999}
+      - {x: 0.17999999, y: -0.19}
+      - {x: 0.13, y: -0.53}
+      - {x: 0.17999999, y: -0.68}
+      - {x: 0.19, y: -0.82}
+      - {x: 0.17, y: -1.13}
+      - {x: 0.19999999, y: -1.15}
+      - {x: 0.38, y: -1.16}
+      - {x: 0.45999998, y: -1.16}
+      - {x: 0.5, y: -1.13}
+      - {x: 0.48999998, y: -1.1}
+      - {x: 0.29999998, y: -1.01}
+      - {x: 0.26, y: -0.66999996}
+      - {x: 0.28, y: -0.65999997}
+      - {x: 0.31, y: -0.48999998}
+      - {x: 0.28, y: -0.16}
+      - {x: 0.31, y: -0.14}
+      - {x: 0.29999998, y: -0.02}
+      - {x: 0.26999998, y: 0.12}
+      - {x: 0.24, y: 0.16}
+      - {x: 0.26999998, y: 0.32}
+      - {x: 0.22, y: 0.34}
+      - {x: 0.16, y: 0.34}
+      - {x: 0.26, y: 0.44}
+      - {x: 0.28, y: 0.58}
+      - {x: 0.26999998, y: 0.72999996}
+      - {x: 0.17, y: 0.88}
+      - {x: 0.26999998, y: 0.87}
+      - {x: 0.32, y: 0.96}
+      - {x: 0.29999998, y: 1.13}
+      - {x: 0.26999998, y: 1.18}
+      - {x: 0.21, y: 1.1999999}
+      - {x: 0.08, y: 1.1999999}
+      - {x: 0.02, y: 1.13}
+      - {x: 0.02, y: 1.04}
+      - {x: 0.049999997, y: 0.9}
+      - {x: -0.06, y: 0.89}
+      - {x: -0.099999994, y: 0.83}
+      - {x: -0.11, y: 0.65999997}
+      - {x: -0.14, y: 0.39}
+      - {x: -0.12, y: 0.089999996}
+      - {x: -0.14, y: -0.11}
+      - {x: -0.19, y: -0.31}
+      - {x: -0.28, y: -0.47}
+      - {x: -0.42, y: -0.84999996}
+      - {x: -0.5, y: -1.04}
+      - {x: -0.5, y: -1.12}
+      - {x: -0.48999998, y: -1.14}
+      - {x: -0.41, y: -1.1999999}
+      - {x: -0.25, y: -1.1999999}
+      - {x: -0.26, y: -1.17}
+      - {x: -0.35, y: -1.06}
+    - - {x: -0.01, y: 0.37}
+      - {x: -0.01, y: 0.42}
+      - {x: -0.03, y: 0.44}
+      - {x: -0.03, y: 0.45}
+      - {x: 0, y: 0.42}
+      - {x: 0, y: 0.42999998}
+      - {x: -0.01, y: 0.42}
+      - {x: -0.02, y: 0.35999998}
+      - {x: 0, y: 0.32}
+      - {x: 0.01, y: 0.32999998}
+  m_UseDelaunayMesh: 0
