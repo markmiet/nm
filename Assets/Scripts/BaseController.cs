@@ -1200,11 +1200,39 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             for (int j = i + 1; j < childColliders.Length; j++)
             {
                 Physics.IgnoreCollision(childColliders[i], childColliders[j]);
-
+      
             }
         }
     }
 
+    /*
+
+    public void IgnoreCollisionsBetweenParentAndChildsAndBetweenAllChilds(GameObject go)
+    {
+        //List<GameObject> childit = GetChildGameObjects(go.transform);
+
+        IgnoreChildCollisions(go.transform);
+
+
+
+
+
+
+
+    }
+    public List<GameObject> GetChildGameObjects(Transform transform)
+    {
+        List<GameObject> childObjects = new List<GameObject>();
+
+        // Iterate through all children of the current transform
+        foreach (Transform child in transform)
+        {
+            childObjects.Add(child.gameObject); // Add the child GameObject to the list
+        }
+
+        return childObjects;
+    }
+    */
 
     public void IgnoreCollisions(List<GameObject> lista)
     {

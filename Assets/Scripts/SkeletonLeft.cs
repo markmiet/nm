@@ -16,7 +16,7 @@ public class SkeletonLeft : MonoBehaviour
     {
 
     }
-    public bool left = true;
+    public bool left;
 
     public void OnTriggerEnter2D(Collider2D col)
     {
@@ -30,7 +30,8 @@ public class SkeletonLeft : MonoBehaviour
         }
 
 
-        if (sc.vaihdasuuntaa && !sc.stoppaa && !col.tag.Contains("makitavihollinenammus") && (col.tag.Contains("vihollinen")
+        if (sc.vaihdasuuntaa && !sc.stoppaa && !col.tag.Contains("skeletonvihollinen") &&
+            !col.tag.Contains("makitavihollinenammus") && (col.tag.Contains("vihollinen")
             || col.tag.Contains("tiili")))
         {
             sc.stoppaa = true;

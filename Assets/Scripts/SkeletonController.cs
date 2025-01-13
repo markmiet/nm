@@ -14,7 +14,7 @@ public class SkeletonController : BaseController, IExplodable
 
     public GameObject uusi;
 
-    public int hitcount = 0;
+    private int hitcount = 0;
     public int hitcoutneeded = 5;
     // public float hitdelay = 0.1f;
 
@@ -51,6 +51,8 @@ public class SkeletonController : BaseController, IExplodable
             //liikevasen = !liikevasen;
         }
 
+        IgnoreChildCollisions(gameObject.transform);
+
     }
 
     public float spritechangetime = 1.0f;
@@ -64,21 +66,21 @@ public class SkeletonController : BaseController, IExplodable
     private float efektilaskuri = 0.0f;
     public float rajahdysgravity = 0.5f;
 
-
+    public bool laskespritechangetimelennossa = false;
     private void LaskeSpriteChangeTime()
     {
         float vauhti = Mathf.Abs(liikex);
         //2=0.01
         //1=0.02
-
-        spritechangetime = 0.02f / liikex;
+        if (laskespritechangetimelennossa)
+            spritechangetime = 0.02f / liikex;
     }
 
     void Update()
     {
         if (!sp.isVisible)
         {
-         //   return;
+            //   return;
         }
 
         LaskeSpriteChangeTime();
@@ -169,7 +171,14 @@ public class SkeletonController : BaseController, IExplodable
 
         }
         float kerroin = liikevasen ? -1 : 1;
-        transform.position = new Vector3(transform.position.x + (Time.deltaTime * kerroin * liikex), transform.position.y, transform.position.z);
+
+
+
+        float sinYMovement = Mathf.Sin(yhteensuuntaanliikkumisaika * sinfrequency) * sinamplitude;
+
+
+        transform.position = new Vector3(transform.position.x + (Time.deltaTime * kerroin * liikex),
+            transform.position.y + sinYMovement, transform.position.z);
 
     }
     private float yhteensuuntaanliikkumisaika = 0.0f;
@@ -184,7 +193,7 @@ public class SkeletonController : BaseController, IExplodable
         }
 
         hitcount++;
-        Debug.Log("hitcount=" + hitcount);
+        //   Debug.Log("hitcount=" + hitcount);
         if (hitcount >= hitcoutneeded)
         {
             // RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false,
@@ -197,17 +206,26 @@ public class SkeletonController : BaseController, IExplodable
 
             if (lopullinenexplosion != null)
             {
-                GameObject instanssi = Instantiate(lopullinenexplosion, col.otherCollider.transform.position, Quaternion.identity);
+                GameObject instanssi = Instantiate(lopullinenexplosion,transform.position, Quaternion.identity);
+
+
+                Destroy(instanssi, aliviteme);
 
             }
             if (uusi != null)
             {
-                GameObject instanssi2 = Instantiate(uusi, col.otherCollider.transform.position, Quaternion.identity);
+                //GameObject instanssi2 = Instantiate(uusi, transform.position, Quaternion.identity);
+                //Invoke("InstantiatePrefab", delay);
+
+                StartCoroutine(InstantiatePrefab());
+                //s SkeletonController sc = instanssi2.GetComponent<SkeletonController>();
+
             }
             if (destroy)
             {
                 Destroy(gameObject);
             }
+
             rajaytetty = true;
             hitcount = 0;
         }
@@ -224,6 +242,16 @@ public class SkeletonController : BaseController, IExplodable
 
         }
 
+    }
+    public float delay = 5.0f;
+
+    IEnumerator InstantiatePrefab()
+    {
+        new WaitForSeconds(delay);
+        Instantiate(uusi, transform.position, Quaternion.identity);
+        Debug.Log("Object instantiated using Invoke!");
+
+        yield return new WaitForSeconds(delay);
     }
 
     public void Explode()
@@ -262,8 +290,14 @@ public class SkeletonController : BaseController, IExplodable
                 GameObject instanssi2 = Instantiate(uusi, transform.position, Quaternion.identity);
             }
             if (destroy)
+            {
+                rajaytetty = true;
                 Destroy(gameObject);
+            }
+
             hitcount = 0;
+
+
         }
         else
         {
@@ -299,6 +333,11 @@ public class SkeletonController : BaseController, IExplodable
 
     public float kuinkakaunstopataan = 2.0f;
     public float stoppauslaskuri = 0.0f;
+
+    //pientä ylösalas liikettä
+    public float sinfrequency = 2f;
+    public float sinamplitude = 0.5f;
+    private float rotationTime = 0f;       // Timer to control the rotation
 
     /*
     public void OnTriggerEnter2D(Collider2D col)
@@ -341,10 +380,16 @@ public class SkeletonController : BaseController, IExplodable
     */
     public void Tormatty(bool tormaysvasen)
     {
+        Debug.Log("tormaysvasen=" + tormaysvasen);
         if (vaihdasuuntaa)
         {
-            liikevasen = !tormaysvasen;
-            sp.flipX = !tormaysvasen;
+            if (liikevasen == tormaysvasen)
+            {
+                liikevasen = !tormaysvasen;
+                sp.flipX = !tormaysvasen;
+
+                yhteensuuntaanliikkumisaika = 0.0f;
+            }
         }
     }
 
@@ -359,8 +404,6 @@ public class SkeletonController : BaseController, IExplodable
         return angle;
     }
 
-    public BoxCollider2D leftCollider;  // Assign this in the Inspector
-    public BoxCollider2D rightCollider; // Assign this in the Inspector
 
 }
 
