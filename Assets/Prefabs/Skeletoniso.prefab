@@ -93,7 +93,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.11969, y: 0.021959782}
+  m_Offset: {x: -0.57682097, y: 0.23992848}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -104,7 +104,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.82933044, y: 1.742368}
+  m_Size: {x: 0.37779233, y: 1.3064306}
   m_EdgeRadius: 0
 --- !u!114 &6312058316964664160
 MonoBehaviour:
@@ -131,8 +131,7 @@ GameObject:
   - component: {fileID: 5797109858965117204}
   - component: {fileID: 2242949222118948958}
   - component: {fileID: 6511875455453554975}
-  - component: {fileID: 352600633502504765}
-  - component: {fileID: 5844209667174240346}
+  - component: {fileID: 5490934387788387650}
   m_Layer: 10
   m_Name: Skeletoniso
   m_TagString: skeletonvihollinenexplode
@@ -200,7 +199,7 @@ SpriteRenderer:
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: b69bc50c7792a334a84be8b8e7da4930, type: 3}
   m_Color: {r: 0.6391954, g: 0.65047747, b: 0.7132075, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6.68, y: 3.74}
@@ -244,7 +243,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d331b0ca6b1d85f4da2dad712e047800, type: 3}
   lopullinenexplosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
-  uusi: {fileID: 0}
+  uusi: {fileID: 3148461829865913597}
   hitcoutneeded: 10
   destroy: 1
   explosion: {fileID: 0}
@@ -254,24 +253,33 @@ MonoBehaviour:
   vaihdasuuntaa: 1
   ylosalaisin: 0
   spritechangetime: 0.001
+  kulmajonkajalkeenliikkuminenLoppuu: 45
   efektivali: 2
-  rajahdysgravity: 0.5
+  rajahdysgravity: 1
   laskespritechangetimelennossa: 0
+  viivelopulliseenrajaytykseen: 3
+  kaatotahti: -3
   yhteensuuntaanliikkumisaikavaihtovali: 60
-  delay: 5
-  rows: 20
-  cols: 20
-  explosionforce: 1
-  aliviteme: 1
+  rajaytaspritexsaata: -2
+  destroycontrollerinExplode: {fileID: 7737871024420907965, guid: c3f711bcf1698934a8238e348466c93b,
+    type: 3}
+  luorajaytyksessaboxcollider2d: 1
+  kulmajonkajalkeenrajahtaa: 85
+  luouusi: 0
+  rows: 5
+  cols: 5
+  explosionforce: 50
+  aliviteme: 10000
   sirpalemass: 11
   rajaytyksenysaato: 0
-  liikex: 2
+  liikex: 1
   stoppaa: 0
   liikevasen: 1
   kuinkakaunstopataan: 0.1
   stoppauslaskuri: 0
   sinfrequency: 0.5
   sinamplitude: 0.01
+  spritensuuntaonalunperinvasemmaltaoikealle: 1
 --- !u!50 &6511875455453554975
 Rigidbody2D:
   serializedVersion: 4
@@ -299,52 +307,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &352600633502504765
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3148461829865913597}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 39aedb252692bfa499210da04d7a899a, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.10009384, y: 0.04403162}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2.4}
-    newSize: {x: 6.68, y: 3.74}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.2001877, y: 2.3119369}
-  m_EdgeRadius: 0
---- !u!60 &5844209667174240346
+--- !u!60 &5490934387788387650
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -376,7 +339,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.04}
+  m_Offset: {x: 0, y: 0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -549,7 +512,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.9375534, y: -0.010855049}
+  m_Offset: {x: 0.557225, y: 0.23555315}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -560,7 +523,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7648163, y: 1.6177478}
+  m_Size: {x: 0.36254886, y: 1.229142}
   m_EdgeRadius: 0
 --- !u!114 &2270488621203142968
 MonoBehaviour:

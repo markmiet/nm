@@ -872,7 +872,7 @@ public class BaseController : MonoBehaviour
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
        )
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false,0,false,0.0f);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false, 0, false, 0.0f, -0.2f, false,null);
 
     }
 
@@ -904,7 +904,7 @@ public class BaseController : MonoBehaviour
 
         // Apply changes to the new texture
         scaledTexture.Apply();
-        
+
         return scaledTexture;
     }
 
@@ -955,23 +955,25 @@ public class BaseController : MonoBehaviour
 
 
 
-public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
-    float sirpalemass, bool teerigitbody)
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+        float sirpalemass, bool teerigitbody)
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f,false,0.0f);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f, false, 0.0f, -0.2f, false,null);
     }
 
 
-        public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
-        float sirpalemass, bool teeBoxcollider2d,float ysaato, bool skaalaatekstuuria,float gravityscale)
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+    float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, float gravityscale,
+        float xsaato, bool addDestroyController,GameObject explosion
+        )
     {
         SpriteRenderer s = GetComponent<SpriteRenderer>();
 
-        if (rows<=1)
+        if (rows <= 1)
         {
             rows = 2;
         }
-        if (columns <=1)
+        if (columns <= 1)
         {
             columns = 2;
         }
@@ -979,10 +981,10 @@ public void RajaytaSprite(GameObject go, int rows, int columns, float explosionF
 
 
         Sprite originalSprite = s.sprite;
-        bool xflippi =s.flipX;
-        bool yflippi =s.flipY;
+        bool xflippi = s.flipX;
+        bool yflippi = s.flipY;
 
-        float ymin=s.bounds.min.y;
+        float ymin = s.bounds.min.y;
         float ymax = s.bounds.max.y;
 
         float puolet = (ymax - ymin) / 2;
@@ -1023,7 +1025,7 @@ public void RajaytaSprite(GameObject go, int rows, int columns, float explosionF
 
 
         // Create a list to store the sliced sprites
-        List<Sprite> slicedSprites = new List<Sprite>();
+       // List<Sprite> slicedSprites = new List<Sprite>();
 
         // Loop through each row and column to create slices
         for (int y = 0; y < rows; y++)
@@ -1040,15 +1042,27 @@ public void RajaytaSprite(GameObject go, int rows, int columns, float explosionF
                     texture,
                     sliceRect,
                     normalizedPivot,
-                   // new Vector2(0.5f, 0.5f),
+                    // new Vector2(0.5f, 0.5f),
                     //new Vector2(0.0f, 0.0f),
 
                     originalSprite.pixelsPerUnit
                 );
+                if (teeBoxcollider2d)
+                {
+                    int maara = CountNonTransparentPixels(newSprite);
+                    Debug.Log("aaaaaaaaaaaaaei piks=" + maara);
+                    if (maara<300)
+                    {
+                        Debug.Log("ei piks=" + maara);
+                        continue;
+                    }
                 
 
+                }
+
+
                 // Store the new sprite in the list
-                slicedSprites.Add(newSprite);
+                //    slicedSprites.Add(newSprite);
 
                 // Optionally, instantiate a GameObject with the new sprite in the scene
                 /**/
@@ -1056,11 +1070,11 @@ public void RajaytaSprite(GameObject go, int rows, int columns, float explosionF
                 sliceObject.layer = go.layer;
 
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
-                sr.flipX = xflippi;
-                sr.flipY = yflippi;
+                //sr.flipX = xflippi;
+                //sr.flipY = yflippi;
                 sr.sortingOrder = -10;
                 sr.sprite = newSprite;
-                
+
                 //Debug.0lo0ff000ddddddddtagi=" + sliceObject.tag);
 
 
@@ -1071,9 +1085,14 @@ public void RajaytaSprite(GameObject go, int rows, int columns, float explosionF
                 sliceObject.AddComponent<Rigidbody2D>();
                 //pieceRigidbody.gravityScale = 0.5f;
                 //pieceRigidbody.gravityScale = 0.5f;
+
                 pieceRigidbody.gravityScale = gravityscale;
 
                 pieceRigidbody.simulated = true;
+
+                // pieceRigidbody.bodyType = RigidbodyType2D.Static;
+                //          pieceRigidbody.simulated = false;
+
                 if (sirpalemass != -1)
                 {
                     pieceRigidbody.mass = sirpalemass;
@@ -1082,9 +1101,35 @@ public void RajaytaSprite(GameObject go, int rows, int columns, float explosionF
                 if (teeBoxcollider2d)
                 {
 
-                    BoxCollider2D p =
+                    PolygonCollider2D p2 =
+                    sliceObject.AddComponent<PolygonCollider2D>();
+                    /*
+                    bool onko = IsPolygonColliderSizeOverLimit(p2, 0.1f);
+                  
+
+                    if (!onko)
+                    {
+                        Destroy(sr);
+                        Destroy(sliceObject);
+                        continue;
+                    }
+                    */
+
+
+
+                    /*
+                    BoxCollider2D p=
                     sliceObject.AddComponent<BoxCollider2D>();
-                    p.size = new Vector2(0.1f, 0.1f);
+                    p.size = new Vector2(0.2f, 0.2f);
+                    */
+                    GameObject alus = PalautaAlus();
+                    if (alus != null)
+                    {
+                        List<GameObject> laa = new List<GameObject>();
+                        laa.Add(alus);
+                        laa.Add(sliceObject);
+                        IgnoreCollisions(laa);
+                    }
                 }
 
                 /*        
@@ -1097,8 +1142,8 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         */
                 float korotus = (y * (sliceHeight / originalSprite.pixelsPerUnit));
-               // Debug.Log("korotus =" + korotus);
-               // Debug.Log("transform.position.y =" + transform.position.y);
+                // Debug.Log("korotus =" + korotus);
+                // Debug.Log("transform.position.y =" + transform.position.y);
 
                 //3 on testi
                 /*
@@ -1108,17 +1153,22 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                         +ysaato- puolet+
       transform.position.y + korotus , transform.position.z);
                 */
+                //oli -0.2f
                 sliceObject.transform.position = new Vector3(
-                    -0.2f +
+                   xsaato +
                     transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
-                        +ysaato -puolet+
+                        +ysaato - puolet +
       transform.position.y + korotus, transform.position.z);
 
                 //   sliceObject.transform.rotation.z=
 
                 float sourceZRotation = go.transform.rotation.eulerAngles.z;
 
-                
+                // sliceObject.tag = "vihollinensirpaleexplode";
+                // sliceObject.layer = go.layer;
+
+                //sliceObject.transform.localScale = new Vector3(2.0f, 2.0f, 0f);
+
 
                 /*
                 float zrotaatio =
@@ -1166,18 +1216,40 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 */
                 //float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
 
-  
-                float randomForce = explosionForce;
 
+                float randomForce = explosionForce;
+                /*MJM TESTI*/
                 pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
 
 
                 // Optionally, add random torque for rotation
 
                 pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
-               
+
+
                 //Destroy(sliceObject, 0.3f);
-                Destroy(sliceObject, alivetime);
+
+                // DestroyController
+                //  DestroyController c=
+                // sliceObject.AddComponent<DestroyController>();
+                // c.alivetime = 4.0f;
+
+                if (addDestroyController)
+                {
+                    DestroyController c =
+                     sliceObject.AddComponent<DestroyController>();
+                    c.SetAlivetime(alivetime);
+                    c.SetExplosion(explosion);
+
+                }
+                else
+                {
+                    Destroy(sliceObject, alivetime);
+                }
+
+
+                //StartCoroutine(ChangeToStaticAfterDelay(1f, pieceRigidbody));
+              
 
                 //  Instantiate(sliceObject);
 
@@ -1189,7 +1261,70 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     }
 
-    public void IgnoreChildCollisions(Transform parent)
+    public static bool IsPolygonColliderSizeOverLimit(PolygonCollider2D polygonCollider, float limit)
+    {
+        Vector2 siz = GetPolygonColliderSize(polygonCollider);
+
+        float koko = siz.x * siz.y;
+      //  Debug.Log("koko=" + koko);
+        return koko >= limit;
+
+
+    }
+
+    public static Vector2 GetPolygonColliderSize(PolygonCollider2D polygonCollider)
+    {
+        if (polygonCollider == null)
+        {
+            Debug.LogError("PolygonCollider2D is null. Please provide a valid collider.");
+            return Vector2.zero;
+        }
+
+        Vector2[] points = polygonCollider.points;
+
+        // Initialize min and max values
+        float minX = float.MaxValue;
+        float minY = float.MaxValue;
+        float maxX = float.MinValue;
+        float maxY = float.MinValue;
+
+        // Iterate through the points to calculate the bounding box
+        foreach (Vector2 point in points)
+        {
+            // Transform local points to world points
+            Vector2 worldPoint = polygonCollider.transform.TransformPoint(point);
+
+            if (worldPoint.x < minX) minX = worldPoint.x;
+            if (worldPoint.y < minY) minY = worldPoint.y;
+            if (worldPoint.x > maxX) maxX = worldPoint.x;
+            if (worldPoint.y > maxY) maxY = worldPoint.y;
+        }
+
+        // Calculate size
+        float width = maxX - minX;
+        float height = maxY - minY;
+
+        return new Vector2(width, height);
+    }
+
+IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
+    {
+        Debug.Log("ennen delay");
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+        Debug.Log("eka loki Rigidbody bodyType changed to Static after delay");
+        //        pieceRigidbody.bodyType = RigidbodyType2D.Static;
+
+        // Change the Rigidbody bodyType to Static
+        pieceRigidbody.bodyType = RigidbodyType2D.Static;
+
+        pieceRigidbody.simulated = false;
+
+        Debug.Log("Rigidbody bodyType changed to Static after delay");
+    }
+
+
+    public void IgnoreChildCollisionsvanhaaa(Transform parent)
     {
 
         Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
@@ -1200,9 +1335,78 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             for (int j = i + 1; j < childColliders.Length; j++)
             {
                 Physics.IgnoreCollision(childColliders[i], childColliders[j]);
-      
+
             }
         }
+    }
+
+    public void IgnoreChildCollisions(Transform parent)
+    {
+        if (parent == null) return;
+
+        Collider parentCollider = parent.GetComponent<Collider>();
+        Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
+
+        for (int i = 0; i < childColliders.Length; i++)
+        {
+            // Ignore collisions between the parent collider and child colliders
+            if (parentCollider != null)
+            {
+                Physics.IgnoreCollision(childColliders[i], parentCollider);
+            }
+
+            // Ignore collisions between all child colliders
+            for (int j = i + 1; j < childColliders.Length; j++)
+            {
+                Physics.IgnoreCollision(childColliders[i], childColliders[j]);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Counts the number of non-transparent pixels in a given sprite.
+    /// </summary>
+    /// <param name="sprite">The sprite to analyze.</param>
+    /// <returns>The count of non-transparent pixels.</returns>
+    public static int CountNonTransparentPixels(Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            Debug.LogError("Sprite is null!");
+            return 0;
+        }
+
+        // Get the texture and sprite rect
+        Texture2D texture = sprite.texture;
+        Rect spriteRect = sprite.rect;
+
+        // Ensure the texture is readable
+        if (!texture.isReadable)
+        {
+            Debug.LogError("The sprite's texture is not readable. Enable 'Read/Write' in the texture import settings.");
+            return 0;
+        }
+
+        // Get the pixel data within the sprite's bounds
+        Color[] pixels = texture.GetPixels(
+            (int)spriteRect.x,
+            (int)spriteRect.y,
+            (int)spriteRect.width,
+            (int)spriteRect.height
+        );
+
+        int count = 0;
+
+        // Count non-transparent pixels
+        foreach (Color pixel in pixels)
+        {
+            if (pixel.a > 0f) // Check if the pixel has any opacity
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     /*
@@ -1234,7 +1438,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
     */
 
-    public void IgnoreCollisions(List<GameObject> lista)
+    public void IgnoreCollisionsEITOIMI(List<GameObject> lista)
     {
         if (lista == null || lista.Count == 0)
         {
@@ -1256,7 +1460,35 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             }
         }
     }
+    public void IgnoreCollisions(List<GameObject> lista)
+    {
+        if (lista == null || lista.Count == 0)
+        {
+            return;
+        }
 
+        // Iterate through all GameObjects in the list
+        for (int i = 0; i < lista.Count; i++)
+        {
+            GameObject go1 = lista[i];
+            Collider[] colliders1 = go1.GetComponentsInChildren<Collider>();
+
+            for (int j = i + 1; j < lista.Count; j++) // Avoid duplicate comparisons
+            {
+                GameObject go2 = lista[j];
+                Collider[] colliders2 = go2.GetComponentsInChildren<Collider>();
+
+                // Ignore collisions between all colliders in go1 and go2
+                foreach (Collider c1 in colliders1)
+                {
+                    foreach (Collider c2 in colliders2)
+                    {
+                        Physics.IgnoreCollision(c1, c2);
+                    }
+                }
+            }
+        }
+    }
 
     bool IsObjectRightOfCamera(Camera cam, Transform objTransform)
     {
@@ -1660,7 +1892,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
             //Vector2 rayOrigin = new Vector2(transform.position.x, i);
 
-            Vector2 rayOrigin = new Vector2(transform.position.x+2, i);
+            Vector2 rayOrigin = new Vector2(transform.position.x + 2, i);
 
 
 
@@ -1675,7 +1907,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 if (hit.collider != null && hit.collider.gameObject != gameObject &&
                     (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
                 {
-                 //   Debug.Log("Obstacle detected at: " + hit.collider.name);
+                    //   Debug.Log("Obstacle detected at: " + hit.collider.name);
 
                     return true;
                 }
@@ -1735,7 +1967,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 if (hit.collider != null && hit.collider.gameObject != gameObject &&
                     (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
                 {
-                   // Debug.Log("Obstacle detected at: " + hit.collider.name);
+                    // Debug.Log("Obstacle detected at: " + hit.collider.name);
 
                     onkoosumaa = true;
                     break;
@@ -1776,7 +2008,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 if (hit.collider != null && hit.collider.gameObject != gameObject &&
                     (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
                 {
-                 //   Debug.Log("Obstacle detected at: " + hit.collider.name);
+                    //   Debug.Log("Obstacle detected at: " + hit.collider.name);
 
                     onkoosumaa = true;
                     break;
@@ -1831,7 +2063,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             else
             {
                 bool alas = OlisikoalhaallaVaistotilaa(rayCount, rayDistance, collisionLayer);
-              //  Debug.Log("alas=" + alas);
+                //  Debug.Log("alas=" + alas);
                 if (alas)
                 {
 

@@ -50,7 +50,10 @@ public class SkeletonController : BaseController, IExplodable
             sp.flipY = !sp.flipY;
             //liikevasen = !liikevasen;
         }
-
+        if (spritensuuntaonalunperinvasemmaltaoikealle && liikevasen)
+        {
+            sp.flipX = true;
+        }
         IgnoreChildCollisions(gameObject.transform);
 
     }
@@ -61,11 +64,13 @@ public class SkeletonController : BaseController, IExplodable
     private int step = 1;
     // Update is called once per frame
 
+    public float kulmajonkajalkeenliikkuminenLoppuu = 45.0f;
+
 
     public float efektivali = 2.0f;
     private float efektilaskuri = 0.0f;
     public float rajahdysgravity = 0.5f;
-
+    //  public float ysuunnassapyorimisennopeus = 0.5f;
     public bool laskespritechangetimelennossa = false;
     private void LaskeSpriteChangeTime()
     {
@@ -76,6 +81,8 @@ public class SkeletonController : BaseController, IExplodable
             spritechangetime = 0.02f / liikex;
     }
 
+    public float viivelopulliseenrajaytykseen = 3.0f;
+    public float kaatotahti = -3.0f;
     void Update()
     {
         if (!sp.isVisible)
@@ -93,6 +100,51 @@ public class SkeletonController : BaseController, IExplodable
 
         // Clamp the Z rotation
         float clampedZRotation = Mathf.Clamp(currentZRotation, minRotation, maxRotation);
+        if (rajaytetty)
+        {
+            rajaytyshetkilaskuri += Time.deltaTime;
+
+        }
+        if (rajaytetty && (rajaytyshetkilaskuri >= viivelopulliseenrajaytykseen
+
+            || Mathf.Abs(currentZRotation) >= kulmajonkajalkeenrajahtaa)
+            )
+        {
+            RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, luorajaytyksessaboxcollider2d,
+rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycontrollerinExplode);
+            if (lopullinenexplosion != null)
+            {
+                GameObject instanssi = Instantiate(lopullinenexplosion, transform.position, Quaternion.identity);
+
+
+                //    Destroy(instanssi, aliviteme);
+
+            }
+            Destroy(gameObject);
+        }
+
+
+
+        if (Mathf.Abs(currentZRotation) >= kulmajonkajalkeenrajahtaa)
+        {
+            Debug.Log(" kulmajonkajalkeenrajahtaaMathf.Abs(currentZRotation)=" + Mathf.Abs(currentZRotation) +
+                "kulmajonkajalkeenrajahtaa=" + kulmajonkajalkeenrajahtaa
+                );
+            TeeLopulllinenRajaytys();
+            return;
+        }
+        /*
+        if (Mathf.Abs(currentZRotation) >= kulmajonkajalkeenliikkuminenLoppuu)
+        {
+            Debug.Log("Mathf.Abs(currentZRotation)=" + Mathf.Abs(currentZRotation) +
+                "kulmajonkajalkeenliikkuminenLoppuu=" + kulmajonkajalkeenliikkuminenLoppuu
+                );
+           
+            return;
+        }
+        */
+
+
 
         // Apply the clamped rotation
         if (limitrotation)
@@ -106,13 +158,18 @@ public class SkeletonController : BaseController, IExplodable
 
 
         }
+        else if (rajaytetty && rajaytyshetkilaskuri < viivelopulliseenrajaytykseen)
+        {
+            transform.Rotate(0, 0, kaatotahti * Time.deltaTime);
+           // return;
+        }
         if (teeEfektia)
         {
             efektilaskuri += Time.deltaTime;
             if (efektilaskuri >= efektivali)
             {
                 RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, false,
-                    rajaytyksenysaato, true, rajahdysgravity);
+                    rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycontrollerinExplode);
                 efektilaskuri = 0;
             }
 
@@ -176,15 +233,27 @@ public class SkeletonController : BaseController, IExplodable
 
         float sinYMovement = Mathf.Sin(yhteensuuntaanliikkumisaika * sinfrequency) * sinamplitude;
 
+        //ysuunnanpyoriminen += Time.deltaTime * ysuunnassapyorimisennopeus;
+
+        //     transform.Rotate(0, ysuunnassapyorimisennopeus * Time.deltaTime, 0);
+
+        //   transform.position = new Vector3(transform.position.x + (Time.deltaTime * kerroin * liikex),
+        //       transform.position.y + sinYMovement, transform.position.z);
 
         transform.position = new Vector3(transform.position.x + (Time.deltaTime * kerroin * liikex),
-            transform.position.y + sinYMovement, transform.position.z);
+            transform.position.y + sinYMovement, 0);
 
     }
+    // private float ysuunnanpyoriminen = 0.0f;
     private float yhteensuuntaanliikkumisaika = 0.0f;
 
     public float yhteensuuntaanliikkumisaikavaihtovali = 3.0f;
     private bool rajaytetty = false;
+
+
+    public float rajaytaspritexsaata = -2.0f;
+
+    public GameObject destroycontrollerinExplode;
     public void Explode(Collision2D col)
     {
         if (rajaytetty)
@@ -196,38 +265,7 @@ public class SkeletonController : BaseController, IExplodable
         //   Debug.Log("hitcount=" + hitcount);
         if (hitcount >= hitcoutneeded)
         {
-            // RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false,
-            //     rajaytyksenysaato, true);
-            //   RajaytaSprite(gameObject, rows , cols , explosionforce , aliviteme , sirpalemass, false,
-            //rajaytyksenysaato, true);
-
-            RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, false,
-    rajaytyksenysaato, true, rajahdysgravity);
-
-            if (lopullinenexplosion != null)
-            {
-                GameObject instanssi = Instantiate(lopullinenexplosion,transform.position, Quaternion.identity);
-
-
-                Destroy(instanssi, aliviteme);
-
-            }
-            if (uusi != null)
-            {
-                //GameObject instanssi2 = Instantiate(uusi, transform.position, Quaternion.identity);
-                //Invoke("InstantiatePrefab", delay);
-
-                StartCoroutine(InstantiatePrefab());
-                //s SkeletonController sc = instanssi2.GetComponent<SkeletonController>();
-
-            }
-            if (destroy)
-            {
-                Destroy(gameObject);
-            }
-
-            rajaytetty = true;
-            hitcount = 0;
+            TeeLopulllinenRajaytys();
         }
         else
         {
@@ -243,16 +281,59 @@ public class SkeletonController : BaseController, IExplodable
         }
 
     }
-    public float delay = 5.0f;
-
-    IEnumerator InstantiatePrefab()
+    private float rajaytyshetkilaskuri = 0.0f;
+    private void TeeLopulllinenRajaytys()
     {
-        new WaitForSeconds(delay);
-        Instantiate(uusi, transform.position, Quaternion.identity);
-        Debug.Log("Object instantiated using Invoke!");
 
-        yield return new WaitForSeconds(delay);
+        if (rajaytetty)
+        {
+            return;
+        }
+        // RajaytaSprite(gameObject, rows * 2, cols * 2, explosionforce * 8, aliviteme * 7, sirpalemass / 2, false,
+        //     rajaytyksenysaato, true);
+        //   RajaytaSprite(gameObject, rows , cols , explosionforce , aliviteme , sirpalemass, false,
+        //rajaytyksenysaato, true);
+
+        //      RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, luorajaytyksessaboxcollider2d,
+        //rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycontrollerinExplode);
+
+        if (lopullinenexplosion != null)
+        {
+            GameObject instanssi = Instantiate(lopullinenexplosion, transform.position, Quaternion.identity);
+
+
+            //    Destroy(instanssi, aliviteme);
+
+        }
+        if (uusi != null && luouusi)
+        {
+            //GameObject instanssi2 = Instantiate(uusi, transform.position, Quaternion.identity);
+            //Invoke("InstantiatePrefab", delay);
+
+            //StartCoroutine(InstantiatePrefab());
+            //s SkeletonController sc = instanssi2.GetComponent<SkeletonController>();
+
+        }
+        if (destroy)
+        {
+            Destroy(gameObject);
+
+        }
+        else
+        {
+
+        }
+
+        rajaytetty = true;
+        hitcount = 0;
     }
+
+    public bool luorajaytyksessaboxcollider2d = true;
+
+    public float kulmajonkajalkeenrajahtaa = 85.0f;
+
+
+    public bool luouusi = false;
 
     public void Explode()
     {
@@ -380,19 +461,33 @@ public class SkeletonController : BaseController, IExplodable
     */
     public void Tormatty(bool tormaysvasen)
     {
-        Debug.Log("tormaysvasen=" + tormaysvasen);
+        float currentZRotation = NormalizeAngle(transform.rotation.eulerAngles.z);
+        if (Mathf.Abs(currentZRotation) >= kulmajonkajalkeenrajahtaa/2.0f)
+        {
+            return;
+        }
+
+            Debug.Log("tormaysvasen=" + tormaysvasen);
         if (vaihdasuuntaa)
         {
             if (liikevasen == tormaysvasen)
             {
                 liikevasen = !tormaysvasen;
-                sp.flipX = !tormaysvasen;
+                if (spritensuuntaonalunperinvasemmaltaoikealle)
+                {
+                    sp.flipX = !tormaysvasen;
+                }
+                else
+                {
+                    sp.flipX = tormaysvasen;
+                }
+
 
                 yhteensuuntaanliikkumisaika = 0.0f;
             }
         }
     }
-
+    public bool spritensuuntaonalunperinvasemmaltaoikealle = true;
     private float NormalizeAngle(float angle)
     {
         angle = angle % 360;

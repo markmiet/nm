@@ -251,7 +251,8 @@ public class AmmusController : BaseController, IExplodable {
 						}
 						else
 						{
-							//Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+							Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+
 						}
 					}
 
