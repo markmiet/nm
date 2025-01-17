@@ -19,6 +19,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
 
 
+    public bool uusiohjauskaytossa = true;
 
     public float maksimimaaradamageajokakestetaan = 100.0f;
     public float damagenmaara = 0.0f;
@@ -297,7 +298,208 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         GameObject foundObject2 = GameObject.Find("Ruudunvasenylakulmateksti");
         ruudunvasenylakulmatekstiTextMeshProUGUI = foundObject2.GetComponent<TextMeshProUGUI>();
+
+
+        sormi = GameObject.Find("Sormialus");
+        if (uusiohjauskaytossa)
+        {
+            //   sormi.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            UusiohjauskaytossaAsetaSormi();
+        }
+        else
+        {
+            
+        }
+
     }
+
+
+    public void UusiohjauskaytossaAsetaSormi()
+    {
+
+
+
+        float screenHeightInWorld = Camera.main.orthographicSize * 2;
+
+        float aluksenpieninkohta = Calculate25PercentAboveBottom(prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
+
+        float aluksentilaysuunnassa = screenHeightInWorld * ((100 - prosenttiosuusmikaonvarattuohjaukseenkorkeudessa) / 100.0f);
+
+        float alusprossylialarajan =
+            Laskemontakoprosenttiaalusonalarajanylapuolella(aluksenpieninkohta, aluksentilaysuunnassa);
+
+        /*
+        //float sormenprosentuaalinenyosuus = sormi.transform.position.y / aluksenpieninkohta;
+
+        float sormiprossat = CalculatePercentageAboveBottom(sormi);
+        Debug.Log("sormiprossat=" + sormiprossat);
+
+        //eli siitä 25% pitäis saada 100%
+        //ja siitä 0% pitäis saada 0&
+        //12.5%=100
+        float laskentay = 100.0f / prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
+        float alusjuttu = laskentay * sormiprossat;
+
+
+        float montakoprossaasormestakaytetty = sormiprossat / prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
+
+
+        float aluksenysuunnassalisays = aluksentilaysuunnassa * (montakoprossaasormestakaytetty);
+
+        float alussijainti = aluksenpieninkohta + aluksenysuunnassalisays;
+        */
+        sormi.transform.position = new Vector3(transform.position.x, transform.position.y- 2.0f, 0);
+
+    }
+
+    private GameObject sormi;
+
+    private void UusiohjauskaytossaAsetaAlussijainti()
+    {
+
+        //  sormi.transform.localPosition=new Vector3(0, -5, 0);
+        /*
+          float screenHeightInWorld = Camera.main.orthographicSize * 2;
+
+          // Calculate half of the screen height
+          float halfScreenHeight = screenHeightInWorld / 2;
+
+          // Set the local position of 'sormi' half a screen height down
+          sormi.transform.localPosition = new Vector3(0, -halfScreenHeight, 0);
+          */
+
+        float screenHeightInWorld = Camera.main.orthographicSize * 2;
+       // float aluksenpieninkohta =
+       //     mainCamera.transform.position.y - Camera.main.orthographicSize/2 +
+       //     screenHeightInWorld * (prosenttiosuusmikaonvarattuohjaukseenkorkeudessa/100.0f);
+
+        float aluksenpieninkohta = Calculate25PercentAboveBottom(prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
+
+       // float sormenprosentit = prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;// sormi.transform.position.y / screenHeightInWorld;
+
+        float aluksentilaysuunnassa = screenHeightInWorld * ((100 - prosenttiosuusmikaonvarattuohjaukseenkorkeudessa) / 100.0f);
+
+      
+        //float sormenprosentuaalinenyosuus = sormi.transform.position.y / aluksenpieninkohta;
+
+        float sormiprossat=CalculatePercentageAboveBottom(sormi);
+        Debug.Log("sormiprossat=" + sormiprossat);
+
+        //eli siitä 25% pitäis saada 100%
+        //ja siitä 0% pitäis saada 0&
+        //12.5%=100
+        float laskentay = 100.0f / prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
+        float alusjuttu = laskentay * sormiprossat;
+
+
+        float montakoprossaasormestakaytetty = sormiprossat / prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
+
+//        float aluksenysuunnassalisays = aluksentilaysuunnassa * (alusjuttu/100.0f);
+
+        float aluksenysuunnassalisays = aluksentilaysuunnassa * (montakoprossaasormestakaytetty );
+
+
+
+        float alussijainti = aluksenpieninkohta + aluksenysuunnassalisays;
+        transform.position = new Vector3(sormi.transform.position.x, alussijainti,0);
+      //  Debug.Log("alussijainti=" + alussijainti);
+
+    }
+
+    public float prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = 25.0f;
+
+
+    float Laskemontakoprosenttiaalusonalarajanylapuolella(float alaraja,float aluksenruututilankorkeus)
+    {
+       // float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
+        float alarajanylitys = transform.position.y-alaraja ;
+
+        return alarajanylitys / aluksenruututilankorkeus;
+    }
+
+    float Calculate25PercentAboveBottom(float sormiprossa)
+    {
+        float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
+        float bottomY = Camera.main.transform.position.y - Camera.main.orthographicSize; // Bottom of the screen
+        return bottomY + sormiprossa/100.0f * screenHeightInWorld; // 25% above the bottom
+    }
+
+    float CalculatePercentageAboveBottom2(GameObject obj)
+    {
+        // Get the Y position of the object in world space
+        float objectY = obj.transform.position.y;
+
+        // Get the bottom and top Y world positions of the screen
+        float bottomY = mainCamera.transform.position.y - mainCamera.orthographicSize;
+        float topY = mainCamera.transform.position.y + mainCamera.orthographicSize;
+
+        // Calculate the percentage above the bottom
+        float percentage = ((objectY - bottomY) / (topY - bottomY)) * 100f;
+
+        // Clamp the percentage between 0% and 100%
+        return Mathf.Clamp(percentage, 0f, 100f);
+    }
+
+    float CalculatePercentageAboveBottom(GameObject obj)
+    {
+        // Get the Y position of the object in world space
+        float objectY = obj.transform.position.y;
+
+        float objectHeight = obj.GetComponent<Renderer>().bounds.size.y;
+
+        objectY = objectY - objectHeight/2;
+
+        // Get the bottom and top Y world positions of the screen
+        float bottomY = mainCamera.transform.position.y - mainCamera.orthographicSize;
+        float topY = mainCamera.transform.position.y + mainCamera.orthographicSize;
+
+        // Check if the object is below the bottom of the screen
+        if (objectY < bottomY)
+        {
+            return 0f; // The object is below the screen, so return 0%
+        }
+
+        // Calculate the percentage above the bottom
+        float percentage = ((objectY - bottomY) / (topY - bottomY)) * 100f;
+
+        // Clamp the percentage between 0% and 100%
+        return Mathf.Clamp(percentage, 0f, 100f);
+    }
+
+    float CalculatePercentageAboveB(GameObject obj)
+    {
+        // Get the object's Y position in world space (center of the object)
+        float objectY = obj.transform.position.y;
+
+        // Calculate the object's height in world space
+        float objectHeight = obj.GetComponent<Renderer>().bounds.size.y;
+
+        // Get the bottom and top Y world positions of the screen
+        float bottomY = mainCamera.transform.position.y - mainCamera.orthographicSize;
+        float topY = mainCamera.transform.position.y + mainCamera.orthographicSize;
+
+        // Calculate the object's bottom position (taking height into account)
+        float objectBottomY = objectY - (objectHeight / 2);
+
+        // Check if the object is fully below the screen
+        if (objectBottomY < bottomY)
+        {
+            return 0f; // The object is fully below the screen, so return 0%
+        }
+
+        // Calculate the object's top position (taking height into account)
+        float objectTopY = objectY + (objectHeight / 2);
+
+        // If the top of the object is above the screen's top, clamp it
+        float effectiveTopY = Mathf.Min(objectTopY, topY);
+
+        // Calculate the percentage above the bottom
+        float percentage = ((effectiveTopY - bottomY) / (topY - bottomY)) * 100f;
+
+        // Clamp the percentage between 0% and 100%
+        return Mathf.Clamp(percentage, 0f, 100f);
+    }
+
 
     TextMeshProUGUI keskellaTextMeshProUGUI;
 
@@ -666,16 +868,24 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             _offset = transform.position - worldPosition;
         }
         */
+        string tagii = "alustag";
+        if (uusiohjauskaytossa)
+        {
+            tagii = "sormitag";
+        }
+
         Vector2 boxSize = boxCollider2D.size * transform.localScale;
 
         boxSize = boxSize * sormipaikkakerto;
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(worldPosition, boxSize, sormenlayermaski);
 
+        
+
         foreach (Collider2D collider in colliders)
         {
             //
-            if (collider.gameObject.tag.Contains("alustag"))
+            if (collider.gameObject.tag.Contains(tagii))
             {
                 _isDragging = true;
                 // Calculate offset between the object and touch/mouse position
@@ -727,70 +937,84 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void MoveObject(Vector3 screenpositionSormen)
     {
-        float spriteWidth = m_SpriteRenderer.bounds.size.x;
-        float spriteHeight = m_SpriteRenderer.bounds.size.y;
-        Bounds bounds = m_SpriteRenderer.bounds;
-        Vector3 worldBottomLeft = new Vector3(bounds.min.x, bounds.min.y, bounds.center.z);
-        Vector3 worldTopRight = new Vector3(bounds.max.x, bounds.max.y, bounds.center.z);
 
-        // Convert world space corners to screen space
-        Vector3 screenBottomLeft = Camera.main.WorldToScreenPoint(worldBottomLeft);
-        Vector3 screenTopRight = Camera.main.WorldToScreenPoint(worldTopRight);
-
-        // Calculate width and height in screen space
-        float screenWidth = screenTopRight.x - screenBottomLeft.x;
-        float screenHeight = screenTopRight.y - screenBottomLeft.y;
-
-
-        //offsetvalue = Screen.width * (offsetvalueprocentsOffScreenWidth / 100f);
-        float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
-        float erikoisalueenoikeareuna = Screen.width * erikoisalueenoikeareunaProsentti / 100.0f;
-        float offsetmaara = Screen.width * offsetmaaraProsentti / 100.0f;
-
-        float offsetmaaraminimi = Screen.width * offsetprosentinminimi / 100.0f;
-
-
-        Vector3 screeni;
-
-        if (screenpositionSormen.x <= ruudunvasemmanreunansuojaalue)
+        if (uusiohjauskaytossa)
         {
-            //screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
-            //screeni = screenpositionSormen;
+            //Vector2 yritysWorldpoint = RajoitaMoveaPalautaWorldPoint(screenpositionSormen);
+            //yritysWorldpoint = new Vector2(yritysWorldpoint.x, yritysWorldpoint.y);
 
-            screenpositionSormen.x = ruudunvasemmanreunansuojaalue + offsetmaaraminimi;
-            screeni = screenpositionSormen;
-
-
-
-
-        }
-        else if (screenpositionSormen.x > ruudunvasemmanreunansuojaalue && screenpositionSormen.x <= erikoisalueenoikeareuna)
-        {
-            //prosenttilaseknta
-            float erikoisalueenleveys = (erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue);
-            float sormisiirrettynavasemmalle = screenpositionSormen.x - ruudunvasemmanreunansuojaalue;
-            float erikoisaluemaksimisiirrettyvasemmalle = erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue;
-
-            float prossa = sormisiirrettynavasemmalle / erikoisaluemaksimisiirrettyvasemmalle;
-
-
-            float offsettiprosentilla = offsetmaara * prossa;
-            if (offsettiprosentilla < offsetmaaraminimi)
-            {
-                offsettiprosentilla = offsetmaaraminimi;
-            }
-
-            screeni = new Vector3(screenpositionSormen.x + offsettiprosentilla, screenpositionSormen.y, 0);
-
+            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenpositionSormen);
+            TryMove(worldPosition);
+            UusiohjauskaytossaAsetaAlussijainti();
         }
         else
         {
-            screeni = new Vector3(screenpositionSormen.x + offsetmaara, screenpositionSormen.y, 0);
-        }
-        Vector2 yritysWorldpoint = RajoitaMoveaPalautaWorldPoint(screeni);
+            float spriteWidth = m_SpriteRenderer.bounds.size.x;
+            float spriteHeight = m_SpriteRenderer.bounds.size.y;
+            Bounds bounds = m_SpriteRenderer.bounds;
+            Vector3 worldBottomLeft = new Vector3(bounds.min.x, bounds.min.y, bounds.center.z);
+            Vector3 worldTopRight = new Vector3(bounds.max.x, bounds.max.y, bounds.center.z);
 
-        // transform.position = worldPosition + _offset;
-        TryMove(yritysWorldpoint);
+            // Convert world space corners to screen space
+            Vector3 screenBottomLeft = Camera.main.WorldToScreenPoint(worldBottomLeft);
+            Vector3 screenTopRight = Camera.main.WorldToScreenPoint(worldTopRight);
+
+            // Calculate width and height in screen space
+            float screenWidth = screenTopRight.x - screenBottomLeft.x;
+            float screenHeight = screenTopRight.y - screenBottomLeft.y;
+
+
+            //offsetvalue = Screen.width * (offsetvalueprocentsOffScreenWidth / 100f);
+            float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
+            float erikoisalueenoikeareuna = Screen.width * erikoisalueenoikeareunaProsentti / 100.0f;
+            float offsetmaara = Screen.width * offsetmaaraProsentti / 100.0f;
+
+            float offsetmaaraminimi = Screen.width * offsetprosentinminimi / 100.0f;
+
+
+            Vector3 screeni;
+
+            if (screenpositionSormen.x <= ruudunvasemmanreunansuojaalue)
+            {
+                //screenpositionSormen.x = ruudunvasemmanreunansuojaalue;
+                //screeni = screenpositionSormen;
+
+                screenpositionSormen.x = ruudunvasemmanreunansuojaalue + offsetmaaraminimi;
+                screeni = screenpositionSormen;
+
+
+
+
+            }
+            else if (screenpositionSormen.x > ruudunvasemmanreunansuojaalue && screenpositionSormen.x <= erikoisalueenoikeareuna)
+            {
+                //prosenttilaseknta
+                float erikoisalueenleveys = (erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue);
+                float sormisiirrettynavasemmalle = screenpositionSormen.x - ruudunvasemmanreunansuojaalue;
+                float erikoisaluemaksimisiirrettyvasemmalle = erikoisalueenoikeareuna - ruudunvasemmanreunansuojaalue;
+
+                float prossa = sormisiirrettynavasemmalle / erikoisaluemaksimisiirrettyvasemmalle;
+
+
+                float offsettiprosentilla = offsetmaara * prossa;
+                if (offsettiprosentilla < offsetmaaraminimi)
+                {
+                    offsettiprosentilla = offsetmaaraminimi;
+                }
+
+                screeni = new Vector3(screenpositionSormen.x + offsettiprosentilla, screenpositionSormen.y, 0);
+
+            }
+            else
+            {
+                screeni = new Vector3(screenpositionSormen.x + offsetmaara, screenpositionSormen.y, 0);
+            }
+            Vector2 yritysWorldpoint = RajoitaMoveaPalautaWorldPoint(screeni);
+
+            // transform.position = worldPosition + _offset;
+            TryMove(yritysWorldpoint);
+
+        }
 
     }
 
@@ -833,6 +1057,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void AsetaSijainti(Vector2 transformposition)
     {
+        if (uusiohjauskaytossa)
+        {
+            return;
+        }
+
         //Vector3 worldPosition = mainCamera.WorldToScreenPoint(transformposition);
         Vector3 screenpositionSormen = Camera.main.WorldToScreenPoint(transformposition);
         float ruudunvasemmanreunansuojaalue = Screen.width * ruudunvasemmanreunansuojaalueProsentti / 100.0f;
@@ -1056,9 +1285,22 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         else
         {
             */
-        Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
-        transform.position = kohta;
-        //}
+
+        if (uusiohjauskaytossa)
+        {
+            //Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
+            Vector2 kohta = Vector2.MoveTowards(sormi.transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
+
+            sormi.transform.position = kohta;
+        }
+        else
+        {
+
+            Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
+            transform.position = kohta;
+            //}
+        }
+
 
 
     }

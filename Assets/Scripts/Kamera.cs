@@ -24,6 +24,7 @@ public class Kamera : MonoBehaviour
             if (Mathf.Abs(ero) > 8)
             {
                 alus.transform.position = new Vector3(transform.position.x, y, 0);
+                alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
             }
 
 
