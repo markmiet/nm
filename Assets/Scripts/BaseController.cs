@@ -2082,4 +2082,31 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
 
     }
 
+    public Vector3 GetOhjausCameraMinWorldPosition(Camera sormikamera)
+    {
+
+        // Calculate the camera's dimensions in world space
+        float height = sormikamera.orthographicSize * 2;
+        float width = height * sormikamera.aspect;
+
+        // Bottom-left corner of the camera's view in world space
+        Vector3 minWorldPosition = sormikamera.transform.position - new Vector3(width / 2, height / 2, 0);
+
+        return minWorldPosition;
+    }
+
+
+    public Vector3 GetOhjausCameraMaxWorldPosition(Camera sormikamera)
+    {
+
+        // Calculate the camera's dimensions in world space
+        float height = sormikamera.orthographicSize * 2;
+        float width = height * sormikamera.aspect;
+
+        // Bottom-left corner of the camera's view in world space
+        Vector3 minWorldPosition = sormikamera.transform.position + new Vector3(width / 2, height / 2, 0);
+
+        return minWorldPosition;
+    }
+
 }
