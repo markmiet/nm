@@ -1050,10 +1050,10 @@ public class BaseController : MonoBehaviour
                 if (teeBoxcollider2d)
                 {
                     int maara = CountNonTransparentPixels(newSprite);
-                    Debug.Log("aaaaaaaaaaaaaei piks=" + maara);
+                   // Debug.Log("aaaaaaaaaaaaaei piks=" + maara);
                     if (maara<300)
                     {
-                        Debug.Log("ei piks=" + maara);
+                    //    Debug.Log("ei piks=" + maara);
                         continue;
                     }
                 

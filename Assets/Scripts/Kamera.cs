@@ -95,7 +95,8 @@ public class Kamera : MonoBehaviour
         transform.position += skrolli;
         if (alus != null)
         {
-            alus.transform.position += skrolli;
+            //alus.transform.position += skrolli;
+            alus.GetComponent<AlusController>().LisaaSkrollia(skrolli);
 
         }
        

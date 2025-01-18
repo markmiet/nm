@@ -89,7 +89,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public int optioidenmaksimaara;
 
 
- //   public Joystick joystick;
+    //   public Joystick joystick;
 
     public GameObject explosion;
 
@@ -170,7 +170,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //   private List<Vector3> aluksenpositiotCameraViewissa = new List<Vector3>();
     private void TallennaSijaintiSailytaVainKymmenenViimeisinta()
     {
-       // base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 8, true, true, debugloota);
+        // base.TallennaSijaintiSailytaVainNkplViimeisinta(optioidenmaksimaara * 8, true, true, debugloota);
         if (true)
         {
             return;
@@ -228,6 +228,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     private BoxCollider2D boxCollider2D;
     private bool android;
+
+    private LineRenderer lineRenderer;
     void Start()
     {
         android = Application.platform == RuntimePlatform.Android;
@@ -292,7 +294,6 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         damagemittariController = damageMittari.GetComponent<DamagemittariController>();
 
 
-
         GameObject foundObject = GameObject.Find("Ruudunkeskiteksti");
         keskellaTextMeshProUGUI = foundObject.GetComponent<TextMeshProUGUI>();
 
@@ -304,19 +305,31 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         if (uusiohjauskaytossa)
         {
             //   sormi.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            //prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = CalculatePercentageAboveBottom2(alamaksiminMaarittava);
+
             UusiohjauskaytossaAsetaSormi();
         }
         else
         {
-            
-        }
 
+        }
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
+    private GameObject damagetausta;
+
+    public void LisaaSkrollia(Vector3 skrolli)
+    {
+        transform.position += skrolli;
+        sormi.transform.position += skrolli;
+    }
 
     public void UusiohjauskaytossaAsetaSormi()
     {
-
+        float sormiuusisijainti = PalautaOhjausAlueenYPelialueenYylla(transform.position);
+        sormi.transform.position = new Vector3(transform.position.x, sormiuusisijainti, 0);
+        if (true)
+            return;
 
 
         float screenHeightInWorld = Camera.main.orthographicSize * 2;
@@ -325,8 +338,28 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         float aluksentilaysuunnassa = screenHeightInWorld * ((100 - prosenttiosuusmikaonvarattuohjaukseenkorkeudessa) / 100.0f);
 
+
+        float ohjausosuudentilaysuunnassa = screenHeightInWorld * ((prosenttiosuusmikaonvarattuohjaukseenkorkeudessa) / 100.0f);
+
+
+
+
         float alusprossylialarajan =
             Laskemontakoprosenttiaalusonalarajanylapuolella(aluksenpieninkohta, aluksentilaysuunnassa);
+
+
+        float aloituskohta = ohjausosuudentilaysuunnassa * alusprossylialarajan;
+
+        // float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
+        float bottomY = Camera.main.transform.position.y - Camera.main.orthographicSize; // Bottom of the screen
+
+
+
+        float objectHeight = sormi.GetComponent<Renderer>().bounds.size.y;
+
+
+        sormi.transform.position = new Vector3(transform.position.x, bottomY + aloituskohta - objectHeight / 2.0f, 0);
+
 
         /*
         //float sormenprosentuaalinenyosuus = sormi.transform.position.y / aluksenpieninkohta;
@@ -348,14 +381,64 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         float alussijainti = aluksenpieninkohta + aluksenysuunnassalisays;
         */
-        sormi.transform.position = new Vector3(transform.position.x, transform.position.y- 2.0f, 0);
+
+
+        //SetUIPosition(new Vector3(transform.position.x, transform.position.y , 0));
 
     }
+
+
+    public void SetUIPosition(Vector3 worldPosition)
+    {
+        // Convert the world position to screen position
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+
+        // Convert the screen position to local position in the canvas
+        RectTransform canvasRect = sormi.GetComponent<RectTransform>();
+        Vector2 localPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            screenPosition,
+            Camera.main, // Use null if Canvas Render Mode is Screen Space - Overlay
+            out localPosition
+        );
+
+        // Set the local position of the UI element
+        sormi.GetComponent<RectTransform>().localPosition = localPosition;
+    }
+
 
     private GameObject sormi;
 
     private void UusiohjauskaytossaAsetaAlussijainti()
     {
+        // float alussijaintiy = this.PalautaPeliAlueenYOhjausAlueenYylla(sormi.transform.position);
+        // transform.position = new Vector3(sormi.transform.position.x, alussijaintiy, 0);
+
+        float alussijaintiy =  PalautaPeliAlueenYOhjausAlueenYylla(sormi.transform.position);
+        transform.position = new Vector3(sormi.transform.position.x, alussijaintiy, 0);
+
+        float alueeny = PalautaPelialueenAlarajaY();
+
+
+        Vector3 minkamera = GetCameraMinWorldPosition();
+        Vector3 maxkamera = GetCameraMaxWorldPosition();
+
+        lineRenderer.SetPosition(0, new Vector3(minkamera.x, alueeny,0)); // Start point
+        lineRenderer.SetPosition(1, new Vector3(maxkamera.x, alueeny, 0)); // End point
+
+        float ohjausalueenalaraja = PalautaOhjausalueenAlarajaY();
+
+        //lineRenderer2.SetPosition(0, new Vector3(minkamera.x, ohjausalueenalaraja, 0)); // Start point
+        //lineRenderer2.SetPosition(1, new Vector3(maxkamera.x, ohjausalueenalaraja, 0)); // End point
+
+
+
+        //  @todoo tahan  private LineRenderer lineRenderer; piirto
+        //  ja toki pitää rajoittaa sormiliike
+
+        if (true)
+            return;
 
         //  sormi.transform.localPosition=new Vector3(0, -5, 0);
         /*
@@ -369,20 +452,20 @@ public class AlusController : BaseController, IDamagedable, IExplodable
           */
 
         float screenHeightInWorld = Camera.main.orthographicSize * 2;
-       // float aluksenpieninkohta =
-       //     mainCamera.transform.position.y - Camera.main.orthographicSize/2 +
-       //     screenHeightInWorld * (prosenttiosuusmikaonvarattuohjaukseenkorkeudessa/100.0f);
+        // float aluksenpieninkohta =
+        //     mainCamera.transform.position.y - Camera.main.orthographicSize/2 +
+        //     screenHeightInWorld * (prosenttiosuusmikaonvarattuohjaukseenkorkeudessa/100.0f);
 
         float aluksenpieninkohta = Calculate25PercentAboveBottom(prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
 
-       // float sormenprosentit = prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;// sormi.transform.position.y / screenHeightInWorld;
+        // float sormenprosentit = prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;// sormi.transform.position.y / screenHeightInWorld;
 
         float aluksentilaysuunnassa = screenHeightInWorld * ((100 - prosenttiosuusmikaonvarattuohjaukseenkorkeudessa) / 100.0f);
 
-      
+
         //float sormenprosentuaalinenyosuus = sormi.transform.position.y / aluksenpieninkohta;
 
-        float sormiprossat=CalculatePercentageAboveBottom(sormi);
+        float sormiprossat = CalculatePercentageAboveBottom(sormi);
         Debug.Log("sormiprossat=" + sormiprossat);
 
         //eli siitä 25% pitäis saada 100%
@@ -394,25 +477,197 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         float montakoprossaasormestakaytetty = sormiprossat / prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
 
-//        float aluksenysuunnassalisays = aluksentilaysuunnassa * (alusjuttu/100.0f);
+        //        float aluksenysuunnassalisays = aluksentilaysuunnassa * (alusjuttu/100.0f);
 
-        float aluksenysuunnassalisays = aluksentilaysuunnassa * (montakoprossaasormestakaytetty );
+        float aluksenysuunnassalisays = aluksentilaysuunnassa * (montakoprossaasormestakaytetty);
 
 
 
         float alussijainti = aluksenpieninkohta + aluksenysuunnassalisays;
-        transform.position = new Vector3(sormi.transform.position.x, alussijainti,0);
-      //  Debug.Log("alussijainti=" + alussijainti);
+        transform.position = new Vector3(sormi.transform.position.x, alussijainti, 0);
+        //  Debug.Log("alussijainti=" + alussijainti);
 
     }
 
+
+    public float prosenttiosuusalasuoja = 5.0f;
     public float prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = 25.0f;
 
-
-    float Laskemontakoprosenttiaalusonalarajanylapuolella(float alaraja,float aluksenruututilankorkeus)
+    //eli
+    private float PalautaPelialueenProsentit()
     {
-       // float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
-        float alarajanylitys = transform.position.y-alaraja ;
+        return 100.0f - prosenttiosuusalasuoja - prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
+
+    }
+    private float PalautaPeliAlueenYOhjausAlueenYylla(Vector3 yohjaus)
+    {
+        //yohj
+        float y = yohjaus.y;
+        float koko = PalautaPelialueenYkoko();
+
+        float ohjausprossa = PalautaOhjausAlueenprossa(y);
+
+        float ala = PalautaPelialueenAlarajaY();
+        float lisays=koko * (ohjausprossa / 100.0f);
+        return ala + lisays;
+    }
+
+    public float PalautaOhjausAlueenYPelialueenYylla(Vector3 pelialue)
+    {
+        float ohjauskoko = PalautaOhjausalueekoko();
+        float prosas = PalautaPeliAlueenprossa(pelialue.y);
+        float ohjausalaraja = PalautaOhjausalueenAlarajaY();
+        float lisays= ohjauskoko * (prosas / 100.0f);
+
+        float sormikoko = PalautaSormenkorkeus();
+
+        return ohjausalaraja + lisays + sormikoko / 2.0f;
+    }
+
+    private float PalautaPeliAlueenprossa(float pelialueeny)
+    {
+        //eli al
+        float pelialueenalaraja= PalautaPelialueenAlarajaY();
+        //float pelialueenylaraja = PalautaPelialueenAlarajaY();
+        float koko = PalautaPelialueenYkoko();
+
+
+        float valimatka = Mathf.Abs(pelialueeny - pelialueenalaraja);
+
+        float p = valimatka / koko;
+        return p * 100.0f;
+
+    }
+
+    private float PalautaOhjausAlueenprossa(float ohjausy)
+    {
+        //eli al
+        float ohjausalueenalaraja = PalautaOhjausalueenAlarajaY();
+        float koko = PalautaOhjausalueekoko() ;
+
+        float valimatka = Mathf.Abs(ohjausy - ohjausalueenalaraja);
+        float p = valimatka / koko;
+        return p * 100.0f;
+
+    }
+
+    private float PalautaSormenkorkeus()
+    {
+
+        float objectHeight = sormi.GetComponent<Renderer>().bounds.size.y;
+        return objectHeight;
+    }
+
+    private float PalautaPelialueenAlarajaY()
+    {
+        float pelialueenalarajay=PalautaOhjausalueenYlarajaY();
+        Gizmos.color = Color.cyan;
+
+        Vector3 kameramin= GetCameraMinWorldPosition();
+        Vector3 kameramax = GetCameraMaxWorldPosition();
+        //Gizmos.DrawLine(new Vector3(kameramin.x, pelialueenalarajay,0), new Vector3(kameramax.x, pelialueenalarajay, 0));
+
+        //Debug.DrawRay(new Vector3(kameramin.x, pelialueenalarajay, 0), Vector2.right * 10.0f, Color.red);
+        pelialueenalarajatallessa = pelialueenalarajay;
+        return pelialueenalarajay;
+
+    }
+    private float pelialueenalarajatallessa = 0.0f;
+
+    private float PalautaPelialueenYkoko()
+    {
+        float a =
+            PalautaPelialueenYlarajaY();
+        float b= PalautaPelialueenAlarajaY();
+
+        return Mathf.Abs(a - b);
+    }
+
+    private float PalautaPelialueenYlarajaY()
+    {
+        return PalautaKameranMaxY();
+
+    }
+
+    private float PalautaOhjausalueekoko()
+    {
+        float a = PalautaOhjausalueenYlarajaY();
+        float b=PalautaOhjausalueenAlarajaY();
+        return Mathf.Abs(a - b); 
+    }
+
+    private float PalautaOhjausalueenAlarajaY()
+    {
+        float r= PalautaKameranMinY() + (prosenttiosuusalasuoja / 100.0f) * PalautaKameranKorkeus();
+        return r;
+    }
+
+    private float PalautaOhjausalueenYlarajaY()
+    {
+        float r =
+            PalautaKameranMinY();
+        float a = ((prosenttiosuusalasuoja + prosenttiosuusmikaonvarattuohjaukseenkorkeudessa) / 100.0f) * PalautaKameranKorkeus();
+
+
+
+        return r + a;
+    }
+
+
+    private float PalautaKameranMinY()
+    {
+        //float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
+        //float bottomY = Camera.main.transform.position.y - Camera.main.orthographicSize; // Bottom of the screen
+        //return bottomY;
+
+        float r= GetCameraMinWorldPosition().y;
+        return r;
+    }
+
+
+    public Vector3 GetCameraMinWorldPosition()
+    {
+        // Calculate the camera's dimensions in world space
+        float height = Camera.main.orthographicSize * 2;
+        float width = height * Camera.main.aspect;
+
+        // Bottom-left corner of the camera's view in world space
+        Vector3 minWorldPosition = Camera.main.transform.position - new Vector3(width / 2, height / 2, 0);
+
+        return minWorldPosition;
+    }
+
+
+    private float PalautaKameranMaxY()
+    {
+        float r= GetCameraMaxWorldPosition().y;
+        return r;
+    }
+
+    public Vector3 GetCameraMaxWorldPosition()
+    {
+        // Calculate the camera's dimensions in world space
+        float height = Camera.main.orthographicSize * 2;
+        float width = height * Camera.main.aspect;
+
+        // Top-right corner of the camera's view in world space
+        Vector3 maxWorldPosition = Camera.main.transform.position + new Vector3(width / 2, height / 2, 0);
+
+        return maxWorldPosition;
+    }
+
+
+    private float PalautaKameranKorkeus()
+    {
+        float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
+        return screenHeightInWorld;
+    }
+
+
+    float Laskemontakoprosenttiaalusonalarajanylapuolella(float alaraja, float aluksenruututilankorkeus)
+    {
+        // float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
+        float alarajanylitys = transform.position.y - alaraja;
 
         return alarajanylitys / aluksenruututilankorkeus;
     }
@@ -421,13 +676,26 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     {
         float screenHeightInWorld = 2 * Camera.main.orthographicSize; // Total height
         float bottomY = Camera.main.transform.position.y - Camera.main.orthographicSize; // Bottom of the screen
-        return bottomY + sormiprossa/100.0f * screenHeightInWorld; // 25% above the bottom
+        return bottomY + sormiprossa / 100.0f * screenHeightInWorld; // 25% above the bottom
     }
+
+
 
     float CalculatePercentageAboveBottom2(GameObject obj)
     {
         // Get the Y position of the object in world space
+
+
+
+
+        //  float objectY = obj.GetComponent<RectTransform>().position.y;
+
+        //Vector3 screenPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position);
+        //Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+
         float objectY = obj.transform.position.y;
+        //  worldPosition.z = uiElement.position.z; // Preserve the UI element's z-coordinate
+
 
         // Get the bottom and top Y world positions of the screen
         float bottomY = mainCamera.transform.position.y - mainCamera.orthographicSize;
@@ -447,7 +715,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         float objectHeight = obj.GetComponent<Renderer>().bounds.size.y;
 
-        objectY = objectY - objectHeight/2;
+        objectY = objectY - objectHeight / 2;
 
         // Get the bottom and top Y world positions of the screen
         float bottomY = mainCamera.transform.position.y - mainCamera.orthographicSize;
@@ -598,7 +866,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             return;
         }
 
-        if ( Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
+        if (Input.GetKey(KeyCode.P) || CrossPlatformInputManager.GetButtonDown("Pause"))
         {
             Debug.Log("pausepressed");
             TogglePause();
@@ -699,7 +967,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float nappiHorizontal = Input.GetAxisRaw("Horizontal");
         if (nappiHorizontal == 0.0f)
         {
-           // nappiHorizontal = moveDirection.x;
+            // nappiHorizontal = moveDirection.x;
         }
 
         //float nappiHorizontal = moveDirection.x;
@@ -721,7 +989,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float nappiVertical = Input.GetAxisRaw("Vertical");
         if (nappiVertical == 0.0f)
         {
-         //   nappiVertical = moveDirection.y;
+            //   nappiVertical = moveDirection.y;
         }
 
         // float nappiVertical = moveDirection.y;
@@ -880,7 +1148,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(worldPosition, boxSize, sormenlayermaski);
 
-        
+
 
         foreach (Collider2D collider in colliders)
         {
@@ -943,7 +1211,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //Vector2 yritysWorldpoint = RajoitaMoveaPalautaWorldPoint(screenpositionSormen);
             //yritysWorldpoint = new Vector2(yritysWorldpoint.x, yritysWorldpoint.y);
 
-            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenpositionSormen);
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenpositionSormen);
             TryMove(worldPosition);
             UusiohjauskaytossaAsetaAlussijainti();
         }
@@ -1147,6 +1415,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void OnDrawGizmos()
     {
+        Vector3 kameramin = GetCameraMinWorldPosition();
+        Debug.DrawRay(new Vector3(kameramin.x, pelialueenalarajatallessa, 0), Vector2.right * 10.0f, Color.red);
+
+
+        float ohjausala = PalautaOhjausalueenAlarajaY();
+        Debug.DrawRay(new Vector3(kameramin.x, ohjausala, 0), Vector2.right * 10.0f, Color.blue);
+
+
+
         //    // Draws a 5 unit long red line in front of the object
         //    Gizmos.color = Color.red;
         //    Vector3 direction = transform.TransformDirection(Vector3.forward) * 50;
@@ -1706,7 +1983,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
             damagenmaara = 0.0f;
         }
-        
+
         else if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
 
@@ -1834,7 +2111,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     {
         //haukisilmavihollinenexplodetag
 
-      //  col.otherCollider tää on alus
+        //  col.otherCollider tää on alus
 
         //explodetag
         if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") ||
