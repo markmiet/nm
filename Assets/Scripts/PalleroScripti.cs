@@ -307,10 +307,12 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
     void OnBecameInvisible()
     {
         //MJM 18.12.2023 OTA POIS KOMMENTEISTA
+        /*
         if (tuhoaJosOnBecameInvisible)
         {
             Destroy(gameObject);
         }
+        */
     }
 
 

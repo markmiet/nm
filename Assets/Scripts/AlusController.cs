@@ -900,17 +900,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     }
 
 
-    public Vector3 GetCameraMinWorldPosition()
-    {
-        // Calculate the camera's dimensions in world space
-        float height = Camera.main.orthographicSize * 2;
-        float width = height * Camera.main.aspect;
 
-        // Bottom-left corner of the camera's view in world space
-        Vector3 minWorldPosition = Camera.main.transform.position - new Vector3(width / 2, height / 2, 0);
-
-        return minWorldPosition;
-    }
 
 
     private float PalautaKameranMaxY()
@@ -919,17 +909,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         return r;
     }
 
-    public Vector3 GetCameraMaxWorldPosition()
-    {
-        // Calculate the camera's dimensions in world space
-        float height = Camera.main.orthographicSize * 2;
-        float width = height * Camera.main.aspect;
 
-        // Top-right corner of the camera's view in world space
-        Vector3 maxWorldPosition = Camera.main.transform.position + new Vector3(width / 2, height / 2, 0);
-
-        return maxWorldPosition;
-    }
 
 
     private float PalautaKameranKorkeus()

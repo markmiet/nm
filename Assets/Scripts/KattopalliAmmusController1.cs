@@ -114,7 +114,7 @@ public class KattopalliAmmusController1 : BaseController, IExplodable
         */
         //  Debug.Log("alpha=" + startAlpha);
 
-        TuhoaJosVaarassaPaikassa(gameObject);
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject); 
 
 
 

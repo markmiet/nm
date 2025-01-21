@@ -80,13 +80,14 @@ public class AmmusController : BaseController, IExplodable {
 	public void Update ()
 	{
 
-
+		TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
+		if (true)
+		{
+			return;
+		}
 
 		/*
-		if (tuhoa)
-        {
-			return;
-        }
+	
 		*/
 		//Debug.Log ("vauhti x=" + m_Rigidbody2D.velocity.x);
 		//Debug.Log ("vauhti y=" + m_Rigidbody2D.velocity.y);
@@ -109,7 +110,7 @@ public class AmmusController : BaseController, IExplodable {
 				Destroy(gameObject);
 		}
 
-		TuhoaJosVaarassaPaikassa(gameObject);
+	//	TuhoaJosVaarassaPaikassa(gameObject);
 		TuhoaJosEiKamerassa(gameObject);
 
 		/*

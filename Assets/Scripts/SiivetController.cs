@@ -101,7 +101,7 @@ public class SiivetController : BaseController, IExplodable
             Vaista(delta, collisionLayer);
         }
 
-
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
     }
     
     private void MoveTowardsAlus(float delta)

@@ -19,32 +19,38 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
     public float nopeusjonkaalleTuhoutuu = 0.2f;
 
-    public float maksimiAikajonkavoiollaElossa = 10.0f;
-    private float eloaika = 0.0f;
+    //public float maksimiAikajonkavoiollaElossa = 10.0f;
+    //private float eloaika = 0.0f;
     // Update is called once per frame
     void Update()
     {
-        if (!android)
-        {
-            TuhoaJosVaarassaPaikassa(gameObject, true, true);
-        }
 
-        eloaika += Time.deltaTime;
-        if (eloaika >= maksimiAikajonkavoiollaElossa)
-        {
-            Explode();
-        }
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
 
-    }
-    private void FixedUpdate()
+
+            /*
+            if (!android)
+            {
+                TuhoaJosVaarassaPaikassa(gameObject, true, true);
+            }
+
+            eloaika += Time.deltaTime;
+            if (eloaika >= maksimiAikajonkavoiollaElossa)
+            {
+                Explode();
+            }
+
+            */
+        }
+        public void FixedUpdate()
     {
-        float speed = m_Rigidbody2D.velocity.magnitude;
+      //  float speed = m_Rigidbody2D.velocity.magnitude;
         //       Debug.Log("ammuksen nopeus=" + speed);
 
-        if (speed <= nopeusjonkaalleTuhoutuu)
-        {
-            Destroy(gameObject);
-        }
+        //if (speed <= nopeusjonkaalleTuhoutuu)
+       // {
+          //  Destroy(gameObject);
+        //}
     }
 
 

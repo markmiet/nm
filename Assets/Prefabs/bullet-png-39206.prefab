@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7615176302225465455}
   - component: {fileID: 2333605685648529242}
   - component: {fileID: 5247729779323276946}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: bullet-png-39206
   m_TagString: ammustag
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7918195032328455905}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alas: 1
   nopeusjonkaalleTuhoutuu: 1
-  maksimiAikajonkavoiollaElossa: 10
+  maksimiAikajonkavoiollaElossa: 100
   liukumisenjalkeinengravity: 6
   liukumisnopeus: 6
   damagemaarajokaaiheutetaan: 3
@@ -159,7 +159,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -204,7 +204,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 3524025249061825277}
   - component: {fileID: 7734783392837123839}
   - component: {fileID: 4197066180343375746}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: Bulletsavu
   m_TagString: Untagged
   m_Icon: {fileID: 0}

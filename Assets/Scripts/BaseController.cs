@@ -872,7 +872,7 @@ public class BaseController : MonoBehaviour
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
        )
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false, 0, false, 0.0f, -0.2f, false,null);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false, 0, false, 0.0f, -0.2f, false, null);
 
     }
 
@@ -958,13 +958,13 @@ public class BaseController : MonoBehaviour
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
         float sirpalemass, bool teerigitbody)
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f, false, 0.0f, -0.2f, false,null);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f, false, 0.0f, -0.2f, false, null);
     }
 
 
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
     float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, float gravityscale,
-        float xsaato, bool addDestroyController,GameObject explosion
+        float xsaato, bool addDestroyController, GameObject explosion
         )
     {
         SpriteRenderer s = GetComponent<SpriteRenderer>();
@@ -1025,7 +1025,7 @@ public class BaseController : MonoBehaviour
 
 
         // Create a list to store the sliced sprites
-       // List<Sprite> slicedSprites = new List<Sprite>();
+        // List<Sprite> slicedSprites = new List<Sprite>();
 
         // Loop through each row and column to create slices
         for (int y = 0; y < rows; y++)
@@ -1050,13 +1050,13 @@ public class BaseController : MonoBehaviour
                 if (teeBoxcollider2d)
                 {
                     int maara = CountNonTransparentPixels(newSprite);
-                   // Debug.Log("aaaaaaaaaaaaaei piks=" + maara);
-                    if (maara<300)
+                    // Debug.Log("aaaaaaaaaaaaaei piks=" + maara);
+                    if (maara < 300)
                     {
-                    //    Debug.Log("ei piks=" + maara);
+                        //    Debug.Log("ei piks=" + maara);
                         continue;
                     }
-                
+
 
                 }
 
@@ -1249,7 +1249,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
 
                 //StartCoroutine(ChangeToStaticAfterDelay(1f, pieceRigidbody));
-              
+
 
                 //  Instantiate(sliceObject);
 
@@ -1266,7 +1266,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         Vector2 siz = GetPolygonColliderSize(polygonCollider);
 
         float koko = siz.x * siz.y;
-      //  Debug.Log("koko=" + koko);
+        //  Debug.Log("koko=" + koko);
         return koko >= limit;
 
 
@@ -1307,7 +1307,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         return new Vector2(width, height);
     }
 
-IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
+    IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
     {
         Debug.Log("ennen delay");
         // Wait for the specified delay
@@ -1490,22 +1490,9 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
         }
     }
 
-    bool IsObjectRightOfCamera(Camera cam, Transform objTransform)
-    {
-        if (objTransform == null)
-        {
-            return false;
-        }
-        // Convert object's world position to viewport coordinates
-        Vector3 viewportPoint = cam.WorldToViewportPoint(objTransform.position);
 
-        // Check if the object is on the right side of the camera and not visible
-        // x > 1 means the object is beyond the right edge of the camera's view
-        // y should be between 0 and 1 (within the vertical bounds of the camera)
-        // z > 0 means the object is in front of the camera, not behind
-        return viewportPoint.x > 1 && viewportPoint.z > 0;
-    }
 
+    /*
     public bool IsObjectLeftOfCamera(GameObject go, float ero)
     {
 
@@ -1519,48 +1506,24 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
             float distance = Vector3.Distance(objectPosition, cameraPosition);
 
             // Check if the distance is approximately 1 unit
-            return distance >= ero;
+            bool onko= distance >= ero;
+            if (onko)
+            {
+                Debug.Log("no on");
+            }
+
+            return onko;
         }
         return false;
     }
-
-    public bool IsObjectLeftOfCamera(GameObject go)
-    {
-
-        return IsObjectLeftOfCamera(go, 1.0f);
-    }
+    */
 
 
-    public bool IsObjectDownOfCamera(GameObject go)
-    {
-        Camera camera = Camera.main; // or reference your specific camera
-        float distance = 1f;
-
-        float height = 2 * Mathf.Tan(camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * distance;
-        float width = height * camera.aspect;
-
-        Debug.Log($"Camera Size (Perspective) - Width: {width}, Height: {height}");
 
 
-        Vector3 objectPosition = go.transform.position;
-        Vector3 cameraPosition = Camera.main.transform.position;
 
-        // onko alla eli y pienempi
 
-        //y on suurempi ylh‰‰ll‰
-        //0-220
-        //y=-0.2
-        //z=-1
-        if (objectPosition.y < cameraPosition.y)
-        {
-            // Calculate the distance between the object and the camera
-            float distance2 = Vector3.Distance(objectPosition, cameraPosition);
 
-            // Check if the distance is approximately 1 unit
-            return distance2 >= 10.0f;
-        }
-        return false;
-    }
 
     public bool OnkoYsuunnassaKamerassa(GameObject gameObject)
     {
@@ -1599,7 +1562,7 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
 
     GameObject alamaksimi = null;
 
-
+    /*
     private static int tarkistuskertojenmaara = 10;//suoritusyky syist‰ tarkistetaan vain joka 100 kerta
 
     private int tarkistuslaskuri = 0;
@@ -1609,13 +1572,19 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
         TuhoaJosVaarassaPaikassa(go, true, false);
     }
 
-    public void TuhoaJosVaarassaPaikassa(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna)
+    public void TuhoaJosVaarassaPaikassaaaaaaaaaaaaaa(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna)
     {
         TuhoaJosVaarassaPaikassa(go, tuhoaJosLiianKorkeallaKameraanverrattuna, false);
     }
 
-    public void TuhoaJosVaarassaPaikassa(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna, bool tuhoajosoikeallakameraanverrattuna)
+    public void TuhoaJosVaarassaPaikassaaaaaaaaaaaaaaa(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna, bool tuhoajosoikeallakameraanverrattuna)
     {
+    }
+
+    public void TuhoaJosVaarassaPaikassaErikois(GameObject go, bool tuhoaJosLiianKorkeallaKameraanverrattuna, bool tuhoajosoikeallakameraanverrattuna)
+    {
+
+
 
         if (alamaksimi == null)
         {
@@ -1647,15 +1616,7 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
 
 
 
-        /*
-       if (!OnkoYsuunnassaKamerassa(go))
-       {
-           Destroy(go);
-           return;
-       }
-
-  
-       */
+ 
 
         if (IsObjectLeftOfCamera(go, 10.0f))
         {
@@ -1689,6 +1650,7 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
             Destroy(go);
         }
     }
+    */
     private SpriteRenderer renderer = null;
 
 
@@ -2022,7 +1984,28 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
         return false;
 
     }
+    public Vector3 GetCameraMaxWorldPosition()
+    {
+        // Calculate the camera's dimensions in world space
+        float height = Camera.main.orthographicSize * 2;
+        float width = height * Camera.main.aspect;
 
+        // Top-right corner of the camera's view in world space
+        Vector3 maxWorldPosition = Camera.main.transform.position + new Vector3(width / 2, height / 2, 0);
+
+        return maxWorldPosition;
+    }
+    public Vector3 GetCameraMinWorldPosition()
+    {
+        // Calculate the camera's dimensions in world space
+        float height = Camera.main.orthographicSize * 2;
+        float width = height * Camera.main.aspect;
+
+        // Bottom-left corner of the camera's view in world space
+        Vector3 minWorldPosition = Camera.main.transform.position - new Vector3(width / 2, height / 2, 0);
+
+        return minWorldPosition;
+    }
 
     public void VaistaAlas(float delta, float nopeusy)
     {
@@ -2108,5 +2091,222 @@ IEnumerator ChangeToStaticAfterDelay(float delay, Rigidbody2D pieceRigidbody)
 
         return minWorldPosition;
     }
+
+    public void TuhoaMuttaAlaTuhoaJosOllaanEditorissa(GameObject go, float nopeusjonkaalletuhotaan)
+    {
+
+
+        TuhoaReal(go, true, nopeusjonkaalletuhotaan, true, 5.0f, true, 5.0f, true, 5.0f,
+true,
+600,
+1, false
+);
+
+    }
+
+    public void TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(GameObject go, float nopeusjonkaalle)
+    {
+
+
+        TuhoaReal(go, true, nopeusjonkaalle, true, 5.0f, true, 5.0f, true, 5.0f,
+true,
+600,
+0.1f, true
+);
+
+    }
+
+
+
+
+    public void TuhoaMuttaAlaTuhoaJosOllaanEditorissa(GameObject go)
+    {
+        /**
+#if !UNITY_EDITOR
+    Debug.Log("This code runs only in builds, not in the Unity Editor.");
+                TuhoaReal(go,false,-1,true,5.0f,true,5.0f,true,5.0f,
+    true,
+    600,
+    1,false
+    );
+#endif
+
+        **/
+        float alaoffsetti = 1.0f;
+
+       // Debug.Log("This code runs only in builds, not in the Unity Editor.");
+        TuhoaReal(go, false, -1, true, 5.0f, true, alaoffsetti, true, 5.0f,
+true,
+600,
+1, false
+);
+
+    }
+
+
+
+    //sitten
+    public bool OnkoOnOkLiikkuaUusi()
+    {
+        return true;
+
+    }
+
+    private bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
+    {
+        Vector3 kameraminimi = GetCameraMinWorldPosition();
+
+        if (go.transform.position.x < kameraminimi.x)
+        {
+            float ero = Mathf.Abs(kameraminimi.x - go.transform.position.x);
+            if (ero >= offset)
+            {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+    private bool OnkoKameranOikeallaPuolella(GameObject go)
+    {
+        Vector3 kameraminimi = GetCameraMaxWorldPosition();
+
+        if (go.transform.position.x > kameraminimi.x)
+        {
+            float ero = Mathf.Abs(kameraminimi.x - go.transform.position.x);
+            if (ero >= 0.1f)
+            {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+
+    private bool OnkoKameranAlaPuolella(GameObject go, float offset)
+    {
+        Vector3 kameraminimi = GetCameraMinWorldPosition();
+
+        if (go.transform.position.y < kameraminimi.y)
+        {
+            float ero = Mathf.Abs(kameraminimi.y - go.transform.position.y);
+            if (ero >= offset)
+            {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+    private bool OnkoKameranYlaPuolella(GameObject go, float offset)
+    {
+        Vector3 kameramax = GetCameraMaxWorldPosition();
+
+        if (go.transform.position.y > kameramax.y)
+        {
+            float ero = Mathf.Abs(kameramax.y - go.transform.position.y);
+            if (ero >= offset)
+            {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+    private float syklilaskuri = 0.0f;
+    // private float tarkistussykli = 5.0f;
+    private float hengissaoloaika = 0.0f;
+    private void TuhoaReal(GameObject go, bool tuhoajosliianhidas, float nopeusJonkaAlletuhotaan,
+        bool tuhoaJosKameranVasemmallaPuolella,
+        float offsettijokasallitaanvasemmallakavaisyyn,
+        bool tuhoaJosKameranAlapuolella,
+        float offsettijokasallitaanAlhaallaKavaisyyn,
+        bool tuhoaJosKameranYlapuolella,
+        float offsettijokasallitaanYlapuolellaKavaisyyn,
+        bool tuhoajosliiankauanhengissa,
+        float hengissaolonraja,
+        float tarkistussykli,
+        bool tuhoajosoikeallakameraanVerrattuna
+        )
+    {
+
+        syklilaskuri += Time.deltaTime;
+        if (syklilaskuri >= tarkistussykli)
+        {
+
+            syklilaskuri = 0.0f;
+            hengissaoloaika += tarkistussykli;
+
+            if (tuhoajosliiankauanhengissa && hengissaoloaika >= hengissaolonraja)
+            {
+                Destroy(go);
+                return;
+            }
+            if (tuhoajosliianhidas)
+            {
+                Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+                if (r != null)
+                {
+                    float speed = r.velocity.magnitude;
+                    if (speed <= nopeusJonkaAlletuhotaan)
+                    {
+                        Destroy(go);
+                        return;
+                    }
+                }
+            }
+            if (tuhoaJosKameranVasemmallaPuolella)
+            {
+                bool vasen =
+                OnkoKameranVasemmallaPuolella(go, offsettijokasallitaanvasemmallakavaisyyn);
+                if (vasen)
+                {
+                    Destroy(go);
+                    return;
+
+                }
+
+            }
+            if (tuhoajosoikeallakameraanVerrattuna)
+            {
+                if (OnkoKameranOikeallaPuolella(go))
+                {
+                    Destroy(go);
+                    return;
+                }
+            }
+            if (tuhoaJosKameranAlapuolella)
+            {
+                if (OnkoKameranAlaPuolella(go, offsettijokasallitaanAlhaallaKavaisyyn))
+                {
+                    Destroy(go);
+                    return;
+
+                }
+            }
+            if (tuhoaJosKameranYlapuolella)
+            {
+                if (OnkoKameranYlaPuolella(go, offsettijokasallitaanYlapuolellaKavaisyyn))
+                {
+                    Destroy(go);
+                    return;
+
+                }
+            }
+
+
+        }
+    }
+
+
+
 
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2965408277044486811}
   - component: {fileID: 3561119158831789725}
   - component: {fileID: 3432093839195414364}
-  m_Layer: 10
+  m_Layer: 3
   m_Name: Alus
   m_TagString: alustag
   m_Icon: {fileID: 0}
@@ -106,6 +106,7 @@ MonoBehaviour:
   elamienmaara: 0
   score: 0
   difficalty: 1
+  uusiohjauskaytossa: 1
   maksimimaaradamageajokakestetaan: 1000
   damagenmaara: 0
   gravitymodifiermuutoskunammusosuu: 0.001
@@ -137,6 +138,11 @@ MonoBehaviour:
     type: 3}
   debugloota: {fileID: 0}
   vauhdinLisaysKunSpeedbonusOtettu: 0.01
+  maincameraGameObject: {fileID: 0}
+  sormitoisessakamerassa: {fileID: 0}
+  sormenkamera: {fileID: 0}
+  prosenttiosuusalasuoja: 5
+  prosenttiosuusmikaonvarattuohjaukseenkorkeudessa: 25
   damageMittari: {fileID: 0}
   isPaused: 0
   sormipaikkakerto: {x: 1.6, y: 1.6}
@@ -158,6 +164,7 @@ MonoBehaviour:
   bulletinalkuxoffsetti: -0.4
   alamaksiminMaarittava: {fileID: 0}
   ylamaksiminMaarittava: {fileID: 0}
+  damagemittarilinerenderer: {fileID: 0}
   demomode: 1
   gameoverinjalkeintimescale: 0.1
   aikamaarajokajatketaangameoverinjalkeen: 7
@@ -183,7 +190,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -406,6 +413,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AlusSavu
+      objectReference: {fileID: 0}
+    - target: {fileID: 738304999498640311, guid: a8faa155b08a8554f84bde27e2b5f4af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 738304999498640311, guid: a8faa155b08a8554f84bde27e2b5f4af,
         type: 3}

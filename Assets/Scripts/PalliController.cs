@@ -143,7 +143,10 @@ public class PalliController : BaseController,  IDamagedable
         */
         //  Debug.Log("alpha=" + startAlpha);
 
-        TuhoaJosVaarassaPaikassa(gameObject,false);
+        //TuhoaJosVaarassaPaikassa(gameObject,false);
+
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+
 
 
 

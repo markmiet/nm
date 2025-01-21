@@ -106,6 +106,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         return m_SpriteRenderer.isVisible;
     }
 
+    /*
     private bool TuhoaJosKameranAlla()
     {
         bool alla = OnkoYsuunnassaKamerassa(gameObject);
@@ -119,10 +120,12 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
 
     }
+    */
 
     void Update()
     {
-        TuhoaJosVaarassaPaikassa(gameObject);
+        //TuhoaJosVaarassaPaikassaErikois(gameObject,true,false);
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
 
 
         if (alusSpriteRenderer == null || !OnkoOkLiikkua())
@@ -820,10 +823,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     void OnBecameInvisible()
     {
         //MJM 18.12.2023 OTA POIS KOMMENTEISTA
+        /*
         if (tuhoaJosOnBecameInvisible)
         {
             Destroy(gameObject);
         }
+        */
     }
 
 }

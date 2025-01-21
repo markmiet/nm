@@ -87,9 +87,9 @@ public class SkeletonController : BaseController, IExplodable
     {
         if (!sp.isVisible)
         {
-            //   return;
+               return;
         }
-
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
         LaskeSpriteChangeTime();
         rotationLimit = 360f * (rotationPercentage / 100f); // Percentage of the full rotation
         float currentZRotation = NormalizeAngle(transform.rotation.eulerAngles.z);

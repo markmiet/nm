@@ -24,7 +24,7 @@ public class NmpalleroController : BaseController
     // Update is called once per frame
     void Update()
     {
- 
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
     }
     public void OnTriggerEnter2D(Collider2D col)
     {

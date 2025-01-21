@@ -23,6 +23,7 @@ public class PommiController : BaseController,  IExplodable
     private float delta = 0.0f;
     void Update()
     {
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
         delta += Time.deltaTime;
 
         if (delta> rajahdysaika)

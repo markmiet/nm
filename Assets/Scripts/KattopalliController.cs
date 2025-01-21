@@ -120,7 +120,7 @@ public class KattopalliController : BaseController, IExplodable
         */
         //  Debug.Log("alpha=" + startAlpha);
 
-        TuhoaJosVaarassaPaikassa(gameObject);
+        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
 
 
 

@@ -37,28 +37,33 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 	}
 	*/
 
-	private float checkInterval = 0.3f;
-	private float nextCheckTime;
-
+	//private float checkInterval = 0.3f;
+	//private float nextCheckTime;
+	//public float nopeusjonkaalletuhotaan;
 	void Update ()
 	{
-		if (Time.time >= nextCheckTime)
-		{
-			nextCheckTime = Time.time + checkInterval;
-			float speed = m_Rigidbody2D.velocity.magnitude;
-		//	Debug.Log("speed="+speed);
-			if (speed <= speedjonkaalletuhotaan)
-			{
-			//	Debug.Log("Projectile too slow, destroying...");
-				//Destroy(gameObject);
-				Explode();
-				return;
-			}
 
+		TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject, speedjonkaalletuhotaan);
+
+			/*
+			if (Time.time >= nextCheckTime)
+			{
+				nextCheckTime = Time.time + checkInterval;
+				float speed = m_Rigidbody2D.velocity.magnitude;
+			//	Debug.Log("speed="+speed);
+				if (speed <= speedjonkaalletuhotaan)
+				{
+				//	Debug.Log("Projectile too slow, destroying...");
+					//Destroy(gameObject);
+					Explode();
+					return;
+				}
+
+			}
+			TuhoaJosVaarassaPaikassa(gameObject);
+			TuhoaJosEiKamerassa(gameObject);
+			*/
 		}
-		TuhoaJosVaarassaPaikassa(gameObject);
-		TuhoaJosEiKamerassa(gameObject);
-	}
 
 
 	void OnBecameInvisible ()
