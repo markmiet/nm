@@ -71,7 +71,7 @@ public class SiivetController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
-        if (spriteRenderer.isVisible)
+        if (OnkoOkToimiaUusi(gameObject))
         {
 
             if (boxCollider != null)

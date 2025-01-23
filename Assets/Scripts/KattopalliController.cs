@@ -178,7 +178,7 @@ public class KattopalliController : BaseController, IExplodable
 
         if (alusGameObject != null)
         {
-            if (!OnkoOkToimia(gameObject))
+            if (!OnkoOkToimiaUusi(gameObject))
             {
                 return;
             }

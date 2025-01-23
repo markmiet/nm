@@ -128,7 +128,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
         TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
 
 
-        if (alusSpriteRenderer == null || !OnkoOkLiikkua())
+        if (alusSpriteRenderer == null || !OnkoOkToimiaUusi(gameObject))
         {
             return;
         }

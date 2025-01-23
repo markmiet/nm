@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HaukiController : MonoBehaviour
+public class HaukiController : BaseController
 {
     public float rotatemax = 45.0f;
     public float rotatemin = -45.0f;
@@ -39,7 +39,7 @@ public class HaukiController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!OnkoOkToimia())
+        if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
@@ -62,7 +62,7 @@ public class HaukiController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!OnkoOkToimia())
+        if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }

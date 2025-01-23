@@ -147,7 +147,7 @@ public class HaukirunkoController : BaseController, IExplodable
     private bool tippuminensuoritettu = false;
     public void FixedUpdate()
     {
-        if (!OnkoOkLiikkua())
+        if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
@@ -342,7 +342,7 @@ public class HaukirunkoController : BaseController, IExplodable
 
     private void LiikuKunSiipiaEiOle()
     {
-        if (!OnkoOkLiikkua())
+        if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }

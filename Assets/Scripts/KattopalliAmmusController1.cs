@@ -166,7 +166,7 @@ public class KattopalliAmmusController1 : BaseController, IExplodable
 
         if (alusGameObject != null)
         {
-            if (!OnkoOkToimia(gameObject))
+            if (!OnkoOkToimiaUusi(gameObject))
             {
                 return;
             }

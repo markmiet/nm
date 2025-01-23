@@ -366,8 +366,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         float kerroin = 100.0f / (prosenttiosuusalasuoja + prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
         prosenttiosuusalasuoja = kerroin * prosenttiosuusalasuoja;
         prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = kerroin * prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
-        Debug.Log("prosenttiosuusalasuoja=" + prosenttiosuusalasuoja + " prosenttiosuusmikaonvarattuohjaukseenkorkeudessa=" +
-            prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
+       // Debug.Log("prosenttiosuusalasuoja=" + prosenttiosuusalasuoja + " prosenttiosuusmikaonvarattuohjaukseenkorkeudessa=" +
+         //   prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
 
 
     }
@@ -2538,12 +2538,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.MissileDown))
                 {
-                    Debug.Log("missile()");
+                    //Debug.Log("missile()");
                     missileDownCollected++;
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.MissileUp))
                 {
-                    Debug.Log("missile()");
+                  //  Debug.Log("missile()");
                     missileUpCollected++;
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Option))

@@ -280,7 +280,7 @@ public class PalliController : BaseController,  IDamagedable
         if (alusGameObject != null)
         {
 
-            if (!OnkoOkToimia())
+            if (!OnkoOkToimiaUusi(gameObject))
             {
                 return;
             }

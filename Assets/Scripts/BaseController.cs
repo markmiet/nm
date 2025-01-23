@@ -83,13 +83,14 @@ public class BaseController : MonoBehaviour
         return erotus;
 
     }
-
+    /*
     public bool OnkoOkToimia(GameObject go)
     {
         SpriteRenderer spriterrend = GetSpriteRenderer(go);
 
         return spriterrend.isVisible;
     }
+    */
 
 
     public bool onkoliikkunutVasemmalle(Vector3 worldPosition, int positionumeroJohonVerrataan, bool muutaworldpositionScreenpositionin, float vaadittavaero)
@@ -2146,9 +2147,22 @@ true,
 
 
     //sitten
-    public bool OnkoOnOkLiikkuaUusi()
+    public bool OnkoOkToimiaUusi(GameObject go)
     {
-        return true;
+        if (go==null)
+        {
+            Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
+            return false;
+        }
+        //jos on näkyvillä
+        //entäs muulloin
+        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+
+        if (s!=null && s.isVisible)
+        {
+            return true;
+        }
+        return false;
 
     }
 

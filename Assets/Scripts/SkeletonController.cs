@@ -85,7 +85,7 @@ public class SkeletonController : BaseController, IExplodable
     public float kaatotahti = -3.0f;
     void Update()
     {
-        if (!sp.isVisible)
+        if (!OnkoOkToimiaUusi(gameObject))
         {
                return;
         }
