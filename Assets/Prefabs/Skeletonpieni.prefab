@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1794903465015302098}
   - component: {fileID: 3950557143201221843}
   - component: {fileID: 1869638268235231290}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SkeletonRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 2242949222118948958}
   - component: {fileID: 6511875455453554975}
   - component: {fileID: 3795506969591193281}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Skeletonpieni
   m_TagString: skeletonvihollinenexplode
   m_Icon: {fileID: 0}
@@ -244,7 +244,6 @@ MonoBehaviour:
   lopullinenexplosion: {fileID: 7737871024420907965, guid: be71e788f53224193a965fdf655875ed,
     type: 3}
   uusi: {fileID: 0}
-  hitcount: 0
   hitcoutneeded: 1
   destroy: 1
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
@@ -255,9 +254,18 @@ MonoBehaviour:
   vaihdasuuntaa: 1
   ylosalaisin: 0
   spritechangetime: 0.01
+  kulmajonkajalkeenliikkuminenLoppuu: 45
   efektivali: 2
   rajahdysgravity: 0.5
+  laskespritechangetimelennossa: 0
+  viivelopulliseenrajaytykseen: 3
+  kaatotahti: -3
   yhteensuuntaanliikkumisaikavaihtovali: 60
+  rajaytaspritexsaata: -2
+  destroycontrollerinExplode: {fileID: 0}
+  luorajaytyksessaboxcollider2d: 1
+  kulmajonkajalkeenrajahtaa: 85
+  luouusi: 0
   rows: 20
   cols: 20
   explosionforce: 0.4
@@ -271,6 +279,7 @@ MonoBehaviour:
   stoppauslaskuri: 0
   sinfrequency: 0.5
   sinamplitude: 0.01
+  spritensuuntaonalunperinvasemmaltaoikealle: 1
 --- !u!50 &6511875455453554975
 Rigidbody2D:
   serializedVersion: 4
@@ -355,7 +364,7 @@ GameObject:
   - component: {fileID: 8898677395007618774}
   - component: {fileID: 4782681496734090978}
   - component: {fileID: 9135062531779032568}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SkeletonLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 2812339386002314722}
   - component: {fileID: 6201689638447569240}
   - component: {fileID: 6775225313498586273}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DummyKori
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -4958,7 +4958,7 @@ GameObject:
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 3824717095248662080}
   - component: {fileID: 5837536427644151803}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Pallovihollinen
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -5182,7 +5182,7 @@ MonoBehaviour:
   - ammustag
   layerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1
   tuhoaJosOnBecameInvisible: 0
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
@@ -5216,6 +5216,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pallosavu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

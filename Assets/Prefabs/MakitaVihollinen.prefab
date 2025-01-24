@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3328583325779947177}
   - component: {fileID: 1660899705671000815}
   - component: {fileID: 1416248142987543733}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: MakitaVihollinen
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -141,6 +141,7 @@ MonoBehaviour:
   bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
   teebonus: 0
   ampumisenkokonaisvoima: 3
+  tuhoaJosOnBecameInvisible: 1
 --- !u!95 &1416248142987543733
 Animator:
   serializedVersion: 5
@@ -173,7 +174,7 @@ GameObject:
   - component: {fileID: 4563262016768507375}
   - component: {fileID: 5459454745536255455}
   - component: {fileID: 8154476427799004366}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Makitavihollinenylos
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -322,7 +323,7 @@ GameObject:
   - component: {fileID: 5652390289431497724}
   - component: {fileID: 7168661500297122430}
   - component: {fileID: 5132013082892019133}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Makitavihollinenvasen
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -464,7 +465,7 @@ GameObject:
   - component: {fileID: 3320540773515685576}
   - component: {fileID: 2446492592619412527}
   - component: {fileID: 1731928742308666260}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Makitavihollinenoikeaylos
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -602,7 +603,7 @@ GameObject:
   - component: {fileID: 5875456412289314279}
   - component: {fileID: 3669844860657088665}
   - component: {fileID: 3175695844791942482}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Makitavihollinenoylos
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -741,7 +742,7 @@ GameObject:
   - component: {fileID: 2813412255701652892}
   - component: {fileID: 2424426611163781085}
   - component: {fileID: 5445849988433794764}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: Piippu
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -820,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829d890d19ab23440b8cb50bf4b6aff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damagemaarajokaaiheutetaan: 1
 --- !u!114 &5445849988433794764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,6 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829d890d19ab23440b8cb50bf4b6aff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damagemaarajokaaiheutetaan: 1
 --- !u!1 &7614615011573209376
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,7 +846,7 @@ GameObject:
   - component: {fileID: 5556439403372047197}
   - component: {fileID: 4290824811149225270}
   - component: {fileID: 5824602138383908429}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Makitavihollinenoikea
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -981,7 +984,7 @@ GameObject:
   - component: {fileID: 5957453313023983305}
   - component: {fileID: 6317237763325358411}
   - component: {fileID: 7707637765298719956}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Makitavihollinenvasenylos
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}

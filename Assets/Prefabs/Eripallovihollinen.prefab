@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2812339386002314722}
   - component: {fileID: 6201689638447569240}
   - component: {fileID: 6775225313498586273}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DummyKori
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 2870186539411993996}
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 974177201031621125}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Eripallovihollinen
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ MonoBehaviour:
   aluksenammuksentagilista: []
   layerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   tuhoaJosOnBecameInvisible: 1
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
@@ -315,6 +315,7 @@ MonoBehaviour:
   rajaytyscols: 10
   rajaytysvoima: 3
   rajaytyskestoaika: 0.1
+  teerajaytys: 0
   ampumisenvoimakkuus: 6
   pieninmahdollinenAikaValiAmpumisissa: 2
   ammu: 1
@@ -342,6 +343,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pallosavu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
