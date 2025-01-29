@@ -5,39 +5,52 @@ using UnityEngine;
 public class SkeletonKoiraController : MonoBehaviour
 {
     //[SerializeField]
- //   public bool hyppaa = false;
- //   public bool laskeudu = false;
+    //   public bool hyppaa = false;
+    //   public bool laskeudu = false;
 
     // Start is called before the first frame update
     private Animator animator;
     private Rigidbody2D rb;
+    public GameObject torso;
+
+
+    private float startingZRotation;
+    public float rotationLimit = 10;    // 10% of the starting rotation
+
+
+
     void Start()
 
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
+        startingZRotation = transform.rotation.eulerAngles.z;
     }
 
 
     public float forceAmount = 5f;       // Total force to apply
 
+    public float maxforce = 55.0f;
 
+    private float forceAnnettu = 0.0f;
 
-    void Update()
+    public float laskeutumisviive = 0.1f;
+    private float laskeutumisekestolaskuri = 0.0f;
+
+    void Update2()
     {
 
         //if (hyppaa)
         //{
-            //animator.SetBool("hyppaa", true);
-            //ollaankohyppaamassa = true;
-            // rigidbody2D.AddForce(new Vector2(0, 10));
+        //animator.SetBool("hyppaa", true);
+        //ollaankohyppaamassa = true;
+        // rigidbody2D.AddForce(new Vector2(0, 10));
 
-            //rb.velocity = new Vector2(rb.velocity.x, 3);
+        //rb.velocity = new Vector2(rb.velocity.x, 3);
 
-            // elapsedTime = 0.0f;
+        // elapsedTime = 0.0f;
 
-            //elapsedTime += Time.deltaTime;
+        //elapsedTime += Time.deltaTime;
         //}
         /*
         if (hyppaa &&  elapsedTime > hypynloppu)
@@ -77,37 +90,77 @@ public class SkeletonKoiraController : MonoBehaviour
         //}
 
         bool maassa = IsMaassa();
-        if (OnkoHyppaamassaLoppuvaiheissa() && rb.velocity.y < 0 && maassa)
+        if (OnkoHyppaamassaLoppuvaiheissa() && rb.velocity.y < 0)
         {
-            Debug.Log("The Rigidbody2D is moving downward.");
+            //   Debug.Log("The Rigidbody2D is moving downward.");
             //hyppaa = false;
             //laskeudu = true;
-            animator.SetBool("hyppaa", false);
-            animator.SetBool("laskeudu", true);
+            //   animator.SetBool("hyppaa", false);
+            //   animator.SetBool("laskeudu", true);
+
+            //   laskeutumisekestolaskuri += Time.deltaTime;
+            // Debug.Log("laskeutuminen aloitetaan");
+        }
+        if (OnkoHyppaamassaLoppuvaiheissa() && rb.velocity.y < 0 && laskeutumisekestolaskuri >= laskeutumisviive)
+        {
+            Debug.Log("The Rigidbody2D viie kuluunut");
+            //hyppaa = false;
+            //laskeudu = true;
+            //   animator.SetBool("hyppaa", false);
+            //   animator.SetBool("laskeudu", true);
+
+        }
+        if (maassa)
+        {
+            // animator.SetBool("laskeudu", false);
+            // laskeutumisekestolaskuri = 0.0f;
         }
         animator.SetBool("maassa", maassa);
 
         //animator.SetBool("hyppaa", hyppaa);
-        //animator.SetBool("laskeudu", laskeudu);
+        //animator.SetBool("laskeudu", laskeudu); Raycast
 
         if (OnkoHyppaamassa() && currentstate == CharacterState.Jumping3)
         {
-        //    rb.AddForce(Vector2.up * forceAmount);
-          //  rb.AddForce(Vector2.left * forceAmount);
+            // float deltaForce = (forceAmount / (hypynloppu - hypynalku)) * Time.deltaTime;
+            float deltaForce = forceAmount * Time.deltaTime;
+
+            if (forceAnnettu < maxforce)
+            {
+                rb.AddForce(Vector2.up * deltaForce);
+                rb.AddForce(Vector2.left * deltaForce);
+            }
+            forceAnnettu += deltaForce;
+
+
+        }
+        else
+        {
+            forceAnnettu = 0.0f;
 
         }
 
 
-        //   if (currentstate == CharacterState.Jumping6)
-        //   {
-        //       hyppaa = false;
-        //       laskeudu = true;
-        //   }
+
+        float currentZRotation = NormalizeAngle(transform.rotation.eulerAngles.z);
+
+        // Calculate clamped rotation range
+        float minRotation = startingZRotation - rotationLimit / 2;
+        float maxRotation = startingZRotation + rotationLimit / 2;
+
+        // Clamp the Z rotation
+        float clampedZRotation = Mathf.Clamp(currentZRotation, minRotation, maxRotation);
+        //katotaas torson rotation
+        transform.rotation = Quaternion.Euler(
+        transform.rotation.eulerAngles.x,
+        transform.rotation.eulerAngles.y,
+        clampedZRotation
+        );
     }
 
     private bool OnkoHyppaamassa()
     {
-        if (currentstate== CharacterState.Jumping1 ||
+        if (currentstate == CharacterState.Jumping1 ||
             currentstate == CharacterState.Jumping2 ||
             currentstate == CharacterState.Jumping3 ||
             currentstate == CharacterState.Jumping4 ||
@@ -155,13 +208,23 @@ public class SkeletonKoiraController : MonoBehaviour
         Laskeudu13,//14
 
     }
+    private float NormalizeAngle(float angle)
+    {
+        angle = angle % 360;
+        if (angle > 180)
+            angle -= 360;
+        else if (angle < -180)
+            angle += 360;
 
+        return angle;
+    }
     public bool IsMaassa()
     {
+
         NilkkaController[] nc =
         GetComponentsInChildren<NilkkaController>();
 
-        if (nc!=null)
+        if (nc != null)
         {
             foreach (NilkkaController n in nc)
             {
@@ -203,4 +266,29 @@ public class SkeletonKoiraController : MonoBehaviour
         }
     }
     */
+
+    public bool hyppaa;
+    public bool laskeudu;
+    public bool nousepuolipystyyn;
+    public bool kavelepuolipystyssa;
+    public bool konttaa;
+    public bool nousepystyyn;
+    public bool idlaa;
+
+
+
+
+    void Update()
+    {
+        bool maassa = IsMaassa();
+        animator.SetBool("maassa", maassa);
+        animator.SetBool("hyppaa", hyppaa);
+        animator.SetBool("nousepuolipystyyn", nousepuolipystyyn);
+        animator.SetBool("kavelepuolipystyssa", kavelepuolipystyssa);
+        animator.SetBool("konttaa", konttaa);
+        animator.SetBool("nousepystyyn", nousepystyyn);
+        animator.SetBool("idlaa", idlaa);
+
+
+    }
 }

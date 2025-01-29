@@ -66,8 +66,8 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\SkeletonLeft.cs" />
-    <Compile Include="Assets\JMO Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Scripts\SkeletonKoiraController.cs" />
+    <Compile Include="Assets\JMO Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Scripts\Vaistoskripti.cs" />
     <Compile Include="Assets\Scripts\SiipiolioController.cs" />
     <Compile Include="Assets\Scripts\PalliController.cs" />
@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\QuitScript.cs" />
     <Compile Include="Assets\Scripts\KattopalliController.cs" />
     <Compile Include="Assets\Scripts\OptionController.cs" />
+    <Compile Include="Assets\Scripts\TargetRigSeuraaAlustaController.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\Scripts\CustomTile.cs" />
     <Compile Include="Assets\Scripts\IAlas.cs" />
@@ -127,8 +128,8 @@
     <Compile Include="Assets\Scripts\PalleroScripti.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
     <Compile Include="Assets\Scripts\HaukisiivetController.cs" />
-    <Compile Include="Assets\JMO Assets\WarFX\Spawn System\CFX_SpawnSystem.cs" />
     <Compile Include="Assets\Scripts\NilkkaController.cs" />
+    <Compile Include="Assets\JMO Assets\WarFX\Spawn System\CFX_SpawnSystem.cs" />
     <Compile Include="Assets\Scripts\IExplodable.cs" />
     <Compile Include="Assets\Scripts\ButtoniScripti.cs" />
     <Compile Include="Assets\Scripts\AmmusController.cs" />
@@ -1051,6 +1052,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Animation.Rigging.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1115,10 +1120,6 @@
       <HintPath>Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.2D.Psdimporter.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.AI.Navigation.Updater">
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
       <Private>False</Private>
@@ -1143,6 +1144,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.2D.Psdimporter.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
@@ -1163,8 +1168,8 @@
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    <Reference Include="Unity.Animation.Rigging">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
@@ -1173,6 +1178,10 @@
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
