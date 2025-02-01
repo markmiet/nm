@@ -1175,6 +1175,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             BonusButtonPressed();
         }
 
+        m_Rigidbody2D.velocity = new Vector2(0, 0);
 
 
         if (Input.touchCount > 0)

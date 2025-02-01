@@ -20,7 +20,7 @@ public class NilkkaController : MonoBehaviour
 
         // Replace this with your grounded logic
         // return Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
-        float raydist = 0.2f;
+        float raydist = 1.4f;
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.down, raydist);
         Debug.DrawRay(transform.position, Vector2.down * raydist, Color.green);
