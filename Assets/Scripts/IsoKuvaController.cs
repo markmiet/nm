@@ -5,8 +5,8 @@ using UnityEngine;
 public class IsoKuvaController : MonoBehaviour
 {
     private Texture2D image; // The source image
-    private int columns = 10;  // Number of horizontal slices
-    private int rows = 10;     // Number of vertical slices
+    public int columns = 10;  // Number of horizontal slices
+    public int rows = 10;     // Number of vertical slices
     private Vector2 startPosition; // The original position of the SpriteRenderer
 
     void Start()
