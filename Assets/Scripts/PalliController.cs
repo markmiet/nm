@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PalliController : BaseController,  IDamagedable
+using UnityEngine.Rendering.Universal; // For Light2D
+public class PalliController : BaseController, IDamagedable
 {
 
     public Vector2 boxsizeylhaalla = new Vector2(2.0f, 2.0f);  // Size of the box
@@ -47,6 +47,8 @@ public class PalliController : BaseController,  IDamagedable
     public GameObject ammus;
     public string[] tagilistaJoitaTutkitaan;
 
+
+    public string[] tagilistajotaEiTutkita;
 
     //private Camera mainCamera;
 
@@ -115,15 +117,39 @@ public class PalliController : BaseController,  IDamagedable
       //  float currentGravityModifier = mainModule.gravityModifier.constant;
 
         mainModule.gravityModifier = alkuperainentulipartikkeliGravitymodifier;
+        //childLight = GetComponentsInChildren<Light>();
+        childLight = GetComponentsInChildren<Light2D>();
+
+        AsetaSateily();
+        AsetaValoIntensity();
 
 
 
     }
+    private Light2D[] childLight;
+
+    
+
+
     public float alkuperainentulipartikkeliGravitymodifier = 0.0f;
     
 
     //   public float rotationSpeed = 90f; // Degrees per second
 
+
+    private bool Onkoeitutkittava(string tag)
+    {
+        if (tagilistajotaEiTutkita!=null)
+        {
+            foreach(string t in tagilistajotaEiTutkita) {
+                if (tag.Equals(t))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     // Update is called once per frame
     void Update()
@@ -181,6 +207,7 @@ public class PalliController : BaseController,  IDamagedable
 
     public ParticleSystem boostParticles; // Particle system for the rocket flames
 
+    public ParticleSystem sateilyParticles; // sateily
 
 
     public ParticleSystem tuliPartikkelit; //tuliPartikkelit
@@ -1146,7 +1173,7 @@ public class PalliController : BaseController,  IDamagedable
                     {
 
                     }
-                    else if (c.gameObject.tag.Contains(name))
+                    else if (c.gameObject.tag.Contains(name) && !Onkoeitutkittava(c.gameObject.tag))
                     {
                       //  bool onko = IsInView((Vector2)transform.position + boxlocation);
                       //  return onko;
@@ -1183,7 +1210,7 @@ public class PalliController : BaseController,  IDamagedable
                     {
 
                     }
-                    else if (c.gameObject.tag.Contains(name))
+                    else if (c.gameObject.tag.Contains(name)  && !Onkoeitutkittava(c.gameObject.tag) ) 
                     {
                         //  bool onko = IsInView((Vector2)transform.position + boxlocation);
                         //  return onko;
@@ -1262,12 +1289,54 @@ public class PalliController : BaseController,  IDamagedable
         color.g = PalautaGvari();
 
         m_SpriteRenderer.color = color;
+        AsetaSateily();
+        AsetaValoIntensity();
+
 
         if (nykyinenosuminenmaara >= osumiemaarajokaTarvitaanRajahdykseen)
         {
             ExplodeOikeasti();
         }
     }
+
+    private void AsetaSateily()
+    {
+
+        float prosentti = nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
+
+        float sateilyscale = sateilyparticlesAloitusScale + (sateilyparticlesLopetusScale - sateilyparticlesAloitusScale) * prosentti;
+
+        sateilyParticles.transform.localScale = new Vector2(sateilyscale, sateilyscale);
+
+
+    }
+
+    private void AsetaValoIntensity()
+    {
+        float prosentti = nykyinenosuminenmaara / osumiemaarajokaTarvitaanRajahdykseen;
+
+        float light = lightIntensityAloitus + (lightIntensityLopetus - lightIntensityAloitus) * prosentti;
+        if (childLight != null)
+        {
+            foreach (Light2D l in childLight)
+            {
+                l.intensity = light;
+            }
+        }
+
+    }
+
+    public float sateilyparticlesAloitusScale = 2.0f;
+    public float sateilyparticlesLopetusScale = 5.0f;
+
+    public float lightIntensityAloitus = 1.0f;
+    public float lightIntensityLopetus = 2.0f;
+
+
+    //    private Light[] childLight;
+
+
+
 
     public int rajaytysrows = 4;
     public int rajaytyscols = 4;

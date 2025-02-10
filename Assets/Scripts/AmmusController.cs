@@ -192,7 +192,7 @@ public class AmmusController : BaseController, IExplodable {
 			return;
         }
 
-		if (col.collider.tag.Contains("tiilivihollinen"))
+		if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("hammasvihollinen"))
 		{
 			Explode();
 		}

@@ -5,16 +5,61 @@ using UnityEngine;
 public class SliceController : BaseController
 {
     // Start is called before the first frame update
+   // private Rigidbody2D rigidbody2D;
     void Start()
     {
-
+     //   rigidbody2D =
+    //    GetComponent<Rigidbody2D>();
+      //   randomValue = Random.Range(0.2f, 0.6f);
     }
+    /*
+    float randomValue;
+    private bool rigib = true;
 
+    private float aikaraja = 0.05f;//talloin rigid
+    private float aikarajaJolloinEirigid = 0.4f;
+
+    private float laskuri = 0.0f;
     // Update is called once per frame
-    void Update()
+
+    private bool odotettu = false;
+    void QQQQQQQQQQQQQQQFixedUpdate()
     {
+        laskuri += Time.deltaTime;
+
+        if (!odotettu && laskuri<randomValue)
+        {
+            return;
+        }
+        if (!odotettu && laskuri >= randomValue)
+        {
+            odotettu = true;
+            return;
+        }
+        if (rigib && laskuri > aikaraja)  {
+            
+
+                rigib = !rigib;
+                rigidbody2D.simulated = rigib;
+
+                laskuri = 0;
+            
+        }
+        else if (!rigib && laskuri > aikarajaJolloinEirigid)
+        {
+
+            rigib = !rigib;
+            rigidbody2D.simulated = rigib;
+
+            laskuri = 0;
+
+        }
+
+
+
 
     }
+    */
 
     private bool ammukseentormatty = false;
 
@@ -25,6 +70,13 @@ public class SliceController : BaseController
             RajaytaSprite(gameObject, 2, 2);
             Destroy(gameObject);
         }
+        if (!ammukseentormatty && collision.gameObject.tag.Contains("pallovihollinen"))
+        {
+            ammukseentormatty = true;
+            RajaytaSprite(gameObject, 2, 2);
+            Destroy(gameObject);
+        }
+
     }
 
     public void RajaytaSprite(GameObject go, int rows, int columns)
@@ -101,6 +153,8 @@ public class SliceController : BaseController
                 {
                     BoxCollider2D collider = newObject.AddComponent<BoxCollider2D>();
                     collider.size = new Vector2(sliceWidth, sliceHeight);
+
+
                 }
                 else
                 {

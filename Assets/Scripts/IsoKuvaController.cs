@@ -88,6 +88,7 @@ public class IsoKuvaController : MonoBehaviour
                 // Add BoxCollider2D to the new object
                 BoxCollider2D collider = newObject.AddComponent<BoxCollider2D>();
                 collider.size = new Vector2(sliceWidth, sliceHeight);
+               
 
                 // Calculate local position for perfect alignment
                 float posX = startPosition.x - (spriteWorldSize.x / 2) + (x * sliceWidth) + (sliceWidth / 2);
@@ -95,16 +96,54 @@ public class IsoKuvaController : MonoBehaviour
 
                 // Set position to exactly match original image
                 newObject.transform.position = new Vector2(posX, posY);
+                Rigidbody2D de=
+                newObject.AddComponent<Rigidbody2D>();
+                de.gravityScale = 1f;
+                
 
                 // Optionally, add additional logic or components as needed
                 newObject.AddComponent<SliceController>();
+                //previous = PalautaRandomiListasta();
+                if (previous != null)
+                {
+                    HingeJoint2D joint = newObject.AddComponent<HingeJoint2D>();
+                    joint.connectedBody = previous.GetComponent<Rigidbody2D>();
+                    joint.breakForce = 150.0f;
+                  
+                }
+
+                if (previous != null)
+                {
+               //     DistanceJoint2D joint = newObject.AddComponent<DistanceJoint2D>();
+                 //   joint.connectedBody = previous.GetComponent<Rigidbody2D>();
+                }
+
+                previous = newObject;
+                lista.Add(newObject);
+
             }
         }
     }
 
+    private GameObject PalautaRandomiListasta()
+    {
+        if (lista!=null && lista.Count>=1 )
+        {
+            int randomNumber = Random.Range(0, lista.Count);
+            return lista[randomNumber];
+        }
+        return null;
+    }
+
+    private GameObject previous;
+    private List<GameObject> lista = new List<GameObject>();
+
+    private int transparentpixelcount = 100;
     // Helper method to check if there are any non-transparent pixels in the slice
     private bool HasNonTransparentPixels(Rect rect)
     {
+
+        int maara = 0;
         // Get the pixels in the specified area
         Color[] pixels = image.GetPixels((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height);
 
@@ -112,6 +151,11 @@ public class IsoKuvaController : MonoBehaviour
         foreach (var pixel in pixels)
         {
             if (pixel.a > 0) // If alpha is greater than 0, the pixel is not fully transparent
+            {
+                //return true;
+                maara++;
+            }
+            if (maara>= transparentpixelcount)
             {
                 return true;
             }

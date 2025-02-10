@@ -2154,17 +2154,52 @@ true,
             Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
             return false;
         }
+        /*
         //jos on näkyvillä
         //entäs muulloin
-        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+       
 
         if (s!=null && s.isVisible)
         {
             return true;
         }
         return false;
-
+        */
+        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+        return IsVisibleFrom(s, Camera.main);
     }
+
+
+    private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
+    {
+        if (!renderer || !camera)
+            return false;
+
+        // Get the world bounds of the sprite
+        Bounds spriteBounds = renderer.bounds;
+
+        // Calculate the camera's 2D bounds
+        float camHeight = camera.orthographicSize * 2;
+        float camWidth = camHeight * camera.aspect;
+
+        Vector3 camPosition = camera.transform.position;
+
+        Rect cameraRect = new Rect(
+            camPosition.x - camWidth / 2,
+            camPosition.y - camHeight / 2,
+            camWidth,
+            camHeight
+        );
+
+        // Check if the sprite bounds intersect the camera's bounds
+        return cameraRect.Overlaps(new Rect(
+            spriteBounds.min.x,
+            spriteBounds.min.y,
+            spriteBounds.size.x,
+            spriteBounds.size.y
+        ));
+    }
+
 
     private bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
     {
