@@ -138,7 +138,7 @@ public class IsoKuvaController : MonoBehaviour
     private GameObject previous;
     private List<GameObject> lista = new List<GameObject>();
 
-    private int transparentpixelcount = 100;
+    public int transparentpixelcount = 100;
     // Helper method to check if there are any non-transparent pixels in the slice
     private bool HasNonTransparentPixels(Rect rect)
     {
