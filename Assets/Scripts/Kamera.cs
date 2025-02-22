@@ -11,11 +11,11 @@ public class Kamera : MonoBehaviour
 
     public LayerMask layerMask;
     public int vihollismaaranrajaarvo = 4;
-    public float xsuunnanoffsettikamerasta=4.0f;
+    public float xsuunnanoffsettikamerasta = 4.0f;
 
     // Start is called before the first frame update
 
-    public GameObject savu;
+ //   public GameObject savu;
     public float savuoffsetx = 2.0f;
     public float savuoffsety = 10.0f;
 
@@ -34,9 +34,15 @@ public class Kamera : MonoBehaviour
 
 
         }
-        if (savu != null)
+        if (cameraInfo != null)
         {
-            savu.transform.position = transform.position + new Vector3(savuoffsetx, savuoffsety, 0);
+            CameraInfoController cami =
+cameraInfo.GetComponent<CameraInfoController>();
+            if (cami.savu != null)
+            {
+                cami.savu.SetActive(true);
+                cami.savu.transform.position = transform.position + new Vector3(savuoffsetx, savuoffsety, 0);
+            }
         }
     }
 
@@ -49,13 +55,37 @@ public class Kamera : MonoBehaviour
         //   gameObject.transform.position.Set(alus.transform.position.x, alus.transform.position.y, gameObject.transform.position.z);
         if (cameraInfo != null)
         {
+            /*
 
-
-
-
+                public GameObject savu;
+    public GameObject tausta1;
+    public GameObject tausta2;
+    public GameObject tausta3;
+    */
+            CameraInfoController cami =
+            cameraInfo.GetComponent<CameraInfoController>();
+            if (cami.naytasavu)
+            {
+                if (cami.savu != null)
+                {
+                    cami.savu.active = true;
+                    cami.savu.transform.position = transform.position + new Vector3(savuoffsetx, savuoffsety, 0);
+                }
+            }
+            else
+            {
+                if (cami.savu != null)
+                {
+                    cami.savu.SetActive(false);
+                }
+            }
+            if (cami.tausta1.active!=cami.naytataustat)
+            cami.tausta1.active=cami.naytataustat;
+            if (cami.tausta2.active != cami.naytataustat)
+                cami.tausta2.active=cami.naytataustat;
+            if (cami.tausta3.active != cami.naytataustat)
+                cami.tausta3.active=cami.naytataustat;
             float xscr = cameraInfo.GetComponent<CameraInfoController>().scrollspeedx;
-
-
             bool stop = cameraInfo.GetComponent<CameraInfoController>().stop;
             float stoptime = cameraInfo.GetComponent<CameraInfoController>().stoptime;
 
@@ -91,7 +121,7 @@ public class Kamera : MonoBehaviour
                     cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
                     float generointivali = cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
 
-                    GeneroiLisaaVihollisia(go,maara, generointivali);
+                    GeneroiLisaaVihollisia(go, maara, generointivali);
                 }
             }
 
@@ -102,17 +132,17 @@ public class Kamera : MonoBehaviour
         //Debug.Log("skrolli=" + skrolli);
 
         transform.position += skrolli;
-        if (savu!=null)
-        {
-            savu.transform.position = transform.position + new Vector3(savuoffsetx, savuoffsety, 0);
-        }
+
+
+
+
         if (alus != null)
         {
             //alus.transform.position += skrolli;
             alus.GetComponent<AlusController>().LisaaSkrollia(skrolli);
 
         }
-       
+
 
     }
 
@@ -132,10 +162,10 @@ public class Kamera : MonoBehaviour
 
     private float generointilaskuri = 0.0f;
 
-    private void GeneroiLisaaVihollisia(GameObject go,int  vihollismaaranrajaarvo, float generointivali)
+    private void GeneroiLisaaVihollisia(GameObject go, int vihollismaaranrajaarvo, float generointivali)
     {
         generointilaskuri += Time.deltaTime;
-        if (generointilaskuri>= generointivali)
+        if (generointilaskuri >= generointivali)
         {
             int maara = GetCollidersInCameraView(Camera.main);
             if (maara < vihollismaaranrajaarvo)
@@ -151,18 +181,18 @@ public class Kamera : MonoBehaviour
     private void GeneroiViholinen(GameObject go)
     {
 
-                Vector2 boxsize = new Vector2(1.0f,1.0f);
-                Vector2 pos = transform.position;
+        Vector2 boxsize = new Vector2(1.0f, 1.0f);
+        Vector2 pos = transform.position;
 
-                float camHeight = Camera.main.orthographicSize * 2f;
-                float camWidth = camHeight * Camera.main.aspect;
+        float camHeight = Camera.main.orthographicSize * 2f;
+        float camWidth = camHeight * Camera.main.aspect;
 
-                Vector2 bottomLeft = (Vector2)Camera.main.transform.position - new Vector2(camWidth / 2, camHeight / 2);
-                Vector2 topRight = (Vector2)Camera.main.transform.position + new Vector2(camWidth / 2, camHeight / 2);
+        Vector2 bottomLeft = (Vector2)Camera.main.transform.position - new Vector2(camWidth / 2, camHeight / 2);
+        Vector2 topRight = (Vector2)Camera.main.transform.position + new Vector2(camWidth / 2, camHeight / 2);
 
-                Vector2 uus = new Vector2(topRight.x + xsuunnanoffsettikamerasta, transform.position.y);
+        Vector2 uus = new Vector2(topRight.x + xsuunnanoffsettikamerasta, transform.position.y);
 
-                GameObject instanssiOption = Instantiate(go, uus, Quaternion.identity);
+        GameObject instanssiOption = Instantiate(go, uus, Quaternion.identity);
     }
 
 
@@ -180,7 +210,7 @@ public class Kamera : MonoBehaviour
         int count = 0;
         foreach (Collider2D c in colliders)
         {
-            if (c.tag.Contains("vihollinen") && (!c.tag.Contains("tiili") && !c.tag.Contains("alus") ))
+            if (c.tag.Contains("vihollinen") && (!c.tag.Contains("tiili") && !c.tag.Contains("alus")))
             {
                 count++;
             }

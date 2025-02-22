@@ -60,6 +60,16 @@ public class CameraInfoController : MonoBehaviour
     public int vihollismaaranrajaarvo = 1;
     public float generointivali = 5.0f;
 
+    public bool naytasavu = false;
+    public bool naytataustat = true;
+    public GameObject savu;
+    public GameObject tausta1;
+    public GameObject tausta2;
+    public GameObject tausta3;
+
+
+
+
     private bool IsObjectInOrthographicView(Transform target, Camera camera)
     {
         Vector3 position = camera.WorldToScreenPoint(target.position);
