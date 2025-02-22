@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\AudioplayerController.cs" />
     <Compile Include="Assets\Scripts\AlusController.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\Scripts\ParticleSizeChanger.cs" />
     <Compile Include="Assets\Scripts\TaustaController.cs" />
     <Compile Include="Assets\Scripts\RajaytaController.cs" />
     <Compile Include="Assets\Scripts\TilemapController.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\Scripts\KalajoukkioController.cs" />
+    <Compile Include="Assets\Scripts\ParticleAttractor.cs" />
     <Compile Include="Assets\Scripts\CameraStopStopper.cs" />
     <Compile Include="Assets\Scripts\TilemapControllerri.cs" />
     <Compile Include="Assets\Scripts\OptionController.cs" />
@@ -114,7 +116,6 @@
     <Compile Include="Assets\Scripts\HaukiController.cs" />
     <Compile Include="Assets\Scripts\SkeletonLeft.cs" />
     <Compile Include="Assets\Scripts\SkeletonKoiraController.cs" />
-    <Compile Include="Assets\Phoenix3D\Demo\Scripts\MaterialSwithcer.cs" />
     <Compile Include="Assets\Scripts\Vaistoskripti.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs" />
     <Compile Include="Assets\Scripts\HaukipaaController.cs" />
@@ -188,12 +189,14 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Art\meshrenderers\StencilParticles.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Particle AddSoft A8.shader" />
     <None Include="Assets\JMO Assets\WarFX\!WarFX Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Art\meshrenderers\StencilSpriteMask.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend NoSoftParticles.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />

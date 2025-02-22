@@ -14,6 +14,11 @@ public class Kamera : MonoBehaviour
     public float xsuunnanoffsettikamerasta=4.0f;
 
     // Start is called before the first frame update
+
+    public GameObject savu;
+    public float savuoffsetx = 2.0f;
+    public float savuoffsety = 10.0f;
+
     void Start()
     {
         float y = 0f;
@@ -28,6 +33,10 @@ public class Kamera : MonoBehaviour
             }
 
 
+        }
+        if (savu != null)
+        {
+            savu.transform.position = transform.position + new Vector3(savuoffsetx, savuoffsety, 0);
         }
     }
 
@@ -93,6 +102,10 @@ public class Kamera : MonoBehaviour
         //Debug.Log("skrolli=" + skrolli);
 
         transform.position += skrolli;
+        if (savu!=null)
+        {
+            savu.transform.position = transform.position + new Vector3(savuoffsetx, savuoffsety, 0);
+        }
         if (alus != null)
         {
             //alus.transform.position += skrolli;

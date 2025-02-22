@@ -173,6 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0577e2ca8bd2b1f62896ec13cf2c906a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   speedjonkaalletuhotaan: 0.3
   damagemaarajokaaiheutetaan: 1
   alivetimeRajahdyksenJalkeen: 0.5
@@ -232,7 +234,7 @@ PrefabInstance:
     - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

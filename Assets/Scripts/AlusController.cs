@@ -2461,7 +2461,29 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
 
+    void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("Particle hit: " + other.name);
 
+        // Example: Apply damage if hitting an enemy
+        //  if (other.CompareTag("Enemy"))
+        // {
+        // EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+        // if (enemyHealth != null)
+        // {
+        //     enemyHealth.TakeDamage(10);
+        // }
+        //   }
+
+        if (other.tag.Contains("vihollinen"))
+        {
+            damagenmaara += maksimimaaradamageajokakestetaan;
+            //ExplodeTarvittaesssa();
+            PaivitaDamagePalkkia();
+
+        }
+
+    }
 
 
 

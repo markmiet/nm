@@ -990,7 +990,10 @@ public class BaseController : MonoBehaviour
 
         float puolet = (ymax - ymin) / 2;
 
-
+        if (originalSprite==null)
+        {
+            return;
+        }
 
 
         // Get the original sprite's texture

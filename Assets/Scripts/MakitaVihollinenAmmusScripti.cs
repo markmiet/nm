@@ -116,7 +116,13 @@ col.gameObject.GetComponent<IDamagedable>();
 		}
 		else 
 		*/
-		if (col.collider.CompareTag("tiilivihollinentag"))
+		if (col.collider.tag.Contains("alus"))
+		{
+			Destroy(gameObject);
+			//Explode();
+
+		}
+		else if (col.collider.tag.Contains("tiili"))
 		{
 			//Destroy(gameObject);
 			Explode();
