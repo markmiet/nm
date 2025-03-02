@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomForcesController : MonoBehaviour
+public class RandomForcesController : BaseController
 {
     public float forceMin = 1f; // Minimum force
     public float forceMax = 2f; // Maximum force
-    public Transform target; // Target GameObject
+    private Transform target; // Target GameObject
 
     public float maxSpeed = 5f; // Maximum speed the object can reach
 
@@ -19,6 +19,7 @@ public class RandomForcesController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        target = PalautaAlus().transform;
         nextForceTime = Time.time + Random.Range(rangetimemin, rangetimemax);
     }
     void Update()

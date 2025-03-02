@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Threading.Tasks;
 
 public class AlusController : BaseController, IDamagedable, IExplodable
 {
@@ -333,7 +337,89 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         }
         lineRenderer = GetComponent<LineRenderer>();
+
+
     }
+
+    public float checkDistance = 5.0f; // Distance threshold
+    private float timeSinceLastCheck = 0f; // Track time for 5-second intervals
+
+    /*
+
+    private void PerformDistanceCheck()
+    {
+        if (this.gameObject == null) return;
+
+        // Get the position of gameObject1 on the main thread
+        Vector3 referencePosition = this.gameObject.transform.position;
+
+        // Get all GameObjects in the scene
+//        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+
+        GameObject[] allObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+
+
+        // Perform the distance check and toggle GameObjects based on distance
+        foreach (GameObject obj in allObjects)
+        {
+
+            Debug.Log("tagiaaaaaaaa='" + obj.tag+"'");
+            if (obj != null && obj != this.gameObject && obj.tag != null &&  obj.tag.Contains("pallovihollinentag")
+                && !obj.tag.Contains("tiili")) // Skip the reference GameObject itself
+                {
+
+                   
+                float distance = Vector3.Distance(obj.transform.position, referencePosition);
+                obj.SetActive(distance <= checkDistance); // Enable or disable based on distance
+            }
+        }
+    }
+    */
+
+    private void PerformDistanceCheck()
+    {
+        if (this.gameObject == null) return;
+
+        // Get the position of gameObject1 on the main thread
+        Vector3 referencePosition = this.gameObject.transform.position;
+
+        // Get all root GameObjects in the scene
+        GameObject[] allRootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+
+        // Perform the distance check for all objects (active and inactive)
+        foreach (GameObject obj in allRootObjects)
+        {
+            // Check recursively for all child objects, including inactive ones
+            CheckAllObjects(obj, referencePosition);
+        }
+    }
+
+
+
+    private void CheckAllObjects(GameObject parent, Vector3 referencePosition)
+    {
+        // Check the parent object itself (this will include inactive objects)
+        if (parent != this.gameObject)
+        {
+            if (parent != null && parent != this.gameObject && parent.tag != null && (parent.tag.Contains("eituhvih")
+                || parent.tag.Contains("vihollinen")) && !parent.tag.Contains("tiili"))
+            {
+
+                float distance = Vector3.Distance(parent.transform.position, referencePosition);
+                parent.SetActive(distance <= checkDistance); // Enable or disable based on distance
+            }
+        }
+
+        // Recursively check all child GameObjects (including inactive ones)
+        foreach (Transform child in parent.transform)
+        {
+            // Recursively check the child GameObjects
+            CheckAllObjects(child.gameObject, referencePosition);
+        }
+    }
+
+
+
     public GameObject sormitoisessakamerassa;
 
     public GameObject sormenkamera;
@@ -1317,7 +1403,31 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //  transform.position += new Vector3(0.4f, 0f, 0f) * Time.deltaTime;//sama skrolli kuin kamerassa
 
         TallennaSijaintiSailytaVainKymmenenViimeisinta();
+        if (tutkaileAsioitaActivated)
+        {
+            TutkaileAsioita(); //tässä tutkaillaan miten kaukana on jos liian kaukana niin disable
+
+
+        }
+
     }
+    public bool tutkaileAsioitaActivated = true;
+    public float tutkailunSykli = 5f;
+
+    private void TutkaileAsioita()
+    {
+        timeSinceLastCheck += Time.deltaTime; // Increment the elapsed time
+
+        // If 5 seconds have passed, perform the logic
+        if (timeSinceLastCheck >= tutkailunSykli)
+        {
+            // Reset the time counter and run the check
+            timeSinceLastCheck = 0f;
+            PerformDistanceCheck(); // Run the distance check synchronously every 5 seconds
+        }
+    }
+
+
     public bool isPaused = false;
 
     public void TogglePause()
@@ -2293,17 +2403,43 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
 
     public float gameoverinjalkeintimescale = 0.1f;
+
+
+    public float viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa = 1.0f;
+    public float viimeisinAluksenRajahdysDemoModessa = 0.0f;
+
+    private IEnumerator PaivitaDamagePalkkiaViiveella()
+    {
+        yield return new WaitForSeconds(0.5f); // Wait for 0.5 seconds
+        damagenmaara = 0.0f;
+        PaivitaDamagePalkkia();
+    }
+
     private void TeeGameOver()
     {
-
+        //PaivitaDamagePalkkia();
 
         if (demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
-            Vector3 vektori =
+            if (Time.realtimeSinceStartup>= viimeisinAluksenRajahdysDemoModessa + viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa)
+            {
+                Vector3 vektori =
 new Vector3(
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
-            GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
-            damagenmaara = 0.0f;
+                GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
+                damagenmaara = 0.0f;
+                viimeisinAluksenRajahdysDemoModessa = Time.realtimeSinceStartup;
+                damagenmaara = 0.0f;
+                //PaivitaDamagePalkkia();
+                damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
+                //StartCoroutine(PaivitaDamagePalkkiaViiveella());
+            }
+            else
+            {
+                damagenmaara = 0.0f;
+                damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
+            }
+
         }
 
         else if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
@@ -2463,7 +2599,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Particle hit: " + other.name);
+       // Debug.Log("Particle hit: " + other.name);
 
         // Example: Apply damage if hitting an enemy
         //  if (other.CompareTag("Enemy"))
