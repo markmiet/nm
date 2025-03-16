@@ -46,7 +46,8 @@ public class AudioplayerController : MonoBehaviour
 
     public void ExplodePlay()
     {
-        explode.Play();
+        if (explode!=null)
+            explode.Play();
     }
 
 }

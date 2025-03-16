@@ -154,8 +154,19 @@ col.gameObject.GetComponent<IDamagedable>();
 	public void Explode()
 	{
 		//0.5f
-		RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
+		GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+        //	RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
 
+      //  Destroy(gameObject);
+		//
+
+
+
+        //RajaytaSprite(gameObject, 3, 3, 2.0f, 1.2f);
+        Destroy(explosionIns, 1.0f);
 		Destroy(gameObject);
+
 	}
+	public GameObject explosion;
+
 }

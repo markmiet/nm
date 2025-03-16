@@ -2559,7 +2559,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
 
-
+    private bool OnkoForceFieldPaalla()
+    {
+        ForceFieldController c =GetComponentInChildren<ForceFieldController>();
+        if (c==null)
+        {
+            return false;
+        }
+        return c.partikkelitEnabloituna;
+    }
 
 
 
@@ -2579,13 +2587,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
         }
-        else if (col.collider.tag.Contains("pallovihollinen"))
+        else if (col.collider.tag.Contains("pallovihollinen") && !OnkoForceFieldPaalla())
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
         }
-        else if (col.collider.tag.Contains("vihollinen"))
+        else if (col.collider.tag.Contains("vihollinen") && !OnkoForceFieldPaalla())
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
@@ -2611,7 +2619,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // }
         //   }
 
-        if (other.tag.Contains("vihollinen"))
+        if (other.tag.Contains("vihollinen")  && !OnkoForceFieldPaalla())
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();

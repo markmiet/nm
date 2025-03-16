@@ -133,6 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1423d377fbc129caa9175c05f5c7a0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   ammusPrefab: {fileID: 1985379849892578813, guid: d20a7acdf168dacf883f197695575668,
     type: 3}
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
@@ -793,7 +795,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0023918152, y: 0}
@@ -829,7 +831,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4855734023025861671}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 829d890d19ab23440b8cb50bf4b6aff4, type: 3}
   m_Name: 
@@ -982,7 +984,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5957453313023983305}
-  - component: {fileID: 6317237763325358411}
   - component: {fileID: 7707637765298719956}
   m_Layer: 0
   m_Name: Makitavihollinenvasenylos
@@ -1006,71 +1007,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7587851952522426830}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &6317237763325358411
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8248805761139656085}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.088150024, y: -0.16645145}
-      - {x: 0.12130737, y: -0.10438061}
-      - {x: 0.10795975, y: -0.008146286}
-      - {x: 0.14108276, y: 0.10951853}
-      - {x: -0.10204315, y: 0.11981964}
-      - {x: -0.15994263, y: 0.20261288}
-      - {x: -0.15768433, y: 0.2223978}
-      - {x: -0.22138125, y: 0.3246725}
-      - {x: -0.1334076, y: 0.27059555}
-      - {x: -0.08024979, y: 0.2601924}
-      - {x: -0.016284943, y: 0.21060324}
-      - {x: 0.13069534, y: 0.05867386}
-      - {x: 0.11606979, y: -0.10300994}
-      - {x: 0.099479675, y: -0.17118979}
-      - {x: -0.22423553, y: -0.20594096}
-      - {x: -0.2722435, y: -0.2378428}
-      - {x: -0.29532242, y: -0.31892586}
-      - {x: -0.24574417, y: -0.32283652}
-      - {x: 0.3136307, y: -0.3211298}
-      - {x: 0.20003414, y: -0.17277533}
-  m_UseDelaunayMesh: 0
 --- !u!61 &7707637765298719956
 BoxCollider2D:
   m_ObjectHideFlags: 0
