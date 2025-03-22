@@ -16,28 +16,34 @@ public class ForceFieldController : MonoBehaviour
     private int hittienmaara = 0;
 
 
-    public bool partikkelitEnabloituna = true;
+   // public bool partikkelitEnabloituna = true;
     ParticleSystem.MainModule main;
     public float alphaValueAloitusArvo = 0.5f;
     public float alphaValueLopetusArvo = 0.1f;
     public float alphaValueNykyarvo = 0.5f;
+    private GameObject alus;
+    private bool onkotoiminnassa = false;
+
     void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();
-       // main = particleSystem.main;
-       // var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
-       // if (renderer != null && renderer.material != null)
-       // {
+        // main = particleSystem.main;
+        // var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
+        // if (renderer != null && renderer.material != null)
+        // {
         //    Color color = renderer.material.color;
         //    renderer.material.color = new Color(color.r, color.g, color.b, alphaValueAloitusArvo);
         //}
+        alus = GameObject.FindGameObjectWithTag("alustag");
         VaihdaAlphaa();
-
+        SetOnkotoiminnassa(false);
+       // SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if (partikkelitEnabloituna)
         {
             if (!particleSystem.isPlaying)
@@ -51,6 +57,7 @@ public class ForceFieldController : MonoBehaviour
         {
             particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
+        */
     }
     /*
     void OnParticleCollision(GameObject other)
@@ -137,6 +144,7 @@ public class ForceFieldController : MonoBehaviour
     */
     public void OnTriggerEnter2D(Collider2D col)
     {
+
         if (col.tag.Contains("vihollinen")  && !col.tag.Contains("tiili"))
         {
            
@@ -157,11 +165,49 @@ public class ForceFieldController : MonoBehaviour
             //tähän se himmennys eli partikkelien määräää vähennetään tms
             if (hittienmaara>= hittienmaaraJokaKestetaan)
             {
-                gameObject.SetActive(false);
+                // gameObject.SetActive(false);
+                //
+                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                SetOnkotoiminnassa(false);
+
             }
         }
 
     }
+
+    public void SetOnkotoiminnassa(bool active)
+    {
+        //gameObject.SetActive(active);
+        onkotoiminnassa = active;
+
+        Collider2D[] sd =
+        GetComponents<Collider2D>();
+
+        foreach (Collider2D c in sd) {
+            c.enabled = active;
+        }
+
+        if (active)
+        {
+            particleSystem.Play();
+        }
+        else
+        {
+            //particleSystem.Stop();
+
+            particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+       
+
+
+
+    }
+
+    public bool IsOnkotoiminnassa()
+    {
+        return onkotoiminnassa;
+    }
+
     private void PoltaValo()
     {
         valo.GetComponent<AlusLightController>().SetExplosionLights();

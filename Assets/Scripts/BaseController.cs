@@ -2479,8 +2479,25 @@ true,
         return false;
     }
 
+    public static string[] tagitjotkatuhoaaAluksen = { "pyoroovi", "tiili", "pyoroovi"
+    , "pyoroovi", "laatikkovihollinenexplodetag", "pallovihollinen", "vihollinen"
+    };
 
 
+    public static bool TuhoaakoAluksen(string tag)
+    {
+        foreach(string s in tagitjotkatuhoaaAluksen) {
+            if (tag.Contains(s)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+public static string[] tagitjotkaAluksenShieldiTuhoaa = { "Apple", "Banana", "Cherry" };
 
 
 }
+

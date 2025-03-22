@@ -2433,6 +2433,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 //PaivitaDamagePalkkia();
                 damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
                 //StartCoroutine(PaivitaDamagePalkkiaViiveella());
+      
+                 Instantiate(gameoverPrefab, transform.position, Quaternion.identity);
             }
             else
             {
@@ -2566,7 +2568,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         {
             return false;
         }
-        return c.partikkelitEnabloituna;
+        return c.IsOnkotoiminnassa();
     }
 
 
@@ -2579,27 +2581,35 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //  col.otherCollider tää on alus
 
-        //explodetag
-        if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") ||
-            col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
-        {
-            damagenmaara += maksimimaaradamageajokakestetaan;
-            //ExplodeTarvittaesssa();
-            PaivitaDamagePalkkia();
-        }
-        else if (col.collider.tag.Contains("pallovihollinen") && !OnkoForceFieldPaalla())
-        {
-            damagenmaara += maksimimaaradamageajokakestetaan;
-            //ExplodeTarvittaesssa();
-            PaivitaDamagePalkkia();
-        }
-        else if (col.collider.tag.Contains("vihollinen") && !OnkoForceFieldPaalla())
-        {
-            damagenmaara += maksimimaaradamageajokakestetaan;
-            //ExplodeTarvittaesssa();
-            PaivitaDamagePalkkia();
 
+        //explodetag
+        //if (col.collider.tag.Contains("hauki") || col.collider.tag.Contains("tiili") ||
+        //    col.collider.tag.Contains("pyoroovi") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
+        // {
+        // damagenmaara += maksimimaaradamageajokakestetaan;
+        //ExplodeTarvittaesssa();
+        // PaivitaDamagePalkkia();
+        // }
+        //   else if (col.collider.tag.Contains("pallovihollinen") /*&& !OnkoForceFieldPaalla() */)
+        // {
+        // damagenmaara += maksimimaaradamageajokakestetaan;
+        //ExplodeTarvittaesssa();
+        // PaivitaDamagePalkkia();
+        // }
+        //else if (col.collider.tag.Contains("vihollinen") /*&& !OnkoForceFieldPaalla() */)
+        // {
+        //damagenmaara += maksimimaaradamageajokakestetaan;
+        //ExplodeTarvittaesssa();
+        // PaivitaDamagePalkkia();
+
+        //}
+        if (BaseController.TuhoaakoAluksen(col.collider.tag))
+        {
+            damagenmaara += maksimimaaradamageajokakestetaan;
+            //ExplodeTarvittaesssa();
+            PaivitaDamagePalkkia();
         }
+
 
     }
 
@@ -2619,7 +2629,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // }
         //   }
 
-        if (other.tag.Contains("vihollinen")  && !OnkoForceFieldPaalla())
+        if (other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
@@ -2730,6 +2740,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                         //        Debug.Log("nykyinenoptioidenmaara="+ nykyinenoptioidenmaara);
                     }
                 }
+                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.ForceField))
+                {
+                    //  Debug.Log("missile()");
+                    //missileUpCollected++;
+                    Debug.Log("instantioi ForceField");
+                    AsetaForceFieldiNakyviin();
+                }
+
             }
             else
             {
@@ -2745,6 +2763,26 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
 
     }
+
+    private void AsetaForceFieldiNakyviin() {
+        GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
+
+    }
+    public void AsetaForceFieldiButtonEnabloiduksi()
+    {
+        foreach (BonusButtonController btc in bbc)
+        {
+            if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.ForceField))
+            {
+                //  Debug.Log("missile()");
+                //missileUpCollected++;
+                btc.enabled = true;
+                btc.usedcount = 0;
+            }
+        }
+
+    }
+
 
     private bool OnkoAmmustenMaaraAlleMaksimin()
     {
