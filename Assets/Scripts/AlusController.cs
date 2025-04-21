@@ -107,6 +107,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private bool vasenNappiPainettu = false;
 
 
+    private bool laserkaytossa = false;
+    public GameObject laserPrefab;
 
     //ylos/alla
 
@@ -2229,19 +2231,39 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             //audiosourcelaukaus.
             //    audiosourcelaukaus.Play();
-            ad.AlusammusPlay();
+
+            GameObject instanssi;
+            if (laserkaytossa)
+            {
+                ad.AluslaserPlay();
+                instanssi = Instantiate(
+                    laserPrefab, v3, Quaternion.identity);
+
+                LaserController aa = instanssi.GetComponent<LaserController>();
+                //aa.SetLaserkaytossa(laserkaytossa);
+                aa.alus = this.gameObject;
+                aa.SetAluksenluoma(true);
+
+            }
+            else
+            {
+                ad.AlusammusPlay();
+                instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+
+                AmmusController aa = instanssi.GetComponent<AmmusController>();
+                //aa.SetLaserkaytossa(laserkaytossa);
+                aa.alus = this.gameObject;
+                aa.SetAluksenluoma(true);
 
 
-            GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+                instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 
-            AmmusController aa = instanssi.GetComponent<AmmusController>();
-            aa.alus = this.gameObject;
-            aa.SetAluksenluoma(true);
+            }
+
+
             aluksenluomienElossaOlevienAmmustenMaara++;
 
 
-
-            instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             AmmuOptioneilla();
 
             ammusinstantioitiin = true;
@@ -2746,6 +2768,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                     //missileUpCollected++;
                     Debug.Log("instantioi ForceField");
                     AsetaForceFieldiNakyviin();
+                }
+                else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Laser))
+                {
+                    //  Debug.Log("missile()");
+                    //missileUpCollected++;
+                    Debug.Log("aseta laserkayttöön");
+                    //AsetaForceFieldiNakyviin();
+                    laserkaytossa = true;
                 }
 
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmusController : BaseController, IExplodable {
+public class AmmusController :BaseController, IExplodable {
 	private Animator m_Animator;
 	//private bool tuhoaViivella = false;
 	//private bool tuhoa = false;
@@ -26,6 +26,9 @@ public class AmmusController : BaseController, IExplodable {
 
 	public GameObject option;
 
+	public bool laserkaytossa = false;
+	public int laserkaytossamontakotuhotaan = 3;
+
 	public void SetOption(GameObject p_option )
     {
 		option = p_option;
@@ -35,6 +38,17 @@ public class AmmusController : BaseController, IExplodable {
     {
 		aluksenluoma = arvo;
     }
+	public void SetLaserkaytossa(bool p_laser)
+    {
+		laserkaytossa = p_laser;
+		if (laserkaytossa)
+        {
+			//Rigidbody2D rb = GetComponent<Rigidbody2D>();
+			//m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+
+		}
+    }
+
 
 	private AudioplayerController ad;
 	void Start ()
@@ -80,7 +94,12 @@ public class AmmusController : BaseController, IExplodable {
 	public void Update ()
 	{
 
-		TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
+		if (!laserkaytossa)
+        {
+			TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
+		}
+
+		//
 		if (true)
 		{
 			return;
@@ -104,7 +123,7 @@ public class AmmusController : BaseController, IExplodable {
 		float speed = m_Rigidbody2D.velocity.magnitude;
 	//	Debug.Log("alusammuksen nopeus=" + speed);
 
-		if (speed <= nopeusjonkaalleTuhoutuu)
+		if (speed <= nopeusjonkaalleTuhoutuu &&!laserkaytossa)
 		{
 		
 				Destroy(gameObject);
@@ -179,7 +198,7 @@ public class AmmusController : BaseController, IExplodable {
 	{
 
 
-
+		
 
 
 		if (col.collider.tag.Equals("alustag"))
@@ -187,13 +206,14 @@ public class AmmusController : BaseController, IExplodable {
 			return;
         }
 
-		if (tormattyviholliseen)
+		if (tormattyviholliseen && !laserkaytossa)
         {
 			return;
         }
 
 		if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("hammasvihollinen"))
 		{
+			tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
 			Explode();
 		}
 
@@ -231,6 +251,8 @@ public class AmmusController : BaseController, IExplodable {
 				if (sc!=null)
                 {
 					sc.Explode(col);
+					//tuhottujenVihollistenmaara++;
+					LisaaTuhottujenMaaraa(col.gameObject);
 
 				}
 				else
@@ -240,6 +262,9 @@ public class AmmusController : BaseController, IExplodable {
 					if (damageMahdollinen != null)
 					{
 						damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+						//tuhottujenVihollistenmaara++;
+						LisaaTuhottujenMaaraa(col.gameObject);
+
 					}
 					else
 					{
@@ -249,6 +274,9 @@ public class AmmusController : BaseController, IExplodable {
 						if (o != null)
 						{
 							o.Explode();
+							//tuhottujenVihollistenmaara++;
+							LisaaTuhottujenMaaraa(col.gameObject);
+
 						}
 						else
 						{
@@ -272,6 +300,18 @@ public class AmmusController : BaseController, IExplodable {
 
 	}
 
+	private HashSet<GameObject> tuhotut=new HashSet<GameObject>();
+	private void LisaaTuhottujenMaaraa(GameObject go)
+    {
+		if (!tuhotut.Contains(go))
+        {
+			tuhottujenVihollistenmaara++;
+			tuhotut.Add(go);
+		}
+		
+
+	}
+
 
 	void OnBecameInvisible ()
 	{
@@ -286,14 +326,26 @@ public class AmmusController : BaseController, IExplodable {
 	{
 		//GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 	//	Destroy(explosionIns, 1.0f);
-		if (rajaytaspriteexplodenjalkeenpistatamatrueksi)
+		if (rajaytaspriteexplodenjalkeenpistatamatrueksi && !laserkaytossa)
         {
 			RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
 		}
 
 		//ammuksen massa oli 0.06
-		Destroy(gameObject);
+		if (!laserkaytossa)
+        {
+			Destroy(gameObject);
+		}
+		else if (laserkaytossa && tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
+        {
+			Destroy(gameObject);
+		}
+
+		
 	}
+
+	private int tuhottujenVihollistenmaara = 0;
+
 
 	public bool rajaytaspriteexplodenjalkeenpistatamatrueksi = false;
 
@@ -331,9 +383,17 @@ public class AmmusController : BaseController, IExplodable {
 	*/
 
 
+	public void Destroy()
+    {
+		Debug.Log("no niin");
+    }
+
 	public void OnDestroy()
     {
-        if (aluksenluoma && alus!=null)
+		//System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
+		//Debug.Log(stackTrace.ToString());
+
+		if (aluksenluoma && alus!=null)
         {
 			//aluscontrollerin 
 			alus.GetComponent<AlusController>().VahennaaluksenluomienElossaOlevienAmmustenMaaraa();

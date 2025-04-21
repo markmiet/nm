@@ -11,6 +11,9 @@ public class AudioplayerController : MonoBehaviour
     public AudioSource alusammus;
     public AudioSource explode;
 
+    public AudioSource alusammuslaser;
+
+
     void Start()
     {
         
@@ -49,5 +52,8 @@ public class AudioplayerController : MonoBehaviour
         if (explode!=null)
             explode.Play();
     }
-
+    public void AluslaserPlay()
+    {
+        alusammuslaser.Play();
+    }
 }
