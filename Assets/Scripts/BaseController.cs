@@ -2034,7 +2034,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     public void Vaista(float delta, LayerMask collisionLayer)
     {
         bool vasen = OnkoVasemmallaVaistettavaa(rayCount, rayDistance, collisionLayer);
-        Debug.Log("vasen=" + vasen);
+        //Debug.Log("vasen=" + vasen);
 
         if (vasen)
         {

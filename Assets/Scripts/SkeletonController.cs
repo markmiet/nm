@@ -254,11 +254,11 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
     public float rajaytaspritexsaata = -2.0f;
 
     public GameObject destroycontrollerinExplode;
-    public void Explode(Collision2D col)
+    public bool Explode(Transform transform)
     {
         if (rajaytetty)
         {
-            return;
+            return true;
         }
 
         hitcount++;
@@ -266,6 +266,7 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
         if (hitcount >= hitcoutneeded)
         {
             TeeLopulllinenRajaytys();
+            return true;
         }
         else
         {
@@ -274,15 +275,15 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
             // Destroy(gameObject);
             if (explosion != null)
             {
-                GameObject instanssi2 = Instantiate(explosion, col.otherCollider.transform.position, Quaternion.identity);
-
+                GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+              
             }
 
         }
-
+        return false;
     }
     private float rajaytyshetkilaskuri = 0.0f;
-    private void TeeLopulllinenRajaytys()
+    public void TeeLopulllinenRajaytys()
     {
 
         if (rajaytetty)

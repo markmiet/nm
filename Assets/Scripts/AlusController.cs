@@ -2365,8 +2365,17 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         {
             //   obj.gameObject.transform.position
             // Set the position
-            obj.ammuNormilaukaus(ammusPrefab);
-            if (missileDownCollected >= 1)
+            
+            if (laserkaytossa)
+            {
+                obj.ammuNormilaukaus(laserPrefab);
+            }
+            else
+            {
+                obj.ammuNormilaukaus(ammusPrefab);
+            }
+
+                if (missileDownCollected >= 1)
             {
                 obj.ammuAlaslaukaus(bulletPrefab);
             }

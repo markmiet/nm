@@ -211,7 +211,7 @@ public class AmmusController :BaseController, IExplodable {
 			return;
         }
 
-		if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("hammasvihollinen"))
+		if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("eituhvih"))
 		{
 			tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
 			Explode();
@@ -250,7 +250,11 @@ public class AmmusController :BaseController, IExplodable {
 				SkeletonController sc=col.gameObject.GetComponent<SkeletonController>();
 				if (sc!=null)
                 {
-					sc.Explode(col);
+					col.collider.enabled = false;
+					GetComponent<Collider2D>().enabled = false;
+
+
+					sc.Explode(col.transform);
 					//tuhottujenVihollistenmaara++;
 					LisaaTuhottujenMaaraa(col.gameObject);
 
@@ -272,7 +276,11 @@ public class AmmusController :BaseController, IExplodable {
 						IExplodable o =
 		col.gameObject.GetComponent<IExplodable>();
 						if (o != null)
-						{
+                        {
+							col.collider.enabled = false;
+							GetComponent<Collider2D>().enabled = false;
+
+
 							o.Explode();
 							//tuhottujenVihollistenmaara++;
 							LisaaTuhottujenMaaraa(col.gameObject);
@@ -281,7 +289,24 @@ public class AmmusController :BaseController, IExplodable {
 						else
 						{
 							Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+							IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
+							if (parentin != null)
+							{
+								parentin.Explode();
 
+							}
+							Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
+							if (ssparent != null)
+							{
+								ssparent.enabled = false;
+							}
+
+							Collider2D ss =
+								col.gameObject.GetComponent<Collider2D>();
+							if (ss != null)
+							{
+								ss.enabled = false;
+							}
 						}
 					}
 

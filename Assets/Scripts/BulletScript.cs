@@ -109,7 +109,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
     {
         //  Debug.Log("alaosa collidoi");
 
-        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("laatikkovihollinenexplodetag"))
+        if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("laatikkovihollinenexplodetag") || col.collider.tag.Contains("eituhvih"))
         {
 
             //  col.otherCollider
@@ -161,7 +161,9 @@ public class BulletScript : BaseController, IExplodable, IAlas
                 SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
                 if (sc != null)
                 {
-                    sc.Explode(col);
+                    GetComponent<Collider2D>().enabled = false;
+
+                    sc.Explode(col.transform);
 
                 }
                 else
@@ -177,6 +179,8 @@ public class BulletScript : BaseController, IExplodable, IAlas
     col.gameObject.GetComponent<IExplodable>();
                         if (o != null)
                         {
+                            GetComponent<Collider2D>().enabled = false;
+
                             o.Explode();
                         }
                         else

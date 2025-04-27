@@ -55,7 +55,7 @@ public class BonusController : BaseController
         if (!onkoAlukseenJoTormatty && col.CompareTag("alustag"))
         {
             onkoAlukseenJoTormatty = true;
-
+            GetComponent<Collider2D>().enabled = false;//tämän pitäisi riittää
             RajaytaSprite(gameObject, 3, 3, 2.0f, 1f);
             Destroy(this.gameObject);
             ad.BonusPlay();

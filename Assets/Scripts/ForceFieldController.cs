@@ -15,12 +15,19 @@ public class ForceFieldController : MonoBehaviour
     public int hittienmaaraJokaKestetaan = 10;
     private int hittienmaara = 0;
 
-
+    //0.8,0,1, 0.8
    // public bool partikkelitEnabloituna = true;
     ParticleSystem.MainModule main;
     public float alphaValueAloitusArvo = 0.5f;
     public float alphaValueLopetusArvo = 0.1f;
     public float alphaValueNykyarvo = 0.5f;
+
+    public float simulationspeedAloitusArvo = 5f;
+    public float simulationspeedLopetusArvo = 1f;
+    public float simulationspeedNykyarvo = 5f;
+
+
+
     private GameObject alus;
     private bool onkotoiminnassa = false;
 
@@ -142,12 +149,41 @@ public class ForceFieldController : MonoBehaviour
 
     }
     */
+
+    private HashSet<Collider2D> alreadyTriggered = new HashSet<Collider2D>();
+
     public void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.tag.Contains("eituhvih"))
+        {
+
+            //return;
+        }
+
 
         if (col.tag.Contains("vihollinen")  && !col.tag.Contains("tiili"))
         {
-           
+            if (alreadyTriggered.Contains(col))
+                return;
+
+            alreadyTriggered.Add(col);
+
+            col.enabled = false;
+
+            SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
+            if (sc != null)
+            {
+                //col.collider.enabled = false;
+                GetComponent<Collider2D>().enabled = false;
+
+
+                sc.TeeLopulllinenRajaytys();
+                //tuhottujenVihollistenmaara++;
+                //LisaaTuhottujenMaaraa(col.gameObject);
+                Destroy(gameObject);
+
+            }
+
 
             IExplodable o =
     col.gameObject.GetComponent<IExplodable>();
@@ -158,10 +194,31 @@ public class ForceFieldController : MonoBehaviour
             else
             {
                 Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.tag);
-                Destroy(col.gameObject);
+                
+                IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
+                if (parentin != null)
+                {
+                    parentin.Explode();
+
+                }
+                Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
+                if (ssparent != null)
+                {
+                    ssparent.enabled = false;
+                }
+
+                Collider2D ss =
+                    col.gameObject.GetComponent<Collider2D>();
+                if (ss != null)
+                {
+                    ss.enabled = false;
+                }
+                //Destroy(col.gameObject);
+
             }
             PoltaValo();
             hittienmaara++;
+            Debug.Log("hittienmäärä=" + hittienmaara);
             //tähän se himmennys eli partikkelien määräää vähennetään tms
             if (hittienmaara>= hittienmaaraJokaKestetaan)
             {
@@ -245,5 +302,14 @@ public class ForceFieldController : MonoBehaviour
             Color color = renderer.material.color;
             renderer.material.color = new Color(color.r, color.g, color.b, alphaValueNykyarvo);
         }
+        /*
+            public float simulationspeedAloitusArvo = 5f;
+    public float simulationspeedLopetusArvo = 1f;
+    public float simulationspeedNykyarvo = 5f;
+    */
+
+        simulationspeedNykyarvo = Mathf.Lerp(simulationspeedAloitusArvo, simulationspeedLopetusArvo, (float)hittienmaara / hittienmaaraJokaKestetaan);
+
+        main.simulationSpeed = simulationspeedNykyarvo;
     }
 }

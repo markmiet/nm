@@ -132,8 +132,21 @@ public class OptionController : MonoBehaviour
 
             instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
             AmmusController ac = instanssi.GetComponent<AmmusController>();
-            ac.SetOption(this.gameObject);
-            aluksenluomienElossaOlevienAmmustenMaara++;
+            if (ac!=null)
+            {
+                ac.SetOption(this.gameObject);
+                aluksenluomienElossaOlevienAmmustenMaara++;
+            }
+            else
+            {
+                LaserController lc= instanssi.GetComponent<LaserController>();
+                if (lc!=null)
+                {
+                    lc.SetOption(this.gameObject);
+                    aluksenluomienElossaOlevienAmmustenMaara++;
+                }
+            }
+
         }
     }
     private int aluksenluomienElossaOlevienAmmustenMaara = 0;
