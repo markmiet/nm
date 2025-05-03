@@ -2480,7 +2480,7 @@ true,
     }
 
     public static string[] tagitjotkatuhoaaAluksen = { "pyoroovi", "tiili", "pyoroovi"
-    , "pyoroovi", "laatikkovihollinenexplodetag", "pallovihollinen", "vihollinen"
+    , "pyoroovi", "laatikkovihollinenexplodetag", "pallovihollinen", "vihollinen", "eituhvih"
     };
 
 

@@ -18,7 +18,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //toisekseen joku gameobjekti jolla voi tehdä näitä savepointteja
 
 
-    public int elamienmaara = 0;
+   // public int elamienmaara = 0;
     public int score = 0;//tälle se 
     public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
 
@@ -142,7 +142,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private float objectWidth;
     private float objectHeight;
 
-    private bool gameover = false;
+    private bool restartscene = false;
 
 
     private GameObject instanssiBulletAlas;
@@ -162,6 +162,11 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //
 
     public GameObject debugloota;
+
+
+    public GameObject elamat;
+
+
 
     /*
     public Vector3 palautaViimeinenSijaintiScreenpositioneissa(int optionjarjestysnumero)
@@ -340,6 +345,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         }
         lineRenderer = GetComponent<LineRenderer>();
 
+        SetElamienMaara(GameManager.Instance.lives);
 
     }
 
@@ -1204,10 +1210,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     private bool osuudetasetettu = false;
 
     // Update is called once per frame
+
+
     void Update()
     {
-
-        if (uusiohjauskaytossa & !osuudetasetettu)
+            if (uusiohjauskaytossa & !osuudetasetettu)
         {
             //   sormi.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = CalculatePercentageAboveBottom2(alamaksiminMaarittava);
@@ -1225,7 +1232,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             osuudetasetettu = true;
         }
 
-        if (gameover)
+        if (restartscene)
         {
             return;
         }
@@ -2038,17 +2045,18 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     void FixedUpdate()
     {
 
-        if (gameover)
+        if (restartscene)
         {
+            /*
             //gameoverinajankohta = Time.time;
             float aikanyt = Time.realtimeSinceStartup;
 
             if (aikanyt - gameoverinajankohta > aikamaarajokajatketaangameoverinjalkeen)
             {
                 Time.timeScale = 0;
-                SiirryGameOverJalkeiseenTilaan();
+               // SiirryGameOverJalkeiseenTilaan();
             }
-
+            */
             return;
 
         }
@@ -2450,7 +2458,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         //PaivitaDamagePalkkia();
 
-        if (demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
+        if (demomode && !restartscene && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
             if (Time.realtimeSinceStartup>= viimeisinAluksenRajahdysDemoModessa + viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa)
             {
@@ -2465,7 +2473,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
                 //StartCoroutine(PaivitaDamagePalkkiaViiveella());
       
+                if (gameoverPrefab!=null)
                  Instantiate(gameoverPrefab, transform.position, Quaternion.identity);
+                GameManager.Instance.PlayerDied();
+
             }
             else
             {
@@ -2475,12 +2486,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         }
 
-        else if (!demomode && !gameover && damagenmaara >= maksimimaaradamageajokakestetaan)
+        else if (!demomode && !restartscene && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
 
-            SetkeskellaTextMeshProUGUI("Game over");
+            //SetkeskellaTextMeshProUGUI("Game over");
 
-            Time.timeScale = gameoverinjalkeintimescale;
+            //Time.timeScale = gameoverinjalkeintimescale;
 
             ad.ExplodePlay();
             Vector3 vektori =
@@ -2490,10 +2501,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             // GameObject instanssiOption = Instantiate(gameoverPrefab, vektori, Quaternion.identity);
 
             GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
-            RajaytaSprite(gameObject, 4, 4, 1, aikamaarajokajatketaangameoverinjalkeen);
+            //RajaytaSprite(gameObject, 4, 4, 1, aikamaarajokajatketaangameoverinjalkeen);
             m_SpriteRenderer.enabled = false;
 
             //  Destroy(instanssiOption, 10);
+
+
+            GameManager.Instance.PlayerDied();
 
 
 
@@ -2507,22 +2521,27 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             {
                 spriteRenderer.enabled = false; // Hides the sprite
             }
-            gameoverinajankohta = Time.realtimeSinceStartup;
+            //gameoverinajankohta = Time.realtimeSinceStartup;
 
-            gameover = true;
+            restartscene = true;
         }
 
     }
 
-    public float aikamaarajokajatketaangameoverinjalkeen = 5.0f;
+    //public float aikamaarajokajatketaangameoverinjalkeen = 5.0f;
 
-    private float gameoverinajankohta;
+    //private float gameoverinajankohta;
 
     public void Explode()
     {
         damagenmaara = maksimimaaradamageajokakestetaan;
         PaivitaDamagePalkkia();
 
+    }
+
+    public void SetElamienMaara(int elamienmaara)
+    {
+        elamat.GetComponent<ElamatController>().SetElamienMaara(elamienmaara);
     }
 
     public void AiheutaDamagea(float damagemaara)

@@ -250,11 +250,19 @@ public class AmmusController :BaseController, IExplodable {
 				SkeletonController sc=col.gameObject.GetComponent<SkeletonController>();
 				if (sc!=null)
                 {
-					col.collider.enabled = false;
+					//col.collider.enabled = false;
 					GetComponent<Collider2D>().enabled = false;
 
 
-					sc.Explode(col.transform);
+					bool rajahtiko=sc.Explode(col.transform);
+					if (rajahtiko)
+                    {
+						Collider2D ss =col.gameObject.GetComponent<Collider2D>();
+						if (ss != null)
+						{
+							ss.enabled = false;
+						}
+					}
 					//tuhottujenVihollistenmaara++;
 					LisaaTuhottujenMaaraa(col.gameObject);
 
