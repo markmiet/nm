@@ -18,7 +18,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //toisekseen joku gameobjekti jolla voi tehdä näitä savepointteja
 
 
-   // public int elamienmaara = 0;
+    // public int elamienmaara = 0;
     public int score = 0;//tälle se 
     public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
 
@@ -27,6 +27,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     public float maksimimaaradamageajokakestetaan = 100.0f;
     public float damagenmaara = 0.0f;
+    public bool damagemodekaytossa = false;
 
 
     public float gravitymodifiermuutoskunammusosuu = 0.01f;
@@ -168,6 +169,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
 
+
+
     /*
     public Vector3 palautaViimeinenSijaintiScreenpositioneissa(int optionjarjestysnumero)
     {
@@ -255,7 +258,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         //   Application.targetFrameRate = 45;
         // Application.targetFrameRate = 10; // For example, cap to 60 FPS
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-     //   mainCamera = Camera.main;
+        //   mainCamera = Camera.main;
 
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -305,6 +308,13 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         damagemittariController = damageMittari.GetComponent<DamagemittariController>();
 
 
+        if (!damagemodekaytossa)
+        {
+         //   gameObject.transform.parent.gameObject.SetActive(false);
+        }
+
+
+
         GameObject foundObject = GameObject.Find("Ruudunkeskiteksti");
         keskellaTextMeshProUGUI = foundObject.GetComponent<TextMeshProUGUI>();
 
@@ -319,7 +329,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         //   sormikamera = sormenkamera.GetComponent<Camera>();
         mainCamera = maincameraGameObject.GetComponent<Camera>();
-        sormikamera=sormenkamera.GetComponent<Camera>();
+        sormikamera = sormenkamera.GetComponent<Camera>();
 
 
         //sormiKameraController = sormenkamera.GetComponent<SormiKameraController>();
@@ -328,11 +338,11 @@ public class AlusController : BaseController, IDamagedable, IExplodable
             //   sormi.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = CalculatePercentageAboveBottom2(alamaksiminMaarittava);
             //säätää myös pääkameran koon
-          //  if (sormiKameraController==null)
-          //  {
+            //  if (sormiKameraController==null)
+            //  {
             //    Debug.Log("sormiKameraController==null");
-           // }
-            
+            // }
+
             SetOsuudet(prosenttiosuusalasuoja, prosenttiosuusmikaonvarattuohjaukseenkorkeudessa,
                 mainCamera);
 
@@ -347,7 +357,11 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         SetElamienMaara(GameManager.Instance.lives);
 
+
     }
+
+
+
 
     public float checkDistance = 5.0f; // Distance threshold
     private float timeSinceLastCheck = 0f; // Track time for 5-second intervals
@@ -460,8 +474,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         float kerroin = 100.0f / (prosenttiosuusalasuoja + prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
         prosenttiosuusalasuoja = kerroin * prosenttiosuusalasuoja;
         prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = kerroin * prosenttiosuusmikaonvarattuohjaukseenkorkeudessa;
-       // Debug.Log("prosenttiosuusalasuoja=" + prosenttiosuusalasuoja + " prosenttiosuusmikaonvarattuohjaukseenkorkeudessa=" +
-         //   prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
+        // Debug.Log("prosenttiosuusalasuoja=" + prosenttiosuusalasuoja + " prosenttiosuusmikaonvarattuohjaukseenkorkeudessa=" +
+        //   prosenttiosuusmikaonvarattuohjaukseenkorkeudessa);
 
 
     }
@@ -470,7 +484,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public void LisaaSkrollia(Vector3 skrolli)
     {
         transform.position += skrolli;
-       // sormitoisessakamerassa.transform.position += skrolli;
+        // sormitoisessakamerassa.transform.position += skrolli;
     }
 
     public void UusiohjauskaytossaAsetaSormi()
@@ -503,13 +517,13 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
 
-        sormitoisessakamerassa.transform.position = new Vector3(newPosition.x, sormiuusisijainti-sormikorkeus, 0);
+        sormitoisessakamerassa.transform.position = new Vector3(newPosition.x, sormiuusisijainti - sormikorkeus, 0);
 
 
 
-        if (damagemittarilinerenderer!=null)
+        if (damagemittarilinerenderer != null)
 
-        damagemittarilinerenderer.transform.position = new Vector3(PalautaKameranMinX(), PalautaPelialueenAlarajaY(), 0);
+            damagemittarilinerenderer.transform.position = new Vector3(PalautaKameranMinX(), PalautaPelialueenAlarajaY(), 0);
         /*
         if (true)
             return;
@@ -598,7 +612,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         // float alussijaintiy = this.PalautaPeliAlueenYOhjausAlueenYylla(sormi.transform.position);
         // transform.position = new Vector3(sormi.transform.position.x, alussijaintiy, 0);
 
-        float alussijaintiy =  PalautaPeliAlueenYOhjausAlueenYylla(sormitoisessakamerassa.transform.position );
+        float alussijaintiy = PalautaPeliAlueenYOhjausAlueenYylla(sormitoisessakamerassa.transform.position);
 
         /*
         sormitoisessakamerassa.transform.position = new Vector3(transform.position.x, sormiuusisijainti, 0);
@@ -635,11 +649,11 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         float alueeny = PalautaPelialueenAlarajaY();
 
 
-      //  Vector3 minkamera = GetCameraMinWorldPosition();
-      //  Vector3 maxkamera = GetCameraMaxWorldPosition();
+        //  Vector3 minkamera = GetCameraMinWorldPosition();
+        //  Vector3 maxkamera = GetCameraMaxWorldPosition();
 
-       // lineRenderer.SetPosition(0, new Vector3(minkamera.x, alueeny,0)); // Start point
-       // lineRenderer.SetPosition(1, new Vector3(maxkamera.x, alueeny, 0)); // End point
+        // lineRenderer.SetPosition(0, new Vector3(minkamera.x, alueeny,0)); // Start point
+        // lineRenderer.SetPosition(1, new Vector3(maxkamera.x, alueeny, 0)); // End point
 
         float ohjausalueenalaraja = PalautaOhjausalueenAlarajaY();
 
@@ -722,7 +736,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         float ohjausprossa = PalautaOhjausAlueenprossa(y);
 
         float ala = PalautaPelialueenAlarajaY();
-        float lisays=koko * (ohjausprossa / 100.0f);
+        float lisays = koko * (ohjausprossa / 100.0f);
         return ala + lisays;
     }
 
@@ -731,7 +745,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         float ohjauskoko = PalautaOhjausalueekoko();
         float prosas = PalautaPeliAlueenprossa(pelialue.y);
         float ohjausalaraja = PalautaOhjausalueenAlarajaY();
-        float lisays= ohjauskoko * (prosas / 100.0f);
+        float lisays = ohjauskoko * (prosas / 100.0f);
 
         float sormikoko = PalautaSormenkorkeus();
 
@@ -755,7 +769,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private float PalautaPeliAlueenprossa(float pelialueeny)
     {
         //eli al
-        float pelialueenalaraja= PalautaPelialueenAlarajaY();
+        float pelialueenalaraja = PalautaPelialueenAlarajaY();
         //float pelialueenylaraja = PalautaPelialueenAlarajaY();
         float koko = PalautaPelialueenYkoko();
 
@@ -787,11 +801,11 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     {
         //eli al
         float ohjausalueenalaraja = PalautaOhjausalueenAlarajaY();
-        float koko = PalautaOhjausalueekoko() ;
+        float koko = PalautaOhjausalueekoko();
         float spritekoko = PalautaSormenkorkeus();
         // + spritekoko/2.0f
 
-        float valimatka = Mathf.Abs(ohjausy +spritekoko/2.0f- ohjausalueenalaraja);
+        float valimatka = Mathf.Abs(ohjausy + spritekoko / 2.0f - ohjausalueenalaraja);
         float p = valimatka / koko;
         return p * 100.0f;
 
@@ -813,24 +827,24 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     private float PalautaAluksenKorkeus()
     {
-        float aluskorkeus=m_SpriteRenderer.bounds.size.y;
+        float aluskorkeus = m_SpriteRenderer.bounds.size.y;
         return aluskorkeus;
     }
 
 
     private float PalautaPelialueenAlarajaY()
     {
-       // float pelialueenalarajay=PalautaOhjausalueenYlarajaY();
-       // Gizmos.color = Color.cyan;
+        // float pelialueenalarajay=PalautaOhjausalueenYlarajaY();
+        // Gizmos.color = Color.cyan;
 
-        Vector3 kameramin= GetCameraMinWorldPosition();
+        Vector3 kameramin = GetCameraMinWorldPosition();
         Vector3 kameramax = GetCameraMaxWorldPosition();
         //Gizmos.DrawLine(new Vector3(kameramin.x, pelialueenalarajay,0), new Vector3(kameramax.x, pelialueenalarajay, 0));
 
         //Debug.DrawRay(new Vector3(kameramin.x, pelialueenalarajay, 0), Vector2.right * 10.0f, Color.red);
         //pelialueenalarajatallessa = pelialueenalarajay;
         //return pelialueenalarajay;
-        float kameraminimi= PalautaKameranMinY();
+        float kameraminimi = PalautaKameranMinY();
         return kameraminimi;
 
     }
@@ -857,7 +871,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private float PalautaPelialueenYkoko()
     {
         //float a =
-            PalautaPelialueenYlarajaY();
+        PalautaPelialueenYlarajaY();
         //float b= PalautaPelialueenAlarajaY();
 
         //return Mathf.Abs(a - b);
@@ -948,7 +962,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     public Vector3 GetOhjausCameraMinWorldPosition()
     {
-  
+
         // Calculate the camera's dimensions in world space
         float height = sormikamera.orthographicSize * 2;
         float width = height * sormikamera.aspect;
@@ -979,7 +993,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         //float bottomY = Camera.main.transform.position.y - Camera.main.orthographicSize; // Bottom of the screen
         //return bottomY;
 
-        float r= GetCameraMinWorldPosition().y;
+        float r = GetCameraMinWorldPosition().y;
         return r;
     }
 
@@ -999,7 +1013,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     private float PalautaKameranMaxY()
     {
-        float r= GetCameraMaxWorldPosition().y;
+        float r = GetCameraMaxWorldPosition().y;
         return r;
     }
 
@@ -1214,21 +1228,21 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void Update()
     {
-            if (uusiohjauskaytossa & !osuudetasetettu)
+        if (uusiohjauskaytossa & !osuudetasetettu)
         {
             //   sormi.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             //prosenttiosuusmikaonvarattuohjaukseenkorkeudessa = CalculatePercentageAboveBottom2(alamaksiminMaarittava);
             //säätää myös pääkameran koon
-           // if (sormiKameraController == null)
-           // {
-           //     Debug.Log("sormiKameraController==null");
-           // }
+            // if (sormiKameraController == null)
+            // {
+            //     Debug.Log("sormiKameraController==null");
+            // }
 
-          //  sormiKameraController.SetOsuudet(prosenttiosuusalasuoja, prosenttiosuusmikaonvarattuohjaukseenkorkeudessa,
-          //      mainCamera);
+            //  sormiKameraController.SetOsuudet(prosenttiosuusalasuoja, prosenttiosuusmikaonvarattuohjaukseenkorkeudessa,
+            //      mainCamera);
 
 
-          //  UusiohjauskaytossaAsetaSormi();
+            //  UusiohjauskaytossaAsetaSormi();
             osuudetasetettu = true;
         }
 
@@ -1823,7 +1837,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         Debug.DrawRay(new Vector3(kameramin.x, ohjausala, 0), Vector2.right * 10.0f, Color.blue);
         */
 
-        if (mainCamera!=null && sormikamera!=null)
+        if (mainCamera != null && sormikamera != null)
         {
             Debug.DrawRay(new Vector3(-1000, PalautaOhjausalueenAlarajaY(), 0), Vector2.right * 10000.0f, Color.blue);
             Debug.DrawRay(new Vector3(-1000, PalautaOhjausalueenYlarajaY(), 0), Vector2.right * 10000.0f, Color.red);
@@ -1851,23 +1865,23 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
         }
-   /*
-        float minXkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).x;
-        float maxXkamera = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, mainCamera.nearClipPlane)).x;
-        float minYkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).y;
-        float maxYkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane)).y;
-       
-        Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(ruudunvasemmanreunansuojaalue, 0, Camera.main.nearClipPlane));
-        Vector3 worldEnd = Camera.main.ScreenToWorldPoint(new Vector3(ruudunvasemmanreunansuojaalue, Screen.height, Camera.main.nearClipPlane));
+        /*
+             float minXkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).x;
+             float maxXkamera = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, mainCamera.nearClipPlane)).x;
+             float minYkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane)).y;
+             float maxYkamera = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane)).y;
 
-        Gizmos.DrawLine(worldStart, worldEnd);
+             Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(ruudunvasemmanreunansuojaalue, 0, Camera.main.nearClipPlane));
+             Vector3 worldEnd = Camera.main.ScreenToWorldPoint(new Vector3(ruudunvasemmanreunansuojaalue, Screen.height, Camera.main.nearClipPlane));
 
-        Gizmos.color = Color.cyan;
-        Vector3 worldStart2 = Camera.main.ScreenToWorldPoint(new Vector3(erikoisalueenoikeareuna, 0, Camera.main.nearClipPlane));
-        Vector3 worldEnd2 = Camera.main.ScreenToWorldPoint(new Vector3(erikoisalueenoikeareuna, Screen.height, Camera.main.nearClipPlane));
+             Gizmos.DrawLine(worldStart, worldEnd);
 
-        Gizmos.DrawLine(worldStart2, worldEnd2);
-        */
+             Gizmos.color = Color.cyan;
+             Vector3 worldStart2 = Camera.main.ScreenToWorldPoint(new Vector3(erikoisalueenoikeareuna, 0, Camera.main.nearClipPlane));
+             Vector3 worldEnd2 = Camera.main.ScreenToWorldPoint(new Vector3(erikoisalueenoikeareuna, Screen.height, Camera.main.nearClipPlane));
+
+             Gizmos.DrawLine(worldStart2, worldEnd2);
+             */
 
     }
 
@@ -1976,9 +1990,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             float aluskorkeus = PalautaAluksenKorkeus();
 
-            ohjausalaraja = ohjausalaraja - (PalautaSormenkorkeus() / 2.0f)+ (aluskorkeus/2.0f);
+            ohjausalaraja = ohjausalaraja - (PalautaSormenkorkeus() / 2.0f) + (aluskorkeus / 2.0f);
 
-            if (targetPosition.y<ohjausalaraja)
+            if (targetPosition.y < ohjausalaraja)
             {
                 targetPosition = new Vector3(targetPosition.x, ohjausalaraja, 0);
             }
@@ -1991,20 +2005,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             }
 
             float sormileveys = PalautaSormenleveys();
-            
-            float minx = PalautaOhjausalueenAlarajaX() +( sormileveys/2.0f);
+
+            float minx = PalautaOhjausalueenAlarajaX() + (sormileveys / 2.0f);
             if (targetPosition.x < minx)
             {
                 targetPosition = new Vector3(minx, targetPosition.y, 0);
             }
             float maxx = PalautaOhjausalueenYlarajaX();
-            maxx= maxx - sormileveys / 2.0f;
+            maxx = maxx - sormileveys / 2.0f;
 
-            if (targetPosition.x>maxx)
+            if (targetPosition.x > maxx)
             {
                 targetPosition = new Vector3(maxx, targetPosition.y, 0);
             }
-            
+
 
             Vector2 kohta = Vector2.MoveTowards(sormitoisessakamerassa.transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
 
@@ -2017,7 +2031,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             transform.position = kohta;
             //}
         }
-            }
+    }
 
     public float movespeedinKasvatussteppi = 1;
     public void LisaaMoveSpeedia()
@@ -2373,7 +2387,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         {
             //   obj.gameObject.transform.position
             // Set the position
-            
+
             if (laserkaytossa)
             {
                 obj.ammuNormilaukaus(laserPrefab);
@@ -2383,7 +2397,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 obj.ammuNormilaukaus(ammusPrefab);
             }
 
-                if (missileDownCollected >= 1)
+            if (missileDownCollected >= 1)
             {
                 obj.ammuAlaslaukaus(bulletPrefab);
             }
@@ -2427,13 +2441,14 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     private void PaivitaDamagePalkkia()
     {
         //jos se on liikaa niin eikun gameoveria
+        if (damagemodekaytossa)
         damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
 
 
-      //  damagemittarilinerenderer.GetComponent<DamageMittariLineRendererController>().SetDamage(damagenmaara, maksimimaaradamageajokakestetaan, sormikamera);
+        //  damagemittarilinerenderer.GetComponent<DamageMittariLineRendererController>().SetDamage(damagenmaara, maksimimaaradamageajokakestetaan, sormikamera);
 
 
-            TeeGameOver();
+        TeeGameOver();
 
 
 
@@ -2447,12 +2462,14 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     public float viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa = 1.0f;
     public float viimeisinAluksenRajahdysDemoModessa = 0.0f;
 
+    /*
     private IEnumerator PaivitaDamagePalkkiaViiveella()
     {
         yield return new WaitForSeconds(0.5f); // Wait for 0.5 seconds
         damagenmaara = 0.0f;
         PaivitaDamagePalkkia();
     }
+    */
 
     private void TeeGameOver()
     {
@@ -2460,7 +2477,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
         if (demomode && !restartscene && damagenmaara >= maksimimaaradamageajokakestetaan)
         {
-            if (Time.realtimeSinceStartup>= viimeisinAluksenRajahdysDemoModessa + viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa)
+            if (Time.realtimeSinceStartup >= viimeisinAluksenRajahdysDemoModessa + viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa)
             {
                 Vector3 vektori =
 new Vector3(
@@ -2470,18 +2487,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 viimeisinAluksenRajahdysDemoModessa = Time.realtimeSinceStartup;
                 damagenmaara = 0.0f;
                 //PaivitaDamagePalkkia();
-                damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
+                if (damagemodekaytossa)
+                    damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
                 //StartCoroutine(PaivitaDamagePalkkiaViiveella());
-      
-                if (gameoverPrefab!=null)
-                 Instantiate(gameoverPrefab, transform.position, Quaternion.identity);
+
+                if (gameoverPrefab != null)
+                    Instantiate(gameoverPrefab, transform.position, Quaternion.identity);
                 GameManager.Instance.PlayerDied();
 
             }
             else
             {
                 damagenmaara = 0.0f;
-                damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
+                if (damagemodekaytossa)
+                    damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
             }
 
         }
@@ -2544,11 +2563,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         elamat.GetComponent<ElamatController>().SetElamienMaara(elamienmaara);
     }
 
-    public void AiheutaDamagea(float damagemaara)
+    public bool AiheutaDamagea(float damagemaara)
     {
         damagenmaara += damagemaara;
         // ExplodeTarvittaesssa();
         PaivitaDamagePalkkia();
+        return false;
     }
 
     public void Savua()
@@ -2613,8 +2633,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private bool OnkoForceFieldPaalla()
     {
-        ForceFieldController c =GetComponentInChildren<ForceFieldController>();
-        if (c==null)
+        ForceFieldController c = GetComponentInChildren<ForceFieldController>();
+        if (c == null)
         {
             return false;
         }
@@ -2667,7 +2687,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void OnParticleCollision(GameObject other)
     {
-       // Debug.Log("Particle hit: " + other.name);
+        // Debug.Log("Particle hit: " + other.name);
 
         // Example: Apply damage if hitting an enemy
         //  if (other.CompareTag("Enemy"))
@@ -2770,7 +2790,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.MissileUp))
                 {
-                  //  Debug.Log("missile()");
+                    //  Debug.Log("missile()");
                     missileUpCollected++;
                 }
                 else if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Option))
@@ -2822,7 +2842,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
 
-    private void AsetaForceFieldiNakyviin() {
+    private void AsetaForceFieldiNakyviin()
+    {
         GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
 
     }

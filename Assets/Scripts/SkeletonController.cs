@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkeletonController : BaseController, IExplodable
 {
 
+
     public Sprite[] sprites; // Assign the new sprite in the Inspector
 
     private Rigidbody2D rb;
@@ -55,8 +56,11 @@ public class SkeletonController : BaseController, IExplodable
             sp.flipX = true;
         }
         IgnoreChildCollisions(gameObject.transform);
-
+        screamAudio = GetComponent<AudioSource>();
     }
+
+    private AudioSource screamAudio;
+
 
     public float spritechangetime = 1.0f;
     private float kesto = 0.0f;
@@ -254,7 +258,7 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
     public float rajaytaspritexsaata = -2.0f;
 
     public GameObject destroycontrollerinExplode;
-    public bool Explode(Transform transform)
+    public bool Explode(Vector2 contactPoint)
     {
         if (rajaytetty)
         {
@@ -270,12 +274,15 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
         }
         else
         {
+            screamAudio.Play();
+
+            screamAudio.pitch += 0.01f;
 
             // RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, false, -1.0f);
             // Destroy(gameObject);
             if (explosion != null)
             {
-                GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+                GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
               
             }
 
@@ -338,6 +345,8 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
 
     public void Explode()
     {
+
+
         /*
         public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
     float sirpalemass, bool teerigitbody, float ysaato)
@@ -389,6 +398,8 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
             if (explosion != null)
             {
                 GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+                
+             
 
             }
 

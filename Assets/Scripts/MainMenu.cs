@@ -8,6 +8,19 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject loadteksti;
 
+    public AudioSource menu;
+
+    public void Start()
+    {
+        if (menu!=null)
+        {
+            menu.loop = true;
+            menu.Play();
+
+        }
+
+    }
+
     public void PlayLevel1()
     {
         Debug.Log("PlayLevel1");

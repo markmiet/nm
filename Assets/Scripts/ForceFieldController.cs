@@ -178,6 +178,7 @@ public class ForceFieldController : MonoBehaviour
 
 
                 sc.TeeLopulllinenRajaytys();
+                GameManager.Instance.kasvataHighScorea(col.gameObject);
                 //tuhottujenVihollistenmaara++;
                 //LisaaTuhottujenMaaraa(col.gameObject);
                 Destroy(gameObject);
@@ -190,6 +191,7 @@ public class ForceFieldController : MonoBehaviour
             if (o != null)
             {
                 o.Explode();
+                GameManager.Instance.kasvataHighScorea(col.gameObject);
             }
             else
             {
@@ -199,6 +201,7 @@ public class ForceFieldController : MonoBehaviour
                 if (parentin != null)
                 {
                     parentin.Explode();
+                    GameManager.Instance.kasvataHighScorea(col.gameObject);
 
                 }
                 Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();

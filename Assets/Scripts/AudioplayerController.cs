@@ -14,6 +14,8 @@ public class AudioplayerController : MonoBehaviour
     public AudioSource alusammuslaser;
 
 
+
+
     void Start()
     {
         
@@ -40,6 +42,8 @@ public class AudioplayerController : MonoBehaviour
         taustamusiikki.loop = true;
         taustamusiikki.Stop();
     }
+
+
 
 
     public void AlusammusPlay()

@@ -1258,9 +1258,9 @@ public class PalliController : BaseController, IDamagedable
 
     }
 
-    public void AiheutaDamagea(float damagemaara)
+    public bool AiheutaDamagea(float damagemaara)
     {
-        TeeDamaget(damagemaara);
+        return TeeDamaget(damagemaara);
     }
 
    // public void Explode()
@@ -1268,7 +1268,7 @@ public class PalliController : BaseController, IDamagedable
   //      TeeDamaget(1.0f);
   //  }
 
-    private void TeeDamaget(float damage)
+    private bool TeeDamaget(float damage)
     {
 
         // tuliPartikkelit.gravityModifier
@@ -1296,7 +1296,9 @@ public class PalliController : BaseController, IDamagedable
         if (nykyinenosuminenmaara >= osumiemaarajokaTarvitaanRajahdykseen)
         {
             ExplodeOikeasti();
+            return true;
         }
+        return false;
     }
 
     private void AsetaSateily()
