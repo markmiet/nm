@@ -969,6 +969,10 @@ public class BaseController : MonoBehaviour
         )
     {
         SpriteRenderer s = GetComponent<SpriteRenderer>();
+        if (s==null)
+        {
+            return;
+        }
 
         if (rows <= 1)
         {

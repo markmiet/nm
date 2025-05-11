@@ -256,6 +256,7 @@ public class AmmusController : BaseController, IExplodable
                         }
                         //tuhottujenVihollistenmaara++;
                         LisaaTuhottujenMaaraa(col.gameObject);
+                        col.otherCollider.enabled = false;
 
                     }
                     else
@@ -271,9 +272,6 @@ public class AmmusController : BaseController, IExplodable
                             }
                             //tuhottujenVihollistenmaara++;
                             LisaaTuhottujenMaaraa(col.gameObject);
-
-
-
                         }
                         else
                         {

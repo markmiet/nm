@@ -2675,6 +2675,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //}
         if (BaseController.TuhoaakoAluksen(col.collider.tag))
         {
+            Debug.Log("collisiontagi joka tuhoaa=" + col.collider.tag);
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();

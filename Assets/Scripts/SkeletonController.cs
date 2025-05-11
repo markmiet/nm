@@ -282,6 +282,8 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
             // Destroy(gameObject);
             if (explosion != null)
             {
+                Debug.Log("instanssi2  ex=" + explosion);
+
                 GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
               
             }

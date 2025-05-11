@@ -158,40 +158,53 @@ public class BulletScript : BaseController, IExplodable, IAlas
             // col.gameObject.SendMessage("Explode");
             if (col.gameObject != null)
             {
-                SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
-                if (sc != null)
+                ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
+                if (childColliderReporter != null)
                 {
-                    GetComponent<Collider2D>().enabled = false;
 
-                    sc.Explode(col.transform);
+                    Vector2 contactPoint = col.GetContact(0).point;
+                    childColliderReporter.RegisterHit(contactPoint);
 
                 }
                 else
                 {
-                    IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
-                    if (damageMahdollinen != null)
+
+
+
+                    SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
+                    if (sc != null)
                     {
-                        damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
+                        GetComponent<Collider2D>().enabled = false;
+                        Vector2 contactPoint = col.GetContact(0).point;
+                        sc.Explode(contactPoint);
+
                     }
                     else
                     {
-                        IExplodable o =
-    col.gameObject.GetComponent<IExplodable>();
-                        if (o != null)
+                        IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+                        if (damageMahdollinen != null)
                         {
-                            GetComponent<Collider2D>().enabled = false;
-
-                            o.Explode();
+                            damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
                         }
                         else
                         {
-                            Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                            IExplodable o =
+        col.gameObject.GetComponent<IExplodable>();
+                            if (o != null)
+                            {
+                                GetComponent<Collider2D>().enabled = false;
+
+                                o.Explode();
+                            }
+                            else
+                            {
+                                Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                            }
                         }
                     }
+
+
                 }
-
-
-
 
             }
 
