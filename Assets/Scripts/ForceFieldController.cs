@@ -16,7 +16,7 @@ public class ForceFieldController : MonoBehaviour
     private int hittienmaara = 0;
 
     //0.8,0,1, 0.8
-   // public bool partikkelitEnabloituna = true;
+    // public bool partikkelitEnabloituna = true;
     ParticleSystem.MainModule main;
     public float alphaValueAloitusArvo = 0.5f;
     public float alphaValueLopetusArvo = 0.1f;
@@ -44,7 +44,7 @@ public class ForceFieldController : MonoBehaviour
         alus = GameObject.FindGameObjectWithTag("alustag");
         VaihdaAlphaa();
         SetOnkotoiminnassa(false);
-       // SetActive(false);
+        // SetActive(false);
     }
 
     // Update is called once per frame
@@ -151,7 +151,7 @@ public class ForceFieldController : MonoBehaviour
     */
 
     private HashSet<Collider2D> alreadyTriggered = new HashSet<Collider2D>();
-
+    private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag.Contains("eituhvih"))
@@ -161,12 +161,27 @@ public class ForceFieldController : MonoBehaviour
         }
 
 
-        if (col.tag.Contains("vihollinen")  && !col.tag.Contains("tiili"))
+        if (col.tag.Contains("vihollinen") && !col.tag.Contains("tiili"))
         {
             if (alreadyTriggered.Contains(col))
                 return;
 
             alreadyTriggered.Add(col);
+
+
+            if (col.gameObject.transform.parent != null)
+            {
+                HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
+                if (hc == null)
+                {
+                    if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
+                    {
+                        return;
+                    }
+                    parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
+                }
+            }
+
 
             col.enabled = false;
 
@@ -184,52 +199,54 @@ public class ForceFieldController : MonoBehaviour
                 Destroy(gameObject);
 
             }
-
-
-            IExplodable o =
-    col.gameObject.GetComponent<IExplodable>();
-            if (o != null)
-            {
-                o.Explode();
-                GameManager.Instance.kasvataHighScorea(col.gameObject);
-            }
             else
             {
-                Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.tag);
-                
-                IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
-                if (parentin != null)
+
+                IExplodable o =
+        col.gameObject.GetComponent<IExplodable>();
+                if (o != null)
                 {
-                    parentin.Explode();
+                    o.Explode();
                     GameManager.Instance.kasvataHighScorea(col.gameObject);
-
                 }
-                Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
-                if (ssparent != null)
+                else
                 {
-                    ssparent.enabled = false;
-                }
+                    Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.tag);
 
-                Collider2D ss =
-                    col.gameObject.GetComponent<Collider2D>();
-                if (ss != null)
+                    IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
+                    if (parentin != null)
+                    {
+                        parentin.Explode();
+                        GameManager.Instance.kasvataHighScorea(col.gameObject);
+
+                    }
+                    Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
+                    if (ssparent != null)
+                    {
+                        ssparent.enabled = false;
+                    }
+
+                    Collider2D ss =
+                        col.gameObject.GetComponent<Collider2D>();
+                    if (ss != null)
+                    {
+                        ss.enabled = false;
+                    }
+                    //Destroy(col.gameObject);
+
+                }
+                PoltaValo();
+                hittienmaara++;
+                Debug.Log("hittienmäärä=" + hittienmaara);
+                //tähän se himmennys eli partikkelien määräää vähennetään tms
+                if (hittienmaara >= hittienmaaraJokaKestetaan)
                 {
-                    ss.enabled = false;
+                    // gameObject.SetActive(false);
+                    //
+                    alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                    SetOnkotoiminnassa(false);
+
                 }
-                //Destroy(col.gameObject);
-
-            }
-            PoltaValo();
-            hittienmaara++;
-            Debug.Log("hittienmäärä=" + hittienmaara);
-            //tähän se himmennys eli partikkelien määräää vähennetään tms
-            if (hittienmaara>= hittienmaaraJokaKestetaan)
-            {
-                // gameObject.SetActive(false);
-                //
-                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
-                SetOnkotoiminnassa(false);
-
             }
         }
 
@@ -243,7 +260,8 @@ public class ForceFieldController : MonoBehaviour
         Collider2D[] sd =
         GetComponents<Collider2D>();
 
-        foreach (Collider2D c in sd) {
+        foreach (Collider2D c in sd)
+        {
             c.enabled = active;
         }
 
@@ -257,7 +275,7 @@ public class ForceFieldController : MonoBehaviour
 
             particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
-       
+
 
 
 

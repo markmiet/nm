@@ -701,6 +701,11 @@ piipunboxit.gameObject.transform.position.x;
 
             if (VoikoVihollinenAmpua(ammusvektori)) {
                 instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
+                MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
+                if (m!=null)
+                {
+                    m.SetCreator(this.gameObject);
+                }
 
                 //     instanssi = Instantiate(ammusPrefab, new Vector3(
                 // piippux,piippuy, 0), Quaternion.identity);

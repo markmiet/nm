@@ -274,9 +274,13 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
         }
         else
         {
-            screamAudio.Play();
+            if (screamAudio!=null)
+            {
+                screamAudio.Play();
 
-            screamAudio.pitch += 0.01f;
+                screamAudio.pitch += 0.01f;
+            }
+
 
             // RajaytaSprite(gameObject, rows, cols, explosionforce, aliviteme, sirpalemass, false, -1.0f);
             // Destroy(gameObject);

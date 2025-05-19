@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BaseController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -808,6 +809,37 @@ public class BaseController : MonoBehaviour
         return alustieto;
 
     }
+
+    public GameObject palautaScoreGameObject()
+    {
+        return GameObject.Find("ScoreText");
+        /*
+        foreach (GameObject obstacles in allObstacles)
+        {
+            return obstacles;
+        }
+        return null;
+        */
+        
+
+    }
+
+    //
+
+    public GameObject palautaHighScoreText()
+    {
+        return GameObject.Find("HighScoreText");
+        /*
+        foreach (GameObject obstacles in allObstacles)
+        {
+            return obstacles;
+        }
+        return null;
+        */
+
+
+    }
+
 
     public void RajaytaSpriteUUsi(GameObject go, int rows, int columns, float explosionForce, float alivetime)
     {
@@ -1726,6 +1758,49 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
     */
 
+    public bool IsFullyVisible2D()
+    {
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        Renderer rend = GetComponent<Renderer>();
+        if (rend == null) return false;
+
+        float halfWidth = rend.bounds.size.x / 2;
+        float halfHeight = rend.bounds.size.y / 2;
+
+        Vector3 leftBottom = Camera.main.WorldToViewportPoint(transform.position - new Vector3(halfWidth, halfHeight, 0));
+        Vector3 rightTop = Camera.main.WorldToViewportPoint(transform.position + new Vector3(halfWidth, halfHeight, 0));
+
+        return leftBottom.x >= 0 && leftBottom.y >= 0 &&
+               rightTop.x <= 1 && rightTop.y <= 1;
+    }
+
+    public bool IsMoreThanHalfOnLeft()
+    {
+        Renderer rend = GetComponent<Renderer>();
+        if (rend == null || Camera.main == null) return false;
+
+        Bounds bounds = rend.bounds;
+
+        // Sample points along the sprite’s width
+        int sampleCount = 5; // More samples = better accuracy
+        int countOnLeft = 0;
+
+        for (int i = 0; i <= sampleCount; i++)
+        {
+            float t = i / (float)sampleCount;
+            Vector3 worldPoint = new Vector3(Mathf.Lerp(bounds.min.x, bounds.max.x, t), bounds.center.y, bounds.center.z);
+            Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPoint);
+
+            if (viewportPoint.x < 0.5f && viewportPoint.z > 0) // z > 0 = in front of camera
+            {
+                countOnLeft++;
+            }
+        }
+
+        return (countOnLeft / (float)(sampleCount + 1)) > 0.5f;
+    }
+
+
     public bool IsGameObjectVisible()
     {
         if (Camera.main == null) return false; // Ensure there is a main camera
@@ -1743,6 +1818,34 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         return isVisible;
     }
+
+
+    /*
+    public Color gizmoColoraaaa = Color.cyan;
+
+    private void OnDrawGizmos()
+    {
+        Camera cam = Camera.main;
+        if (cam == null || !cam.orthographic) return;
+
+        Gizmos.color = gizmoColoraaaa;
+
+        float height = cam.orthographicSize * 2;
+        float width = height * cam.aspect;
+
+        Vector3 camPos = cam.transform.position;
+        Vector3 bottomLeft = new Vector3(camPos.x - width / 2f, camPos.y - height / 2f, 0);
+        Vector3 bottomRight = new Vector3(camPos.x + width / 2f, camPos.y - height / 2f, 0);
+        Vector3 topRight = new Vector3(camPos.x + width / 2f, camPos.y + height / 2f, 0);
+        Vector3 topLeft = new Vector3(camPos.x - width / 2f, camPos.y + height / 2f, 0);
+
+        // Draw rectangle
+        Gizmos.DrawLine(bottomLeft, bottomRight);
+        Gizmos.DrawLine(bottomRight, topRight);
+        Gizmos.DrawLine(topRight, topLeft);
+        Gizmos.DrawLine(topLeft, bottomLeft);
+    }
+    */
     AlusController ac = null;
 
     public AlusController PalautaAlusController()

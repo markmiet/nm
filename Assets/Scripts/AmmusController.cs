@@ -26,10 +26,6 @@ public class AmmusController : BaseController, IExplodable
 
 
     public GameObject option;
-
-    public bool laserkaytossa = false;
-    public int laserkaytossamontakotuhotaan = 3;
-
     public void SetOption(GameObject p_option)
     {
         option = p_option;
@@ -39,16 +35,7 @@ public class AmmusController : BaseController, IExplodable
     {
         aluksenluoma = arvo;
     }
-    public void SetLaserkaytossa(bool p_laser)
-    {
-        laserkaytossa = p_laser;
-        if (laserkaytossa)
-        {
-            //Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            //m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
 
-        }
-    }
 
 
     private AudioplayerController ad;
@@ -95,10 +82,9 @@ public class AmmusController : BaseController, IExplodable
     public void Update()
     {
 
-        if (!laserkaytossa)
-        {
+
             TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
-        }
+
 
         //
         if (true)
@@ -106,9 +92,6 @@ public class AmmusController : BaseController, IExplodable
             return;
         }
 
-        /*
-	
-		*/
         //Debug.Log ("vauhti x=" + m_Rigidbody2D.velocity.x);
         //Debug.Log ("vauhti y=" + m_Rigidbody2D.velocity.y);
         /*
@@ -120,7 +103,7 @@ public class AmmusController : BaseController, IExplodable
 
             return;
 		}
-		*/
+		
         float speed = m_Rigidbody2D.velocity.magnitude;
         //	Debug.Log("alusammuksen nopeus=" + speed);
 
@@ -133,49 +116,8 @@ public class AmmusController : BaseController, IExplodable
         //	TuhoaJosVaarassaPaikassa(gameObject);
         TuhoaJosEiKamerassa(gameObject);
 
-        /*
-		if ( !m_Renderer.isVisible) {
-				Debug.Log ("ei visible destroy");
 
-				Destroy (gameObject);
-		
-		}
-		el
-		
-		se
-	*/
-
-        /*
-		//if (tuhoa && !tuhoamistoimenpiteetkaynnistetty) {
-			//tuhoamistoimenpiteetkaynnistetty = true;
-            //Explode(0.0f);
-
-        //   Destroy (gameObject);
-		} else if (tuhoaViivella && !tuhoamistoimenpiteetkaynnistetty) {
-			tuhoamistoimenpiteetkaynnistetty = true;
-			m_Rigidbody2D.gravityScale = 5;
-
-			//m_Animator.SetBool ("tormasi", true);
-
-			m_Rigidbody2D.freezeRotation = false;
-
-			//m_Rigidbody2D.velocity = new Vector2 (-1.0f, 0);
-
-			//m_Rigidbody2D.rotation =45.0f;
-
-			//		m_Rigidbody2D.rotation = annaRandomiKulmaAmmukselleTormayksenJalkeen ();
-
-			//Destroy (gameObject,5f);
-
-            Explode(0.0f);
-        } else if (tuhoaViivella && tuhoamistoimenpiteetkaynnistetty && tormaysmaara > 2) {
-			//transform.position = new Vector2 (transform.position.x - 0.01f, transform.position.y);
-
-	//		Debug.Log ("tormaysmaara= " + tormaysmaara);
-
-	//		Destroy (gameObject);
-		}
-		*/
+        */
 
     }
 
@@ -194,27 +136,21 @@ public class AmmusController : BaseController, IExplodable
 
 
     public float damagemaarajokaaiheutataan = 1.0f;
-
+    private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
     void OnCollisionEnter2D(Collision2D col)
     {
-
-
-
-
-
         if (col.collider.tag.Equals("alustag"))
         {
             return;
         }
 
-        if (tormattyviholliseen && !laserkaytossa)
+        if (tormattyviholliseen)
         {
             return;
         }
 
         if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("eituhvih"))
         {
-            tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
             Explode();
         }
 
@@ -225,96 +161,138 @@ public class AmmusController : BaseController, IExplodable
 
             if (col.gameObject != null)
             {
-                ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
-                if (childColliderReporter != null)
+                if (col.gameObject.transform.parent != null)
                 {
-                    LisaaTuhottujenMaaraa(col.gameObject);
+                    HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
+                    if (hc == null)
+                    {
+                        if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
+                        {
+                            return;
+                        }
+                        parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
+                    }
+                }
+
+                HitCounter hitcounter = col.gameObject.GetComponent<HitCounter>();
+
+                if (hitcounter != null)
+                {
 
                     Vector2 contactPoint = col.GetContact(0).point;
-                    childColliderReporter.RegisterHit(contactPoint);
-                    
+                    hitcounter.RegisterHit(contactPoint);
                 }
                 else
                 {
-
-                    SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
-                    if (sc != null)
+                    ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
+                    if (childColliderReporter != null)
                     {
-                        //col.collider.enabled = false;
-                        GetComponent<Collider2D>().enabled = false;
-                        Vector2 contactPoint = col.GetContact(0).point;
 
-                        bool rajahtiko = sc.Explode(contactPoint);
-                        if (rajahtiko)
-                        {
-                            Collider2D ss = col.gameObject.GetComponent<Collider2D>();
-                            if (ss != null)
-                            {
-                                ss.enabled = false;
-                            }
-                            GameManager.Instance.kasvataHighScorea(col.gameObject);
-                        }
-                        //tuhottujenVihollistenmaara++;
-                        LisaaTuhottujenMaaraa(col.gameObject);
-                        col.otherCollider.enabled = false;
+                        Vector2 contactPoint = col.GetContact(0).point;
+                        childColliderReporter.RegisterHit(contactPoint);
 
                     }
                     else
                     {
 
-                        IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
-                        if (damageMahdollinen != null)
+                        SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
+                        if (sc != null)
                         {
-                            bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+                            //col.collider.enabled = false;
+                            GetComponent<Collider2D>().enabled = false;
+                            Vector2 contactPoint = col.GetContact(0).point;
+
+                            bool rajahtiko = sc.Explode(contactPoint);
                             if (rajahtiko)
                             {
-                                GameManager.Instance.kasvataHighScorea(col.gameObject);
-                            }
-                            //tuhottujenVihollistenmaara++;
-                            LisaaTuhottujenMaaraa(col.gameObject);
-                        }
-                        else
-                        {
-
-                            IExplodable o =
-            col.gameObject.GetComponent<IExplodable>();
-                            if (o != null)
-                            {
-                                col.collider.enabled = false;
-                                GetComponent<Collider2D>().enabled = false;
-
-
-                                GameManager.Instance.kasvataHighScorea(col.gameObject);
-                                o.Explode();
-                                //tuhottujenVihollistenmaara++;
-                                LisaaTuhottujenMaaraa(col.gameObject);
-
-                            }
-                            else
-                            {
-                                Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
-                                IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
-                                if (parentin != null)
-                                {
-                                    GameManager.Instance.kasvataHighScorea(col.gameObject);
-                                    parentin.Explode();
-
-                                }
-                                Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
-                                if (ssparent != null)
-                                {
-                                    ssparent.enabled = false;
-                                }
-
-                                Collider2D ss =
-                                    col.gameObject.GetComponent<Collider2D>();
+                                Collider2D ss = col.gameObject.GetComponent<Collider2D>();
                                 if (ss != null)
                                 {
                                     ss.enabled = false;
                                 }
+                                GameManager.Instance.kasvataHighScorea(col.gameObject);
+                            }
+                            //tuhottujenVihollistenmaara++;
+                            col.otherCollider.enabled = false;
+
+                        }
+                        else
+                        {
+
+                            IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+                            if (damageMahdollinen != null)
+                            {
+                                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+                                if (rajahtiko)
+                                {
+                                    GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                }
+                                //tuhottujenVihollistenmaara++;
+                            }
+                            else
+                            {
+                               // Debug.Log("osauma=" + col.gameObject);
+                                IExplodable o =
+                col.gameObject.GetComponent<IExplodable>();
+                                if (o != null)
+                                {
+                                    col.collider.enabled = false;
+                                    GetComponent<Collider2D>().enabled = false;
+
+
+                                    GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                    o.Explode();
+                                    //tuhottujenVihollistenmaara++;
+
+                                }
+                                else
+                                {
+                                    Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                                    IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
+                                    if (parentin != null)
+                                    {
+                                        if (col.gameObject.transform.parent != null)
+                                        {
+                                            Collider2D[] childCollid = col.gameObject.transform.parent.GetComponentsInChildren<Collider2D>();
+                                            if (childCollid != null)
+                                            {
+                                                foreach (Collider2D m in childCollid)
+                                                {
+                                                    m.enabled = false;
+                                                }
+                                            }
+                                        }
+
+
+                                        GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                        parentin.Explode();
+
+
+                                    }
+                                    Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
+                                    if (ssparent != null)
+                                    {
+                                        ssparent.enabled = false;
+                                    }
+
+                                    Collider2D ss =
+                                        col.gameObject.GetComponent<Collider2D>();
+                                    if (ss != null)
+                                    {
+                                        ss.enabled = false;
+                                    }
+                                    Collider2D[] childCollid2 = col.gameObject.transform.GetComponentsInChildren<Collider2D>();
+                                    if (childCollid2 != null)
+                                    {
+                                        foreach (Collider2D m in childCollid2)
+                                        {
+                                            m.enabled = false;
+                                        }
+                                    }
+
+                                }
                             }
                         }
-
                     }
                 }
 
@@ -333,17 +311,6 @@ public class AmmusController : BaseController, IExplodable
 
     }
 
-    private HashSet<GameObject> tuhotut = new HashSet<GameObject>();
-    private void LisaaTuhottujenMaaraa(GameObject go)
-    {
-        if (!tuhotut.Contains(go))
-        {
-            tuhottujenVihollistenmaara++;
-            tuhotut.Add(go);
-        }
-
-
-    }
 
 
     void OnBecameInvisible()
@@ -359,25 +326,20 @@ public class AmmusController : BaseController, IExplodable
     {
         //GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         //	Destroy(explosionIns, 1.0f);
-        if (rajaytaspriteexplodenjalkeenpistatamatrueksi && !laserkaytossa)
+        if (rajaytaspriteexplodenjalkeenpistatamatrueksi)
         {
             RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
         }
 
         //ammuksen massa oli 0.06
-        if (!laserkaytossa)
-        {
+
             Destroy(gameObject);
-        }
-        else if (laserkaytossa && tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
-        {
-            Destroy(gameObject);
-        }
+
 
 
     }
 
-    private int tuhottujenVihollistenmaara = 0;
+
 
 
     public bool rajaytaspriteexplodenjalkeenpistatamatrueksi = false;

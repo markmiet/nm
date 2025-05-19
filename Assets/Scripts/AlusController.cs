@@ -108,7 +108,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private bool vasenNappiPainettu = false;
 
 
-    private bool laserkaytossa = false;
+    public bool laserkaytossa = true;
     public GameObject laserPrefab;
 
     //ylos/alla
@@ -167,7 +167,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     public GameObject elamat;
 
-
+    /*
+     * LOOSER HUUTO
 
 
 
@@ -2705,6 +2706,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
+
+
 
         }
 

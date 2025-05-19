@@ -105,6 +105,8 @@ public class BulletScript : BaseController, IExplodable, IAlas
     }
 
     public float damagemaarajokaaiheutetaan = 5.0f;
+
+    private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
     void OnCollisionEnter2D(Collision2D col)
     {
         //  Debug.Log("alaosa collidoi");
@@ -158,54 +160,82 @@ public class BulletScript : BaseController, IExplodable, IAlas
             // col.gameObject.SendMessage("Explode");
             if (col.gameObject != null)
             {
-                ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
-                if (childColliderReporter != null)
+                if (col.gameObject.transform.parent != null)
+                {
+                    HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
+                    if (hc == null)
+                    {
+                        if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
+                        {
+                            return;
+                        }
+                        parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
+                    }
+                }
+
+                HitCounter hitcounter = col.gameObject.GetComponent<HitCounter>();
+
+                if (hitcounter != null)
                 {
 
                     Vector2 contactPoint = col.GetContact(0).point;
-                    childColliderReporter.RegisterHit(contactPoint);
-
+                    hitcounter.RegisterHit(contactPoint);
                 }
                 else
                 {
 
-
-
-                    SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
-                    if (sc != null)
+                    ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
+                    if (childColliderReporter != null)
                     {
-                        GetComponent<Collider2D>().enabled = false;
+
                         Vector2 contactPoint = col.GetContact(0).point;
-                        sc.Explode(contactPoint);
+                        childColliderReporter.RegisterHit(contactPoint);
 
                     }
                     else
                     {
-                        IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
-                        if (damageMahdollinen != null)
+                        SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
+                        if (sc != null)
                         {
-                            damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
+                            GetComponent<Collider2D>().enabled = false;
+                            Vector2 contactPoint = col.GetContact(0).point;
+                            bool rajahtiko = sc.Explode(contactPoint);
+                            if (rajahtiko)
+                            {
+                                GameManager.Instance.kasvataHighScorea(col.gameObject);
+                            }
+
                         }
                         else
                         {
-                            IExplodable o =
-        col.gameObject.GetComponent<IExplodable>();
-                            if (o != null)
+                            IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+                            if (damageMahdollinen != null)
                             {
-                                GetComponent<Collider2D>().enabled = false;
-
-                                o.Explode();
+                                bool rajahti = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
+                                if (rajahti)
+                                {
+                                    GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                }
                             }
                             else
                             {
-                                Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                                IExplodable o =
+            col.gameObject.GetComponent<IExplodable>();
+                                if (o != null)
+                                {
+                                    GetComponent<Collider2D>().enabled = false;
+
+                                    o.Explode();
+                                    GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                }
+                                else
+                                {
+                                    Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.collider.tag);
+                                }
                             }
                         }
                     }
-
-
                 }
-
             }
 
 
@@ -241,6 +271,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
         }
 
     }
+
 
     public void Explode()
     {

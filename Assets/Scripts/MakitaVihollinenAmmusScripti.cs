@@ -9,11 +9,24 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 	private Rigidbody2D m_Rigidbody2D;
 
 	// Start is called before the first frame update
+	//private float spawnTime;
+	//public float kauankoViholliseentormayksetIgnorataan = 0.5f;
 	void Start ()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		//spawnTime = Time.time;
 
 	}
+	/*
+	private bool VihollinenCollideIgnore()
+    {
+		if (Time.time-spawnTime>=kauankoViholliseentormayksetIgnorataan)
+        {
+			return false;
+        }
+		return true;
+    }
+	*/
 
 	// Update is called once per frame
 
@@ -138,13 +151,30 @@ col.gameObject.GetComponent<IDamagedable>();
 		else if (col.collider.tag.Contains("ammus")) { 
 			
 		}
-		else if (col.collider.tag.Contains("vihollinen") /*|| col.collider.tag== "makitavihollinenammustag"*/) {
+		/*
+		else if (col.collider.tag.Contains("makitavihollinen") )
+		{
 			//Destroy (col.gameObject);
 			//Destroy(gameObject);
 			//Debug.Log ("dame over");
 			//just continue
 			//Destroy(gameObject);
-			//Explode();
+			if (!VihollinenCollideIgnore())
+            {
+				Explode();
+			}
+		}
+		*/
+		else if ( col.collider.tag.Contains("vihollinen") ) {
+			//Destroy (col.gameObject);
+			//Destroy(gameObject);
+			//Debug.Log ("dame over");
+			//just continue
+			//Destroy(gameObject);
+			if (col.collider.gameObject!=creator)
+            {
+				Explode();
+			}
 
 		} 
 	}
@@ -168,5 +198,13 @@ col.gameObject.GetComponent<IDamagedable>();
 
 	}
 	public GameObject explosion;
+
+
+	private GameObject creator;
+	public void SetCreator(GameObject c)
+    {
+		creator = c;
+
+	}
 
 }

@@ -9,41 +9,90 @@ public class GameManager : BaseController
     public static GameManager Instance;
 
     public int lives = 3;
-    private TextMeshProUGUI scoreTextMeshProUGUI;
-    public GameObject scoreGameObject;
+    //private TextMeshProUGUI scoreTextMeshProUGUI;
+    //public GameObject scoreGameObject;
 
-    private int score = 0;
+    private TextMeshProUGUI scoreTextMeshProUGUI = null;
+    private TextMeshProUGUI highscoreTextMeshProUGUI = null;
+
+   public GameObject checkPoint;
+    
+
+    public AudioSource gameoverAudioSource;
+
+    public AudioSource looserAudioSource;
 
     public void kasvataHighScorea(GameObject go)
     {
-        if (go.GetComponent<SkeletonController>()!=null)
+
+        if (go.GetComponent<HitCounter>() != null)
+        {
+
+            score += go.GetComponent<HitCounter>().hitThreshold*100;
+        }
+
+        else if (go.GetComponent<SkeletonController>()!=null)
         {
             score += 1000;
         }
-        if (go.GetComponent<IDamagedable>() != null)
+        else if (go.GetComponent<IDamagedable>() != null)
         {
-            score += 100;
+           score += 100;
         }
         else
         {
             score += 10;
         }
-        scoreTextMeshProUGUI.SetText("" + score);
+       // scoreTextMeshProUGUI.SetText("" + score);
+
+
+        //palautaScoreGameObject().GetComponent<TextMeshProUGUI>().SetText("" + score);
+        AsetaScoreTeksti();
+
+    }
+
+    private void AsetaScoreTeksti()
+    {
+        if (scoreTextMeshProUGUI==null)
+        {
+            GameObject scoreGameObject = GameObject.Find("ScoreText"); // Use the correct name
+            if (scoreGameObject != null)
+            {
+                scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
+                scoreTextMeshProUGUI.SetText(score.ToString());
+            }
+        }
+        else
+        {
+            scoreTextMeshProUGUI.SetText(score.ToString());
+        }
+        SetHighScore();
     }
 
 
+    public int score = 0;
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
+         //   scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
 
             DontDestroyOnLoad(gameObject); // Keep across scenes
+            DontDestroyOnLoad(gameoverAudioSource); // Keep across scenes
+            DontDestroyOnLoad(looserAudioSource);
+            //DontDestroyOnLoad(scoreGameObject); // Keep across scenes
+            //DontDestroyOnLoad(scoreTextMeshProUGUI); // Keep across scenes
+
+            //DontDestroyOnLoad(score); // Keep across scenes
+            DontDestroyOnLoad(checkPoint);
+            
+
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             siirtymisenaloituskohta = Time.realtimeSinceStartup;
             //     elamat.GetComponent<ElamatController>().SetElamienMaara(lives);
+
         }
         else
         {
@@ -74,7 +123,12 @@ public class GameManager : BaseController
             {
                 Time.timeScale = 1.0f;
                 siirtymassascenenalkuun = false;
+                //scoreTextMeshProUGUI.SetText("" + score);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                // scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
+                // scoreTextMeshProUGUI.SetText("" + score);
+                // palautaScoreGameObject().GetComponent<TextMeshProUGUI>().SetText("" + score);
+
             }
         }
         if (siirtymassastartmenuun)
@@ -100,6 +154,7 @@ public class GameManager : BaseController
         Debug.Log("lives=" + lives);
         if (lives > 0)
         {
+            looserAudioSource.PlayDelayed(1.0f);
             // Reload current scene but preserve lives
             GameObject alus = PalautaAlus();
             alus.GetComponent<AlusController>().SetElamienMaara(lives);
@@ -117,6 +172,9 @@ public class GameManager : BaseController
         {
             // Game over logic
             Debug.Log("Game Over");
+            SaveHighScore();
+            score = 0;
+            gameoverAudioSource.PlayDelayed(0.5f);
             // Optionally: Load Game Over Scene
             GameObject alus = PalautaAlus();
             alus.GetComponent<AlusController>().SetElamienMaara(lives);
@@ -128,8 +186,11 @@ public class GameManager : BaseController
             siirtymisenaloituskohta = Time.realtimeSinceStartup;
 
             lives = 3;
+            checkPoint.GetComponent<CheckPointController>().asetettu = false;
         }
     }
+
+
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -142,15 +203,51 @@ public class GameManager : BaseController
                 // Resetoi damaget tässä
             }
 
+            /*
+            GameObject scoreGameObject = GameObject.Find("ScoreText"); // Use the correct name
+            if (scoreGameObject != null)
+            {
+                TextMeshProUGUI scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
+                scoreTextMeshProUGUI.SetText(score.ToString());
+            }
+            */
+            currentHighScore = PlayerPrefs.GetInt("HighScore", 0); // Default is 0 if not set
+            AsetaScoreTeksti();
+            //tässä tutkitaan onko checkpointti
+            /*if (checkpointAsetettu)
+             {
+                 //                public bool checkpointAsetettu = false;
+                 //public float checkpointx;
+                 //public float checkpointy;
+                 Camera.main.transform.position = new Vector2(checkpointx, checkpointy);
+                 Camera.main.GetComponent<Kamera>().AsetaAlusKeskelleKameraa();
+             }
+             */
+            if (checkPoint!=null)
+             {
+               
+                GameObject go=GameObject.Find("CheckPointStart");
+                if ( !checkPoint.GetComponent<CheckPointController>().asetettu) {
+                    checkPoint.GetComponent<CheckPointController>().x = go.transform.position.x;
 
+                    checkPoint.GetComponent<CheckPointController>().asetettu = true;
+                }
+                
+                Debug.Log("checkPoint.transform.position.x=" + checkPoint.transform.position.x);
+                 Camera.main.transform.position = new Vector3(checkPoint.GetComponent<CheckPointController>().x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                 //Camera.main.GetComponent<Kamera>().AsetaAlusKeskelleKameraa();
 
+             }
+            
         }
         if (scene.name.Equals("StartMenu"))
         {
             GameObject mainMenu = GameObject.Find("MainMenu");
             mainMenu.GetComponent<MainMenu>().SetTeksti("");
-
+            //GameObject go = GameObject.Find("CheckPointStart");
+            //checkPointGetComponent<CheckPointController>().asetettu = false;
         }
+            
     }
 
 
@@ -162,5 +259,44 @@ public class GameManager : BaseController
 
         SceneManager.LoadScene(name);
     }
+    private int currentHighScore = 0;
+
+
+    private void SetHighScore()
+    {
+        if (currentHighScore < score)
+        {
+            currentHighScore = score;
+        }
+
+
+        if (highscoreTextMeshProUGUI == null)
+        {
+            GameObject scoreGameObject = GameObject.Find("HighScoreText"); // Use the correct name
+            if (scoreGameObject != null)
+            {
+                highscoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
+                highscoreTextMeshProUGUI.SetText(currentHighScore.ToString());
+            }
+        }
+        else
+        {
+            highscoreTextMeshProUGUI.SetText(currentHighScore.ToString());
+        }
+    }
+
+    public void SaveHighScore()
+    {
+
+        currentHighScore=PlayerPrefs.GetInt("HighScore", 0); // Default is 0 if not set
+        if (score > currentHighScore)
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save(); // Optional, forces saving immediately
+            Debug.Log("New High Score Saved: " + score);
+        }
+        
+    }
+
 
 }

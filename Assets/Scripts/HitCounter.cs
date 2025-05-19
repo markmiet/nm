@@ -15,10 +15,22 @@ public class HitCounter : BaseController
         hitCount++;
         if (hitCount >= hitThreshold)
         {
+            GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
             Destroy(gameObject);
+      
         }
     }
+    public void RegisterHit(Vector2 contactPoint)
+    {
+        RegisterHit();
+        if (teeExplosion && explosion != null)
+        {
+            GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
+        }
+    }
+
+
 
     private void RajaytaChildrenit()
     {

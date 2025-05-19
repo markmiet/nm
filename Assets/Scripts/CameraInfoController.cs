@@ -67,7 +67,7 @@ public class CameraInfoController : MonoBehaviour
     public GameObject tausta2;
     public GameObject tausta3;
 
-
+    public bool checkPoint = false;
 
 
     private bool IsObjectInOrthographicView(Transform target, Camera camera)

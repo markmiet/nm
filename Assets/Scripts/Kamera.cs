@@ -19,6 +19,20 @@ public class Kamera : MonoBehaviour
     public float savuoffsetx = 2.0f;
     public float savuoffsety = 10.0f;
 
+
+    public void AsetaAlusKeskelleKameraa()
+    {
+        if (alus != null)
+        {
+            float y = 0f;
+            y = alus.transform.position.y;
+            float ero = alus.transform.position.x - transform.position.x;
+                alus.transform.position = new Vector3(transform.position.x, y, 0);
+                alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
+         
+        }
+    }
+
     void Start()
     {
         float y = 0f;

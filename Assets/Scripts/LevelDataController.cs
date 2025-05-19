@@ -9,6 +9,9 @@ public class LevelDataController : MonoBehaviour
     public string levelname;
     public int camerastartSpeed;
 
+    public bool checkpointAsetettu = false;
+    public float checkpointx;
+    public float checkpointy;
 
 
     // Start is called before the first frame update
