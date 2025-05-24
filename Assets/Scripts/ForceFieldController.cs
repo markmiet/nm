@@ -152,6 +152,8 @@ public class ForceFieldController : MonoBehaviour
 
     private HashSet<Collider2D> alreadyTriggered = new HashSet<Collider2D>();
     private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
+
+    public float damagemaarajokaaiheutataan = 10.0f;
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag.Contains("eituhvih"))
@@ -169,6 +171,23 @@ public class ForceFieldController : MonoBehaviour
             alreadyTriggered.Add(col);
 
 
+            IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+            if (damageMahdollinen != null)
+            {
+                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+                if (rajahtiko)
+                {
+                    GameManager.Instance.kasvataHighScorea(col.gameObject);
+                }
+                //tuhottujenVihollistenmaara++;
+
+                //tuhottujenVihollistenmaara++;
+                //LisaaTuhottujenMaaraa(col.gameObject);
+                Destroy(gameObject);
+                return;
+
+            }
+
             if (col.gameObject.transform.parent != null)
             {
                 HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
@@ -182,8 +201,51 @@ public class ForceFieldController : MonoBehaviour
                 }
             }
 
+            HitCounter hitcounter = col.gameObject.GetComponent<HitCounter>();
 
-            col.enabled = false;
+            if (hitcounter != null)
+            {
+                col.enabled = false;
+                Vector2 thisPosition = transform.position;
+                Vector2 otherPosition = col.transform.position;
+
+                Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
+
+                int maara = hitcounter.hitThreshold;
+                for (int i = 0; i < maara; i++)
+                {
+                    hitcounter.RegisterHit(estimatedContactPoint);
+                }
+
+                //hitcounter.RegisterHit(estimatedContactPoint);
+                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                SetOnkotoiminnassa(false);
+                return;
+                
+            }
+            ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
+            if (childColliderReporter != null)
+            {
+                col.enabled = false;
+                Vector2 thisPosition = transform.position;
+                Vector2 otherPosition = col.transform.position;
+                Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
+                int maara = childColliderReporter.PalautaHittienMaara();
+                for (int i=0;i<maara;i++)
+                {
+                    childColliderReporter.RegisterHit(estimatedContactPoint);
+                }
+                
+                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                SetOnkotoiminnassa(false);
+
+                return;
+
+
+            }
+
+
+           
 
             SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
             if (sc != null)
@@ -196,11 +258,15 @@ public class ForceFieldController : MonoBehaviour
                 GameManager.Instance.kasvataHighScorea(col.gameObject);
                 //tuhottujenVihollistenmaara++;
                 //LisaaTuhottujenMaaraa(col.gameObject);
-                Destroy(gameObject);
+                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                SetOnkotoiminnassa(false);
 
             }
             else
             {
+                //mites tämä damage
+
+
 
                 IExplodable o =
         col.gameObject.GetComponent<IExplodable>();

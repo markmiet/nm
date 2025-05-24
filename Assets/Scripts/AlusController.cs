@@ -168,7 +168,13 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public GameObject elamat;
 
     /*
-     * LOOSER HUUTO
+     * LOOSER HUUTO ok
+     * kellon kuva ruudulle, jonka voi poimia aika hidaastuu esim. puoleen 10 sekunniksi
+     * sitten se camera stop ominaisuus, pitää tehdä esim. niitä tulivuoria
+     * ja sitten levelin loppuun se pääpahis
+     * sama scene josta tehdään useita leveleitä
+     * new game aloita alusta
+     * tai sitten aloita pelatuista leveleistä mutta ilman aseita
 
 
 

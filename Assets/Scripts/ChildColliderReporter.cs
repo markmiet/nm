@@ -6,10 +6,12 @@ public class ChildColliderReporter : BaseController
 {
     private HitCounter parent;
     public GameObject explosion;
+    private HitCounter tamaHitCounter;
 
-    void Start()
+    protected virtual void Start()
     {
         parent = GetComponentInParent<HitCounter>();
+        tamaHitCounter = GetComponent<HitCounter>();
     }
 
     /*
@@ -22,11 +24,24 @@ public class ChildColliderReporter : BaseController
     public void RegisterHit(Vector2 contactPoint)
     {
         parent?.RegisterHit();
+        tamaHitCounter?.RegisterHit();
         if (explosion!=null)
         {
             GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
-        }
-
-        
+        }       
     }
+
+    public int PalautaHittienMaara()
+    {
+        if (parent != null)
+        {
+            return parent.hitThreshold;
+        }
+        else if (tamaHitCounter != null)
+        {
+            return tamaHitCounter.hitThreshold;
+        }
+        return 1;
+    }
+
 }
