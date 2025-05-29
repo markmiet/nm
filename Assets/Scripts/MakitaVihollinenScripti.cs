@@ -192,6 +192,8 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
         float ammusx = 0f;//= m_SpriteRenderer.bounds.center.x;
 
+        ammusx = piipunboxit.bounds.center.x;
+
         if (alusSpriteRenderer != null & alusSpriteRenderer.bounds.center.x <= m_SpriteRenderer.bounds.center.x)
         {
             //m_SpriteRenderer.flipX = false;
@@ -203,6 +205,9 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
             m_Animator.SetBool("left", true);
 
+            ammusx -= 0.5f;
+
+
             //  ammusx= polygonCollider2D.bounds.min.x;
         }
         else if (alusSpriteRenderer.bounds.center.x > m_SpriteRenderer.bounds.center.x)
@@ -213,6 +218,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
             m_Animator.SetBool("left", false);
             // ammusx = polygonCollider2D.bounds.max.x;
+            ammusx += 0.5f;
 
 
             //   piipunboxit
@@ -225,7 +231,6 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
 
 
-        ammusx = piipunboxit.bounds.center.x;
 
         //   polygonCollider2D.bounds.min.y
 

@@ -144,27 +144,10 @@ col.gameObject.GetComponent<IDamagedable>();
 		else if (col.collider.CompareTag("makitavihollinenexplodetag") &&
 			col.gameObject.transform == gameObject.transform.parent
 			) {
-		//	Debug.Log("ampui itesaan ignere");
-			//instanssi.transform.parent = gameObject.transform;
-
 		}
 		else if (col.collider.tag.Contains("ammus")) { 
 			
 		}
-		/*
-		else if (col.collider.tag.Contains("makitavihollinen") )
-		{
-			//Destroy (col.gameObject);
-			//Destroy(gameObject);
-			//Debug.Log ("dame over");
-			//just continue
-			//Destroy(gameObject);
-			if (!VihollinenCollideIgnore())
-            {
-				Explode();
-			}
-		}
-		*/
 		else if ( col.collider.tag.Contains("vihollinen") ) {
 			//Destroy (col.gameObject);
 			//Destroy(gameObject);
