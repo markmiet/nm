@@ -415,6 +415,24 @@ public class LaserController : MonoBehaviour
         }
     }
 
+    /*
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        //   collision.enabled = false;
 
+        BoxCollider2D[] childCollid2 = GetComponents<BoxCollider2D>();
+        if (childCollid2 != null)
+        {
+            foreach (BoxCollider2D m in childCollid2)
+            {
+                if (!m.isTrigger)
+                {
+                  //  m.enabled = false;
+                }
+            }
+        }
+        
+    }
+    */
 
 }

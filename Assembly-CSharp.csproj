@@ -69,6 +69,7 @@
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_RandomDir.cs" />
     <Compile Include="Assets\AdvancedPolygonCollider\Script\AdvancedPolygonColliderUtilities.cs" />
     <Compile Include="Assets\Scripts\OliotekijaController.cs" />
+    <Compile Include="Assets\Scripts\KiventekijaController.cs" />
     <Compile Include="Assets\Scripts\KalajoukkioController.cs" />
     <Compile Include="Assets\Scripts\ParticleAttractor.cs" />
     <Compile Include="Assets\Scripts\CheckPointController.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\Scripts\CustomTile.cs" />
     <Compile Include="Assets\Scripts\IsoKuvaController.cs" />
+    <Compile Include="Assets\Scripts\KiviController.cs" />
     <Compile Include="Assets\Scripts\KarkiControler.cs" />
     <Compile Include="Assets\Scripts\DamagemittariController.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Assets\JMO Assets\WarFX\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\RainMaker\Prefab\BaseRainScript.cs" />
     <Compile Include="Assets\RainMaker\Demo\DemoScript2D.cs" />
+    <Compile Include="Assets\Scripts\KiviIExplodaple.cs" />
     <Compile Include="Assets\Scripts\IAlas.cs" />
     <Compile Include="Assets\Scripts\SkeletonController.cs" />
     <Compile Include="Assets\Scripts\IDamagedable.cs" />
@@ -162,11 +165,13 @@
     <Compile Include="Assets\Tazo_fx\Script\BillBoard.cs" />
     <Compile Include="Assets\Scripts\MakitaVihollinenAmmusScripti.cs" />
     <Compile Include="Assets\Scripts\SkeletonLeft.cs" />
+    <Compile Include="Assets\Scripts\JointBreakHandler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs" />
     <Compile Include="Assets\Scripts\HaukipaaController.cs" />
     <Compile Include="Assets\Scripts\NmpalleroController.cs" />
     <Compile Include="Assets\Scripts\NappienPaikkojenSijoittelijaController.cs" />
+    <Compile Include="Assets\Scripts\DestroyWhenChildrenGone.cs" />
     <Compile Include="Assets\RainMaker\Demo\DemoScript.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\ProximityActivate.cs" />
     <Compile Include="Assets\Scripts\DestroyController.cs" />

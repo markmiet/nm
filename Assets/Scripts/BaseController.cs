@@ -994,10 +994,18 @@ public class BaseController : MonoBehaviour
         RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teerigitbody, 0.0f, false, 0.0f, -0.2f, false, null);
     }
 
-
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, float gravityscale,
+    float xsaato, bool addDestroyController, GameObject explosion
+    )
+    {
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teeBoxcollider2d, ysaato, skaalaatekstuuria, gravityscale, xsaato, addDestroyController, explosion, false,null,null);
+    }
+
+
+        public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
     float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, float gravityscale,
-        float xsaato, bool addDestroyController, GameObject explosion
+        float xsaato, bool addDestroyController, GameObject explosion,bool siirragameobjectinvelocitypaloihin,string tag,string layer
         )
     {
         SpriteRenderer s = GetComponent<SpriteRenderer>();
@@ -1107,7 +1115,20 @@ public class BaseController : MonoBehaviour
                 // Optionally, instantiate a GameObject with the new sprite in the scene
                 /**/
                 GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
-                sliceObject.layer = go.layer;
+                if (tag!=null)
+                {
+                    sliceObject.tag = tag;
+                }
+                if (layer!=null)
+                {
+                    sliceObject.layer = LayerMask.NameToLayer(layer);
+
+                }
+                else
+                {
+                    sliceObject.layer = go.layer;
+
+                }
 
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
                 //sr.flipX = xflippi;
@@ -1129,6 +1150,15 @@ public class BaseController : MonoBehaviour
                 pieceRigidbody.gravityScale = gravityscale;
 
                 pieceRigidbody.simulated = true;
+
+                if (siirragameobjectinvelocitypaloihin)
+                {
+                    if (gameObject.GetComponent<Rigidbody2D>()!=null)
+                    {
+                        pieceRigidbody.velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+                    }
+                }
+
 
                 // pieceRigidbody.bodyType = RigidbodyType2D.Static;
                 //          pieceRigidbody.simulated = false;
@@ -1259,12 +1289,17 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
                 float randomForce = explosionForce;
                 /*MJM TESTI*/
-                pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
+
+                if (!siirragameobjectinvelocitypaloihin)
+                {
+                    pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
 
 
-                // Optionally, add random torque for rotation
+                    // Optionally, add random torque for rotation
 
-                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
+                    pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
+                }
+ 
 
 
                 //Destroy(sliceObject, 0.3f);
