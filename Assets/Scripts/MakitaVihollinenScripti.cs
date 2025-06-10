@@ -821,7 +821,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //  Instantiate(bonus, v3, Quaternion.identity);
         if (teebonus)
         {
-            TeeBonus(bonus, v3, boxsize, 1);
+            TeeBonus(bonus,  boxsize, 1);
         }
 
 

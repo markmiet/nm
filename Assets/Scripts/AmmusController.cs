@@ -82,8 +82,14 @@ public class AmmusController : BaseController, IExplodable
     public void Update()
     {
 
-
-            TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
+        if (OnkoKameranOikeallaPuolella(gameObject))
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
+        }
 
 
         //

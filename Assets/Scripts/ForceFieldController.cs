@@ -29,7 +29,7 @@ public class ForceFieldController : MonoBehaviour
 
 
     private GameObject alus;
-    private bool onkotoiminnassa = false;
+    public bool onkotoiminnassa = false;
 
     void Start()
     {
@@ -43,7 +43,7 @@ public class ForceFieldController : MonoBehaviour
         //}
         alus = GameObject.FindGameObjectWithTag("alustag");
         VaihdaAlphaa();
-        SetOnkotoiminnassa(false);
+        SetOnkotoiminnassa(IsOnkotoiminnassa());
         // SetActive(false);
     }
 

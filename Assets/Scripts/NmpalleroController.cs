@@ -24,7 +24,9 @@ public class NmpalleroController : BaseController
     // Update is called once per frame
     void Update()
     {
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        //TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+
+        TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
     }
     public void OnTriggerEnter2D(Collider2D col)
     {
@@ -46,10 +48,11 @@ col.gameObject.GetComponent<IExplodable>();
             }
 
         }
-        else if (col.CompareTag("ammustag"))
+        else if (col.CompareTag("ammustag") || col.CompareTag("forcefield"))
         {
 
             Explode();
+            
             IExplodable o =
 col.gameObject.GetComponent<IExplodable>();
             if (o != null)
@@ -58,8 +61,9 @@ col.gameObject.GetComponent<IExplodable>();
             }
             else
             {
-                Debug.Log("alus ja explode mutta ei ookkaan " + col);
+               // Debug.Log("alus ja explode mutta ei ookkaan " + col);
             }
+            
         }
 
     }
@@ -74,6 +78,17 @@ col.gameObject.GetComponent<IExplodable>();
         bool onkokaikkiammuttu = pc.TarkistaOnkoAmmuttu();
 
         sp.enabled = false;
+        ParticleSystem[] pa =
+        GetComponentsInChildren<ParticleSystem>();
+        if (pa!=null)
+        {
+            foreach(ParticleSystem p in pa)
+            {
+                Destroy(p);  
+            }
+        }
+
+
         foreach(Collider2D c in bd)
         {
             c.enabled = false;
@@ -85,9 +100,17 @@ col.gameObject.GetComponent<IExplodable>();
         {
             Vector2 boxsize = new Vector2(sp.size.x, sp.size.y);
             Vector2 pos = transform.position;
-            if (bonusprefab!=null)
+            if (pc.bonusPrefabit!=null && pc.bonusPrefabit.Length!=0)
             {
-                TeeBonus(bonusprefab, pos, boxsize, 1);
+                foreach (GameObject g in pc.bonusPrefabit)
+                {
+                    TeeBonusReal(g, pos,1, true);
+                }
+            }
+            else if (bonusprefab!=null)
+            {
+
+                TeeBonusReal(bonusprefab, pos, 1,false);
             }
             
         }

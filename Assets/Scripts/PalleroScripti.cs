@@ -269,7 +269,7 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
             //   {
             //  TeeBonus();
 
-            TeeBonus(bonus, v2, boxsize, 1);
+            TeeBonus(bonus,  boxsize, 1);
             Ammu();
 
 

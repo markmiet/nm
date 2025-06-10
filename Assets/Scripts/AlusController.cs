@@ -363,7 +363,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         lineRenderer = GetComponent<LineRenderer>();
 
         SetElamienMaara(GameManager.Instance.lives);
-
+    
 
     }
 
@@ -2857,6 +2857,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
 
     }
+
+    public void AlustaForceFied()
+    {
+        bool onko = GetComponentInChildren<ForceFieldController>().IsOnkotoiminnassa();
+        GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(onko);
+    }
+
     public void AsetaForceFieldiButtonEnabloiduksi()
     {
         foreach (BonusButtonController btc in bbc)

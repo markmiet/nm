@@ -231,4 +231,7 @@ cameraInfo.GetComponent<CameraInfoController>();
         }
         return count;
     }
+
+
+
 }

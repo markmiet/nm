@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserController : MonoBehaviour
+public class LaserController : BaseController
 {
     public int laserkaytossamontakotuhotaan = 3;
     private int tuhottujenmaara;
@@ -62,6 +62,18 @@ public class LaserController : MonoBehaviour
     {
         float delta = Time.deltaTime;
         transform.position += new Vector3(delta * nopeusx, 0, 0f);
+        
+        if (OnkoKameranOikeallaPuolella(gameObject))
+        {
+            Destroy(gameObject);
+        }
+        /*
+        else
+        {
+            TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject,-10.0f);
+        }
+        */
+
     }
 
     //@todoooo vaihda ontriggeriksi

@@ -836,7 +836,7 @@ public class KattopalliController : BaseController, IExplodable
         Vector3 v3 =
 new Vector3(
 rb.position.x, rb.position.y, 0);
-        TeeBonus(bonus, v3, boxsize, bonusmaara);
+        TeeBonus(bonus, boxsize, bonusmaara);
 
 
 

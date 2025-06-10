@@ -1366,7 +1366,7 @@ rb.position.x, rb.position.y, 0);
         //  Instantiate(bonus, v3, Quaternion.identity)
         int bonusmaara = 1;
         
-            TeeBonus(bonus, v3, boxsize, bonusmaara);
+            TeeBonus(bonus,  boxsize, bonusmaara);
 
         
 

@@ -442,23 +442,23 @@ public class BaseController : MonoBehaviour
     private int luotujenbonuksienmaara = 0;
 
 
-    public void TeeBonus(GameObject bonus, Vector2 v2, Vector2 boxsize)
+    public void TeeBonus(GameObject bonus, Vector2 boxsize)
     {
-        TeeBonus(bonus, v2, boxsize, 1);
+        TeeBonus(bonus, boxsize, 1);
     }
 
-    public void TeeBonus(GameObject bonus, Vector2 v2, Vector2 boxsize, int bonuksienmaara)
+    public void TeeBonus(GameObject bonus, Vector2 boxsize, int bonuksienmaara)
     {
         for (int i = 0; i < bonuksienmaara; i++)
         {
-            TeeBonusReal(bonus, v2, boxsize, bonuksienmaara);
+            TeeBonusReal(bonus, boxsize, bonuksienmaara, false);
         }
     }
 
 
-    private void TeeBonusReal(GameObject bonus, Vector2 v2, Vector2 boxsize, int bonuksienmaara)
+    public void TeeBonusReal(GameObject bonus, Vector2 boxsize, int bonuksienmaara, bool ignoraaAlkulaskuri)
     {
-        if (luotujenbonuksienmaara >= bonuksienmaara)
+        if (!ignoraaAlkulaskuri && luotujenbonuksienmaara >= bonuksienmaara)
         {
             return;
         }
@@ -470,7 +470,7 @@ public class BaseController : MonoBehaviour
                 //new Vector3(0.1f +
                 //m_Rigidbody2D.position.x+x, m_Rigidbody2D.position.y, 0);
 
-                v2 = new Vector2(x, y);
+                Vector2 v2 = new Vector2(x, y);
 
 
 
@@ -820,7 +820,7 @@ public class BaseController : MonoBehaviour
         }
         return null;
         */
-        
+
 
     }
 
@@ -999,17 +999,21 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
     float xsaato, bool addDestroyController, GameObject explosion
     )
     {
-        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teeBoxcollider2d, ysaato, skaalaatekstuuria, gravityscale, xsaato, addDestroyController, explosion, false,null,null);
+        RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teeBoxcollider2d, ysaato, skaalaatekstuuria, gravityscale, xsaato, addDestroyController, explosion, false, null, null);
     }
 
+    private static int maxExplosionsPertime = 20;
+    private static Queue<float> explosionTimestamps = new Queue<float>();
 
-        public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
+    private float second = 0.5f;
+
+    public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
     float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, float gravityscale,
-        float xsaato, bool addDestroyController, GameObject explosion,bool siirragameobjectinvelocitypaloihin,string tag,string layer
+        float xsaato, bool addDestroyController, GameObject explosion, bool siirragameobjectinvelocitypaloihin, string tag, string layer
         )
     {
         SpriteRenderer s = GetComponent<SpriteRenderer>();
-        if (s==null)
+        if (s == null)
         {
             return;
         }
@@ -1022,7 +1026,26 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
         {
             columns = 2;
         }
+        float currentTime = Time.time;
 
+        // Remove timestamps older than 1 second
+        while (explosionTimestamps.Count > 0 && currentTime - explosionTimestamps.Peek() > second)
+        {
+            explosionTimestamps.Dequeue();
+        }
+
+        // Check if we can explode
+        if (explosionTimestamps.Count < maxExplosionsPertime)
+        {
+            explosionTimestamps.Enqueue(currentTime);
+            // Debug.Log("BOOM!");
+            // Your explode logic here
+        }
+        else
+        {
+            Debug.Log("Explosion rate limit reached (max 5 per second).");
+            return;
+        }
 
 
         Sprite originalSprite = s.sprite;
@@ -1034,7 +1057,7 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
 
         float puolet = (ymax - ymin) / 2;
 
-        if (originalSprite==null)
+        if (originalSprite == null)
         {
             return;
         }
@@ -1115,11 +1138,11 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
                 // Optionally, instantiate a GameObject with the new sprite in the scene
                 /**/
                 GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
-                if (tag!=null)
+                if (tag != null)
                 {
                     sliceObject.tag = tag;
                 }
-                if (layer!=null)
+                if (layer != null)
                 {
                     sliceObject.layer = LayerMask.NameToLayer(layer);
 
@@ -1153,7 +1176,7 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
 
                 if (siirragameobjectinvelocitypaloihin)
                 {
-                    if (gameObject.GetComponent<Rigidbody2D>()!=null)
+                    if (gameObject.GetComponent<Rigidbody2D>() != null)
                     {
                         pieceRigidbody.velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
                     }
@@ -1299,7 +1322,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
                     pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
                 }
- 
+
 
 
                 //Destroy(sliceObject, 0.3f);
@@ -1835,6 +1858,45 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         return (countOnLeft / (float)(sampleCount + 1)) > 0.5f;
     }
 
+    public bool IsAnyOfGameObjectVisible(List<GameObject> gos)
+    {
+        if (gos == null || gos.Capacity == 0)
+        {
+            return false;
+        }
+        foreach (GameObject go in gos)
+        {
+            if (Camera.main == null) return false; // Ensure there is a main camera
+            if (go == null || go.transform == null)
+            {
+                continue;
+            }
+
+            SpriteRenderer sp = go.GetComponent<SpriteRenderer>();
+            if (sp != null && !sp.enabled)
+            {
+                continue;
+            }
+
+
+            // Get the main camera
+            Camera mainCamera = Camera.main;
+
+            // Convert the target's position to viewport coordinates
+            Vector3 viewportPosition = mainCamera.WorldToViewportPoint(go.transform.position);
+
+            // Check if the target is within the camera's viewport
+            bool isVisible = viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                             viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                             viewportPosition.z > 0; // Ensure it's in front of the camera
+
+            if (isVisible)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public bool IsGameObjectVisible()
     {
@@ -1845,6 +1907,26 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         // Convert the target's position to viewport coordinates
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
+
+        // Check if the target is within the camera's viewport
+        bool isVisible = viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                         viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                         viewportPosition.z > 0; // Ensure it's in front of the camera
+
+        return isVisible;
+    }
+
+    public bool IsGameObjectVisible(float xoffset)
+    {
+        if (Camera.main == null) return false; // Ensure there is a main camera
+
+        // Get the main camera
+        Camera mainCamera = Camera.main;
+
+        // Convert the target's position to viewport coordinates
+        Vector3 uusi = new Vector3(transform.position.x + xoffset, transform.position.y, transform.position.z);
+
+        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(uusi);
 
         // Check if the target is within the camera's viewport
         bool isVisible = viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
@@ -2250,7 +2332,7 @@ true,
 
     }
 
-    public void TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(GameObject go, float nopeusjonkaalle)
+    public void TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(GameObject go, float nopeusjonkaalle)
     {
 
 
@@ -2280,7 +2362,7 @@ true,
         **/
         float alaoffsetti = 1.0f;
 
-       // Debug.Log("This code runs only in builds, not in the Unity Editor.");
+        // Debug.Log("This code runs only in builds, not in the Unity Editor.");
         TuhoaReal(go, false, -1, true, 5.0f, true, alaoffsetti, true, 5.0f,
 true,
 600,
@@ -2290,11 +2372,36 @@ true,
     }
 
 
+    public void TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(GameObject go)
+    {
+        TuhoaReal(go, false, -1, true, 10.0f, true, 1, true, 1.0f,
+true,
+600,
+0.5f, false
+);
+        /*
+        private void TuhoaReal(GameObject go, bool tuhoajosliianhidas, float nopeusJonkaAlletuhotaan,
+    bool tuhoaJosKameranVasemmallaPuolella,
+    float offsettijokasallitaanvasemmallakavaisyyn,
+    bool tuhoaJosKameranAlapuolella,
+    float offsettijokasallitaanAlhaallaKavaisyyn,
+    bool tuhoaJosKameranYlapuolella,
+    float offsettijokasallitaanYlapuolellaKavaisyyn,
+    bool tuhoajosliiankauanhengissa,
+    float hengissaolonraja,
+    float tarkistussykli,
+    bool tuhoajosoikeallakameraanVerrattuna
+    )
+        */
+
+
+    }
+
 
     //sitten
     public bool OnkoOkToimiaUusi(GameObject go)
     {
-        if (go==null)
+        if (go == null)
         {
             Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
             return false;
@@ -2346,7 +2453,7 @@ true,
     }
 
 
-    private bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
+    public bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
     {
         Vector3 kameraminimi = GetCameraMinWorldPosition();
 
@@ -2363,7 +2470,7 @@ true,
 
     }
 
-    private bool OnkoKameranOikeallaPuolella(GameObject go)
+    public bool OnkoKameranOikeallaPuolella(GameObject go)
     {
         Vector3 kameraminimi = GetCameraMaxWorldPosition();
 
@@ -2555,7 +2662,7 @@ true,
                     Mathf.Min(pixelHeight + extraPixel * 2, image.height - invertedY)    // Ensure height fits within bounds
                 );
 
-                if (!HasNonTransparentPixels(rect,image))
+                if (!HasNonTransparentPixels(rect, image))
                 {
                     continue; // Skip this slice if it's completely transparent
                 }
@@ -2628,8 +2735,10 @@ true,
 
     public static bool TuhoaakoAluksen(string tag)
     {
-        foreach(string s in tagitjotkatuhoaaAluksen) {
-            if (tag.Contains(s)) {
+        foreach (string s in tagitjotkatuhoaaAluksen)
+        {
+            if (tag.Contains(s))
+            {
                 return true;
             }
 
@@ -2638,8 +2747,16 @@ true,
     }
 
 
-public static string[] tagitjotkaAluksenShieldiTuhoaa = { "Apple", "Banana", "Cherry" };
+    public static string[] tagitjotkaAluksenShieldiTuhoaa = { "Apple", "Banana", "Cherry" };
 
+
+
+    public static float GetKameranSkrolliMaara()
+    {
+
+        return Camera.main.GetComponent<Kamera>().skrollimaara;
+
+    }
 
 }
 

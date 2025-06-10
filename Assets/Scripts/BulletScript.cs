@@ -25,7 +25,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
     void Update()
     {
 
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissaTuhoaJosOikeallapuolen(gameObject, nopeusjonkaalleTuhoutuu);
+        TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
 
 
             /*
