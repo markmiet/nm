@@ -74,7 +74,7 @@ public class KiviIExplodaple : BaseController, IExplodable
         //tiilivihollinentag on se oikea tiili
         //tämä onkin tiilivihollinenkivitag
         float relativeVelocity = col.relativeVelocity.magnitude;
-        Debug.Log("kivihomman relativeVelocity=" + relativeVelocity);
+       // Debug.Log("kivihomman relativeVelocity=" + relativeVelocity);
 
         if (relativeVelocity>= nopeusjokapitaaYlittaaJottaKaikkituhoutuu && col.collider.CompareTag("tiilivihollinentag"))
         {

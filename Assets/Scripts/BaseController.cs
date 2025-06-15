@@ -407,6 +407,41 @@ public class BaseController : MonoBehaviour
 
 
 
+    public bool onkoTagiaBoxissaAlakaytaTransformia(string name, Vector2 boxsize, Vector2 boxlocation)
+    {
+        Vector2 uusi = boxlocation;
+
+        //foreach (string name in tagit)
+        //{
+        // Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
+        Collider2D[] cs = Physics2D.OverlapBoxAll(uusi, boxsize, 0f);
+
+        if (cs != null && cs.Length > 0)
+        {
+            foreach (Collider2D c in cs)
+            {
+                // Debug.Log("tagi=" + c.gameObject.tag);
+                if (c.gameObject == this.gameObject)
+                {
+
+                }
+                else if (c.gameObject.transform.parent == this.gameObject.transform)
+                {
+
+                }
+                else if (c.gameObject.tag.Contains(name))
+                {
+                    return true;
+                }
+            }
+        }
+
+
+        //}
+        return false;
+
+    }
+
 
     /*
     void OnDrawGizmos()
@@ -462,9 +497,9 @@ public class BaseController : MonoBehaviour
         {
             return;
         }
-        for (float y = 0.0f; y < 1.0f; y += 0.3f)
+        for (float y = 0.0f; y < 1.5f; y += 0.5f)
         {
-            for (float x = 0.0f; x < 1.0f; x += 0.3f)
+            for (float x = 0.0f; x < 1.5f; x += 0.5f)
             {
                 //         Vector3 v3 =
                 //new Vector3(0.1f +

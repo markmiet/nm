@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3294481396978785094}
   - component: {fileID: 3294481396978785095}
   - component: {fileID: 3362095348282915404}
-  - component: {fileID: 2965408277044486811}
   - component: {fileID: 3561119158831789725}
   - component: {fileID: 3432093839195414364}
   m_Layer: 3
@@ -103,12 +102,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f905085a7c9e2e08cf1ac0c0c09213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elamienmaara: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   score: 0
   difficalty: 1
   uusiohjauskaytossa: 1
   maksimimaaradamageajokakestetaan: 1000
   damagenmaara: 0
+  damagemodekaytossa: 0
   gravitymodifiermuutoskunammusosuu: 0.001
   gravitynminimi: -0.2
   damagemaarakasvastatuskunsavutaan: 5
@@ -128,6 +129,8 @@ MonoBehaviour:
   optioidenmaksimaara: 5
   explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
     type: 3}
+  laserkaytossa: 1
+  laserPrefab: {fileID: 0}
   ammusPrefab: {fileID: 9057892473094562812, guid: eb03189b9a8660376b2e58982102e80b,
     type: 3}
   bulletPrefab: {fileID: 7918195032328455905, guid: 196dd8526859e18d6a77cd2e1fceab16,
@@ -137,13 +140,18 @@ MonoBehaviour:
   instanssiOption1: {fileID: 5525969137987615723, guid: e658a5da25aa37a43b0d31df13cf8c05,
     type: 3}
   debugloota: {fileID: 0}
+  elamat: {fileID: 0}
+  alusTuhoutumatonColliderPoistuuJaOhjaussysteemiEstaaTiileenTormaamisen: 0
   vauhdinLisaysKunSpeedbonusOtettu: 0.01
   maincameraGameObject: {fileID: 0}
+  checkDistance: 5
   sormitoisessakamerassa: {fileID: 0}
   sormenkamera: {fileID: 0}
   prosenttiosuusalasuoja: 5
   prosenttiosuusmikaonvarattuohjaukseenkorkeudessa: 25
   damageMittari: {fileID: 0}
+  tutkaileAsioitaActivated: 1
+  tutkailunSykli: 5
   isPaused: 0
   sormipaikkakerto: {x: 1.6, y: 1.6}
   sormenlayermaski:
@@ -167,7 +175,8 @@ MonoBehaviour:
   damagemittarilinerenderer: {fileID: 0}
   demomode: 1
   gameoverinjalkeintimescale: 0.1
-  aikamaarajokajatketaangameoverinjalkeen: 7
+  viiveAluksenRajahdyksissaGameOverissaKunOllaanDemossa: 1
+  viimeisinAluksenRajahdysDemoModessa: 0
 --- !u!50 &3294481396978785095
 Rigidbody2D:
   serializedVersion: 4
@@ -216,51 +225,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &2965408277044486811
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294481396978785091}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0029666424, y: 0.00042887032}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.32}
-    newSize: {x: 0.64, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.63724947, y: 0.28450492}
-  m_EdgeRadius: 0
 --- !u!61 &3561119158831789725
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -77,7 +77,7 @@ public class JointBreakHandler : MonoBehaviour
 
     void OnJointBreak2D(Joint2D brokenJoint)
     {
-        Debug.Log("Joint broken: " + brokenJoint);
+      //  Debug.Log("Joint broken: " + brokenJoint);
         // Call your custom action here
         MyCustomBreakAction(brokenJoint);
         CheckIfHasAnyJoints();
@@ -98,7 +98,7 @@ public class JointBreakHandler : MonoBehaviour
     {
         // Your custom logic when joint breaks
         // Example: play sound, spawn particles, notify game manager, etc.
-        Debug.Log("Custom break action triggered for: " + joint.name);
+     //   Debug.Log("Custom break action triggered for: " + joint.name);
 
 
         if (oneBreaksAllBreaks)

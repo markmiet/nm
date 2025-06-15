@@ -167,6 +167,9 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     public GameObject elamat;
 
+
+    public bool enabloiboxcollider = true;
+
     /*
      * LOOSER HUUTO ok
      * kellon kuva ruudulle, jonka voi poimia aika hidaastuu esim. puoleen 10 sekunniksi
@@ -176,6 +179,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
      * new game aloita alusta
      * tai sitten aloita pelatuista leveleistä mutta ilman aseita
 
+
+    
 
 
     /*
@@ -363,8 +368,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         lineRenderer = GetComponent<LineRenderer>();
 
         SetElamienMaara(GameManager.Instance.lives);
-    
 
+        SetEnabloiboxcollider(enabloiboxcollider);
     }
 
 
@@ -614,7 +619,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     // private GameObject sormi;
 
-    private void UusiohjauskaytossaAsetaAlussijainti()
+    private bool UusiohjauskaytossaAsetaAlussijainti()
     {
         // float alussijaintiy = this.PalautaPeliAlueenYOhjausAlueenYylla(sormi.transform.position);
         // transform.position = new Vector3(sormi.transform.position.x, alussijaintiy, 0);
@@ -639,21 +644,58 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         Vector3 newPosition = transform.position;
         newPosition.x = worldPosInCamera2.x;
 
-        transform.position = new Vector3(newPosition.x, alussijaintiy, 0);
+        //eli joku 10 sekunnin kuolemattomuuspätkä tällä...
+        //mutta ei ole hyvä kun pitäis saada liukumaan nätisti tiiliseinää pitkin...
+        if ( !enabloiboxcollider)
+        {
+            Vector2 uusimahdollinenpositio = new Vector3(newPosition.x, alussijaintiy);
 
-        // Apply the updated position to gameObject2
-        //gameObject2.transform.position = newPosition;
+
+            //Vector2 boxlocation = new Vector2(0, 0);
+            //"tiilivihollinentag"
+            bool onkotiilta = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", this.boxCollider2D.size, uusimahdollinenpositio);
+            Debug.Log("onkotiilta=" + onkotiilta);
+            if (!onkotiilta)
+            {
+                transform.position = new Vector3(newPosition.x, alussijaintiy, 0);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            transform.position = new Vector3(newPosition.x, alussijaintiy, 0);
+            return true;
+        }
 
 
-        /*
-        Vector3 sormiworldi = sormitoisessakamerassa.transform.position;
-        Vector2 screenPosition = Camera.main.WorldToScreenPoint(sormiworldi);
-        Vector3 worlidi = Camera.main.ScreenToWorldPoint(screenPosition);
+        return false;
 
-        transform.position = new Vector3(worlidi.x, alussijaintiy, 0);
-        */
+        
 
-        float alueeny = PalautaPelialueenAlarajaY();
+        
+        //Vector2 boxsize = new Vector2(1f, 1f);
+
+
+       //      bool onkoTagiaBoxissa(string name, Vector2 boxsize, Vector2 boxlocation, l);
+       
+
+            // Apply the updated position to gameObject2
+            //gameObject2.transform.position = newPosition;
+
+
+            /*
+            Vector3 sormiworldi = sormitoisessakamerassa.transform.position;
+            Vector2 screenPosition = Camera.main.WorldToScreenPoint(sormiworldi);
+            Vector3 worlidi = Camera.main.ScreenToWorldPoint(screenPosition);
+
+            transform.position = new Vector3(worlidi.x, alussijaintiy, 0);
+            */
+
+            float alueeny = PalautaPelialueenAlarajaY();
 
 
         //  Vector3 minkamera = GetCameraMinWorldPosition();
@@ -673,7 +715,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         //  ja toki pitää rajoittaa sormiliike
 
         if (true)
-            return;
+            return true;
 
         //  sormi.transform.localPosition=new Vector3(0, -5, 0);
         /*
@@ -1632,8 +1674,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //yritysWorldpoint = new Vector2(yritysWorldpoint.x, yritysWorldpoint.y);
 
             Vector3 worldPosition = sormenkamera.GetComponent<Camera>().ScreenToWorldPoint(screenpositionSormen);
+            Vector3 sormikohta=
+            sormitoisessakamerassa.transform.position;
             TryMove(worldPosition);
-            UusiohjauskaytossaAsetaAlussijainti();
+            bool liikkuiko=UusiohjauskaytossaAsetaAlussijainti();
+            if (!liikkuiko)
+            {
+                sormitoisessakamerassa.transform.position = sormikohta;
+            }
         }
         else
         {
@@ -2026,19 +2074,107 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 targetPosition = new Vector3(maxx, targetPosition.y, 0);
             }
 
-
-            Vector2 kohta = Vector2.MoveTowards(sormitoisessakamerassa.transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
+            /*
+            Vector2 kohta = Vector2.MoveTowards((Vector2)sormitoisessakamerassa.transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
 
             sormitoisessakamerassa.transform.position = kohta;
+            */
+            
+
+            Vector2 currentPosition = sormitoisessakamerassa.transform.position;
+
+            float newX = Mathf.MoveTowards(
+                currentPosition.x,
+                targetPosition.x,
+                movespeedjotakaytetaan/ nopeusjakox * Time.deltaTime
+            );
+
+            float newY = Mathf.MoveTowards(
+                currentPosition.y,
+                targetPosition.y,
+                (movespeedjotakaytetaan/ nopeusjakoy) * Time.deltaTime
+            );
+
+            Vector2 kohta = new Vector2(newX, newY);
+
+            if (enabloiboxcollider)
+            {
+                sormitoisessakamerassa.transform.position = kohta;
+            }
+            else
+            {
+
+                
+                /*ei toimi*/
+                float moveSpeed = 0.01f; // units per iteration (not per second)
+                //Vector2 kohtajohonliikutaan = kohta;
+                Vector2 edellinenkunnollinenkohta = Vector2.zero;
+                bool kunnonkohtaloytyi = false;
+                
+                while (Vector2.Distance(currentPosition, kohta) > 0.01f)
+                {
+                    currentPosition = Vector2.MoveTowards(currentPosition, kohta, moveSpeed);
+                    // Debug.Log("Moved to: " + currentPosition);
+                    //onkoTagiaBoxissaAlakaytaTransformia("vihollinen",this.m_Rigidbody2D.)
+
+                    float alussijaintiy = PalautaPeliAlueenYOhjausAlueenYylla(currentPosition);
+
+
+                    Vector3 viewportPos = sormenkamera.GetComponent<Camera>().WorldToViewportPoint(currentPosition);
+
+                    // Step 2: Convert the viewport position to world position in camera2
+                    Vector3 worldPosInCamera2 = Camera.main.ViewportToWorldPoint(new Vector3(viewportPos.x, viewportPos.y, Camera.main.nearClipPlane));
+
+                    // Step 3: Update only the X position of gameObject2 to align horizontally
+                    //Vector3 newPosition = transform.position;
+                    //newPosition.x = worldPosInCamera2.x;
+
+                    float uusialuksenx= worldPosInCamera2.x;
+
+                    bool onko = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", this.boxCollider2D.size*1.2f, new Vector2(uusialuksenx, alussijaintiy));
+                    if (onko)
+                    {
+                        Debug.Log("onko=" + onko);
+                        break;
+                    }
+                    edellinenkunnollinenkohta = new Vector2(currentPosition.x, currentPosition.y);
+                    kunnonkohtaloytyi = true;
+
+                    //kohtajohonliikutaan = new Vector2(uusialuksenx, alussijaintiy);
+                }
+                //transform.position = kohtajohonliikutaan;
+                if (kunnonkohtaloytyi)
+                {
+                    sormitoisessakamerassa.transform.position = edellinenkunnollinenkohta;
+                }
+            }
+
+
+            /*
+            Vector2 currentPosition = sormitoisessakamerassa.transform.position;
+
+            Vector2 direction = (targetPosition - currentPosition).normalized;
+            float deltaX = direction.x * movespeedjotakaytetaan/ nopeusjakox * Time.deltaTime;
+            float deltaY = direction.y * (movespeedjotakaytetaan/ nopeusjakoy) * Time.deltaTime;
+
+            float newX = Mathf.MoveTowards(currentPosition.x, targetPosition.x, Mathf.Abs(deltaX));
+            float newY = Mathf.MoveTowards(currentPosition.y, targetPosition.y, Mathf.Abs(deltaY));
+
+            Vector2 uusiKohta = new Vector2(newX, newY);
+            sormitoisessakamerassa.transform.position = uusiKohta;
+            */
         }
         else
         {
 
-            Vector2 kohta = Vector2.MoveTowards(transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
+            Vector2 kohta = Vector2.MoveTowards((Vector2)transform.position, targetPosition, movespeedjotakaytetaan * Time.deltaTime);
             transform.position = kohta;
             //}
         }
     }
+
+    public float nopeusjakox = 1.5f;
+    public float nopeusjakoy = 6.0f;
 
     public float movespeedinKasvatussteppi = 1;
     public void LisaaMoveSpeedia()
@@ -2388,6 +2524,23 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     }
 
 
+    public void SetEnabloiboxcollider(bool arvo)
+    {
+        enabloiboxcollider = arvo;
+
+        //   boxCollider2D.enabled = arvo;no jätetään tämä nyt päälle, jotta bonukset toimii...
+
+        //boxCollider2D.enabled = true;
+
+        boxCollider2D.isTrigger = !arvo;
+
+        //eli jos enabloidaan niin itseasiassa pitää semmonen iso oikein vahva forcefieldi pistääkin päälle
+        //eli koodaa joko uusi tai sitten sitä vanhaa skaalataan tms...
+
+
+
+    }
+
     private void AmmuOptioneilla()
     {
         foreach (OptionController obj in optionControllerit)
@@ -2560,6 +2713,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public void Explode()
     {
+        if (!enabloiboxcollider)
+        {
+            return;
+        }
         damagenmaara = maksimimaaradamageajokakestetaan;
         PaivitaDamagePalkkia();
 
@@ -2680,7 +2837,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // PaivitaDamagePalkkia();
 
         //}
-        if (BaseController.TuhoaakoAluksen(col.collider.tag))
+     
+        if (enabloiboxcollider && BaseController.TuhoaakoAluksen(col.collider.tag))
         {
             Debug.Log("collisiontagi joka tuhoaa=" + col.collider.tag);
             damagenmaara += maksimimaaradamageajokakestetaan;
@@ -2889,7 +3047,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
 
 
-    void OnParticleTrigger()
+        void OnParticleTrigger()
     {
         // Debug.Log($"OnParticleTrigger hit: {other.name}");
         Debug.Log("OnParticleTrigger");
@@ -2907,6 +3065,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
 
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("OnTriggerEnter2D " + col);
+        if (col.CompareTag("tiilivihollinentag"))
+        {
+            //tiileen törmätty mitäs sitten
+        }
+    }
 
 
 
