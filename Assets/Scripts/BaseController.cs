@@ -2793,5 +2793,30 @@ true,
 
     }
 
+    public static Vector2 PalautaKaikkienCollidereidenKeskipiste(GameObject go)
+    {
+        Collider2D[] allColliders =go.GetComponents<Collider2D>();
+
+        if (allColliders.Length == 0)
+        {
+            Debug.Log("No 2D colliders found in the scene.");
+            return Vector2.zero;
+        }
+
+        // Sum of all collider positions
+        Vector2 sum = Vector2.zero;
+
+        foreach (Collider2D col in allColliders)
+        {
+            sum += (Vector2)col.bounds.center; // or col.transform.position if you prefer object pivot
+        }
+
+        // Calculate center point
+        Vector2 centerPoint = sum / allColliders.Length;
+
+        Debug.Log("Center point of all 2D colliders: " + centerPoint);
+        return centerPoint;
+    }
+
 }
 

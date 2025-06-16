@@ -51,7 +51,11 @@ public class HitCounter : BaseController
                 }
                 if (teeExplosion && explosion != null)
                 {
-                    GameObject instanssi2 = Instantiate(explosion, tt.transform.position, Quaternion.identity);
+                    Vector2 keski=PalautaKaikkienCollidereidenKeskipiste(tt.gameObject);
+
+                    GameObject instanssi2 = Instantiate(explosion,keski, Quaternion.identity);
+                   // GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+
                 }
 
             }
