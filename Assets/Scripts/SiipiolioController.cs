@@ -47,7 +47,7 @@ GetComponents<BoxCollider2D>();
     // Update is called once per frame
     void Update()
     {
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        Tuhoa(gameObject);
         rotationTime += Time.deltaTime;
         float t = Mathf.PingPong(rotationTime / rotatetimeseconds, 1f);
         float currentRotationsiivet = Mathf.Lerp(siivetrotatemin, siivetrotatemax, t);

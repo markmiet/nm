@@ -171,7 +171,7 @@ public class PalliController : BaseController, IDamagedable
 
         //TuhoaJosVaarassaPaikassa(gameObject,false);
 
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
 
 
@@ -1064,10 +1064,12 @@ public class PalliController : BaseController, IDamagedable
     void OnBecameInvisible()
     {
         //MJM 18.12.2023 OTA POIS KOMMENTEISTA
+        /*
         if (tuhoaJosOnBecameInvisible)
         {
             Destroy(gameObject);
         }
+        */
       // 
 
         /*

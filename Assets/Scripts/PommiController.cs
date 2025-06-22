@@ -24,7 +24,7 @@ public class PommiController : BaseController, IExplodable
     private bool rajaytetty = false;
     void Update()
     {
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        Tuhoa(gameObject);
         delta += Time.deltaTime;
 
         if (!rajaytetty && delta > rajahdysaika)

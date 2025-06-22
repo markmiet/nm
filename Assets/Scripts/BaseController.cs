@@ -750,6 +750,136 @@ public class BaseController : MonoBehaviour
         return false;
     }
 
+    float GetGameObjectRadius(GameObject obj)
+    {
+        // Check for CircleCollider2D
+        CircleCollider2D circle = obj.GetComponent<CircleCollider2D>();
+        if (circle != null)
+        {
+            return circle.radius * obj.transform.lossyScale.x; // Assumes uniform scaling
+        }
+
+        // Check for BoxCollider2D (approximate as circle using largest side)
+        BoxCollider2D box = obj.GetComponent<BoxCollider2D>();
+        if (box != null)
+        {
+            Vector3 scale = obj.transform.lossyScale;
+            float width = box.size.x * scale.x;
+            float height = box.size.y * scale.y;
+            return Mathf.Max(width, height) * 0.5f;
+        }
+
+        // Check for SpriteRenderer bounds (fallback)
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            Bounds bounds = sr.bounds;
+            float diameter = Mathf.Max(bounds.size.x, bounds.size.y);
+            return diameter * 0.5f;
+        }
+
+        // If no size-related components found
+     //   Debug.LogWarning("No known radius source found on " + obj.name);
+        return 0.0f;
+    }
+
+
+    public bool OnkoPisteenJaAluksenValillaTilltaTaiVihollista(Vector2  shooterPosition, GameObject go)
+    {
+        Vector2 alusPosition = PalautaAlus().transform.position;
+
+        // Distance to target
+        //Vector3 directionToAlus = alusPosition - shooterPosition;
+        float distance = Vector2.Distance(shooterPosition, alusPosition);
+        Vector2 direction = (alusPosition - shooterPosition).normalized;
+        float radius = GetGameObjectRadius(go);
+        radius *= 1.04f;//laitetaas säteeseen 5% lisää
+        RaycastHit2D[] hitsit;
+        if (radius>0.0f)
+        {
+            hitsit = Physics2D.CircleCastAll(shooterPosition, radius, direction, distance);
+
+            //Debug.color = Color.red;
+       //     Debug.DrawLine(shooterPosition, shooterPosition + direction * distance, Color.green);
+
+            // Draw start and end circles
+         //   DrawCircle(shooterPosition, radius, Color.green);
+         //   DrawCircle(shooterPosition + direction * distance, radius, Color.yellow);
+
+        }
+        else
+        {
+             hitsit = Physics2D.RaycastAll(shooterPosition, direction, distance);
+        }
+       
+        if (hitsit != null & hitsit.Length > 0)
+        {
+            foreach (RaycastHit2D hit in hitsit)
+            {
+                if (hit.collider != null)
+                {
+                    if (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("laatikkovihollinen") || hit.collider.tag.Contains("vihollinen"))
+                    {
+                      //  Debug.Log("osutaan johonkin "+ hit.collider.tag);
+                        if (!OnkoOma(hit.collider.gameObject))
+                        {
+                            return true;
+                        }
+                       
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    void DrawCircle(Vector2 center, float radius, Color color, int segments = 32)
+    {
+       // Gizmos.color = color;
+        float angleStep = 360f / segments;
+        Vector3 prevPoint = center + Vector2.right * radius;
+        for (int i = 1; i <= segments; i++)
+        {
+            float rad = Mathf.Deg2Rad * angleStep * i;
+            Vector3 newPoint = center + new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * radius;
+            Debug.DrawLine(prevPoint, newPoint, color);
+            prevPoint = newPoint;
+        }
+    }
+
+
+    private bool OnkoOma(GameObject go)
+    {
+        if (go == this.gameObject)
+            return true;
+
+        foreach (Transform child in this.transform)
+        {
+            if (IsDescendant(child, go))
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool IsDescendant(Transform parent, GameObject target)
+    {
+        if (parent.gameObject == target)
+            return true;
+
+        foreach (Transform child in parent)
+        {
+            if (IsDescendant(child, target))
+                return true;
+        }
+
+        return false;
+    }
+
+
+
     public bool VoikoVihollinenAmpua(Vector3 shooterPositionpara)
     {
         return !OnkoVihollisenJaAluksenValillaTiilia(shooterPositionpara);
@@ -1895,10 +2025,11 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool IsAnyOfGameObjectVisible(List<GameObject> gos)
     {
-        if (gos == null || gos.Capacity == 0)
+        if (gos == null || gos.Count == 0)
         {
             return false;
         }
+        Camera mainCamera = Camera.main;
         foreach (GameObject go in gos)
         {
             if (Camera.main == null) return false; // Ensure there is a main camera
@@ -1906,16 +2037,26 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             {
                 continue;
             }
-
+            /*
             SpriteRenderer sp = go.GetComponent<SpriteRenderer>();
             if (sp != null && !sp.enabled)
             {
                 continue;
             }
+            */
+            
+            Renderer renderer = go.GetComponent<Renderer>();
 
+            if (renderer != null && !renderer.enabled)
+            {
+                continue;
+            }
+
+            if (renderer != null && renderer.isVisible)
+                return true;
 
             // Get the main camera
-            Camera mainCamera = Camera.main;
+
 
             // Convert the target's position to viewport coordinates
             Vector3 viewportPosition = mainCamera.WorldToViewportPoint(go.transform.position);
@@ -2355,7 +2496,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         return minWorldPosition;
     }
 
-    public void TuhoaMuttaAlaTuhoaJosOllaanEditorissa(GameObject go, float nopeusjonkaalletuhotaan)
+    public void Tuhoa(GameObject go, float nopeusjonkaalletuhotaan)
     {
 
 
@@ -2382,7 +2523,8 @@ true,
 
 
 
-    public void TuhoaMuttaAlaTuhoaJosOllaanEditorissa(GameObject go)
+
+    public void Tuhoa(GameObject go)
     {
         /**
 #if !UNITY_EDITOR
@@ -2396,9 +2538,10 @@ true,
 
         **/
         float alaoffsetti = 1.0f;
+        float offsettiylapuolellakavaisyyn = 0.5f;
 
         // Debug.Log("This code runs only in builds, not in the Unity Editor.");
-        TuhoaReal(go, false, -1, true, 5.0f, true, alaoffsetti, true, 5.0f,
+        TuhoaReal(go, false, -1, true, 5.0f, true, alaoffsetti, true, offsettiylapuolellakavaisyyn,
 true,
 600,
 1, false
@@ -2409,11 +2552,24 @@ true,
 
     public void TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(GameObject go)
     {
-        TuhoaReal(go, false, -1, true, 10.0f, true, 1, true, 1.0f,
-true,
-600,
-0.5f, false
+        bool tuhoajosliianhidas = false;
+            float nopeusJonkaAlletuhotaan = 10f;
+    bool tuhoaJosKameranVasemmallaPuolella = true;
+    float offsettijokasallitaanvasemmallakavaisyyn = 0.5f;
+        bool tuhoaJosKameranAlapuolella = true;
+    float offsettijokasallitaanAlhaallaKavaisyyn = 0.1f;
+    bool tuhoaJosKameranYlapuolella = true;
+    float offsettijokasallitaanYlapuolellaKavaisyyn = 2.0f;
+    bool tuhoajosliiankauanhengissa = true;
+    float hengissaolonraja = 600f;//tarkista
+    float tarkistussykli = 0.01f;
+    bool tuhoajosoikeallakameraanVerrattuna = false;
+
+        TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
+            tuhoaJosKameranAlapuolella, offsettijokasallitaanAlhaallaKavaisyyn, tuhoaJosKameranYlapuolella, offsettijokasallitaanYlapuolellaKavaisyyn,
+            tuhoajosliiankauanhengissa, hengissaolonraja, tarkistussykli, tuhoajosoikeallakameraanVerrattuna
 );
+
         /*
         private void TuhoaReal(GameObject go, bool tuhoajosliianhidas, float nopeusJonkaAlletuhotaan,
     bool tuhoaJosKameranVasemmallaPuolella,
@@ -2433,27 +2589,120 @@ true,
     }
 
 
+    public void TuhoaJosOllaanSiirrettyReilustiKameranVasemmallePuolenSalliPieniAlitusJaYlitys(GameObject go)
+    {
+        bool tuhoajosliianhidas = false;
+        float nopeusJonkaAlletuhotaan = 10f;
+        bool tuhoaJosKameranVasemmallaPuolella = true;
+        float offsettijokasallitaanvasemmallakavaisyyn = 5.0f;
+        bool tuhoaJosKameranAlapuolella = true;
+        float offsettijokasallitaanAlhaallaKavaisyyn = 1.0f;
+        bool tuhoaJosKameranYlapuolella = true;
+        float offsettijokasallitaanYlapuolellaKavaisyyn = 1.0f;
+        bool tuhoajosliiankauanhengissa = true;
+        float hengissaolonraja = 600f;//tarkista
+        float tarkistussykli = 0.1f;
+        bool tuhoajosoikeallakameraanVerrattuna = false;
+
+        TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
+            tuhoaJosKameranAlapuolella, offsettijokasallitaanAlhaallaKavaisyyn, tuhoaJosKameranYlapuolella, offsettijokasallitaanYlapuolellaKavaisyyn,
+            tuhoajosliiankauanhengissa, hengissaolonraja, tarkistussykli, tuhoajosoikeallakameraanVerrattuna
+);
+
+        /*
+        private void TuhoaReal(GameObject go, bool tuhoajosliianhidas, float nopeusJonkaAlletuhotaan,
+    bool tuhoaJosKameranVasemmallaPuolella,
+    float offsettijokasallitaanvasemmallakavaisyyn,
+    bool tuhoaJosKameranAlapuolella,
+    float offsettijokasallitaanAlhaallaKavaisyyn,
+    bool tuhoaJosKameranYlapuolella,
+    float offsettijokasallitaanYlapuolellaKavaisyyn,
+    bool tuhoajosliiankauanhengissa,
+    float hengissaolonraja,
+    float tarkistussykli,
+    bool tuhoajosoikeallakameraanVerrattuna
+    )
+        */
+
+
+    }
+
+    //private Dictionary<GameObject, Rigidbody2D> rigidbodyCache = new Dictionary<GameObject, Rigidbody2D>();
+    private float onkoOkToimiaTarkistussykli = 0.2f;
+    private float onkoOkToimiaTarkistuksensyklilaskuri = 0.2f;
+
+    private bool viimeinentarkistustulos = false;
+
     //sitten
     public bool OnkoOkToimiaUusi(GameObject go)
     {
+
+
+
         if (go == null)
         {
             Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
             return false;
         }
-        /*
-        //jos on näkyvillä
-        //entäs muulloin
-       
 
-        if (s!=null && s.isVisible)
+
+        onkoOkToimiaTarkistuksensyklilaskuri += Time.deltaTime;
+        if (onkoOkToimiaTarkistuksensyklilaskuri >= onkoOkToimiaTarkistussykli)
         {
-            return true;
+            onkoOkToimiaTarkistuksensyklilaskuri = 0.0f;
         }
-        return false;
+        else
+        {
+            return viimeinentarkistustulos;
+        }
+
+
+            /*
+            //jos on näkyvillä
+            //entäs muulloin
+
+
+            if (s!=null && s.isVisible)
+            {
+                return true;
+            }
+            return false;
+            */
+            SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+        bool nakyvilla= IsVisibleFrom(s, Camera.main);
+        /*
+        Rigidbody2D rb = null;
+
+        // Try to get Rigidbody2D from cache
+        if (!rigidbodyCache.TryGetValue(go, out rb))
+        {
+            rb = go.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rigidbodyCache[go] = rb; // Cache it for future use
+            }
+        }
         */
-        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
-        return IsVisibleFrom(s, Camera.main);
+
+
+        if (!nakyvilla)
+        {
+            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (r!=null)
+            {
+                r.simulated = false;
+            }
+        }
+        else
+        {
+            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (r != null)
+            {
+                r.simulated = true;
+            }
+        }
+        viimeinentarkistustulos = nakyvilla;
+        return nakyvilla;
     }
 
 
@@ -2549,6 +2798,7 @@ true,
             float ero = Mathf.Abs(kameramax.y - go.transform.position.y);
             if (ero >= offset)
             {
+                Debug.Log("offsetti=" + offset);
                 return true;
             }
 
@@ -2577,7 +2827,7 @@ true,
         syklilaskuri += Time.deltaTime;
         if (syklilaskuri >= tarkistussykli)
         {
-
+            /*
             syklilaskuri = 0.0f;
             hengissaoloaika += tarkistussykli;
 
@@ -2586,6 +2836,7 @@ true,
                 Destroy(go);
                 return;
             }
+            */
             if (tuhoajosliianhidas)
             {
                 Rigidbody2D r = go.GetComponent<Rigidbody2D>();
@@ -2799,7 +3050,7 @@ true,
 
         if (allColliders.Length == 0)
         {
-            Debug.Log("No 2D colliders found in the scene.");
+            Debug.Log("No 2D colliders found in the scene."+go);
             return Vector2.zero;
         }
 

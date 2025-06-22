@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8059222670511141531}
   - component: {fileID: 3284657979122198894}
   - component: {fileID: 6462253615958408040}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pallovihollinenammus
   m_TagString: makitavihollinenammusexplodetag
   m_Icon: {fileID: 0}
@@ -178,6 +178,8 @@ MonoBehaviour:
   speedjonkaalletuhotaan: 0.3
   damagemaarajokaaiheutetaan: 1
   alivetimeRajahdyksenJalkeen: 0.5
+  explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
+    type: 3}
 --- !u!58 &6462253615958408040
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -229,7 +231,7 @@ PrefabInstance:
     - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}

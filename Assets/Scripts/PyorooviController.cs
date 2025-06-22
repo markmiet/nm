@@ -47,7 +47,7 @@ public class PyorooviController : BaseController
     // Apply the rotation around the Y-axis (you can change the axis as needed)
     transform.Rotate(0, 0, rotationAmount);
 
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        Tuhoa(gameObject);
 
     }
     public void FixedUpdate()

@@ -19,6 +19,9 @@ public class TankkiPiippuController : ChildColliderReporter
     public float tulinopeus = 2.0f;
     private float seuraavaTuliAika = 0f;
 
+
+    public bool ammuriippumattaonkojotainvalissa = true;
+
     //public GameObject piipunrajahdys;
     protected override void Start()
 
@@ -34,10 +37,12 @@ public class TankkiPiippuController : ChildColliderReporter
         if (spaceship == null) return;
 
 
-        if (! OnkoOkToimiaUusi(gameObject))
+        if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
+
+       // bool onko = OnkoPisteenJaAluksenValillaTilltaTaiVihollista(kohtaMissaAmmusLaukaistaan.transform.position, tankinAmmus);
 
         Vector2 alku = kohtaMissaPiippuliittyytankkiin.transform.position;
         Vector2 loppu = kohtaMissaAmmusLaukaistaan.transform.position;
@@ -74,7 +79,7 @@ public class TankkiPiippuController : ChildColliderReporter
         motor.motorSpeed = motorSpeed;
         motor.maxMotorTorque = maxTorque;
         hingeJoint2D.motor = motor;
-
+       // Debug.Log("motorspeed=" + motorSpeed);
 
         // 7. Ampuminen kun tähtäys kohdallaan
         if (Mathf.Abs(angleError) <= aimingTolerance && Time.time >= seuraavaTuliAika)
@@ -96,8 +101,31 @@ public class TankkiPiippuController : ChildColliderReporter
         //GameObject Instantiate(ammus);
 
 
+        if (!ammuriippumattaonkojotainvalissa)
+        {
+
+            //return;
+            bool onko = OnkoPisteenJaAluksenValillaTilltaTaiVihollista(kohtaMissaAmmusLaukaistaan.transform.position,tankinAmmus);
+            if (onko)
+            {
+                Debug.Log("ei ole vapaa väylä");
+                return;
+            }
+
+        }
+
+
+
 
         GameObject instanssi = Instantiate(tankinAmmus, kohtaMissaAmmusLaukaistaan.transform.position, Quaternion.identity);
+
+
+        MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
+        if (m != null)
+        {
+            m.SetCreator(this.gameObject);
+        }
+
 
         //   PalliController p = instanssi.GetComponent<PalliController>();
         //   p.alusGameObject = alusGameObject;

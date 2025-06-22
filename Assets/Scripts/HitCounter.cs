@@ -53,8 +53,16 @@ public class HitCounter : BaseController
                 {
                     Vector2 keski=PalautaKaikkienCollidereidenKeskipiste(tt.gameObject);
 
-                    GameObject instanssi2 = Instantiate(explosion,keski, Quaternion.identity);
-                   // GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+                    if (keski!=Vector2.zero)
+                    {
+                        GameObject instanssi2 = Instantiate(explosion, keski, Quaternion.identity);
+                    }
+                    else
+                    {
+                      //  GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+                    }
+                   
+                   //
 
                 }
 

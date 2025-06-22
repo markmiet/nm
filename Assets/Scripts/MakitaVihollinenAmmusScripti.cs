@@ -11,6 +11,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 	// Start is called before the first frame update
 	//private float spawnTime;
 	//public float kauankoViholliseentormayksetIgnorataan = 0.5f;
+
 	void Start ()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -56,7 +57,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 	void Update ()
 	{
 
-		TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject, speedjonkaalletuhotaan);
+		Tuhoa(gameObject, speedjonkaalletuhotaan);
 
 			/*
 			if (Time.time >= nextCheckTime)
@@ -85,7 +86,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable {
 		// Destroy the enemy
 		//tuhoa = true;
 
-	//	Destroy (gameObject);
+		Destroy (gameObject);
 	}
 	public float damagemaarajokaaiheutetaan = 1.0f;
 
@@ -166,17 +167,21 @@ col.gameObject.GetComponent<IDamagedable>();
 	public float alivetimeRajahdyksenJalkeen = 0.5f;
 	public void Explode()
 	{
+		if (explosion!=null)
+        {
+			GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+			//	RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
+
+			//  Destroy(gameObject);
+			//
+
+
+
+			//RajaytaSprite(gameObject, 3, 3, 2.0f, 1.2f);
+			Destroy(explosionIns, 1.0f);
+		}
 		//0.5f
-		GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        //	RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
 
-      //  Destroy(gameObject);
-		//
-
-
-
-        //RajaytaSprite(gameObject, 3, 3, 2.0f, 1.2f);
-        Destroy(explosionIns, 1.0f);
 		Destroy(gameObject);
 
 	}
@@ -189,5 +194,7 @@ col.gameObject.GetComponent<IDamagedable>();
 		creator = c;
 
 	}
+
+
 
 }

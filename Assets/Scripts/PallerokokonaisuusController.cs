@@ -163,6 +163,21 @@ public class PallerokokonaisuusController : BaseController
         return Mathf.Lerp(min, max, t);
     }
 
+    public GameObject GetLeader()
+    {
+        //GameObject leader = followers[0];
+
+        foreach (GameObject c in followers)
+        {
+            if (c != null)
+            {
+                return c;
+            }
+        }
+        return null;
+
+    }
+
     private void MoveLeader()
     {
         float delta = Time.deltaTime;
@@ -182,12 +197,12 @@ public class PallerokokonaisuusController : BaseController
         mk = movekesto[movennumero];
 
         currentPhase = patternMovementPhase[movennumero];
-        if (followers==null || followers.Capacity==0)
+        if (followers==null || followers.Count==0)
         {
             return;
         }
 
-        GameObject leader = followers[0];
+        GameObject leader = GetLeader();
 
         if (leader==null)
         {

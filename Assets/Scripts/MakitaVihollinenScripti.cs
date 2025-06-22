@@ -125,7 +125,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
     void Update()
     {
         //TuhoaJosVaarassaPaikassaErikois(gameObject,true,false);
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        Tuhoa(gameObject);
 
 
         if (alusSpriteRenderer == null || !OnkoOkToimiaUusi(gameObject))

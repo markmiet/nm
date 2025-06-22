@@ -125,7 +125,7 @@ public class HaukirunkoController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject); 
+        Tuhoa(gameObject); 
 
     }
     private bool silmaheitettyilmaan = false;

@@ -16,7 +16,7 @@ public class PiippuluotiController : BaseController,IDamagedable
 		if (ve!=null)
 		GetComponent<Rigidbody2D>().velocity = ve;
 
-		TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+		Tuhoa(gameObject);
 
 	}
 

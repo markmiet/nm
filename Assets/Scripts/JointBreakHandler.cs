@@ -68,7 +68,7 @@ public class JointBreakHandler : MonoBehaviour
             }
 
             breakEnabled = true;
-            Debug.Log("Top speed reached. Joint is now breakable.");
+       //     Debug.Log("Top speed reached. Joint is now breakable.");
         }
         aikalaskuri += Time.deltaTime;
 

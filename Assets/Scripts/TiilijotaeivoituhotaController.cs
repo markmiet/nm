@@ -14,7 +14,7 @@ public class TiilijonkavoituhotaController : BaseController /*, IExplodable*/
     void Update()
     {
         //TuhoaJosVaarassaPaikassa(gameObject);
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        Tuhoa(gameObject);
 
     }
     public float explosionForce = 10f; // Base force magnitude

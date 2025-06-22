@@ -16,7 +16,7 @@ public class PallerotScripti : BaseController
  
     public void Update()
     {
-        TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
+        Tuhoa(gameObject);
 
         /*
         SpriteRenderer[] ss =
