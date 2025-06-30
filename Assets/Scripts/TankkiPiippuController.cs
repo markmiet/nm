@@ -22,6 +22,12 @@ public class TankkiPiippuController : ChildColliderReporter
 
     public bool ammuriippumattaonkojotainvalissa = true;
 
+
+    public float rekyyliVoima = 5f;
+    public GameObject laukaisusavu;
+    public float savukesto = 0.2f;
+
+
     //public GameObject piipunrajahdys;
     protected override void Start()
 
@@ -36,11 +42,12 @@ public class TankkiPiippuController : ChildColliderReporter
     {
         if (spaceship == null) return;
 
-
+        /*
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
+        */
 
        // bool onko = OnkoPisteenJaAluksenValillaTilltaTaiVihollista(kohtaMissaAmmusLaukaistaan.transform.position, tankinAmmus);
 
@@ -67,6 +74,8 @@ public class TankkiPiippuController : ChildColliderReporter
 
         // 5. Kulmaero
         float angleError = Mathf.DeltaAngle(kulmaasteinaalukseen, kulmaAsteina);
+        Debug.Log("angleError=" + angleError + " kulmaalukseen=" + kulmaasteinaalukseen+ "kulmaasteinaalukseen="+ kulmaasteinaalukseen);
+
 
         // 6. Moottorin ohjaus
         float motorSpeed = 0f;
@@ -119,6 +128,13 @@ public class TankkiPiippuController : ChildColliderReporter
 
         GameObject instanssi = Instantiate(tankinAmmus, kohtaMissaAmmusLaukaistaan.transform.position, Quaternion.identity);
 
+        if (laukaisusavu!=null & savukesto>0.0f)
+        {
+            GameObject instanssisavu = Instantiate(laukaisusavu, kohtaMissaAmmusLaukaistaan.transform.position, Quaternion.identity);
+            Destroy(instanssisavu, savukesto);
+
+        }
+
 
         MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
         if (m != null)
@@ -131,6 +147,17 @@ public class TankkiPiippuController : ChildColliderReporter
         //   p.alusGameObject = alusGameObject;
 
         instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+
+        if (rekyyliVoima>0.0f)
+        {
+            Vector2 alku = kohtaMissaPiippuliittyytankkiin.transform.position;
+            Vector2 loppu = kohtaMissaAmmusLaukaistaan.transform.position;
+
+            Vector2 suunta = alku - loppu;
+
+            GetComponent<Rigidbody2D>().AddForce(suunta * rekyyliVoima, ForceMode2D.Impulse);
+        }
+
 
     }
     /*
