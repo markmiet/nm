@@ -233,5 +233,31 @@ cameraInfo.GetComponent<CameraInfoController>();
     }
 
 
+    public float GetCurrentScrollSpeed()
+    {
+        return skrollimaara;
+    }
+
+    public float GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin(float alkuperainenNopeus,float kerroin)
+    {
+        if (Mathf.Approximately(skrollimaara, 0f))
+        {
+            return alkuperainenNopeus;
+        }
+
+        // Jos ammus liikkuu oikealle (positiivinen nopeus), lisää skrollimaara
+        if (alkuperainenNopeus > 0)
+        {
+            return alkuperainenNopeus + skrollimaara * kerroin;//randomi luvulla 2.0f
+        }
+        // Jos ammus liikkuu vasemmalle (negatiivinen nopeus), vähennä skrollimaara
+        else if (alkuperainenNopeus < 0)
+        {
+         //   return alkuperainenNopeus - skrollimaara;
+        }
+
+        return alkuperainenNopeus;
+    }
+
 
 }

@@ -155,12 +155,27 @@ col.gameObject.GetComponent<IDamagedable>();
 			//Debug.Log ("dame over");
 			//just continue
 			//Destroy(gameObject);
-			if (col.collider.gameObject!=creator)
+			if (/*col.collider.gameObject!=creator*/ !OnkoSamaaKokonaisuutta(col.collider.gameObject,creator))
             {
 				Explode();
 			}
 
 		} 
+	}
+
+
+	private bool OnkoSamaaKokonaisuutta(GameObject g1, GameObject g2)
+	{
+		if (g1==g2)
+        {
+			return true;
+        }
+		//m.SetCreator(this.gameObject);
+
+
+		if (g1 == null || g2 == null) return false;
+		bool ret= g1.transform.root == g2.transform.root;
+		return ret;
 	}
 
 

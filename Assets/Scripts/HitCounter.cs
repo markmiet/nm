@@ -6,9 +6,12 @@ public class HitCounter : BaseController
 {
     // Start is called before the first frame update
     public int hitThreshold = 100;
-    private int hitCount = 0;
+    public int hitCount = 0;
 
     public GameObject explosion;
+
+    public GameObject osumanSavu;
+    public float osumanSavunKesto = 0.5f;
 
     public void RegisterHit()
     {
@@ -27,7 +30,15 @@ public class HitCounter : BaseController
         if (teeExplosion && explosion != null)
         {
             GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
+            Destroy(instanssi2, alivetime);
+
         }
+        if (osumanSavu!=null)
+        {
+            GameObject instanssi2 = Instantiate(osumanSavu, contactPoint, Quaternion.identity);
+            Destroy(instanssi2, osumanSavunKesto);
+        }
+
     }
 
 
@@ -47,7 +58,7 @@ public class HitCounter : BaseController
                 tt.gameObject.GetComponent<ChildColliderReporter>();
                 if (c != null && teerajaytasprite)
                 {
-                    c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, 1.0f);
+                    c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
                 }
                 if (teeExplosion && explosion != null)
                 {
@@ -56,6 +67,9 @@ public class HitCounter : BaseController
                     if (keski!=Vector2.zero)
                     {
                         GameObject instanssi2 = Instantiate(explosion, keski, Quaternion.identity);
+                        
+                        Destroy(instanssi2, alivetime);
+
                     }
                     else
                     {

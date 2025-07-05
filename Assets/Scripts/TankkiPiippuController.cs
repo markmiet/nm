@@ -9,6 +9,10 @@ public class TankkiPiippuController : ChildColliderReporter
     private HingeJoint2D hingeJoint2D;
     public GameObject tankinAmmus;
 
+    public int ammusmaara = 1;
+    public float ammusrandomiprossa = 0f;
+
+
     public float maxMotorSpeed = 150f;
     public float maxTorque = 1000f;
     public float aimingTolerance = 1f; // kuinka l‰helle astetta t‰ht‰ys hyv‰ksyt‰‰n
@@ -27,6 +31,11 @@ public class TankkiPiippuController : ChildColliderReporter
     public GameObject laukaisusavu;
     public float savukesto = 0.2f;
 
+    public bool pakotaVaakaan = false;
+    public void AsetaVaakaan(bool aseta)
+    {
+        pakotaVaakaan = aseta;
+    }
 
     //public GameObject piipunrajahdys;
     protected override void Start()
@@ -74,7 +83,7 @@ public class TankkiPiippuController : ChildColliderReporter
 
         // 5. Kulmaero
         float angleError = Mathf.DeltaAngle(kulmaasteinaalukseen, kulmaAsteina);
-        Debug.Log("angleError=" + angleError + " kulmaalukseen=" + kulmaasteinaalukseen+ "kulmaasteinaalukseen="+ kulmaasteinaalukseen);
+        //Debug.Log("angleError=" + angleError + " kulmaalukseen=" + kulmaasteinaalukseen+ "kulmaasteinaalukseen="+ kulmaasteinaalukseen);
 
 
         // 6. Moottorin ohjaus
@@ -83,29 +92,54 @@ public class TankkiPiippuController : ChildColliderReporter
         {
             motorSpeed = Mathf.Sign(angleError) * maxMotorSpeed;
         }
+    
 
-        JointMotor2D motor = hingeJoint2D.motor;
-        motor.motorSpeed = motorSpeed;
-        motor.maxMotorTorque = maxTorque;
-        hingeJoint2D.motor = motor;
+        if (pakotaVaakaan)
+        {
+            motorSpeed = 1 * maxMotorSpeed;
+            JointMotor2D motor = hingeJoint2D.motor;
+            motor.motorSpeed = motorSpeed;
+            motor.maxMotorTorque = maxTorque;
+            hingeJoint2D.motor = motor;
+        }
+        else
+        {
+            JointMotor2D motor = hingeJoint2D.motor;
+            motor.motorSpeed = motorSpeed;
+            motor.maxMotorTorque = maxTorque;
+            hingeJoint2D.motor = motor;
+        }
+
+
        // Debug.Log("motorspeed=" + motorSpeed);
 
         // 7. Ampuminen kun t‰ht‰ys kohdallaan
         if (Mathf.Abs(angleError) <= aimingTolerance && Time.time >= seuraavaTuliAika)
         {
-            Ammu();
-            seuraavaTuliAika = Time.time + tulinopeus;
+            bool ammuttiin=Ammu();
+            if (ammuttiin)
+            {
+                //ei ammettu joten ei kasvateta
+                seuraavaTuliAika = Time.time + tulinopeus;
+            }
+            
         }
 
     }
 
-    void Ammu()
+
+    bool Ammu()
     {
-        if (tankinAmmus == null || kohtaMissaAmmusLaukaistaan == null) return;
+        if (tankinAmmus == null || kohtaMissaAmmusLaukaistaan == null) return false;
 
 
 
-        Vector2 ve = palautaAmmuksellaVelocityVector(spaceship, ammusVoima, kohtaMissaAmmusLaukaistaan.transform.position);
+        if (IsOffScreen())
+        {
+            return false;
+        }
+        //eli jos ampujana on interceptor niin pit‰‰ olla suurinpiirtein vaakatasossa jottei ammuta
+
 
         //GameObject Instantiate(ammus);
 
@@ -118,35 +152,44 @@ public class TankkiPiippuController : ChildColliderReporter
             if (onko)
             {
                 Debug.Log("ei ole vapaa v‰yl‰");
-                return;
+                return false;
             }
 
         }
 
 
 
+        for (int i = 0; i < ammusmaara; i++)
+        {
 
-        GameObject instanssi = Instantiate(tankinAmmus, kohtaMissaAmmusLaukaistaan.transform.position, Quaternion.identity);
+            Vector2 ve = palautaAmmuksellaVelocityVector(spaceship, ammusVoima, kohtaMissaAmmusLaukaistaan.transform.position);
 
-        if (laukaisusavu!=null & savukesto>0.0f)
+                
+            if (ammusrandomiprossa!=0.0f)
+            {
+                ve = RandomizeVector2(ve, ammusrandomiprossa);
+            }
+            GameObject instanssi = Instantiate(tankinAmmus, kohtaMissaAmmusLaukaistaan.transform.position, Quaternion.identity);
+
+            MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
+            if (m != null)
+            {
+                m.SetCreator(this.gameObject);
+            }
+
+
+            //   PalliController p = instanssi.GetComponent<PalliController>();
+            //   p.alusGameObject = alusGameObject;
+
+            instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+        }
+
+        if (laukaisusavu != null & savukesto > 0.0f)
         {
             GameObject instanssisavu = Instantiate(laukaisusavu, kohtaMissaAmmusLaukaistaan.transform.position, Quaternion.identity);
             Destroy(instanssisavu, savukesto);
 
         }
-
-
-        MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
-        if (m != null)
-        {
-            m.SetCreator(this.gameObject);
-        }
-
-
-        //   PalliController p = instanssi.GetComponent<PalliController>();
-        //   p.alusGameObject = alusGameObject;
-
-        instanssi.GetComponent<Rigidbody2D>().velocity = ve;
 
         if (rekyyliVoima>0.0f)
         {
@@ -158,8 +201,20 @@ public class TankkiPiippuController : ChildColliderReporter
             GetComponent<Rigidbody2D>().AddForce(suunta * rekyyliVoima, ForceMode2D.Impulse);
         }
 
-
+        return true;
     }
+
+    Vector2 RandomizeVector2(Vector2 input, float percent)
+    {
+        float xOffset = input.x * (percent / 100f);
+        float yOffset = input.y * (percent / 100f);
+
+        float newX = input.x + Random.Range(-xOffset, xOffset);
+        float newY = input.y + Random.Range(-yOffset, yOffset);
+
+        return new Vector2(newX, newY);
+    }
+
     /*
     public void Explode()
     {

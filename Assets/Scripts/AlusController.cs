@@ -3068,7 +3068,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("OnTriggerEnter2D " + col);
+       // Debug.Log("OnTriggerEnter2D " + col);
         if (col.CompareTag("tiilivihollinentag"))
         {
             //tiileen törmätty mitäs sitten

@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -779,12 +779,12 @@ public class BaseController : MonoBehaviour
         }
 
         // If no size-related components found
-     //   Debug.LogWarning("No known radius source found on " + obj.name);
+        //   Debug.LogWarning("No known radius source found on " + obj.name);
         return 0.0f;
     }
 
 
-    public bool OnkoPisteenJaAluksenValillaTilltaTaiVihollista(Vector2  shooterPosition, GameObject go)
+    public bool OnkoPisteenJaAluksenValillaTilltaTaiVihollista(Vector2 shooterPosition, GameObject go)
     {
         Vector2 alusPosition = PalautaAlus().transform.position;
 
@@ -793,39 +793,42 @@ public class BaseController : MonoBehaviour
         float distance = Vector2.Distance(shooterPosition, alusPosition);
         Vector2 direction = (alusPosition - shooterPosition).normalized;
         float radius = GetGameObjectRadius(go);
-        radius *= 1.04f;//laitetaas s‰teeseen 5% lis‰‰
+        radius *= 1.04f;//laitetaas s√§teeseen 5% lis√§√§
         RaycastHit2D[] hitsit;
-        if (radius>0.0f)
+        if (radius > 0.0f)
         {
             hitsit = Physics2D.CircleCastAll(shooterPosition, radius, direction, distance);
 
             //Debug.color = Color.red;
-       //     Debug.DrawLine(shooterPosition, shooterPosition + direction * distance, Color.green);
+            //     Debug.DrawLine(shooterPosition, shooterPosition + direction * distance, Color.green);
 
             // Draw start and end circles
-         //   DrawCircle(shooterPosition, radius, Color.green);
-         //   DrawCircle(shooterPosition + direction * distance, radius, Color.yellow);
+            //   DrawCircle(shooterPosition, radius, Color.green);
+            //   DrawCircle(shooterPosition + direction * distance, radius, Color.yellow);
 
         }
         else
         {
-             hitsit = Physics2D.RaycastAll(shooterPosition, direction, distance);
+            hitsit = Physics2D.RaycastAll(shooterPosition, direction, distance);
         }
-       
+
         if (hitsit != null & hitsit.Length > 0)
         {
             foreach (RaycastHit2D hit in hitsit)
             {
                 if (hit.collider != null)
                 {
-                    if (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("laatikkovihollinen") || hit.collider.tag.Contains("vihollinen"))
+                    if (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("laatikkovihollinen")){
+                        return true;
+                    }
+                    else if ( hit.collider.tag.Contains("vihollinen"))
                     {
-                      //  Debug.Log("osutaan johonkin "+ hit.collider.tag);
+                        //  Debug.Log("osutaan johonkin "+ hit.collider.tag);
                         if (!OnkoOma(hit.collider.gameObject))
                         {
                             return true;
                         }
-                       
+
                     }
                 }
             }
@@ -837,7 +840,7 @@ public class BaseController : MonoBehaviour
 
     void DrawCircle(Vector2 center, float radius, Color color, int segments = 32)
     {
-       // Gizmos.color = color;
+        // Gizmos.color = color;
         float angleStep = 360f / segments;
         Vector3 prevPoint = center + Vector2.right * radius;
         for (int i = 1; i <= segments; i++)
@@ -854,12 +857,20 @@ public class BaseController : MonoBehaviour
     {
         if (go == this.gameObject)
             return true;
+        Transform t=go.transform.root;
+
+        foreach (Transform child in t)
+        {
+            if (IsDescendant(child, go))
+                return true;
+        }
 
         foreach (Transform child in this.transform)
         {
             if (IsDescendant(child, go))
                 return true;
         }
+
 
         return false;
     }
@@ -950,8 +961,19 @@ public class BaseController : MonoBehaviour
         Vector3 adjustedDirection = (futureAlusPosition - shooterPosition).normalized;
 
         // Calculate the velocity vector for the bullet
-        Vector2 velocityVector = new Vector2(adjustedDirection.x, adjustedDirection.y) * ampumisevoimakkuus;
+        Vector2 velocityVector;
+        if (directionToAlus.x > 0)
+        {
+            //ammutaan aluksen vasemmalla puolella
+            float uusiampumis = GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin
+                (ampumisevoimakkuus);
+            velocityVector = new Vector2(adjustedDirection.x, adjustedDirection.y) * uusiampumis;
+        }
+        else
+        {
+            velocityVector = new Vector2(adjustedDirection.x, adjustedDirection.y) * ampumisevoimakkuus;
 
+        }
         return velocityVector;
 
     }
@@ -1237,7 +1259,7 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
 
         if (skaalaatekstuuria && scale != Vector3.one)
         {
-            //t‰‰ on hidas ja textuurin asetuksissa pit‰‰ olla read/write ja compressio pois jotta toimii
+            //t√§√§ on hidas ja textuurin asetuksissa pit√§√§ olla read/write ja compressio pois jotta toimii
             int adjustedWidth = RoundUpToMultipleOfFour((int)(texture.width * scale.x));
             int adjustedHeight = RoundUpToMultipleOfFour((int)(texture.height * scale.y));
 
@@ -1826,7 +1848,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     GameObject alamaksimi = null;
 
     /*
-    private static int tarkistuskertojenmaara = 10;//suoritusyky syist‰ tarkistetaan vain joka 100 kerta
+    private static int tarkistuskertojenmaara = 10;//suoritusyky syist√§ tarkistetaan vain joka 100 kerta
 
     private int tarkistuslaskuri = 0;
 
@@ -2004,7 +2026,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         Bounds bounds = rend.bounds;
 
-        // Sample points along the spriteís width
+        // Sample points along the sprite‚Äôs width
         int sampleCount = 5; // More samples = better accuracy
         int countOnLeft = 0;
 
@@ -2044,7 +2066,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                 continue;
             }
             */
-            
+
             Renderer renderer = go.GetComponent<Renderer>();
 
             if (renderer != null && !renderer.enabled)
@@ -2553,17 +2575,17 @@ true,
     public void TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(GameObject go)
     {
         bool tuhoajosliianhidas = false;
-            float nopeusJonkaAlletuhotaan = 10f;
-    bool tuhoaJosKameranVasemmallaPuolella = true;
-    float offsettijokasallitaanvasemmallakavaisyyn = 0.5f;
+        float nopeusJonkaAlletuhotaan = 10f;
+        bool tuhoaJosKameranVasemmallaPuolella = true;
+        float offsettijokasallitaanvasemmallakavaisyyn = 0.5f;
         bool tuhoaJosKameranAlapuolella = true;
-    float offsettijokasallitaanAlhaallaKavaisyyn = 0.1f;
-    bool tuhoaJosKameranYlapuolella = true;
-    float offsettijokasallitaanYlapuolellaKavaisyyn = 2.0f;
-    bool tuhoajosliiankauanhengissa = true;
-    float hengissaolonraja = 600f;//tarkista
-    float tarkistussykli = 0.01f;
-    bool tuhoajosoikeallakameraanVerrattuna = false;
+        float offsettijokasallitaanAlhaallaKavaisyyn = 0.1f;
+        bool tuhoaJosKameranYlapuolella = true;
+        float offsettijokasallitaanYlapuolellaKavaisyyn = 2.0f;
+        bool tuhoajosliiankauanhengissa = true;
+        float hengissaolonraja = 600f;//tarkista
+        float tarkistussykli = 0.01f;
+        bool tuhoajosoikeallakameraanVerrattuna = false;
 
         TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
             tuhoaJosKameranAlapuolella, offsettijokasallitaanAlhaallaKavaisyyn, tuhoaJosKameranYlapuolella, offsettijokasallitaanYlapuolellaKavaisyyn,
@@ -2657,19 +2679,19 @@ true,
         }
 
 
-            /*
-            //jos on n‰kyvill‰
-            //ent‰s muulloin
+        /*
+        //jos on n√§kyvill√§
+        //ent√§s muulloin
 
 
-            if (s!=null && s.isVisible)
-            {
-                return true;
-            }
-            return false;
-            */
-            SpriteRenderer s = go.GetComponent<SpriteRenderer>();
-        bool nakyvilla= IsVisibleFrom(s, Camera.main);
+        if (s!=null && s.isVisible)
+        {
+            return true;
+        }
+        return false;
+        */
+        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+        bool nakyvilla = IsVisibleFrom(s, Camera.main);
         /*
         Rigidbody2D rb = null;
 
@@ -2688,7 +2710,7 @@ true,
         if (!nakyvilla)
         {
             Rigidbody2D r = go.GetComponent<Rigidbody2D>();
-            if (r!=null)
+            if (r != null)
             {
                 r.simulated = false;
             }
@@ -2754,14 +2776,97 @@ true,
 
     }
 
+    private float viimeisinTarkistusAika = -1f;
+    private float tarkistussykli = 0.1f;
+    private bool viimeisin = false;
+    public bool HoidaInterceptorTapaus(GameObject go)
+    {
+        if (go == null)
+            return false;
+
+
+        if (Time.time - viimeisinTarkistusAika < tarkistussykli)
+            return viimeisin;
+
+        // 2. P√§ivitet√§√§n viimeisin tarkistus
+        viimeisinTarkistusAika = Time.time;
+
+        GameObject targetRoot = go.transform.parent != null ? go.transform.parent.gameObject : go;
+
+        // 1. Jos objekti on reilusti vasemmalla ‚Üí tuhotaan
+        if (OnkoKameranVasemmallaPuolella(go, 8.0f))
+        {
+            GameObject.Destroy(targetRoot);
+            viimeisin = false;
+            return viimeisin;
+        }
+
+        // 2. Tarkista onko hieman vasemmalla tai oikealla
+        bool vasemmalla = OnkoKameranVasemmallaPuolella(go, 8.0f);
+        bool oikealla = OnkoKameranOikeallaPuolella(go,3.0f);
+
+        // 3. Haetaan kaikki Rigidbody2D:t
+        List<Rigidbody2D> rigidbodies = new List<Rigidbody2D>();
+        rigidbodies.AddRange(targetRoot.GetComponentsInChildren<Rigidbody2D>());
+        rigidbodies.AddRange(go.GetComponents<Rigidbody2D>());
+
+        bool aktiivinen = !(vasemmalla || oikealla);
+
+
+        foreach (Rigidbody2D rb in rigidbodies)
+        {
+            rb.simulated = aktiivinen;
+        }
+        viimeisin = aktiivinen;
+        return aktiivinen;
+    }
+
+
+
+    public bool OnkoKameranVasemmassaReunassa(GameObject go, float percentKamerasta)
+    {
+        if (Camera.main == null || go == null)
+            return false;
+
+        // Kamera-arvot
+        float camHeight = Camera.main.orthographicSize * 2f;
+        float camWidth = camHeight * Camera.main.aspect;
+        Vector3 cameraMin = GetCameraMinWorldPosition(); // vasen alakulma
+
+        // Lasketaan raja x-koordinaatille, jonka sis√§ll√§ objekti on "vasemmassa reunassa"
+        float rajaX = cameraMin.x + camWidth * percentKamerasta / 100.0f;
+
+        // Objektin sijainti maailmakoordinaateissa
+        SpriteRenderer sp = go.GetComponent<SpriteRenderer>();
+        float objektinX;
+        if (sp != null)
+        {
+            Bounds bounds = sp.bounds;
+            objektinX = bounds.center.x;
+        }
+        else
+        {
+            objektinX = go.transform.position.x;
+        }
+
+        return objektinX <= rajaX;
+    }
+
+
+
     public bool OnkoKameranOikeallaPuolella(GameObject go)
+    {
+        return OnkoKameranOikeallaPuolella(go, 0.1f);
+    }
+
+    public bool OnkoKameranOikeallaPuolella(GameObject go,float offset)
     {
         Vector3 kameraminimi = GetCameraMaxWorldPosition();
 
         if (go.transform.position.x > kameraminimi.x)
         {
             float ero = Mathf.Abs(kameraminimi.x - go.transform.position.x);
-            if (ero >= 0.1f)
+            if (ero >= offset)
             {
                 return true;
             }
@@ -3046,11 +3151,11 @@ true,
 
     public static Vector2 PalautaKaikkienCollidereidenKeskipiste(GameObject go)
     {
-        Collider2D[] allColliders =go.GetComponents<Collider2D>();
+        Collider2D[] allColliders = go.GetComponents<Collider2D>();
 
         if (allColliders.Length == 0)
         {
-            Debug.Log("No 2D colliders found in the scene."+go);
+            Debug.Log("No 2D colliders found in the scene." + go);
             return Vector2.zero;
         }
 
@@ -3069,5 +3174,15 @@ true,
         return centerPoint;
     }
 
-}
+    public float GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin(float alkuperainenNopeus)
+    {
+        return
+                    Camera.main.GetComponent<Kamera>().GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin(alkuperainenNopeus, 1.5f);
 
+
+
+    }
+
+
+
+}
