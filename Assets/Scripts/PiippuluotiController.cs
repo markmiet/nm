@@ -40,7 +40,7 @@ public class PiippuluotiController : BaseController,IDamagedable
 		else if (col.collider.tag.Contains("tiili"))
 		{
 			//Destroy(gameObject);
-			Explode();
+		//	Explode();
 
 		}
 		else if (col.collider.CompareTag("makitavihollinenexplodetag") &&
@@ -66,7 +66,7 @@ public class PiippuluotiController : BaseController,IDamagedable
 	public float osumiemaarajokaTarvitaanRajahdykseen = 1000f;
 	private float nykyinenosuminenmaara = 0;
 
-	public bool AiheutaDamagea(float damagemaara)
+	public bool AiheutaDamagea(float damagemaara,Vector2 c)
     {
 		nykyinenosuminenmaara += damagemaara;
 		if (nykyinenosuminenmaara >= osumiemaarajokaTarvitaanRajahdykseen)

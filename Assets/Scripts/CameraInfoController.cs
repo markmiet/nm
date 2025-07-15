@@ -56,7 +56,10 @@ public class CameraInfoController : MonoBehaviour
 
 
     public bool generoilisaavihollisia = false;
-    public GameObject vihollinenjokageneroidaan;
+    public GameObject[] vihollisetjokageneroidaan;
+    public GameObject[] vihollisetJoidenOlemassaOloTutkitaan;
+
+
     public int vihollismaaranrajaarvo = 1;
     public float generointivali = 5.0f;
 

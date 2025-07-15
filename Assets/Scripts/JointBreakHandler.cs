@@ -123,18 +123,25 @@ public class JointBreakHandler : MonoBehaviour
         }
         else
         {
-            joint.connectedBody.transform.gameObject.tag = "makitavihollinenexplodetag";
-            joint.connectedBody.transform.gameObject.layer = LayerMask.NameToLayer("Default");
-            //joint.connectedBody.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-
-
-            KiviIExplodaple c = joint.connectedBody.gameObject.GetComponent<KiviIExplodaple>();
-            if (c != null)
+            if (joint != null && joint.connectedBody != null)
             {
-                c.prefabExplosion = explosion;
-                c.explode = true;
+                joint.connectedBody.transform.gameObject.tag = "makitavihollinenexplodetag";
+                joint.connectedBody.transform.gameObject.layer = LayerMask.NameToLayer("Default");
+
+
+                //joint.connectedBody.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+
+
+                KiviIExplodaple c = joint.connectedBody.gameObject.GetComponent<KiviIExplodaple>();
+                if (c != null)
+                {
+                    c.prefabExplosion = explosion;
+                    c.explode = true;
+                }
+                Destroy(joint);
             }
-            Destroy(joint);
+
+           
         }
         
         

@@ -4844,6 +4844,7 @@ GameObject:
   - component: {fileID: 3419758873635484216}
   - component: {fileID: 1688580068549664688}
   - component: {fileID: 3884943110193439385}
+  - component: {fileID: 2114010107760528757}
   m_Layer: 10
   m_Name: Siivettrigger
   m_TagString: siivetvihollinenexplode
@@ -4859,14 +4860,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4429820925521456841}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
   m_LocalPosition: {x: 82, y: 2.1799998, z: 0}
   m_LocalScale: {x: 3, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2350730144878406560}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!212 &6677324041162820012
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4976,6 +4977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd8da23e6f10740a0dc4383ebd5bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   siivetrotatemax: 180
   siivetrotatemin: -180
   rotatetimeseconds: 2
@@ -4987,6 +4990,7 @@ MonoBehaviour:
   eroalukseen: 0.5
   sinfrequency: 2
   sinamplitude: 1.5
+  randomisointiprossa: 0.1
 --- !u!50 &1688580068549664688
 Rigidbody2D:
   serializedVersion: 4
@@ -5026,4 +5030,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5cf4385b99140a4f8736b6b516411d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   bonusprefab: {fileID: 0}
+--- !u!58 &2114010107760528757
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4429820925521456841}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.06808033}
+  serializedVersion: 2
+  m_Radius: 0.05574302

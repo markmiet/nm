@@ -67,6 +67,11 @@ public class PalliController : BaseController, IDamagedable
 
     private Camera maincamera;
     private Kamera kamera;
+
+
+    public GameObject osumanSavu;
+    public float osumanSavunKesto = 0.2f;
+
     void Start()
     {
         //eli osalle hemmetin moiset liekit
@@ -1260,9 +1265,9 @@ public class PalliController : BaseController, IDamagedable
 
     }
 
-    public bool AiheutaDamagea(float damagemaara)
+    public bool AiheutaDamagea(float damagemaara,Vector2 contactpoint)
     {
-        return TeeDamaget(damagemaara);
+        return TeeDamaget(damagemaara, contactpoint);
     }
 
    // public void Explode()
@@ -1270,7 +1275,7 @@ public class PalliController : BaseController, IDamagedable
   //      TeeDamaget(1.0f);
   //  }
 
-    private bool TeeDamaget(float damage)
+    private bool TeeDamaget(float damage, Vector2 contactpoint)
     {
 
         // tuliPartikkelit.gravityModifier
@@ -1294,6 +1299,19 @@ public class PalliController : BaseController, IDamagedable
         AsetaSateily();
         AsetaValoIntensity();
 
+        if (osumanSavu != null)
+        {
+
+
+            //GameObject instanssi2 = Instantiate(osumanSavu, contactPoint, Quaternion.identity);
+
+            // GameObject instanssi2 = Instantiate(osumanSavu, position, rotation, gameObject.transform);
+            // Destroy(instanssi2, osumanSavunKesto);
+
+            GameObject instance = Instantiate(osumanSavu, contactpoint, Quaternion.identity);
+            instance.transform.SetParent(gameObject.transform, worldPositionStays: true);
+            Destroy(instance, osumanSavunKesto);
+        }
 
         if (nykyinenosuminenmaara >= osumiemaarajokaTarvitaanRajahdykseen)
         {
@@ -1387,9 +1405,20 @@ rb.position.x, rb.position.y, 0);
             float aikanyt = Time.time;
             if (aikanyt- viimeksiAmmuttu> pieninmahdollinenAikaValiAmpumisissa)
             {
+                /*
+                              Vector3 ampumispaikka =
+                              new Vector3(
+                       transform.position.x, transform.position.y + 1.0f, 0);
+              */
+                /*
                 Vector3 ampumispaikka =
                 new Vector3(
-         transform.position.x, transform.position.y + 1.0f, 0);
+         transform.position.x, transform.position.y, 0);
+                */
+                Vector3 ampumispaikka =
+
+                PalautaKaikkienCollidereidenKeskipiste(gameObject);
+
                 if (VoikoVihollinenAmpua(ampumispaikka))
                 {
 
@@ -1400,6 +1429,14 @@ rb.position.x, rb.position.y, 0);
 
 
                     GameObject instanssi = Instantiate(ammus, ampumispaikka, Quaternion.identity);
+
+                    MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
+                    if (m != null)
+                    {
+                        m.SetCreator(this.gameObject);
+                    }
+
+
 
                     //   PalliController p = instanssi.GetComponent<PalliController>();
                     //   p.alusGameObject = alusGameObject;

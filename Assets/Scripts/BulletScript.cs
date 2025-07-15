@@ -211,7 +211,8 @@ public class BulletScript : BaseController, IExplodable, IAlas
                             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
                             if (damageMahdollinen != null)
                             {
-                                bool rajahti = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan);
+                                Vector2 contactPoint = col.GetContact(0).point;
+                                bool rajahti = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan,contactPoint);
                                 if (rajahti)
                                 {
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
@@ -275,7 +276,9 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
     public void Explode()
     {
-        //   RajaytaSprite(gameObject, 4, 4, 1.0f, 0.3f);
+        if (rajaytasprite) { 
+            RajaytaSprite(gameObject, uusirajaytyscolumns, uusirajaytysrows, 1.0f, explosionlivetime);
+    }
         Destroy(gameObject);
     }
 

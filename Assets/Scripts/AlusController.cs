@@ -168,7 +168,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public GameObject elamat;
 
 
-    public bool enabloiboxcollider = true;
+    public bool enabloiboxcollider = true;//EI TOIMI JOS EDITORISSA VAIHTAA ARVOA
 
     /*
      * LOOSER HUUTO ok
@@ -654,7 +654,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
             //Vector2 boxlocation = new Vector2(0, 0);
             //"tiilivihollinentag"
             bool onkotiilta = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", this.boxCollider2D.size, uusimahdollinenpositio);
-            Debug.Log("onkotiilta=" + onkotiilta);
+            //Debug.Log("onkotiilta=" + onkotiilta);
             if (!onkotiilta)
             {
                 transform.position = new Vector3(newPosition.x, alussijaintiy, 0);
@@ -1327,6 +1327,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
         PaivitaStoptime();
 
+        SetEnabloiboxcollider(enabloiboxcollider);//mjM OTA TAMA OPIS
         if (Input.GetKey(KeyCode.N) || CrossPlatformInputManager.GetButtonDown("Bonus"))
         {
             //   Debug.Log("BonusButtonPressed");
@@ -2727,7 +2728,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         elamat.GetComponent<ElamatController>().SetElamienMaara(elamienmaara);
     }
 
-    public bool AiheutaDamagea(float damagemaara)
+    public bool AiheutaDamagea(float damagemaara,Vector2 contactpoint)
     {
         damagenmaara += damagemaara;
         // ExplodeTarvittaesssa();
@@ -2865,7 +2866,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // }
         //   }
 
-        if (other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
+        if (enabloiboxcollider &&  other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();

@@ -190,7 +190,8 @@ public class LaserController : BaseController
                             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
                             if (damageMahdollinen != null)
                             {
-                                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+                                Vector2 contactPoint = col.ClosestPoint(transform.position);
+                                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, contactPoint);
                                 if (rajahtiko)
                                 {
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);

@@ -228,7 +228,8 @@ public class AmmusController : BaseController, IExplodable
                             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
                             if (damageMahdollinen != null)
                             {
-                                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+                                Vector2 contactPoint = col.GetContact(0).point;
+                                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, contactPoint);
                                 if (rajahtiko)
                                 {
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
@@ -245,7 +246,7 @@ public class AmmusController : BaseController, IExplodable
                                     col.collider.enabled = false;
                                     GetComponent<Collider2D>().enabled = false;
 
-
+                                    if (col.gameObject!=null)
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
                                     o.Explode();
                                     //tuhottujenVihollistenmaara++;

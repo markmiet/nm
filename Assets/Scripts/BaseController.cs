@@ -752,13 +752,30 @@ public class BaseController : MonoBehaviour
 
     float GetGameObjectRadius(GameObject obj)
     {
+        Vector3 scaleaaa = obj.transform.lossyScale;
+        if (Mathf.Abs(scaleaaa.x - scaleaaa.y) > 0.001f)
+        {
+            Debug.LogWarning("Non-uniform scale detected on " + obj.name);
+        }
+
+        CircleCollider2D circle = obj.GetComponent<CircleCollider2D>();
+        if (circle != null)
+        {
+            float scale = Mathf.Max(obj.transform.lossyScale.x, obj.transform.lossyScale.y);
+            //            float radius = circle.radius * scale;
+            float radius = circle.radius;
+
+            return radius;
+        }
+
+        /*
         // Check for CircleCollider2D
         CircleCollider2D circle = obj.GetComponent<CircleCollider2D>();
         if (circle != null)
         {
             return circle.radius * obj.transform.lossyScale.x; // Assumes uniform scaling
         }
-
+        */
         // Check for BoxCollider2D (approximate as circle using largest side)
         BoxCollider2D box = obj.GetComponent<BoxCollider2D>();
         if (box != null)
@@ -786,29 +803,36 @@ public class BaseController : MonoBehaviour
 
     public bool OnkoPisteenJaAluksenValillaTilltaTaiVihollista(Vector2 shooterPosition, GameObject go)
     {
-        Vector2 alusPosition = PalautaAlus().transform.position;
+        GameObject alus = PalautaAlus();
+
+        Vector2 alusPosition = PalautaGameObjektinKeskipiste(alus);
 
         // Distance to target
         //Vector3 directionToAlus = alusPosition - shooterPosition;
         float distance = Vector2.Distance(shooterPosition, alusPosition);
+        distance -= 0.2f;
         Vector2 direction = (alusPosition - shooterPosition).normalized;
         float radius = GetGameObjectRadius(go);
-        radius *= 1.04f;//laitetaas säteeseen 5% lisää
+       // radius *= 1.04f;//laitetaas säteeseen 5% lisää
+        //radius = 1.0f;
         RaycastHit2D[] hitsit;
+        
         if (radius > 0.0f)
         {
             hitsit = Physics2D.CircleCastAll(shooterPosition, radius, direction, distance);
 
             //Debug.color = Color.red;
-            //     Debug.DrawLine(shooterPosition, shooterPosition + direction * distance, Color.green);
+                 Debug.DrawLine(shooterPosition, shooterPosition + direction * distance, Color.green);
 
             // Draw start and end circles
-            //   DrawCircle(shooterPosition, radius, Color.green);
-            //   DrawCircle(shooterPosition + direction * distance, radius, Color.yellow);
+               DrawCircle(shooterPosition, radius, Color.green);
+               DrawCircle(shooterPosition + direction * distance, radius, Color.yellow);
 
         }
         else
         {
+        
+            Debug.DrawLine(shooterPosition, shooterPosition + direction * distance, Color.green);
             hitsit = Physics2D.RaycastAll(shooterPosition, direction, distance);
         }
 
@@ -852,12 +876,32 @@ public class BaseController : MonoBehaviour
         }
     }
 
+    GameObject FindRootWithTagContaining(GameObject go, string tagSubstring)
+    {
+        Transform current = go.transform;
+
+        GameObject match = null;
+
+        while (current != null)
+        {
+            if (current.gameObject.tag.Contains(tagSubstring))
+            {
+                match = current.gameObject; // Save current as potential match
+            }
+
+            current = current.parent;
+        }
+        if (match!=null)
+            return match;
+        else
+            return go;
+    }
 
     private bool OnkoOma(GameObject go)
     {
         if (go == this.gameObject)
             return true;
-        Transform t=go.transform.root;
+        Transform t = FindRootWithTagContaining(go, "vihollinen").transform;
 
         foreach (Transform child in t)
         {
@@ -865,11 +909,13 @@ public class BaseController : MonoBehaviour
                 return true;
         }
 
+        
         foreach (Transform child in this.transform)
         {
             if (IsDescendant(child, go))
                 return true;
         }
+        
 
 
         return false;
@@ -978,6 +1024,96 @@ public class BaseController : MonoBehaviour
 
     }
 
+    public Vector2 PalautaGameObjektinKeskipiste(GameObject go)
+    {
+        Collider2D[] allColliders = go.GetComponents<Collider2D>();
+
+        if (allColliders.Length == 0)
+        {
+            //Debug.Log("No 2D colliders found in the scene." + go);
+            return go.transform.position;
+        }
+
+        // Sum of all collider positions
+        Vector2 sum = Vector2.zero;
+
+        foreach (Collider2D col in allColliders)
+        {
+            sum += (Vector2)col.bounds.center; // or col.transform.position if you prefer object pivot
+        }
+
+        // Calculate center point
+        Vector2 centerPoint = sum / allColliders.Length;
+
+       // Debug.Log("Center point of all 2D colliders: " + centerPoint);
+        return centerPoint;
+
+    }
+
+    public Vector2 palautaAmmukselleVelocityVectorKaytaPiippua(GameObject alus, float ampumisevoimakkuus, Vector3 shooterPosition,Vector3 piipuntoinenpaa)
+    {
+        //Kamera k = Camera.main.GetComponent<Kamera>();
+
+
+        if (alus == null) return Vector2.zero; // Return zero vector if target is null
+
+        // Current positions
+        //   Vector3 shooterPosition = objektijostasijaintilasketaan.transform.position;
+        Vector3 alusPosition = PalautaGameObjektinKeskipiste(alus);
+
+        // Distance to target
+        Vector2 directionToAlusOikeasti = alusPosition - shooterPosition;
+
+        Vector2 directionToAlus = (shooterPosition - piipuntoinenpaa).normalized;
+
+        if (directionToAlus.x > 0)
+        {
+            //ammutaan aluksen vasemmalla puolella
+            float uusiampumis = GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin
+                (ampumisevoimakkuus);
+            return directionToAlus * uusiampumis;
+        }
+        else
+        {
+            return directionToAlus * ampumisevoimakkuus;
+        }
+
+           
+
+        /*
+        // Bullet travel time (time = distance / speed)
+        float distance = directionToAlus.magnitude;
+        float travelTime = distance / ampumisevoimakkuus;
+
+        // Predict future position of the target
+
+        //EI TOIMI OK KUN KAMERAPOSITION ON 1.25
+
+        Vector3 futureAlusPosition = alusPosition + new Vector3(k.skrollimaara * travelTime, 0f, 0f);
+
+        // Adjust direction to aim at the predicted position
+        Vector3 adjustedDirection = (futureAlusPosition - shooterPosition).normalized;
+
+        // Calculate the velocity vector for the bullet
+        Vector2 velocityVector;
+        if (directionToAlus.x > 0)
+        {
+            //ammutaan aluksen vasemmalla puolella
+            float uusiampumis = GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin
+                (ampumisevoimakkuus);
+            velocityVector = directionToAlus * uusiampumis;
+        }
+        else
+        {
+            velocityVector = directionToAlus * ampumisevoimakkuus;
+
+        }
+        return velocityVector;
+        */
+
+    }
+
+
     private GameObject alustieto;
 
     public GameObject PalautaAlus()
@@ -996,6 +1132,22 @@ public class BaseController : MonoBehaviour
         return alustieto;
 
     }
+
+    private GameObject tilemaptieto;
+
+    public GameObject PalautaTilemap()
+    {
+        if (tilemaptieto != null)
+        {
+            return tilemaptieto;
+        }
+
+        tilemaptieto = GameObject.Find("Tilemap");
+        return tilemaptieto;
+
+    }
+
+
 
     public GameObject palautaScoreGameObject()
     {
@@ -1609,41 +1761,27 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
 
 
-    public void IgnoreChildCollisionsvanhaaa(Transform parent)
-    {
 
-        Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
-
-        for (int i = 0; i < childColliders.Length; i++)
-        {
-            Physics.IgnoreCollision(childColliders[i], parent.gameObject.GetComponent<Collider>());
-            for (int j = i + 1; j < childColliders.Length; j++)
-            {
-                Physics.IgnoreCollision(childColliders[i], childColliders[j]);
-
-            }
-        }
-    }
 
     public void IgnoreChildCollisions(Transform parent)
     {
         if (parent == null) return;
 
-        Collider parentCollider = parent.GetComponent<Collider>();
-        Collider[] childColliders = parent.GetComponentsInChildren<Collider>();
+        Collider2D parentCollider = parent.GetComponent<Collider2D>();
+        Collider2D[] childColliders = parent.GetComponentsInChildren<Collider2D>();
 
         for (int i = 0; i < childColliders.Length; i++)
         {
             // Ignore collisions between the parent collider and child colliders
             if (parentCollider != null)
             {
-                Physics.IgnoreCollision(childColliders[i], parentCollider);
+                Physics2D.IgnoreCollision(childColliders[i], parentCollider);
             }
 
             // Ignore collisions between all child colliders
             for (int j = i + 1; j < childColliders.Length; j++)
             {
-                Physics.IgnoreCollision(childColliders[i], childColliders[j]);
+                Physics2D.IgnoreCollision(childColliders[i], childColliders[j]);
             }
         }
     }
@@ -1723,28 +1861,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
     */
 
-    public void IgnoreCollisionsEITOIMI(List<GameObject> lista)
-    {
-        if (lista == null || lista.Count == 0)
-        {
-            return;
-        }
-        foreach (GameObject go in lista)
-        {
-            Collider[] childColliders = go.GetComponents<Collider>();
-            foreach (GameObject go2 in lista)
-            {
-                Collider[] childColliders2 = go2.GetComponents<Collider>();
-                foreach (Collider c in childColliders)
-                {
-                    foreach (Collider c2 in childColliders2)
-                    {
-                        Physics.IgnoreCollision(c, c2);
-                    }
-                }
-            }
-        }
-    }
+
     public void IgnoreCollisions(List<GameObject> lista)
     {
         if (lista == null || lista.Count == 0)
@@ -1756,19 +1873,19 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         for (int i = 0; i < lista.Count; i++)
         {
             GameObject go1 = lista[i];
-            Collider[] colliders1 = go1.GetComponentsInChildren<Collider>();
+            Collider2D[] colliders1 = go1.GetComponentsInChildren<Collider2D>();
 
             for (int j = i + 1; j < lista.Count; j++) // Avoid duplicate comparisons
             {
                 GameObject go2 = lista[j];
-                Collider[] colliders2 = go2.GetComponentsInChildren<Collider>();
+                Collider2D[] colliders2 = go2.GetComponentsInChildren<Collider2D>();
 
                 // Ignore collisions between all colliders in go1 and go2
-                foreach (Collider c1 in colliders1)
+                foreach (Collider2D c1 in colliders1)
                 {
-                    foreach (Collider c2 in colliders2)
+                    foreach (Collider2D c2 in colliders2)
                     {
-                        Physics.IgnoreCollision(c1, c2);
+                        Physics2D.IgnoreCollision(c1, c2);
                     }
                 }
             }
@@ -2525,10 +2642,68 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         TuhoaReal(go, true, nopeusjonkaalletuhotaan, true, 5.0f, true, 5.0f, true, 5.0f,
 true,
 600,
-1, false
+1, false,null
 );
 
     }
+
+    public void Tuhoa(GameObject prefap,GameObject go, float nopeusjonkaalletuhotaan)
+    {
+
+
+        TuhoaReal(go, true, nopeusjonkaalletuhotaan, true, 5.0f, true, 5.0f, true, 5.0f,
+true,
+600,
+0.4f, false, prefap
+);
+
+    }
+
+
+
+    public void TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GameObject prefap, GameObject go, float hengissaolonraja,float nopeudenalaraja)
+    {
+
+        syklilaskuri += Time.deltaTime;
+        if (syklilaskuri >= tarkistussykli)
+        {
+
+            syklilaskuri = 0.0f;
+            hengissaoloaika += tarkistussykli;
+
+            if (hengissaoloaika >= hengissaolonraja)
+            {
+                //Destroy(go);
+                hengissaoloaika = 0.0f;
+                ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                return;
+            }
+
+            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (r != null)
+            {
+                float speed = r.velocity.magnitude;
+                if (speed <= nopeudenalaraja)
+                {
+                    if (prefap == null)
+                    {
+                        Destroy(go);
+                        return;
+                    }
+                    else
+                    {
+                        hengissaoloaika = 0.0f;
+                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                        return;
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
 
     public void TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(GameObject go, float nopeusjonkaalle)
     {
@@ -2537,7 +2712,7 @@ true,
         TuhoaReal(go, true, nopeusjonkaalle, true, 5.0f, true, 5.0f, true, 5.0f,
 true,
 600,
-0.1f, true
+0.1f, true,null
 );
 
     }
@@ -2559,14 +2734,14 @@ true,
 #endif
 
         **/
-        float alaoffsetti = 1.0f;
+            float alaoffsetti = 1.0f;
         float offsettiylapuolellakavaisyyn = 0.5f;
 
         // Debug.Log("This code runs only in builds, not in the Unity Editor.");
         TuhoaReal(go, false, -1, true, 5.0f, true, alaoffsetti, true, offsettiylapuolellakavaisyyn,
 true,
 600,
-1, false
+1, false,null
 );
 
     }
@@ -2589,7 +2764,7 @@ true,
 
         TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
             tuhoaJosKameranAlapuolella, offsettijokasallitaanAlhaallaKavaisyyn, tuhoaJosKameranYlapuolella, offsettijokasallitaanYlapuolellaKavaisyyn,
-            tuhoajosliiankauanhengissa, hengissaolonraja, tarkistussykli, tuhoajosoikeallakameraanVerrattuna
+            tuhoajosliiankauanhengissa, hengissaolonraja, tarkistussykli, tuhoajosoikeallakameraanVerrattuna,null
 );
 
         /*
@@ -2628,7 +2803,7 @@ true,
 
         TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
             tuhoaJosKameranAlapuolella, offsettijokasallitaanAlhaallaKavaisyyn, tuhoaJosKameranYlapuolella, offsettijokasallitaanYlapuolellaKavaisyyn,
-            tuhoajosliiankauanhengissa, hengissaolonraja, tarkistussykli, tuhoajosoikeallakameraanVerrattuna
+            tuhoajosliiankauanhengissa, hengissaolonraja, tarkistussykli, tuhoajosoikeallakameraanVerrattuna,null
 );
 
         /*
@@ -2914,7 +3089,7 @@ true,
 
     private float syklilaskuri = 0.0f;
     // private float tarkistussykli = 5.0f;
-    private float hengissaoloaika = 0.0f;
+    public float hengissaoloaika = 0.0f;
     private void TuhoaReal(GameObject go, bool tuhoajosliianhidas, float nopeusJonkaAlletuhotaan,
         bool tuhoaJosKameranVasemmallaPuolella,
         float offsettijokasallitaanvasemmallakavaisyyn,
@@ -2925,11 +3100,21 @@ true,
         bool tuhoajosliiankauanhengissa,
         float hengissaolonraja,
         float tarkistussykli,
-        bool tuhoajosoikeallakameraanVerrattuna
+        bool tuhoajosoikeallakameraanVerrattuna,
+        GameObject prefap
         )
     {
 
         syklilaskuri += Time.deltaTime;
+        if (go.GetComponent<MakitaVihollinenAmmusScripti>() != null)
+        {
+            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (r != null)
+            {
+                float speed = r.velocity.magnitude;
+                Debug.Log("ammusnopesu=" + speed);
+            }
+        }
         if (syklilaskuri >= tarkistussykli)
         {
             /*
@@ -2950,8 +3135,18 @@ true,
                     float speed = r.velocity.magnitude;
                     if (speed <= nopeusJonkaAlletuhotaan)
                     {
-                        Destroy(go);
-                        return;
+                        if (prefap==null)
+                        {
+                            Destroy(go);
+                            return;
+                        }
+                        else
+                        {
+                            hengissaoloaika = 0.0f;
+                            ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                            return;
+                        }
+                        
                     }
                 }
             }
@@ -2961,8 +3156,19 @@ true,
                 OnkoKameranVasemmallaPuolella(go, offsettijokasallitaanvasemmallakavaisyyn);
                 if (vasen)
                 {
-                    Destroy(go);
-                    return;
+                    if (prefap == null)
+                    {
+                        Destroy(go);
+                        return;
+                    }
+                    else
+                    {
+                        hengissaoloaika = 0.0f;
+                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                        return;
+                    }
+
+                  
 
                 }
 
@@ -2971,16 +3177,34 @@ true,
             {
                 if (OnkoKameranOikeallaPuolella(go))
                 {
-                    Destroy(go);
-                    return;
+                    if (prefap == null)
+                    {
+                        Destroy(go);
+                        return;
+                    }
+                    else
+                    {
+                        hengissaoloaika = 0.0f;
+                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                        return;
+                    }
                 }
             }
             if (tuhoaJosKameranAlapuolella)
             {
                 if (OnkoKameranAlaPuolella(go, offsettijokasallitaanAlhaallaKavaisyyn))
                 {
-                    Destroy(go);
-                    return;
+                    if (prefap == null)
+                    {
+                        Destroy(go);
+                        return;
+                    }
+                    else
+                    {
+                        hengissaoloaika = 0.0f;
+                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                        return;
+                    }
 
                 }
             }
@@ -2988,8 +3212,17 @@ true,
             {
                 if (OnkoKameranYlaPuolella(go, offsettijokasallitaanYlapuolellaKavaisyyn))
                 {
-                    Destroy(go);
-                    return;
+                    if (prefap == null)
+                    {
+                        Destroy(go);
+                        return;
+                    }
+                    else
+                    {
+                        hengissaoloaika = 0.0f;
+                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                        return;
+                    }
 
                 }
             }
@@ -3170,7 +3403,7 @@ true,
         // Calculate center point
         Vector2 centerPoint = sum / allColliders.Length;
 
-        Debug.Log("Center point of all 2D colliders: " + centerPoint);
+       // Debug.Log("Center point of all 2D colliders: " + centerPoint);
         return centerPoint;
     }
 
@@ -3183,6 +3416,24 @@ true,
 
     }
 
+    public void IgnoraaCollisiotVihollistenValilla(GameObject cp, GameObject c)
+    {
+        cp = FindRootWithTagContaining(cp, "vihollinen");
+        c = FindRootWithTagContaining(c, "vihollinen");
+
+        Collider2D[] allColliders = cp.GetComponentsInChildren<Collider2D>();
+
+        Collider2D[] allColliders2 = c.GetComponentsInChildren<Collider2D>();
+
+        foreach (Collider2D c1 in allColliders)
+        {
+            foreach (Collider2D c2 in allColliders2)
+            {
+                //Physics.IgnoreCollision
+                Physics2D.IgnoreCollision(c1, c2);
+            }
+        }
+    }
 
 
 }

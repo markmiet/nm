@@ -42,6 +42,10 @@ public class PiippuLuotiLahtoController : BaseController
 
 
         GameObject instanssi = Instantiate(luoti, transform.position, Quaternion.identity);
+        IgnoraaCollisiotVihollistenValilla(instanssi, gameObject);
+
+        GameObject obj = PalautaTilemap();
+        IgnoraaCollisiotVihollistenValilla(instanssi, obj);
 
         //   PalliController p = instanssi.GetComponent<PalliController>();
         //   p.alusGameObject = alusGameObject;

@@ -18,7 +18,8 @@ public class HitCounter : BaseController
         hitCount++;
         if (hitCount >= hitThreshold)
         {
-            GameManager.Instance.kasvataHighScorea(gameObject);
+            if (gameObject!=null)
+             GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
             Destroy(gameObject);
       
@@ -40,7 +41,11 @@ public class HitCounter : BaseController
         }
 
     }
+    public void Update()
+    {
+        TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
+    }
 
 
     private void RajaytaChildrenit()

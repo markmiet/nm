@@ -122,8 +122,8 @@ public class PommiController : BaseController, IExplodable
             IDamagedable dama= collider.gameObject.GetComponent<IDamagedable>();
             if (dama != null)
             {
-                
-                dama.AiheutaDamagea(1);
+                Vector2 contactPoint = collider.gameObject.transform.position;
+                dama.AiheutaDamagea(1, contactPoint);
             }
 
             ChildColliderReporter child = collider.gameObject.GetComponent<ChildColliderReporter>();

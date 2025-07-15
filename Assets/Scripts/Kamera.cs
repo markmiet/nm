@@ -128,14 +128,17 @@ cameraInfo.GetComponent<CameraInfoController>();
             {
                 if (cameraInfo.GetComponent<CameraInfoController>().generoilisaavihollisia)
                 {
-                    GameObject go =
-                    cameraInfo.GetComponent<CameraInfoController>().vihollinenjokageneroidaan;
+                    GameObject[] go =
+                    cameraInfo.GetComponent<CameraInfoController>().vihollisetjokageneroidaan;
 
                     int maara =
                     cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
-                    float generointivali = cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
+                    float generointivali = cameraInfo.GetComponent<CameraInfoController>().generointivali;
 
-                    GeneroiLisaaVihollisia(go, maara, generointivali);
+
+                    GameObject[] olemassa = cameraInfo.GetComponent<CameraInfoController>().vihollisetJoidenOlemassaOloTutkitaan;
+
+                    GeneroiLisaaVihollisia(go, maara, generointivali, olemassa);
                 }
             }
 
@@ -176,22 +179,31 @@ cameraInfo.GetComponent<CameraInfoController>();
 
     private float generointilaskuri = 0.0f;
 
-    private void GeneroiLisaaVihollisia(GameObject go, int vihollismaaranrajaarvo, float generointivali)
+    private void GeneroiLisaaVihollisia(GameObject[] go, int vihollismaaranrajaarvo, float generointivali, GameObject[] vihollisetjoidenOlemassaOloTutkitaan)
     {
         generointilaskuri += Time.deltaTime;
         if (generointilaskuri >= generointivali)
         {
-            int maara = GetCollidersInCameraView(Camera.main);
+            int maara = 0;
+            foreach (GameObject g in vihollisetjoidenOlemassaOloTutkitaan)
+            {
+                maara+= GetCountOfTheseObjects(Camera.main, g);
+            }
+            
+
+           
             if (maara < vihollismaaranrajaarvo)
             {
-                Debug.Log("generoi lisaa vihollisia" + maara);
-                GeneroiViholinen(go);
+                Debug.Log("generoi lisaa vihollisia nykymaara=" + maara);
+                GameObject randomGO = go[Random.Range(0, go.Length)];
+                GeneroiViholinen(randomGO);
             }
             generointilaskuri = 0;
         }
 
 
     }
+   
     private void GeneroiViholinen(GameObject go)
     {
 
@@ -209,10 +221,48 @@ cameraInfo.GetComponent<CameraInfoController>();
         GameObject instanssiOption = Instantiate(go, uus, Quaternion.identity);
     }
 
+    /*
+   int GetCollidersInCameraView(Camera camera)
+   {
 
-    int GetCollidersInCameraView(Camera camera)
+       HashSet<GameObject> uniikit = new HashSet<GameObject>();
+       // Calculate the camera's world-space bounds
+       float camHeight = camera.orthographicSize * 2f;
+       float camWidth = camHeight * camera.aspect;
+
+       Vector2 bottomLeft = (Vector2)camera.transform.position - new Vector2(camWidth / 2, camHeight / 2);
+       Vector2 topRight = (Vector2)camera.transform.position + new Vector2(camWidth / 2, camHeight / 2);
+
+       // Use Physics2D.OverlapArea to get colliders within the bounds
+       //Collider2D[] colliders = Physics2D.OverlapAreaAll(bottomLeft, topRight, layerMask);
+       Collider2D[] colliders = Physics2D.OverlapAreaAll(bottomLeft, topRight);
+
+
+       int count = 0;
+       foreach (Collider2D c in colliders)
+       {
+           if (c.tag.Contains("vihollinen") && (!c.tag.Contains("tiili") && !c.tag.Contains("alus")))
+           {
+               //count++;
+               GameObject root = c.gameObject.transform.root.gameObject;
+               if (root!=null)
+               {
+                   uniikit.Add(root);
+               }
+               else
+               {
+                   uniikit.Add(c.gameObject);
+               }
+           }
+       }
+       return uniikit.Count;
+   }
+   */
+
+    public List<GameObject> GetGameObjectsInCameraView(Camera camera)
     {
         // Calculate the camera's world-space bounds
+        List<GameObject> ret = new List<GameObject>();
         float camHeight = camera.orthographicSize * 2f;
         float camWidth = camHeight * camera.aspect;
 
@@ -220,18 +270,41 @@ cameraInfo.GetComponent<CameraInfoController>();
         Vector2 topRight = (Vector2)camera.transform.position + new Vector2(camWidth / 2, camHeight / 2);
 
         // Use Physics2D.OverlapArea to get colliders within the bounds
-        Collider2D[] colliders = Physics2D.OverlapAreaAll(bottomLeft, topRight, layerMask);
+        //Collider2D[] colliders = Physics2D.OverlapAreaAll(bottomLeft, topRight, layerMask);
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(bottomLeft, topRight);
+
         int count = 0;
         foreach (Collider2D c in colliders)
         {
             if (c.tag.Contains("vihollinen") && (!c.tag.Contains("tiili") && !c.tag.Contains("alus")))
             {
+                if (c.gameObject.activeInHierarchy)
+                {
+                    ret.Add(c.gameObject);
+                }
+                
+            }
+        }
+        return ret;
+    }
+
+    public int GetCountOfTheseObjects(Camera camera,GameObject go)
+    {
+        int count = 0;
+        List<GameObject> lista = GetGameObjectsInCameraView(camera);
+        var comp1=go.GetComponent<MonoBehaviour>();
+        foreach (GameObject g in lista)
+        {
+            var comp2 = g.GetComponent<MonoBehaviour>();
+            if (comp1 != null && comp2 != null && comp1.GetType() == comp2.GetType())
+            {
                 count++;
             }
         }
+      //  Debug.Log("count objektit=" + count);
         return count;
-    }
 
+    }
 
     public float GetCurrentScrollSpeed()
     {

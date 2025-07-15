@@ -35,6 +35,8 @@ public class SkeletonController : BaseController, IExplodable
     public bool vaihdasuuntaa = true;
 
     public bool ylosalaisin = false;
+
+
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
@@ -292,9 +294,13 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
               
             }
 
+
         }
         return false;
     }
+
+
+
     private float rajaytyshetkilaskuri = 0.0f;
     public void TeeLopulllinenRajaytys()
     {

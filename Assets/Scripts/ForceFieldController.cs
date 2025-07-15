@@ -174,7 +174,11 @@ public class ForceFieldController : MonoBehaviour
             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
             if (damageMahdollinen != null)
             {
-                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan);
+                Vector2 thisPosition = transform.position;
+                Vector2 otherPosition = col.transform.position;
+
+                Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
+                bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, estimatedContactPoint);
                 if (rajahtiko)
                 {
                     GameManager.Instance.kasvataHighScorea(col.gameObject);

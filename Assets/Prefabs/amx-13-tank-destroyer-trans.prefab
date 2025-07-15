@@ -704,8 +704,11 @@ MonoBehaviour:
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   hitThreshold: 5
+  hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: b2086b12f9fc4074597273d41506dc9a,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 0.5
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 5
@@ -731,6 +734,10 @@ MonoBehaviour:
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: b2086b12f9fc4074597273d41506dc9a,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
 --- !u!1 &5989179900469003869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,13 +1025,19 @@ MonoBehaviour:
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: b2086b12f9fc4074597273d41506dc9a,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
   tankinAmmus: {fileID: 1985379849892578813, guid: d20a7acdf168dacf883f197695575668,
     type: 3}
+  ammusmaara: 1
+  ammusrandomiprossa: 0
   maxMotorSpeed: 50
   maxTorque: 1000
   aimingTolerance: 1
-  kohtaMissaAmmusLaukaistaan: {fileID: 5989179900469003869}
-  kohtaMissaPiippuliittyytankkiin: {fileID: 1651895635496846411}
+  piipunpaaJohonGameObjectInstantioidaan: {fileID: 5989179900469003869}
+  piipunToinenPaa: {fileID: 1651895635496846411}
   ammusVoima: 5
   tulinopeus: 3
   ammuriippumattaonkojotainvalissa: 1
@@ -1032,3 +1045,6 @@ MonoBehaviour:
   laukaisusavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
     type: 3}
   savukesto: 0.2
+  pakotaVaakaan: 0
+  motorSpeedGain: 5
+  ignoraaAmmuttaessaAimingToleranceKokonaan: 0

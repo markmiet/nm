@@ -111,7 +111,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4b8fd708f95e3b744825b7891da524a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -277,16 +277,6 @@ CompositeCollider2D:
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
-  - m_Collider: {fileID: 6102097978403163038}
-    m_ColliderPaths:
-    - - X: -244903
-        Y: 3692708
-      - X: -7480621
-        Y: 3692708
-      - X: -7480621
-        Y: -3692715
-      - X: -244903
-        Y: -3692715
   - m_Collider: {fileID: 5637338457773168117}
     m_ColliderPaths:
     - - X: 9136047
@@ -297,6 +287,16 @@ CompositeCollider2D:
         Y: -2920168
       - X: 9136047
         Y: -2920168
+  - m_Collider: {fileID: 6102097978403163038}
+    m_ColliderPaths:
+    - - X: -244903
+        Y: 3692708
+      - X: -7480621
+        Y: 3692708
+      - X: -7480621
+        Y: -3692715
+      - X: -244903
+        Y: -3692715
   m_CompositePaths:
     m_Paths:
     - - {x: -0.0245196, y: -0.36927152}
@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 2773302060974514673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -362,8 +362,8 @@ MonoBehaviour:
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   luoti: {fileID: 1289790796295829970, guid: 89efec56170e78c458f3b9d0869adf60, type: 3}
-  ammusVoima: -3
-  tulinopeus: 5
+  ammusVoima: -4.5
+  tulinopeus: 4
 --- !u!1 &5599371727893833542
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +390,7 @@ Transform:
   m_GameObject: {fileID: 5599371727893833542}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -411,8 +411,8 @@ MonoBehaviour:
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   luoti: {fileID: 1289790796295829970, guid: 89efec56170e78c458f3b9d0869adf60, type: 3}
-  ammusVoima: -3
-  tulinopeus: 5
+  ammusVoima: -4.5
+  tulinopeus: 4
 --- !u!1 &6735987509452927592
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +490,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4b8fd708f95e3b744825b7891da524a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -656,16 +656,6 @@ CompositeCollider2D:
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
-  - m_Collider: {fileID: 1798904252028722486}
-    m_ColliderPaths:
-    - - X: -244903
-        Y: 3692708
-      - X: -7480621
-        Y: 3692708
-      - X: -7480621
-        Y: -3692715
-      - X: -244903
-        Y: -3692715
   - m_Collider: {fileID: 2178557915459853022}
     m_ColliderPaths:
     - - X: 9136047
@@ -676,6 +666,16 @@ CompositeCollider2D:
         Y: -2920168
       - X: 9136047
         Y: -2920168
+  - m_Collider: {fileID: 1798904252028722486}
+    m_ColliderPaths:
+    - - X: -244903
+        Y: 3692708
+      - X: -7480621
+        Y: 3692708
+      - X: -7480621
+        Y: -3692715
+      - X: -244903
+        Y: -3692715
   m_CompositePaths:
     m_Paths:
     - - {x: -0.0245196, y: -0.36927152}
@@ -771,7 +771,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4b8fd708f95e3b744825b7891da524a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -937,16 +937,6 @@ CompositeCollider2D:
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
-  - m_Collider: {fileID: 2899359562875177392}
-    m_ColliderPaths:
-    - - X: -244903
-        Y: 3692708
-      - X: -7480621
-        Y: 3692708
-      - X: -7480621
-        Y: -3692715
-      - X: -244903
-        Y: -3692715
   - m_Collider: {fileID: 4199142800081877503}
     m_ColliderPaths:
     - - X: 9136047
@@ -957,6 +947,16 @@ CompositeCollider2D:
         Y: -2920168
       - X: 9136047
         Y: -2920168
+  - m_Collider: {fileID: 2899359562875177392}
+    m_ColliderPaths:
+    - - X: -244903
+        Y: 3692708
+      - X: -7480621
+        Y: 3692708
+      - X: -7480621
+        Y: -3692715
+      - X: -244903
+        Y: -3692715
   m_CompositePaths:
     m_Paths:
     - - {x: -0.0245196, y: -0.36927152}
@@ -1001,7 +1001,7 @@ Transform:
   m_GameObject: {fileID: 7863531015593962282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1022,5 +1022,5 @@ MonoBehaviour:
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   luoti: {fileID: 1289790796295829970, guid: 89efec56170e78c458f3b9d0869adf60, type: 3}
-  ammusVoima: -3
-  tulinopeus: 5
+  ammusVoima: -4.5
+  tulinopeus: 4
