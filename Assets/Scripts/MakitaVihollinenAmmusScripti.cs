@@ -72,9 +72,10 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
         if (prefap != null)
         {
-            TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(prefap, gameObject, maksimiaikaMinkaVoiOllaHengissa, speedjonkaalletuhotaan);
+            bool tuhoutui=TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(prefap, gameObject, maksimiaikaMinkaVoiOllaHengissa, speedjonkaalletuhotaan);
+
         }
-           
+        
         else
         {
             Tuhoa(gameObject, speedjonkaalletuhotaan);

@@ -2661,7 +2661,7 @@ true,
 
 
 
-    public void TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GameObject prefap, GameObject go, float hengissaolonraja,float nopeudenalaraja)
+    public bool TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GameObject prefap, GameObject go, float hengissaolonraja,float nopeudenalaraja)
     {
 
         syklilaskuri += Time.deltaTime;
@@ -2676,8 +2676,17 @@ true,
                 //Destroy(go);
                 hengissaoloaika = 0.0f;
                 ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                return;
+                return true;
             }
+
+            bool liianylhaalla = OnkoKameranYlaPuolella(go, 5.0f);
+            if (liianylhaalla)
+            {
+                hengissaoloaika = 0.0f;
+                ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                return true;
+            }
+
 
             Rigidbody2D r = go.GetComponent<Rigidbody2D>();
             if (r != null)
@@ -2688,20 +2697,20 @@ true,
                     if (prefap == null)
                     {
                         Destroy(go);
-                        return;
+                        return true;
                     }
                     else
                     {
                         hengissaoloaika = 0.0f;
                         ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                        return;
+                        return true;
                     }
 
                 }
             }
 
         }
-
+        return false;
     }
 
 
