@@ -59,6 +59,39 @@ public class TankkiPiippuController : ChildColliderReporter
     }
 
     public float motorSpeedGain = 5.0f; // Controls responsiveness of rotation
+
+
+    private bool KorjaaKulma()
+    {
+        float angle = hingeJoint2D.jointAngle;
+        float min = hingeJoint2D.limits.min;
+        float max = hingeJoint2D.limits.max;
+
+        JointMotor2D motor = hingeJoint2D.motor;
+
+        // If outside limits, activate motor to push back
+        if (angle < min)
+        {
+            motor.motorSpeed = maxMotorSpeed;   // Positive speed = clockwise
+            motor.maxMotorTorque = maxTorque*1000;
+            hingeJoint2D.motor = motor;
+            hingeJoint2D.useMotor = true;
+            return true;
+        }
+        else if (angle > max)
+        {
+            motor.motorSpeed = -maxMotorSpeed;  // Negative speed = counter-clockwise
+            motor.maxMotorTorque = maxTorque*1000;
+            hingeJoint2D.motor = motor;
+            hingeJoint2D.useMotor = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
     void Update()
     {
         if (spaceship == null) return;
@@ -69,6 +102,10 @@ public class TankkiPiippuController : ChildColliderReporter
             return;
         }
 
+        if (KorjaaKulma())
+        {
+            return;
+        }
 
         // bool onko = OnkoPisteenJaAluksenValillaTilltaTaiVihollista(kohtaMissaAmmusLaukaistaan.transform.position, tankinAmmus);
 
@@ -197,13 +234,15 @@ public class TankkiPiippuController : ChildColliderReporter
                 if (m.prefap==null)
                      m.prefap = tankinAmmus;
 
+
+                //
             }
 
 
-            //   PalliController p = instanssi.GetComponent<PalliController>();
-            //   p.alusGameObject = alusGameObject;
+                //   PalliController p = instanssi.GetComponent<PalliController>();
+                //   p.alusGameObject = alusGameObject;
 
-            instanssi.GetComponent<Rigidbody2D>().velocity = ve;
+                instanssi.GetComponent<Rigidbody2D>().velocity = ve;
             /*
                 public GameObject hylsy;
     public GameObject hylsynpaikka;

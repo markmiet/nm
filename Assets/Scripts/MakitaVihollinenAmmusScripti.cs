@@ -262,8 +262,9 @@ col.gameObject.GetComponent<IDamagedable>();
             }
         }
 
+        IgnoraaCollisiotVihollistenValilla(c, gameObject);
 
-       
+
     }
 
 

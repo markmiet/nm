@@ -9941,10 +9941,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 5
-  m_LinearDrag: 1
-  m_AngularDrag: 1
+  m_LinearDrag: 0.5
+  m_AngularDrag: 0.8
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 2569ed191898bf8f98df95618075ee69, type: 2}
+  m_Material: {fileID: 6200000, guid: 0cb77231a430b454fb792ff7ffcc3943, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9964,7 +9964,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 7639041830807167212}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0cb77231a430b454fb792ff7ffcc3943, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -10079,6 +10079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9993b0d086e101b47b6ef33dadc19c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   boxsizeylhaalla: {x: 0.1, y: 0.1}

@@ -306,6 +306,26 @@ public class PalliController : BaseController, IDamagedable
 
     public float torqueForce = 10f;
 
+    bool OnSlope()
+    {
+        float rayLength = 0.1f;
+        Vector2 origin = transform.position;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength);
+
+        if (hit.collider != null)
+        {
+            // Normaalivektori kertoo pinnan suunnan
+            Vector2 normal = hit.normal;
+
+            // Jos normaalin suunta poikkeaa ylöspäin osoittavasta vektorista, ollaan kaltevalla pinnalla
+            return Vector2.Angle(normal, Vector2.up) > 0.1f;
+        }
+
+        return false;
+    }
+
+
     public void FixedUpdate()
     {
 
@@ -327,11 +347,14 @@ public class PalliController : BaseController, IDamagedable
 
             }
 
+            //eli laita tämä interceptorille
+            if (OnSlope() && Mathf.Abs(rb.velocity.x) < 1f )
+            {
+                rb.AddForce(Vector2.down * 20f, ForceMode2D.Impulse);
+            }
 
 
-            
 
-           
             rb.simulated = true;
 
 
