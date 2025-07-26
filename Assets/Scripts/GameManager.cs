@@ -73,6 +73,7 @@ public class GameManager : BaseController
     public int score = 0;
     void Awake()
     {
+        Application.targetFrameRate = 60;//t‰rke‰‰‰
         if (Instance == null)
         {
             Instance = this;

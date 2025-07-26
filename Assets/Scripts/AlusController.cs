@@ -267,7 +267,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         }
 
         //  audiosourcetaustamusiikki.Play();
-        //   Application.targetFrameRate = 45;
+        //   Application.targetFrameRate = 60;//tärkeäää
         // Application.targetFrameRate = 10; // For example, cap to 60 FPS
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         //   mainCamera = Camera.main;

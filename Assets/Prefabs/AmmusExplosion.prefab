@@ -5,11 +5,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 100006, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
       propertyPath: m_Name
-      value: Explosion Variant
+      value: AmmusExplosion
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
       propertyPath: m_RootOrder
@@ -67,6 +68,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 19800006, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
       propertyPath: looping
       value: 0
@@ -103,6 +128,22 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.scalar
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 19800010, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800010, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800010, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800010, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 19900000, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -132,4 +173,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 808e73d863fcde3499fd5301563ffd3d, type: 3}

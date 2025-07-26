@@ -123,6 +123,8 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
     }
     public float damagemaarajokaaiheutetaan = 1.0f;
 
+    public float explosionkesto = 0.2f;
+
     void OnCollisionEnter2D(Collision2D col)
     {
         /*
@@ -175,7 +177,7 @@ col.gameObject.GetComponent<IDamagedable>();
         else if (col.collider.tag.Contains("tiili"))
         {
             //Destroy(gameObject);
-            Explode();
+            Explode(col.GetContact(0).point);
 
         }
         else if (col.collider.CompareTag("makitavihollinenexplodetag") &&
@@ -219,11 +221,28 @@ col.gameObject.GetComponent<IDamagedable>();
 
 
     public float alivetimeRajahdyksenJalkeen = 0.5f;
+
     public void Explode()
+    {
+        Explode(Vector2.zero);
+    }
+    public void Explode(Vector2 contactPoint)
     {
         if (explosion != null)
         {
-            GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+            GameObject explosionIns;
+            if (contactPoint==Vector2.zero)
+            {
+                explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                explosionIns = Instantiate(explosion, contactPoint, Quaternion.identity);
+            }
+
+            Destroy(explosionIns, explosionkesto);
+
+
             //	RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
 
             //  Destroy(gameObject);
@@ -232,7 +251,7 @@ col.gameObject.GetComponent<IDamagedable>();
 
 
             //RajaytaSprite(gameObject, 3, 3, 2.0f, 1.2f);
-            Destroy(explosionIns, 1.0f);
+
         }
         //0.5f
 
