@@ -6,7 +6,13 @@ public class TextuuriController : BaseController
     private Material[] _materials;
     private int _MainTex = Shader.PropertyToID("_MainTex");
     private int _NoiseTex = Shader.PropertyToID("_NoiseTex");
-    private int _Rotation = Shader.PropertyToID("_Rotation");
+    private int _Rotation = Shader.PropertyToID("_RotationArvo");
+    private int _Tiling = Shader.PropertyToID("_TilingArvo");
+
+
+    private int _TilingOffset = Shader.PropertyToID("_TilingOffsetArvo");
+
+
 
     //public Texture2D maini;
     public Texture2D overlayTexture;
@@ -15,9 +21,21 @@ public class TextuuriController : BaseController
 
     public Material konttimateriaali;
 
-    public float rotationKokoHomma = 0.0f;
+    [Range(-180, 180)]
+    public int rotationGraffiti = 0;
+    //eli asetetaan joku koko ja sitten vaan randomisoidaan sitä
+    [Range(0.1f, 20f)]
+    public float kokox = 1.0f;
+    [Range(0.1f, 20f)]
+    public float kokoy = 1.0f;
 
-  //  private bool materiaalivaihtotehty = false;
+    public float randomisointiprosentti = 40f;
+
+
+    public float tilinoffsetx = 0.0f;
+    public float tilinoffsety = 0.0f;
+
+    //  private bool materiaalivaihtotehty = false;
     private void teeMateriaaliVaihto()
     {
         _spriteRenderers = GetComponentsInParent<SpriteRenderer>();
@@ -28,29 +46,85 @@ public class TextuuriController : BaseController
             _spriteRenderers[i].material = new Material( konttimateriaali);
             _materials[i] = _spriteRenderers[i].material;
             _materials[i].SetTexture(_NoiseTex, originellitekstuuri);
-            _materials[i].SetFloat(_Rotation, rotationKokoHomma);
+            _materials[i].SetFloat(_Rotation, rotationGraffiti);
+          //  _materials[i].SetVector(_Tiling, tilingvalue);
+            
+            //_materials[i].SetVector(_TilingOffset, tilingoffsetvalue);
+
+      //      _materials[i].SetTextureScale(_NoiseTex, new Vector2(tilingX, tilingY));
+
+
+        }
+    }
+
+
+    private void AsetaArvot()
+    {
+       // float GenerateRandomFromPosition(float alaraja, float ylaraja)
+
+        float randomFactorX = GenerateRandomFromPosition(
+        1f - randomisointiprosentti / 100f,
+        1f + randomisointiprosentti / 100f
+    );
+
+        float randomFactorY = GenerateRandomFromPosition(
+            1f - randomisointiprosentti / 100f,
+            1f + randomisointiprosentti / 100f
+        );
+
+        float scaleX = kokox * randomFactorX;
+        float scaleY = kokoy * randomFactorY;
+
+
+        float tilinoffsetxr = kokox * tilinoffsetx;
+        float tilinoffsetyr = kokoy * tilinoffsety;
+
+
+        for (int i = 0; i < _materials.Length; i++)
+        {
+            Texture2D te2 = GetTexture();
+            _materials[i].SetTexture(_NoiseTex, te2);
+            _materials[i].SetVector(_Tiling, new Vector2(scaleX, scaleY));
+
+            float angleInRadians = rotationGraffiti * Mathf.Deg2Rad;
+
+            _materials[i].SetFloat(_Rotation, angleInRadians);
+            _materials[i].SetVector(_TilingOffset, new Vector2(tilinoffsetxr, tilinoffsetyr));
+
         }
     }
 
     void Start()
     {
+        _spriteRenderers = GetComponentsInParent<SpriteRenderer>();
+        _materials = new Material[_spriteRenderers.Length];
+
+        for (int i = 0; i < _spriteRenderers.Length; i++)
+        {
+            // Clone materials to avoid shared material side effects
+            _spriteRenderers[i].material = new Material(konttimateriaali);
+            _materials[i] = _spriteRenderers[i].material;
+        }
+
+
 
         //GetComponent<SpriteRenderer>().sprite = overlayTexture;
         originellitekstuuri = GetComponent<SpriteRenderer>().sprite.texture;
         //bool graffikaytossa = GraffitiKaytossa();
-        teeMateriaaliVaihto();
-        
+        // teeMateriaaliVaihto();
+        AsetaArvot();
         Muunto();
-        
-        
+
+
     }
     private Texture2D originellitekstuuri;
-
+    /*
     public byte r = 255;
     public byte g = 255;
     public byte b = 255;
     public byte aa = 255;
-
+    */
+    /*
     //nämä kertoo sen muunnoksen
     public float offsetxInPercentsOffMainTextureWidth = 0;
     public float offsetyInPercentsOffMainTextureHeight = 0;
@@ -59,9 +133,10 @@ public class TextuuriController : BaseController
     public float randomisointiMuutosprosenttiXYPositioneissa = 0;
     public float scaleRandomiprosentti = 0.0f;
 
-    public float varinArvonRandomiArvo = 0.0f;
+    //public float varinArvonRandomiArvo = 0.0f;
 
     public float prosenttiOsuusMikaVoiMaksimissaanOllaGraffitinKokoSuhteessaKonttiin = 30.0f;
+    */
 
     public float prosenttijollaylipaansalistaanGraffiti = 50.0f;
 
@@ -129,42 +204,59 @@ public class TextuuriController : BaseController
     }
     private Texture2D GetTexture()
     {
-        if (overlayTextures!=null && overlayTextures.Length>0)
+        if (overlayTexture!=null)
+        {
+            return overlayTexture;
+        }
+        else if (overlayTextures!=null && overlayTextures.Length>0)
         {
             float arpa= GenerateRandomFromPosition(0, overlayTextures.Length-1);
             return overlayTextures[(int)arpa];
         }
         else
         {
-            return overlayTexture;
+            return null;
         }
     }
 
     private void Muunto()
     {
-        // float GenerateRandomFromPosition(float alaraja, float ylaraja)
-        for (int i = 0; i < _materials.Length; i++)
-        {
-
-            //_materials[i].SetTexture(_NoiseTex, a);
-
-            _materials[i].SetFloat(_Rotation, rotationKokoHomma);
-
-
-        }
 
         bool tehdaanko = GraffitiKaytossa();
         if (!tehdaanko)
         {
             return;
         }
+        //tähän randomit
+        AsetaArvot();
+
         /*
         if (!materiaalivaihtotehty)
         {
             teeMateriaaliVaihto(true);
         }
         */
-          
+
+
+        /*
+float variarpa = GenerateRandomFromPosition(-varinArvonRandomiArvo, varinArvonRandomiArvo);
+//-5 ja 5
+
+
+
+int uusivariarvoR = Mathf.Clamp(r + (int)variarpa, 0, 255);
+
+int uusivariarvoG = Mathf.Clamp(g + (int)variarpa, 0, 255);
+
+int uusivariarvoB = Mathf.Clamp(b + (int)variarpa, 0, 255);
+
+int uusivariarvoA = Mathf.Clamp(aa + (int)variarpa, 0, 255);
+
+Color32 whiteTint = new Color32((byte)uusivariarvoR, (byte)uusivariarvoG, (byte)uusivariarvoB, (byte)uusivariarvoA);
+
+*/
+
+        /*
 
         Texture2D te = GetTexture();
         if (te!=null)
@@ -172,21 +264,6 @@ public class TextuuriController : BaseController
             //r on siis 255
             //sitä pitäisi siis randomisoida
             //0-10% 10% on siis se 
-
-            float variarpa = GenerateRandomFromPosition(-varinArvonRandomiArvo, varinArvonRandomiArvo);
-            //-5 ja 5
-
-
-
-            int uusivariarvoR = Mathf.Clamp(r + (int)variarpa, 0, 255);
-
-            int uusivariarvoG = Mathf.Clamp(g + (int)variarpa, 0, 255);
-
-            int uusivariarvoB = Mathf.Clamp(b + (int)variarpa, 0, 255);
-
-            int uusivariarvoA = Mathf.Clamp(aa + (int)variarpa, 0, 255);
-
-            Color32 whiteTint = new Color32((byte)uusivariarvoR, (byte)uusivariarvoG, (byte)uusivariarvoB, (byte)uusivariarvoA);
 
             //offsetxInPercentsOffMainTextureWidth  5 % offsetti esim.
             //randomisoidaan tuota prosenttia eli esim. 10%
@@ -204,24 +281,15 @@ public class TextuuriController : BaseController
 
             float uusiscale = percentOfOverlaytexturescale + scalenrandomi;
 
-
-            Texture2D a = OverlayTexture(originellitekstuuri, te, whiteTint,
-
-                uusioffsetxInPercentsOffMainTextureWidth,
-                uusioffsetYInPercentsOffMainTextureWidth,
-                uusiscale
-                );
-            for (int i = 0; i < _materials.Length; i++)
-            {
-
-                _materials[i].SetTexture(_NoiseTex, a);
-
-                _materials[i].SetFloat(_Rotation, rotationKokoHomma);
+            Texture2D a = te;
 
 
-            }
+            
         }
+        */
     }
+
+    /*
 
     public Texture2D OverlayTexture(
     Texture2D mainTexture,
@@ -304,5 +372,5 @@ public class TextuuriController : BaseController
         outTexture.Apply(false);
         return outTexture;
     }
-
+    */
 }
