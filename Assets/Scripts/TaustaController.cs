@@ -37,6 +37,7 @@ public class TaustaController : BaseController
 
     void Start()
     {
+
       //  Debug.Log("aksaa=" + transform.position.x);
         transform.position = new Vector2(transform.position.x+xsaato, ysaato);
         tilemap = GetComponent<Tilemap>();
