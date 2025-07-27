@@ -230,18 +230,39 @@ public class ForceFieldController : MonoBehaviour
             ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
             if (childColliderReporter != null)
             {
-                col.enabled = false;
+                //col.enabled = false;
                 Vector2 thisPosition = transform.position;
                 Vector2 otherPosition = col.transform.position;
                 Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
-                int maara = childColliderReporter.PalautaHittienMaara();
+                //n‰in saadaan r‰j‰ht‰m‰‰n
+                int maara = childColliderReporter.PalautaVaadittuHittienMaara();//t‰m‰ kuluttaa aina sen verran mit‰ vaaditaan ko. objekti tuhoamiseen
                 for (int i=0;i<maara;i++)
                 {
+                    int nykymaara = childColliderReporter.PalautaNykyinenOsumienMaara();
+                    int vaaditut = childColliderReporter.PalautaVaadittuHittienMaara();
+                    if (nykymaara==vaaditut)
+                    {
+                        break;
+                    }
                     childColliderReporter.RegisterHit(estimatedContactPoint);
+                    hittienmaara++;
+                    if (hittienmaara >= hittienmaaraJokaKestetaan)
+                    {
+                        break;
+                    }
                 }
-                
-                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
-                SetOnkotoiminnassa(false);
+                //hittienmaara += maara;
+                if (hittienmaara > hittienmaaraJokaKestetaan)
+                {
+                    // gameObject.SetActive(false);
+                    //
+                    alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                    SetOnkotoiminnassa(false);
+
+                }
+
+                //alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                //SetOnkotoiminnassa(false);
 
                 return;
 
@@ -309,7 +330,7 @@ public class ForceFieldController : MonoBehaviour
                 hittienmaara++;
                 Debug.Log("hittienm‰‰r‰=" + hittienmaara);
                 //t‰h‰n se himmennys eli partikkelien m‰‰r‰‰‰ v‰hennet‰‰n tms
-                if (hittienmaara >= hittienmaaraJokaKestetaan)
+                if (hittienmaara > hittienmaaraJokaKestetaan)
                 {
                     // gameObject.SetActive(false);
                     //

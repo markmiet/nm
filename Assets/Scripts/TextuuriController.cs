@@ -8,8 +8,10 @@ public class TextuuriController : BaseController
     private int _NoiseTex = Shader.PropertyToID("_NoiseTex");
     private int _Rotation = Shader.PropertyToID("_RotationArvo");
     private int _Tiling = Shader.PropertyToID("_TilingArvo");
+    private int _Multiply = Shader.PropertyToID("_Multiply");
 
 
+    
     private int _TilingOffset = Shader.PropertyToID("_TilingOffsetArvo");
 
 
@@ -31,6 +33,8 @@ public class TextuuriController : BaseController
 
     public float randomisointiprosentti = 40f;
 
+    [Range(0.0f, 1.0f)]
+    public float multiply = 1.0f;
 
     public float tilinoffsetx = 0.0f;
     public float tilinoffsety = 0.0f;
@@ -90,6 +94,11 @@ public class TextuuriController : BaseController
 
             _materials[i].SetFloat(_Rotation, angleInRadians);
             _materials[i].SetVector(_TilingOffset, new Vector2(tilinoffsetxr, tilinoffsetyr));
+
+            _materials[i].SetVector(_Multiply, new Vector4(multiply, multiply, multiply, multiply));
+
+
+            
 
         }
     }
@@ -211,7 +220,8 @@ public class TextuuriController : BaseController
         else if (overlayTextures!=null && overlayTextures.Length>0)
         {
             float arpa= GenerateRandomFromPosition(0, overlayTextures.Length-1);
-            return overlayTextures[(int)arpa];
+            
+            return overlayTextures[Mathf.RoundToInt(arpa)];
         }
         else
         {

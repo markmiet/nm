@@ -116,7 +116,7 @@ public class ChildColliderReporter : BaseController
     }
 
 
-    public int PalautaHittienMaara()
+    public int PalautaVaadittuHittienMaara()
     {
         if (parent != null)
         {
@@ -129,7 +129,7 @@ public class ChildColliderReporter : BaseController
         return 1;
     }
 
-    public int PalautaOsumienMaara()
+    public int PalautaNykyinenOsumienMaara()
     {
         if (parent != null)
         {
@@ -145,8 +145,8 @@ public class ChildColliderReporter : BaseController
 
     public float PalautaHittienMaaraKokonaisuudestaProsentteina()
     {
-        int threadshold = PalautaHittienMaara();
-        int osumienmaara = PalautaOsumienMaara();
+        int threadshold = PalautaVaadittuHittienMaara();
+        int osumienmaara = PalautaNykyinenOsumienMaara();
 
         float prossa = (float)osumienmaara / (float)threadshold;
 

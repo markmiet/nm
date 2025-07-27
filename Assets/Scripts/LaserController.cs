@@ -92,11 +92,12 @@ public class LaserController : BaseController
         }
 
 
+        Vector2 contactPoint = col.ClosestPoint(transform.position);
 
         if (col.tag.Contains("tiilivihollinen") || col.tag.Contains("eituhvih"))
         {
             tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
-            TeeOsumaExplosion();
+            TeeOsumaExplosion(contactPoint);
 
             Explode();
 
@@ -106,8 +107,7 @@ public class LaserController : BaseController
         {
             //tormattyviholliseen = true;
             //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
-
-            TeeOsumaExplosion();
+            TeeOsumaExplosion(contactPoint);
 
 
 
@@ -139,7 +139,6 @@ public class LaserController : BaseController
                 if (hitcounter != null)
                 {
 
-                    Vector2 contactPoint = col.ClosestPoint(transform.position);
                     hitcounter.RegisterHit(contactPoint);
                 }
                 else
@@ -150,7 +149,6 @@ public class LaserController : BaseController
                     {
                         //LisaaTuhottujenMaaraa(col.gameObject);
                         tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
-                        Vector2 contactPoint = col.ClosestPoint(transform.position);
                         childColliderReporter.RegisterHit(contactPoint);
 
                     }
@@ -162,7 +160,6 @@ public class LaserController : BaseController
                         {
                             GetComponent<Collider2D>().enabled = false;
 
-                            Vector2 contactPoint = col.ClosestPoint(transform.position);
 
                             //Vector2 contactPoint = col.GetContact(0).point;
                             bool rajahtiko = sc.Explode(contactPoint);
@@ -190,7 +187,6 @@ public class LaserController : BaseController
                             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
                             if (damageMahdollinen != null)
                             {
-                                Vector2 contactPoint = col.ClosestPoint(transform.position);
                                 bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, contactPoint);
                                 if (rajahtiko)
                                 {
@@ -389,11 +385,11 @@ public class LaserController : BaseController
 
     }
 
-    public void TeeOsumaExplosion()
+    public void TeeOsumaExplosion(Vector2 contactPoint)
     {
                if (osumaExplosion!=null)
         {
-            GameObject explosionIns = Instantiate(osumaExplosion, transform.position, Quaternion.identity);
+            GameObject explosionIns = Instantiate(osumaExplosion, contactPoint, Quaternion.identity);
             Destroy(explosionIns, 1.0f);
         }
     }

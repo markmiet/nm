@@ -69,6 +69,13 @@ public class TankkiPiippuController : ChildColliderReporter
 
         JointMotor2D motor = hingeJoint2D.motor;
 
+
+        if (!hingeJoint2D.useLimits)
+        {
+            return false;
+        }
+
+
         // If outside limits, activate motor to push back
         if (angle < min)
         {
