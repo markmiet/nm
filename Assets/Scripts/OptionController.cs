@@ -117,7 +117,7 @@ public class OptionController : MonoBehaviour
         return nykymaara < maksimi;
     }
 
-    public void ammuNormilaukaus(GameObject ammusPrefab)
+    public void ammuNormilaukaus(GameObject ammusPrefab,Vector2 aa)
     {
 
         if (OnkoAmmustenMaaraAlleMaksimin())
@@ -130,7 +130,7 @@ public class OptionController : MonoBehaviour
             // instanssi.
             //       instanssi.tag = "optionammustag";tama kommentoitu
 
-            instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+            instanssi.GetComponent<Rigidbody2D>().velocity =aa;
             AmmusController ac = instanssi.GetComponent<AmmusController>();
             if (ac!=null)
             {
@@ -140,6 +140,7 @@ public class OptionController : MonoBehaviour
             else
             {
                 LaserController lc= instanssi.GetComponent<LaserController>();
+                lc.alkuvelocity = aa;
                 if (lc!=null)
                 {
                     lc.SetOption(this.gameObject);
@@ -155,12 +156,17 @@ public class OptionController : MonoBehaviour
         aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara - 1;
     }
 
+    public void LisaaaOptionLuomienElossaOlevienAmmustenMaaraa()
+    {
+        aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara + 1;
+    }
+
 
 
     GameObject instanssiBulletAlas;
     GameObject instanssiBulletYlos;
 
-    public void ammuAlaslaukaus(GameObject bulletPrefab)
+    public void ammuAlaslaukaus(GameObject bulletPrefab,Vector2 bulletinalkuvelocity,float bulletgravityscale)
     {
           if (instanssiBulletAlas == null)
         {
@@ -169,7 +175,12 @@ new Vector3(0.1f +
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y-0.0f, 0);
 
 
+            /*
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
 
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -bulletingravityscale;
+
+            */
             instanssiBulletAlas = Instantiate(bulletPrefab, v3, Quaternion.identity);
             //instanssiBulletAlas.SendMessage("Alas", true);
 
@@ -179,15 +190,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y-0.0f, 0);
                 alas.Alas(true);
             }
 
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, -2);
+            instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = bulletinalkuvelocity;
 
 
-            instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = bulletgravityscale;
         }
 
     }
 
-    public void ammuYloslaukaus(GameObject bulletPrefab)
+    public void ammuYloslaukaus(GameObject bulletPrefab, Vector2 bulletinalkuvelocity, float bulletgravityscale)
     {
         if (instanssiBulletYlos == null)
         {
@@ -206,9 +217,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 alas.Alas(false);
             }
 
-            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.1f, 2);
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = bulletinalkuvelocity;
 
-            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -1.0f;
+            instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = bulletgravityscale;
 
         }
 

@@ -28,28 +28,28 @@ public class BulletScript : BaseController, IExplodable, IAlas
         TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
 
 
-            /*
-            if (!android)
-            {
-                TuhoaJosVaarassaPaikassa(gameObject, true, true);
-            }
-
-            eloaika += Time.deltaTime;
-            if (eloaika >= maksimiAikajonkavoiollaElossa)
-            {
-                Explode();
-            }
-
-            */
+        /*
+        if (!android)
+        {
+            TuhoaJosVaarassaPaikassa(gameObject, true, true);
         }
-        public void FixedUpdate()
+
+        eloaika += Time.deltaTime;
+        if (eloaika >= maksimiAikajonkavoiollaElossa)
+        {
+            Explode();
+        }
+
+        */
+    }
+    public void FixedUpdate()
     {
-      //  float speed = m_Rigidbody2D.velocity.magnitude;
+        //  float speed = m_Rigidbody2D.velocity.magnitude;
         //       Debug.Log("ammuksen nopeus=" + speed);
 
         //if (speed <= nopeusjonkaalleTuhoutuu)
-       // {
-          //  Destroy(gameObject);
+        // {
+        //  Destroy(gameObject);
         //}
     }
 
@@ -59,7 +59,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
         alas = al;
     }
 
-
+    /*
     public void Putoa()
     {
 
@@ -75,6 +75,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
             }
         }
     }
+    */
 
 
     public float liukumisenjalkeinengravity = 20.0f;
@@ -212,7 +213,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
                             if (damageMahdollinen != null)
                             {
                                 Vector2 contactPoint = col.GetContact(0).point;
-                                bool rajahti = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan,contactPoint);
+                                bool rajahti = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutetaan, contactPoint);
                                 if (rajahti)
                                 {
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
@@ -276,9 +277,10 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
     public void Explode()
     {
-        if (rajaytasprite) { 
+        if (rajaytasprite)
+        {
             RajaytaSprite(gameObject, uusirajaytyscolumns, uusirajaytysrows, 1.0f, explosionlivetime);
-    }
+        }
         Destroy(gameObject);
     }
 

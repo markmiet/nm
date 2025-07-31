@@ -210,7 +210,7 @@ public class TankkiPiippuController : ChildColliderReporter
             bool onko = OnkoPisteenJaAluksenValillaTilltaTaiVihollista(piipunpaaJohonGameObjectInstantioidaan.transform.position,tankinAmmus);
             if (onko)
             {
-                Debug.Log("ei ole vapaa väylä");
+               // Debug.Log("ei ole vapaa väylä");
                 return false;
             }
 

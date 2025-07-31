@@ -2135,7 +2135,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                     bool onko = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", this.boxCollider2D.size*1.2f, new Vector2(uusialuksenx, alussijaintiy));
                     if (onko)
                     {
-                        Debug.Log("onko=" + onko);
+                     //   Debug.Log("onko=" + onko);
                         break;
                     }
                     edellinenkunnollinenkohta = new Vector2(currentPosition.x, currentPosition.y);
@@ -2405,11 +2405,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 instanssi = Instantiate(
                     laserPrefab, v3, Quaternion.identity);
 
+                instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(ammuksenalkuvelocity, 0);
+
                 LaserController aa = instanssi.GetComponent<LaserController>();
                 //aa.SetLaserkaytossa(laserkaytossa);
                 aa.alus = this.gameObject;
                 aa.SetAluksenluoma(true);
-
+                aa.alkuvelocity = new Vector2(ammuksenalkuvelocity, 0);
             }
             else
             {
@@ -2422,7 +2424,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 aa.SetAluksenluoma(true);
 
 
-                instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
+                instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(ammuksenalkuvelocity, 0);
 
             }
 
@@ -2457,6 +2459,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
     }
+
+    public float ammuksenalkuvelocity = 20.0f;
 
     private void InstantioiBulletAlasTarvittaessa()
     {
@@ -2524,6 +2528,11 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara - 1;
     }
 
+    public void LisaaaluksenluomienElossaOlevienAmmustenMaaraa()
+    {
+        aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara + 1;
+       
+    }
 
     public void SetEnabloiboxcollider(bool arvo)
     {
@@ -2551,16 +2560,20 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             if (laserkaytossa)
             {
-                obj.ammuNormilaukaus(laserPrefab);
+                obj.ammuNormilaukaus(laserPrefab ,new Vector2(ammuksenalkuvelocity, 0));
             }
             else
             {
-                obj.ammuNormilaukaus(ammusPrefab);
+                obj.ammuNormilaukaus(ammusPrefab, new Vector2(ammuksenalkuvelocity, 0));
             }
 
             if (missileDownCollected >= 1)
             {
-                obj.ammuAlaslaukaus(bulletPrefab);
+               // instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
+
+               // instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -bulletingravityscale;
+
+                obj.ammuAlaslaukaus(bulletPrefab, new Vector2(0.0f, -bulletinalkuvelocityy), bulletingravityscale);
             }
             if (missileUpCollected >= 1)
             {
@@ -2575,7 +2588,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
                 }
                 else
                 {
-                    obj.ammuYloslaukaus(bulletPrefab);
+                    obj.ammuYloslaukaus(bulletPrefab, new Vector2(0.0f, bulletinalkuvelocityy), -bulletingravityscale);
                 }
 
             }

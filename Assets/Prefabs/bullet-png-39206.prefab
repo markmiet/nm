@@ -111,8 +111,8 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
+    m_Bits: 520
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -128,12 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b56c3ec1eb97efc99601768b39557b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 4
   uusirajaytysrows: 4
   alas: 1
   nopeusjonkaalleTuhoutuu: 1
   liukumisenjalkeinengravity: 6
-  liukumisnopeus: 6
+  liukumisnopeus: 8
   damagemaarajokaaiheutetaan: 3
   force: 0.1
   alive: 0.1
@@ -222,8 +223,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.16534954, y: -0.0031029484}
-  m_Size: {x: 0.17623423, y: 0.08329401}
+  m_Offset: {x: 0.140013, y: 0.0050409087}
+  m_Size: {x: 0.12556113, y: 0.048909053}
   m_Direction: 1
 --- !u!1 &8500075087134560541
 GameObject:

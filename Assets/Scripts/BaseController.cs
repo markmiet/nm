@@ -2943,22 +2943,28 @@ true,
     }
 
 
-    public bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
+
+
+    Dictionary<string, Vector3> GetAllWorldPositions(Transform parent)
     {
-        Vector3 kameraminimi = GetCameraMinWorldPosition();
+        Dictionary<string, Vector3> posDict = new Dictionary<string, Vector3>();
 
-        if (go.transform.position.x < kameraminimi.x)
+        // Add the parent itself
+        posDict[parent.name] = parent.position;
+
+        // Recurse through children
+        foreach (Transform child in parent)
         {
-            float ero = Mathf.Abs(kameraminimi.x - go.transform.position.x);
-            if (ero >= offset)
+            var childPositions = GetAllWorldPositions(child);
+            foreach (var kvp in childPositions)
             {
-                return true;
+                posDict[kvp.Key] = kvp.Value;
             }
-
         }
-        return false;
 
+        return posDict;
     }
+
 
     private float viimeisinTarkistusAika = -1f;
     private float tarkistussykli = 0.1f;
@@ -3043,20 +3049,68 @@ true,
         return OnkoKameranOikeallaPuolella(go, 0.1f);
     }
 
+
+    public bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
+    {
+        Vector3 kameraminimi = GetCameraMinWorldPosition();
+        Dictionary<string, Vector3> positions = GetAllWorldPositions(transform);
+        //eli kaikki pitää olla vasemmalla jolloin true, muuten false
+        foreach (var entry in positions)
+        {
+
+            //Debug.Log($"{entry.Key}: {entry.Value}");
+            if (entry.Value.x < kameraminimi.x)
+            {
+                float ero = Mathf.Abs(kameraminimi.x - entry.Value.x);
+                if (ero >= offset)
+                {
+                    //return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        return true;
+
+    }
+
+
     public bool OnkoKameranOikeallaPuolella(GameObject go,float offset)
     {
         Vector3 kameraminimi = GetCameraMaxWorldPosition();
 
-        if (go.transform.position.x > kameraminimi.x)
+        Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+        //eli kaikki pitää olla vasemmalla jolloin true, muuten false
+        foreach (var entry in positions)
         {
-            float ero = Mathf.Abs(kameraminimi.x - go.transform.position.x);
-            if (ero >= offset)
+            //Debug.Log($"{entry.Key}: {entry.Value}");
+            if (entry.Value.x > kameraminimi.x)
             {
-                return true;
-            }
+                float ero = Mathf.Abs(kameraminimi.x - entry.Value.x);
+                if (ero >= offset)
+                {
+                   // return true;
+                }
+                else
+                {
+                    return false;
+                }
 
+            }
+            else
+            {
+                return false;
+            }
         }
-        return false;
+        return true;
 
     }
 
@@ -3064,35 +3118,61 @@ true,
     private bool OnkoKameranAlaPuolella(GameObject go, float offset)
     {
         Vector3 kameraminimi = GetCameraMinWorldPosition();
-
-        if (go.transform.position.y < kameraminimi.y)
+        Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+        foreach (var entry in positions)
         {
-            float ero = Mathf.Abs(kameraminimi.y - go.transform.position.y);
-            if (ero >= offset)
-            {
-                return true;
-            }
 
+            //Debug.Log($"{entry.Key}: {entry.Value}");
+            if (entry.Value.y < kameraminimi.y)
+            {
+                float ero = Mathf.Abs(kameraminimi.y - entry.Value.y);
+                if (ero >= offset)
+                {
+                   // return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
+                return false;
+            }
         }
-        return false;
+        return true;
 
     }
 
     private bool OnkoKameranYlaPuolella(GameObject go, float offset)
     {
         Vector3 kameramax = GetCameraMaxWorldPosition();
-
-        if (go.transform.position.y > kameramax.y)
+        Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+        foreach (var entry in positions)
         {
-            float ero = Mathf.Abs(kameramax.y - go.transform.position.y);
-            if (ero >= offset)
-            {
-                Debug.Log("offsetti=" + offset);
-                return true;
-            }
 
+            //Debug.Log($"{entry.Key}: {entry.Value}");
+            if (entry.Value.y > kameramax.y)
+            {
+                float ero = Mathf.Abs(kameramax.y - entry.Value.y);
+                if (ero >= offset)
+                {
+                   // Debug.Log("offsetti=" + offset);
+                   // return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
+                return false;
+            }
         }
-        return false;
+        return true;
 
     }
 

@@ -86,15 +86,30 @@ public class InterceptorController : BaseController
             if (Mathf.Abs(rb.angularVelocity) > 50f)
                 rb.angularVelocity = Mathf.Sign(rb.angularVelocity) * 50f;
         }
-        /*
+        /* */
         bool ylosalaisin = OllaankoYlosAlaisin();
-        ylosalaisin ja maassa
-        if (ylosalaisin)
+        //ylosalaisin ja maassa
+        if (ylosalaisin && transform.parent != null && KoskettaakoRunkoMaata())
         {
-            Destroy(gameObject);
+            //tähän vielä räjäytkset
+            //eli childcollisionreporterin avulla :)
+
+
+            HitCounter[] ccc =
+            transform.parent.gameObject.GetComponentsInChildren<HitCounter>();
+            foreach(HitCounter aa in ccc)
+            {
+               // int uupuu = aa.hitThreshold - aa.hitCount;
+                //for (int i=0;i<uupuu;i++)
+                //{
+                    aa.RajaytaChildrenit();
+                //}
+            }
+            
+            Destroy(transform.parent.gameObject);
             return;
         }
-        */
+       
 
         /*
         if (etuilmassa || takailmassa)
@@ -331,6 +346,27 @@ GetComponents<WheelJoint2D>();
 
     }
 
+    public bool KoskettaakoRunkoMaata()
+    {
+        BoxCollider2D[] bb = GetComponents<BoxCollider2D>();
+        foreach(BoxCollider2D box in bb)
+        {
+            Vector2 position = box.bounds.center;
+            Vector2 size = box.bounds.size;
+            float angle = 0f; // or box.transform.eulerAngles.z if rotated
+            Collider2D[]  cc=Physics2D.OverlapBoxAll(position, size, angle);
+            foreach(Collider2D c in cc)
+            {
+                if (c.tag.Contains("tiili"))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
 
 
     public bool OnkoTiiliVasemmalla(GameObject rengasObj, float etaisyys = 0.8f)
@@ -432,8 +468,15 @@ GetComponents<WheelJoint2D>();
             {
                 if (c.explosion)
                 {
+                    /*
                     GameObject instanssisavu = Instantiate(c.explosion, transform.position, Quaternion.identity);
+
                     Destroy(instanssisavu, 1.0f);
+                    */
+                    
+                    GameObject instanssisavu = ObjectPoolManager.Instance.GetFromPool(c.explosion, transform.position, Quaternion.identity);
+
+                    ObjectPoolManager.Instance.ReturnToPool(c.explosion, instanssisavu, 1.0f);
                 }
             }
 

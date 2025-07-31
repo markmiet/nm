@@ -18,6 +18,8 @@ public class VaihtoController : MonoBehaviour
 
     public bool bulletholemode = false;
 
+    public bool jakaudutarvittaessa = false;
+
 
     public Texture2D noisetex;//t‰m‰n on siis se tekstuuri joka piirret‰‰n maintex eli sprite muodon p‰‰lle
     public Vector2 tilingoffset = Vector2.one;//1,1 ei toista 
@@ -34,7 +36,10 @@ public class VaihtoController : MonoBehaviour
     public float bulletHoleCooldown = 0.1f; // 20 bullet holes per second max oncollisionenteriss‰ siis rajoitetaan
     public float regioninminimikoko = 10.0f;
 
-    public float leveydenkertoma = 5;//bulletin
+    public float radiuskertoma = 1000.0f;//bulletin
+
+    public int bulletholenradiusminimi = 40;
+    public int bulletholenradiusmaksimi = 45;
 
     //public int maxSearchRadius = 20; //bulletin tune this as needed
 
@@ -237,7 +242,7 @@ public class VaihtoController : MonoBehaviour
 
 
         int maara = CountNonAlphaPixels(GetComponent<SpriteRenderer>().sprite);
-        Debug.Log("maara=" + maara);
+       // Debug.Log("maara=" + maara);
         if (maara < pikseliminimimaara)
         {
             Destroy(gameObject);
@@ -249,8 +254,23 @@ public class VaihtoController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-    }
 
+        if (GetComponent<SpriteRenderer>()!=null)
+        {
+            Sprite s = GetComponent<SpriteRenderer>().sprite;
+            float xkoko=s.bounds.size.x;
+            float ykoko = s.bounds.size.y;
+           // Debug.Log("sprite kokox=" + xkoko + " ykoko=" + ykoko);
+            float ala = xkoko * ykoko;
+            if (ala< minimipintaala)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+
+    }
+    public float minimipintaala = 1.0f;
 
 
     public int GetSpriteHeightInPixels()
@@ -329,45 +349,13 @@ public class VaihtoController : MonoBehaviour
         //  GeneratePreciseCollider();
         // 
     }
-
-
-    
-
-    public void OnCollisionEnter2D(Collision2D col)
+    /*
+    public void OnTriggerEnter2D(Collider2D col)
     {
-        if (!bulletholemode)
+        Debug.Log(col);
+        if (col.tag.Contains("ammus"))
         {
-            return;
-        }
-
-        if (col.collider.tag.Contains("ammus"))
-        {
-            float currentTime = Time.time;
-
-            // Rate limit
-            if (currentTime - lastBulletHoleTime < bulletHoleCooldown)
-                return;
-
-
-            lastBulletHoleTime = currentTime;
-
-            col.collider.enabled = false;
-            //laskuri += Time.deltaTime;
-
-            //  if (laskuri >= muunnossykli)
-            //  {
-            //      laskuri = 0;
-
-            // Get world hit point
-            Vector2 hitPoint = col.GetContact(0).point;
-
-            //hitPoint = GetNearestWorldPoint(hitPoint, col.gameObject);
             /*
-            hitPoint = GetNearestWorldPoint(hitPoint, col.gameObject, col.rigidbody.velocity
-
-Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
-                */
-
             List<Vector2> lista = GetWorldPointList(hitPoint, col.gameObject, bulletholelistankoko, col.relativeVelocity, bulletholestep);
 
             foreach (Vector2 v in lista)
@@ -398,6 +386,48 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
                 }
 
             }
+
+            
+        }
+            */
+
+
+        public void OnCollisionEnter2D(Collision2D col)
+    {
+        if (!bulletholemode)
+        {
+            return;
+        }
+
+        if (col.collider.tag.Contains("ammus"))
+        {
+            float currentTime = Time.time;
+
+            // Rate limit
+            if (currentTime - lastBulletHoleTime < bulletHoleCooldown)
+                return;
+
+
+            lastBulletHoleTime = currentTime;
+
+            //col.collider.enabled = false;
+            //laskuri += Time.deltaTime;
+
+            //  if (laskuri >= muunnossykli)
+            //  {
+            //      laskuri = 0;
+
+            // Get world hit point
+            Vector2 hitPoint = col.GetContact(0).point;
+
+            //hitPoint = GetNearestWorldPoint(hitPoint, col.gameObject);
+            /*
+            hitPoint = GetNearestWorldPoint(hitPoint, col.gameObject, col.rigidbody.velocity
+
+Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
+                */
+
+            BulletHole(col.relativeVelocity, hitPoint,col.gameObject);
             //DrawBulletHole3(hitPoint, col.gameObject);
 
 
@@ -405,7 +435,61 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         }
     }
 
-    private List<Vector2> GetWorldPointList(Vector2 startPoint, GameObject go, int listSize, Vector2 velocity, float stepDistance = 0.1f)
+    public void BulletHole(Vector2 relvel, Vector2 hitPoint,GameObject go)
+    {
+        bool muuttuiko = NewMethod(relvel, hitPoint, go,1);
+
+        if (!muuttuiko)
+        {
+            Debug.Log("ei muutosta");
+            //RebuildCollider();
+           bool uus= NewMethod(relvel, hitPoint, go, 2);
+            if (!uus)
+            {
+                Debug.Log("ei uusikaan muutosta");
+            }
+        }
+    }
+
+    private bool NewMethod(Vector2 relvel, Vector2 hitPoint, GameObject go,int listakerroin)
+    {
+        bool muuttuiko = false;
+        List<Vector2> lista = GetWorldPointList(hitPoint, bulletholelistankoko*listakerroin, relvel, bulletholestep);
+
+        foreach (Vector2 v in lista)
+        {
+            Vector2 localPoint = transform.InverseTransformPoint(v);
+
+            // Convert local point to texture space
+            Sprite sprite = _spriteRenderers.sprite;
+            Rect rect = sprite.rect;
+            //Vector2 pivot = sprite.pivot;
+
+            // int texX = Mathf.RoundToInt((localPoint.x * sprite.pixelsPerUnit) + pivot.x);
+            // int texY = Mathf.RoundToInt((localPoint.y * sprite.pixelsPerUnit) + pivot.y);
+
+            Vector2 pivot = sprite.pivot / sprite.pixelsPerUnit;
+            Vector2 texCoord = (localPoint + pivot) * sprite.pixelsPerUnit;
+
+            // Draw bullet hole at texX, texY
+            // DrawBulletHole(texX, texY, col.gameObject.GetComponent<SpriteRenderer>().sprite.texture);
+            int texX = Mathf.RoundToInt(texCoord.x);
+            int texY = Mathf.RoundToInt(texCoord.y);
+
+
+            bool change = DrawBulletHole3(texX, texY, go);
+            if (change)
+            {
+                muuttuiko = true;
+                break;
+            }
+
+        }
+
+        return muuttuiko;
+    }
+
+    private List<Vector2> GetWorldPointList(Vector2 startPoint, int listSize, Vector2 velocity, float stepDistance = 0.1f)
     {
         List<Vector2> points = new List<Vector2>();
 
@@ -573,7 +657,7 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
     }
 
 
-    public static Vector2 GetWorldPositionFromPixelIndex(int index, int textureWidth, SpriteRenderer spriteRenderer)
+    public static Vector2 GetWorldPositionFromPixelIndexVanha(int index, int textureWidth, SpriteRenderer spriteRenderer)
     {
         // Get texX and texY from 1D index
         int texX = index % textureWidth;
@@ -596,39 +680,64 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         return transform.TransformPoint(localPosition);
     }
 
+    public static Vector2 GetWorldPositionFromPixelIndex(int index, int textureWidth, SpriteRenderer spriteRenderer)
+    {
+        int texX = index % textureWidth;
+        int texY = index / textureWidth;
+
+        Sprite sprite = spriteRenderer.sprite;
+        Transform transform = spriteRenderer.transform;
+
+        float ppu = sprite.pixelsPerUnit;
+        Rect rect = sprite.rect;         // Rect inside the texture
+        Vector2 pivot = sprite.pivot;    // Pivot in pixels
+
+        // Adjust texX and texY relative to the sprite's rect and pivot
+        float spriteX = texX - rect.x;
+        float spriteY = texY - rect.y;
+
+        // Offset from pivot
+        float localX = (spriteX - pivot.x) / ppu;
+        float localY = (spriteY - pivot.y) / ppu;
+
+        Vector2 localPos = new Vector2(localX, localY);
+
+        // Transform to world space
+        return transform.TransformPoint(localPos);
+    }
+
 
 
     private float lastSmokeTime = 0f;
 
     //public float travelDistance = 140f;
-    
 
-    bool DrawBulletHole3(int centerX, int centerY, GameObject go)
+
+
+    bool DrawBulletHole3Eitoimi(int centerX, int centerY, GameObject go, float bulletHoleWorldRadius = 5.0f)
     {
+        //bulletHoleWorldRadius laske spriten worlg doosta
+        SpriteRenderer spriteRenderer = go.GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return false;
 
-        float leveys = GetSpriteScreenWidth(go, Camera.main);
-        //int holeRadius =(int)( leveys / 2.0f);
-        int holeRadius = (int)(leveys * leveydenkertoma);
+        Texture2D maintekstuuri = spriteRenderer.sprite.texture;
+        if (maintekstuuri == null) return false;
 
-        /*
-        // Estimate size from GameObject scale (e.g., bullet size)
-        float avgScale = (go.transform.lossyScale.x + go.transform.lossyScale.y) * 0.5f;
-        float worldRadius = avgScale * 0.5f; // in world units
-
-        // Convert to texture-space pixels
-        float pixelsPerUnit = _spriteRenderers.sprite.pixelsPerUnit;
-
-        float scaleFactor = 0.1f; // tweak this to get good hole size (0.1ñ0.3)
-        int holeRadius = Mathf.RoundToInt(worldRadius * pixelsPerUnit * scaleFactor);
-        holeRadius = Mathf.Clamp(holeRadius, 1, 16); // optional safety clamp
-        */
-
-        Color32[] pixels = maintekstuuri.GetPixels32();
         int width = maintekstuuri.width;
         int height = maintekstuuri.height;
 
+        // Get pixels from texture once
+        Color32[] pixels = maintekstuuri.GetPixels32();
+
+        // Calculate hole radius in pixels based on sprite pixelsPerUnit and desired world radius
+        float pixelsPerUnit = spriteRenderer.sprite.pixelsPerUnit;
+        int holeRadius = Mathf.RoundToInt(bulletHoleWorldRadius * pixelsPerUnit);
+
+        holeRadius = Mathf.Clamp(holeRadius, 1, 50); // Clamp to reasonable range
+
         bool changed = false;
 
+        // Loop over circle area around center pixel
         for (int y = -holeRadius; y <= holeRadius; y++)
         {
             for (int x = -holeRadius; x <= holeRadius; x++)
@@ -643,6 +752,153 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
                         int index = texY * width + texX;
                         Color32 c = pixels[index];
 
+                        // Clear only non-transparent pixels
+                        if (c.a != 0)
+                        {
+                            pixels[index] = new Color32(0, 0, 0, 0);
+                            changed = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (changed)
+        {
+            // Apply changed pixels to texture
+            maintekstuuri.SetPixels32(pixels);
+            maintekstuuri.Apply();
+
+            // Your custom method to update sprite visuals/physics
+            TeeMainTekstuuriVaihto();
+
+            // Spawn smoke effect at bullet hole center in world space (once)
+            if (savu != null && Time.time - lastSmokeTime >= smokeCooldown)
+            {
+                Vector2 bulletWorldPos = GetWorldPositionFromPixelIndex(centerY * width + centerX, width, spriteRenderer);
+                GameObject smokeInstance = Instantiate(savu, bulletWorldPos, Quaternion.identity);
+                Destroy(smokeInstance, savunkesto);
+                lastSmokeTime = Time.time;
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+    bool DrawBulletHole3(int centerX, int centerY, GameObject go)
+    {
+        //ei hyv‰ laske jotenkin colliderista
+        //tai sitten siit‰ mik‰ on prosentuaalisesti x suunnassa leveys kuvasta
+        //t‰ll‰ kerrotaan sitten lopulta
+        /*
+        float leveys = GetSpriteScreenWidth(go, Camera.main);
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+        if (sr == null || sr.sprite == null || camera == null)
+            return 0f;
+        */
+        // Get sprite bounds in world space
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+        Bounds bounds = sr.bounds;
+        float korkeus = bounds.size.y * bounds.size.x;
+
+
+
+        /*
+        Vector3 worldLeft = new Vector3(bounds.min.x, bounds.center.y, 0);
+        Vector3 worldRight = new Vector3(bounds.max.x, bounds.center.y, 0);
+
+        // Convert world points to screen space
+        Vector3 screenLeft = Camera.main.WorldToScreenPoint(worldLeft);
+        Vector3 screenRight = Camera.main.WorldToScreenPoint(worldRight);
+
+        float screenWidth = Mathf.Abs(screenRight.x - screenLeft.x);
+
+
+        float ppu = go.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+
+        float spritewidthinworld=leveys*
+            */
+        /*
+        leveys = 0.0f;
+        if (Mathf.Approximately(leveys, 0.0f))
+        {
+            float maxWidth = 0f;
+
+            Collider2D[] colliders = go.GetComponentsInParent<Collider2D>();
+            foreach (Collider2D col in colliders)
+            {
+
+               
+                float worldWidth = col.bounds.size.x; // Width in world units
+                
+
+                if (worldWidth > maxWidth)
+                    maxWidth = worldWidth;
+
+
+            }
+
+            leveys = maxWidth;
+        }
+        */
+
+
+        //int holeRadius =(int)( leveys / 2.0f);
+        //     int holeRadius = (int)(korkeus * leveydenkertoma);
+        int holeRadius = Mathf.RoundToInt(korkeus * radiuskertoma);
+
+        holeRadius=Math.Clamp(holeRadius, bulletholenradiusminimi, bulletholenradiusmaksimi);
+
+        /*
+            public float bulletholenleveydenminimi = 10;
+    public float bulletholenleveydenmaksimi = 100;
+    */
+
+
+    /*
+    // Estimate size from GameObject scale (e.g., bullet size)
+    float avgScale = (go.transform.lossyScale.x + go.transform.lossyScale.y) * 0.5f;
+    float worldRadius = avgScale * 0.5f; // in world units
+
+    // Convert to texture-space pixels
+    float pixelsPerUnit = _spriteRenderers.sprite.pixelsPerUnit;
+
+    float scaleFactor = 0.1f; // tweak this to get good hole size (0.1ñ0.3)
+    int holeRadius = Mathf.RoundToInt(worldRadius * pixelsPerUnit * scaleFactor);
+    holeRadius = Mathf.Clamp(holeRadius, 1, 16); // optional safety clamp
+    */
+
+    Color32[] pixels = maintekstuuri.GetPixels32();
+        int width = maintekstuuri.width;
+        int height = maintekstuuri.height;
+
+        bool changed = false;
+        //t‰ll‰, mutta hidas?
+//        Vector2 vv = GetWorldPositionFromPixelIndex(index, width, GetComponent<SpriteRenderer>());
+
+
+        for (int y = -holeRadius; y <= holeRadius; y++)
+        {
+            for (int x = -holeRadius; x <= holeRadius; x++)
+            {
+                if (x * x + y * y <= holeRadius * holeRadius)
+                {
+                    int texX = centerX + x;
+                    int texY = centerY + y;
+
+                    if (texX >= 0 && texX < width && texY >= 0 && texY < height)
+                    {
+                        int index = texY * width + texX;
+                        Color32 c = pixels[index];
+                        Vector2Int pixelCoord = new Vector2Int(texX, texY);
+
+  
                         // Only clear non-transparent pixels
                         if (c.a != 0 || c.r != 0 || c.g != 0 || c.b != 0)
                         {
@@ -740,7 +996,10 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
     public bool SplitDisconnectedRegions()
     {
-
+        if (!jakaudutarvittaessa)
+        {
+            return false;
+        }
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Sprite originalSprite = sr.sprite;
@@ -774,7 +1033,7 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
         if (regions.Count <= 1)
         {
-            Debug.Log("No disconnected regions found.");
+         //   Debug.Log("No disconnected regions found.");
             return false;
         }
         bool first = true;

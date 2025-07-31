@@ -74,6 +74,8 @@ public class GameManager : BaseController
     void Awake()
     {
         Application.targetFrameRate = 60;//t‰rke‰‰‰
+
+        //Application.targetFrameRate = Screen.currentResolution.refreshRateRatio.value;
         if (Instance == null)
         {
             Instance = this;

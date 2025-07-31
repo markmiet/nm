@@ -13,7 +13,7 @@ public class HitCounter : BaseController
     public GameObject osumanSavu;
     public float osumanSavunKesto = 0.5f;
 
-    public void RegisterHit()
+    public bool RegisterHit()
     {
         hitCount++;
         if (hitCount >= hitThreshold)
@@ -22,12 +22,13 @@ public class HitCounter : BaseController
              GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
             Destroy(gameObject);
-      
+            return true;
         }
+        return false;
     }
-    public void RegisterHit(Vector2 contactPoint)
+    public bool RegisterHit(Vector2 contactPoint)
     {
-        RegisterHit();
+        bool ret=RegisterHit();
         if (teeExplosion && explosion != null)
         {
             GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
@@ -39,6 +40,7 @@ public class HitCounter : BaseController
             GameObject instanssi2 = Instantiate(osumanSavu, contactPoint, Quaternion.identity);
             Destroy(instanssi2, osumanSavunKesto);
         }
+        return ret;
 
     }
     public void Update()
@@ -48,7 +50,7 @@ public class HitCounter : BaseController
     }
 
 
-    private void RajaytaChildrenit()
+    public void RajaytaChildrenit()
     {
         //if (explosion!=null)
         // {

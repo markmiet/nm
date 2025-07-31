@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LaserController : BaseController
 {
+    public Color cloneColor;
     public int laserkaytossamontakotuhotaan = 3;
     private int tuhottujenmaara;
     //eli ei rigidbodya ollenkaan joo
@@ -16,6 +17,8 @@ public class LaserController : BaseController
     public GameObject osumaExplosion;
 
     // Start is called before the first frame update
+
+    public Vector2 alkuvelocity = Vector2.zero;
 
     public void SetOption(GameObject p_option)
     {
@@ -42,11 +45,34 @@ public class LaserController : BaseController
 
         if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
         {
-            Destroy(gameObject);
+            if (!olenklooni)
+            {
+                lisaaAluksenLuomi();
+                GameObject klooni = Instantiate(gameObject);
+                klooni.GetComponent<LaserController>().SetAluksenluoma(aluksenluoma);
+                klooni.GetComponent<LaserController>().SetOption(option);
+
+                klooni.GetComponent<LaserController>().olenklooni = true;
+
+                klooni.GetComponent<Rigidbody2D>().velocity = alkuvelocity;
+                SpriteRenderer sr = klooni.GetComponent<SpriteRenderer>();
+
+
+               // Color originalColor = sr.color;
+
+                // Set alpha to half
+                //originalColor.a *= 0.1f;
+
+                // Apply new color
+                sr.color = cloneColor;
+
+
+                //vaihdetaanko klooni puolta pienemmäksi :) hihii tai väriä sehän on cooli tai jotain hih
+            }
+            Destroy(gameObject);   
         }
-
-
     }
+    public bool olenklooni = false;
     void OnBecameInvisible()
     {
         //Debug.Log ("OnBecameInvisible");
@@ -60,9 +86,15 @@ public class LaserController : BaseController
     // Update is called once per frame
     void Update()
     {
-        float delta = Time.deltaTime;
-        transform.position += new Vector3(delta * nopeusx, 0, 0f);
-        
+        if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+      //  float delta = Time.deltaTime;
+    //    transform.position += new Vector3(delta * nopeusx, 0, 0f);
+
         if (OnkoKameranOikeallaPuolella(gameObject))
         {
             Destroy(gameObject);
@@ -79,22 +111,43 @@ public class LaserController : BaseController
     //@todoooo vaihda ontriggeriksi
 
 
-    private HashSet<Collider2D> alreadyTriggered = new HashSet<Collider2D>();
+    private HashSet<Collision2D> alreadyTriggered = new HashSet<Collision2D>();
     private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
-    public void OnTriggerEnter2D(Collider2D col)
+
+    private void DestroyKaikki(GameObject go)
+    {
+        /*
+        if (go.transform.parent!=null)
+        {
+            Destroy(go.transform.parent.gameObject);
+        }
+        else
+        {
+            Destroy(go);
+        }
+        */
+    }
+
+
+    void OnCollisionEnter2D(Collision2D col)
     {
 
+        if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-
-        if (col.tag.Contains("alustag"))
+        if (col.collider.tag.Contains("alustag"))
         {
             return;
         }
 
+        Vector2 contactPoint = col.GetContact(0).point;
 
-        Vector2 contactPoint = col.ClosestPoint(transform.position);
+        // Vector2 contactPoint = col.ClosestPoint(transform.position);
 
-        if (col.tag.Contains("tiilivihollinen") || col.tag.Contains("eituhvih"))
+        if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("eituhvih"))
         {
             tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
             TeeOsumaExplosion(contactPoint);
@@ -103,18 +156,20 @@ public class LaserController : BaseController
 
         }
 
-        else if (col.tag.Contains("vihollinen") && col.tag.Contains("explode"))
+        else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
+
             //tormattyviholliseen = true;
             //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
             TeeOsumaExplosion(contactPoint);
 
+            LisaaTuhottujenMaaraa(col.gameObject);
 
 
             if (col.gameObject != null)
             {
-                if (alreadyTriggered.Contains(col))
-                    return;
+                //             if (alreadyTriggered.Contains(col))
+                //               return;
 
                 alreadyTriggered.Add(col);
 
@@ -128,7 +183,7 @@ public class LaserController : BaseController
                     {
                         if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
                         {
-                            return;
+                            //                     return;
                         }
                         parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
                     }
@@ -138,8 +193,13 @@ public class LaserController : BaseController
 
                 if (hitcounter != null)
                 {
-
-                    hitcounter.RegisterHit(contactPoint);
+                    //LisaaTuhottujenMaaraa(col.gameObject);
+                    bool tuhoutuiko = hitcounter.RegisterHit(contactPoint);
+                    if (tuhoutuiko)
+                    {
+                        IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
+                        DestroyKaikki(col.gameObject);
+                    }
                 }
                 else
                 {
@@ -147,8 +207,9 @@ public class LaserController : BaseController
                     ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
                     if (childColliderReporter != null)
                     {
-                        //LisaaTuhottujenMaaraa(col.gameObject);
-                        tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                        //  LisaaTuhottujenMaaraa(col.gameObject);
+                        //tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+
                         childColliderReporter.RegisterHit(contactPoint);
 
                     }
@@ -173,10 +234,12 @@ public class LaserController : BaseController
                                     ss.enabled = false;
                                 }
                                 //col.enabled = false;
+                                IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
+
                             }
 
                             //tuhottujenVihollistenmaara++;
-                            tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                            //    tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
                             //LisaaTuhottujenMaaraa(col.gameObject);
 
 
@@ -193,8 +256,9 @@ public class LaserController : BaseController
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
                                 }
                                 //tuhottujenVihollistenmaara++;
-                                tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                                //      tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
                                 //LisaaTuhottujenMaaraa(col.gameObject);
+                                IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
 
                             }
                             else
@@ -213,13 +277,14 @@ public class LaserController : BaseController
                                     {
                                         ss.enabled = false;
                                     }
+                                    IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
 
-                                    LisaaTuhottujenMaaraa(col.gameObject);
+                                    //        LisaaTuhottujenMaaraa(col.gameObject);
 
                                 }
                                 else
                                 {
-                                    Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.tag);
+                                    //Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.tag);
                                     //makitavihollinen vasen
 
                                     IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
@@ -238,6 +303,8 @@ public class LaserController : BaseController
 
                                         }
                                         parentin.Explode();
+                                        IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
+
                                         GameManager.Instance.kasvataHighScorea(col.gameObject);
 
                                     }
@@ -264,7 +331,7 @@ public class LaserController : BaseController
                                     }
 
 
-                                    LisaaTuhottujenMaaraa(col.gameObject);
+                                    //      LisaaTuhottujenMaaraa(col.gameObject);
 
                                 }
                             }
@@ -286,6 +353,214 @@ public class LaserController : BaseController
 
     }
 
+
+
+    /*
+        public void OnTriggerEnter2D(Collider2D col)
+        {
+
+
+
+            if (col.tag.Contains("alustag"))
+            {
+                return;
+            }
+
+
+            Vector2 contactPoint = col.ClosestPoint(transform.position);
+
+            if (col.tag.Contains("tiilivihollinen") || col.tag.Contains("eituhvih"))
+            {
+                tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                TeeOsumaExplosion(contactPoint);
+
+                Explode();
+
+            }
+
+            else if (col.tag.Contains("vihollinen") && col.tag.Contains("explode"))
+            {
+                //tormattyviholliseen = true;
+                //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
+                TeeOsumaExplosion(contactPoint);
+
+
+
+                if (col.gameObject != null)
+                {
+                    if (alreadyTriggered.Contains(col))
+                        return;
+
+                    alreadyTriggered.Add(col);
+
+
+
+
+                    if (col.gameObject.transform.parent != null)
+                    {
+                        HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
+                        if (hc == null)
+                        {
+                            if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
+                            {
+                                return;
+                            }
+                            parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
+                        }
+                    }
+
+                    HitCounter hitcounter = col.gameObject.GetComponent<HitCounter>();
+
+                    if (hitcounter != null)
+                    {
+
+                        hitcounter.RegisterHit(contactPoint);
+                    }
+                    else
+                    {
+
+                        ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
+                        if (childColliderReporter != null)
+                        {
+                            //LisaaTuhottujenMaaraa(col.gameObject);
+                            tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                            childColliderReporter.RegisterHit(contactPoint);
+
+                        }
+                        else
+                        {
+
+                            SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
+                            if (sc != null)
+                            {
+                                GetComponent<Collider2D>().enabled = false;
+
+
+                                //Vector2 contactPoint = col.GetContact(0).point;
+                                bool rajahtiko = sc.Explode(contactPoint);
+                                if (rajahtiko)
+                                {
+                                    GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                    Collider2D ss =
+                                    col.gameObject.GetComponent<Collider2D>();
+                                    if (ss != null)
+                                    {
+                                        ss.enabled = false;
+                                    }
+                                    //col.enabled = false;
+                                }
+
+                                //tuhottujenVihollistenmaara++;
+                                tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                                //LisaaTuhottujenMaaraa(col.gameObject);
+
+
+                            }
+                            else
+                            {
+
+                                IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
+                                if (damageMahdollinen != null)
+                                {
+                                    bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, contactPoint);
+                                    if (rajahtiko)
+                                    {
+                                        GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                    }
+                                    //tuhottujenVihollistenmaara++;
+                                    tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
+                                    //LisaaTuhottujenMaaraa(col.gameObject);
+
+                                }
+                                else
+                                {
+
+                                    IExplodable o =
+                    col.gameObject.GetComponent<IExplodable>();
+                                    if (o != null)
+                                    {
+                                        o.Explode();
+                                        //tuhottujenVihollistenmaara++;
+                                        GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                        Collider2D ss =
+                                    col.gameObject.GetComponent<Collider2D>();
+                                        if (ss != null)
+                                        {
+                                            ss.enabled = false;
+                                        }
+
+                                        LisaaTuhottujenMaaraa(col.gameObject);
+
+                                    }
+                                    else
+                                    {
+                                        Debug.Log("vihollinen ja explode mutta ei ookkaan " + col.tag);
+                                        //makitavihollinen vasen
+
+                                        IExplodable parentin = col.gameObject.GetComponentInParent<IExplodable>();
+                                        if (parentin != null)
+                                        {
+                                            if (col.gameObject.transform.parent != null)
+                                            {
+                                                Collider2D[] childCollid = col.gameObject.transform.parent.GetComponentsInChildren<Collider2D>();
+                                                if (childCollid != null)
+                                                {
+                                                    foreach (Collider2D m in childCollid)
+                                                    {
+                                                        m.enabled = false;
+                                                    }
+                                                }
+
+                                            }
+                                            parentin.Explode();
+                                            GameManager.Instance.kasvataHighScorea(col.gameObject);
+
+                                        }
+                                        Collider2D ssparent = col.gameObject.GetComponentInParent<Collider2D>();
+                                        if (ssparent != null)
+                                        {
+                                            ssparent.enabled = false;
+                                        }
+
+                                        Collider2D ss =
+                                            col.gameObject.GetComponent<Collider2D>();
+                                        if (ss != null)
+                                        {
+                                            ss.enabled = false;
+                                        }
+
+                                        Collider2D[] childCollid2 = col.gameObject.transform.GetComponentsInChildren<Collider2D>();
+                                        if (childCollid2 != null)
+                                        {
+                                            foreach (Collider2D m in childCollid2)
+                                            {
+                                                m.enabled = false;
+                                            }
+                                        }
+
+
+                                        LisaaTuhottujenMaaraa(col.gameObject);
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //	Debug.Log("gameobjekcti null");
+
+                }
+                Explode();
+            }
+
+            //Explode(0.0f);
+
+
+
+        }
+    */
     /**
 	void OnCollisionEnter2D(Collision2D col)
 	{
@@ -376,21 +651,26 @@ public class LaserController : BaseController
     private int tuhottujenVihollistenmaara = 0;
     private void LisaaTuhottujenMaaraa(GameObject go)
     {
-        if (!tuhotut.Contains(go))
-        {
-            tuhottujenVihollistenmaara++;
-            tuhotut.Add(go);
-        }
+        //     if (!tuhotut.Contains(go))
+        //   {
+        tuhottujenVihollistenmaara++;
+        tuhotut.Add(go);
+        // }
 
 
     }
 
     public void TeeOsumaExplosion(Vector2 contactPoint)
     {
-               if (osumaExplosion!=null)
+        if (osumaExplosion != null)
         {
-            GameObject explosionIns = Instantiate(osumaExplosion, contactPoint, Quaternion.identity);
-            Destroy(explosionIns, 1.0f);
+            //GameObject explosionIns = Instantiate(osumaExplosion, contactPoint, Quaternion.identity);
+
+           GameObject explosionIns = ObjectPoolManager.Instance.GetFromPool(osumaExplosion, contactPoint, Quaternion.identity);
+
+           ObjectPoolManager.Instance.ReturnToPool(osumaExplosion,explosionIns,1.0f);
+
+            //Destroy(explosionIns, 1.0f);
         }
     }
 
@@ -398,10 +678,13 @@ public class LaserController : BaseController
     public GameObject alus;
 
     public GameObject option;
-    public void OnDestroy()
+    void OnDestroy()
     {
         //System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
         //Debug.Log(stackTrace.ToString());
+
+        Debug.Log("D olen klooni="+olenklooni);
+
 
         if (aluksenluoma && alus != null)
         {
@@ -423,6 +706,29 @@ public class LaserController : BaseController
 
         }
     }
+
+    private void lisaaAluksenLuomi()
+    {
+        if (aluksenluoma && alus != null)
+        {
+            //aluscontrollerin 
+            alus.GetComponent<AlusController>().LisaaaluksenluomienElossaOlevienAmmustenMaaraa();
+        }
+        else if (option != null)
+        {
+            if (option.GetComponent<OptionController>() != null)
+            {
+                option.GetComponent<OptionController>().LisaaaOptionLuomienElossaOlevienAmmustenMaaraa();
+
+            }
+            else
+            {
+                Debug.Log("mitaa");
+            }
+        }
+    }
+
+
 
     /*
     private void OnCollisionEnter2D(Collision2D col)

@@ -81,6 +81,11 @@ public class AmmusController : BaseController, IExplodable
 
     public void Update()
     {
+        if (tormattyviholliseen)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         if (OnkoKameranOikeallaPuolella(gameObject))
         {
@@ -154,14 +159,15 @@ public class AmmusController : BaseController, IExplodable
         {
             return;
         }
-
+        Vector2 contactPoint = col.GetContact(0).point;
         if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("eituhvih"))
         {
-            Explode();
+            Explode(contactPoint);
         }
 
         else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
+            IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
             tormattyviholliseen = true;
             //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
 
@@ -185,7 +191,7 @@ public class AmmusController : BaseController, IExplodable
                 if (hitcounter != null)
                 {
 
-                    Vector2 contactPoint = col.GetContact(0).point;
+                   // Vector2 contactPoint = col.GetContact(0).point;
                     hitcounter.RegisterHit(contactPoint);
                 }
                 else
@@ -194,7 +200,7 @@ public class AmmusController : BaseController, IExplodable
                     if (childColliderReporter != null)
                     {
 
-                        Vector2 contactPoint = col.GetContact(0).point;
+                     
                         childColliderReporter.RegisterHit(contactPoint);
 
                     }
@@ -206,7 +212,7 @@ public class AmmusController : BaseController, IExplodable
                         {
                             //col.collider.enabled = false;
                             GetComponent<Collider2D>().enabled = false;
-                            Vector2 contactPoint = col.GetContact(0).point;
+                           // Vector2 contactPoint = col.GetContact(0).point;
 
                             bool rajahtiko = sc.Explode(contactPoint);
                             if (rajahtiko)
@@ -228,7 +234,7 @@ public class AmmusController : BaseController, IExplodable
                             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
                             if (damageMahdollinen != null)
                             {
-                                Vector2 contactPoint = col.GetContact(0).point;
+                               // Vector2 contactPoint = col.GetContact(0).point;
                                 bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, contactPoint);
                                 if (rajahtiko)
                                 {
@@ -311,7 +317,7 @@ public class AmmusController : BaseController, IExplodable
                 //	Debug.Log("gameobjekcti null");
 
             }
-            Explode();
+            Explode(contactPoint);
         }
 
         //Explode(0.0f);
@@ -331,18 +337,25 @@ public class AmmusController : BaseController, IExplodable
 
     public void Explode()
     {
-        //GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
-        //	Destroy(explosionIns, 1.0f);
+        Explode(transform.position);
+    }
+    public void Explode(Vector2 contanctpoint)
+    {
+        if (explosion!=null)
+        {
+            GameObject explosionIns = Instantiate(explosion, contanctpoint, Quaternion.identity);
+            Destroy(explosionIns, rajaytyskestoaika);
+        }
+        /*
         if (rajaytaspriteexplodenjalkeenpistatamatrueksi)
         {
             RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
         }
+        */
 
         //ammuksen massa oli 0.06
 
-            Destroy(gameObject);
-
-
+         Destroy(gameObject);
 
     }
 

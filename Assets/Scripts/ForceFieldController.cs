@@ -154,6 +154,10 @@ public class ForceFieldController : MonoBehaviour
     private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
 
     public float damagemaarajokaaiheutataan = 10.0f;
+
+    //vaihda tämäkin normicolladeriksi
+    //     IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
+    //pakko olla triggeri?
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag.Contains("eituhvih"))
@@ -161,8 +165,37 @@ public class ForceFieldController : MonoBehaviour
 
             //return;
         }
+        Vector2 thisPosition = transform.position;
+        Vector2 otherPosition = col.transform.position;
 
+        Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
+        //ei ole tarkka
+        //kysymys kuuluu miksi trigger miksei muu
 
+        /*
+        if (col.tag.Contains("tiili") && col.gameObject.GetComponent<VaihtoController>()!=null)
+        {
+            VaihtoController v = col.gameObject.GetComponent<VaihtoController>();
+            if (v.bulletholemode)
+            {
+                
+                Rigidbody2D myRb = GetComponentInParent<Rigidbody2D>();
+                Rigidbody2D otherRb = col.attachedRigidbody;
+
+                Vector2 myVelocity = myRb ? myRb.velocity : Vector2.zero;
+                Vector2 otherVelocity = otherRb ? otherRb.velocity : Vector2.zero;
+
+                Vector2 relativeVelocity = myVelocity - otherVelocity;
+
+                //public void BulletHole(Vector2 relvel, Vector2 hitPoint, GameObject go)
+                Debug.Log("estim=" + estimatedContactPoint);
+                v.BulletHole(relativeVelocity, estimatedContactPoint, gameObject);
+
+            }
+        }
+
+        else 
+        */
         if (col.tag.Contains("vihollinen") && !col.tag.Contains("tiili"))
         {
             if (alreadyTriggered.Contains(col))
@@ -174,10 +207,7 @@ public class ForceFieldController : MonoBehaviour
             IDamagedable damageMahdollinen = col.gameObject.GetComponent<IDamagedable>();
             if (damageMahdollinen != null)
             {
-                Vector2 thisPosition = transform.position;
-                Vector2 otherPosition = col.transform.position;
 
-                Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
                 bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, estimatedContactPoint);
                 if (rajahtiko)
                 {
@@ -210,10 +240,12 @@ public class ForceFieldController : MonoBehaviour
             if (hitcounter != null)
             {
                 col.enabled = false;
+                /*
                 Vector2 thisPosition = transform.position;
                 Vector2 otherPosition = col.transform.position;
 
                 Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
+                */
 
                 int maara = hitcounter.hitThreshold;
                 for (int i = 0; i < maara; i++)
@@ -231,9 +263,11 @@ public class ForceFieldController : MonoBehaviour
             if (childColliderReporter != null)
             {
                 //col.enabled = false;
+                /*
                 Vector2 thisPosition = transform.position;
                 Vector2 otherPosition = col.transform.position;
                 Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
+                */
                 //näin saadaan räjähtämään
                 int maara = childColliderReporter.PalautaVaadittuHittienMaara();//tämä kuluttaa aina sen verran mitä vaaditaan ko. objekti tuhoamiseen
                 for (int i=0;i<maara;i++)
