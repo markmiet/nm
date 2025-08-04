@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 {
+    [SerializeField] private float blinkSpeed = 2f;
+    [SerializeField] private float intensityMin = 0.5f;
+    [SerializeField] private float intensityMax = 1.5f;
+
+    private Material _material;
+    private Color _baseColor;
+
+    private static readonly int BaseColorID = Shader.PropertyToID("_TintColor"); // URP Sprite Lit uses _BaseColor
+
+
+
+    //blinkit
 
     public GameObject prefap;
 
@@ -28,6 +40,22 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
                 transform.rotation = Quaternion.Euler(0f, 0f, angle);
             }
         }
+
+        // Clone the material to avoid affecting shared one
+        _material = GetComponent<SpriteRenderer>().material;
+
+        if (_material.HasProperty(BaseColorID))
+        {
+            // Color tint = _material.GetColor("_TintColor");
+            Debug.Log("Material does have _TintColor property");
+        
+        }
+        else
+        {
+            Debug.Log("Material does not have _TintColor property");
+        }
+
+        _baseColor = _material.GetColor(BaseColorID);
     }
     /*
 	private bool VihollinenCollideIgnore()
@@ -70,6 +98,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
 //        Tuhoa(prefap,gameObject, speedjonkaalletuhotaan);
 
+        
         if (prefap != null)
         {
             bool tuhoutui=TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(prefap, gameObject, maksimiaikaMinkaVoiOllaHengissa, speedjonkaalletuhotaan);
@@ -80,6 +109,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
         {
             Tuhoa(gameObject, speedjonkaalletuhotaan);
         }
+        
 
         /*
         if (Time.time >= nextCheckTime)
@@ -109,6 +139,15 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
                 transform.rotation = Quaternion.Euler(0f, 0f, angle);
             }
         }
+        //blink osuus
+
+        float t = Mathf.PingPong(Time.time * blinkSpeed, 1f);
+        float intensity = Mathf.Lerp(intensityMin, intensityMax, t);
+
+        // Multiply the original color by the blinking intensity
+        Color blinkingColor = _baseColor * intensity;
+
+        _material.SetColor(BaseColorID, blinkingColor);
     }
 
 
@@ -127,6 +166,12 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (col.collider.tag.Contains("vihollinen") && !col.collider.tag.Contains("tiili"))
+        {
+            Debug.Log("viholliseen osui");
+        }
+
+
         /*
 		//      Debug.Log("tagi=" + col.collider.tag);
 		if (col.collider.CompareTag("alustag")) {
@@ -196,15 +241,15 @@ col.gameObject.GetComponent<IDamagedable>();
             //Debug.Log ("dame over");
             //just continue
             //Destroy(gameObject);
-            if (/*col.collider.gameObject!=creator*/ !OnkoSamaaKokonaisuutta(col.collider.gameObject, creator))
-            {
-                Explode();
-            }
-
+           // if (/*col.collider.gameObject!=creator*/ !OnkoSamaaKokonaisuutta(col.collider.gameObject, creator))
+           // {
+           //     Explode();
+           // }
+            Explode();
         }
     }
 
-
+    /*
     private bool OnkoSamaaKokonaisuutta(GameObject g1, GameObject g2)
     {
         if (g1 == g2)
@@ -218,7 +263,7 @@ col.gameObject.GetComponent<IDamagedable>();
         bool ret = g1.transform.root == g2.transform.root;
         return ret;
     }
-
+    */
 
     public float alivetimeRajahdyksenJalkeen = 0.5f;
 

@@ -99,6 +99,9 @@ public class TankkiPiippuController : ChildColliderReporter
         }
 
     }
+
+    public float ampumisenjalkeinaikajolloinkulmaaeimuuteta = 1.0f;
+ //   private float viimeksiammuttu = 0.0f;
     void Update()
     {
         if (spaceship == null) return;
@@ -113,6 +116,17 @@ public class TankkiPiippuController : ChildColliderReporter
         {
             return;
         }
+
+
+ 
+
+        Vector2 ve = palautaAmmukselleVelocityVectorKaytaPiippua(spaceship, ammusVoima, piipunpaaJohonGameObjectInstantioidaan.transform.position, piipunToinenPaa.transform.position);
+        //Vector2 ve = (piipunpaaJohonGameObjectInstantioidaan.transform.position - piipunToinenPaa.transform.position).normalized;
+
+        Vector3 end = piipunpaaJohonGameObjectInstantioidaan.transform.position + (Vector3)ve;
+        Debug.DrawLine(piipunpaaJohonGameObjectInstantioidaan.transform.position,
+
+            end, Color.red, 0f, false);
 
         // bool onko = OnkoPisteenJaAluksenValillaTilltaTaiVihollista(kohtaMissaAmmusLaukaistaan.transform.position, tankinAmmus);
 
@@ -224,6 +238,10 @@ public class TankkiPiippuController : ChildColliderReporter
             Vector2 ve = palautaAmmukselleVelocityVectorKaytaPiippua(spaceship, ammusVoima, piipunpaaJohonGameObjectInstantioidaan.transform.position, piipunToinenPaa.transform.position);
             //Vector2 ve = (piipunpaaJohonGameObjectInstantioidaan.transform.position - piipunToinenPaa.transform.position).normalized;
 
+            Vector3 end = piipunpaaJohonGameObjectInstantioidaan.transform.position + (Vector3)ve;
+            Debug.DrawLine(piipunpaaJohonGameObjectInstantioidaan.transform.position,
+                
+                end, Color.red, 0f, false);
 
             if (ammusrandomiprossa!=0.0f)
             {
@@ -233,7 +251,7 @@ public class TankkiPiippuController : ChildColliderReporter
 
             GameObject instanssi = ObjectPoolManager.Instance.GetFromPool(tankinAmmus, piipunpaaJohonGameObjectInstantioidaan.transform.position, Quaternion.identity);
 
-
+            IgnoraaCollisiotVihollistenValilla(instanssi, gameObject);
             MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
             if (m != null)
             {

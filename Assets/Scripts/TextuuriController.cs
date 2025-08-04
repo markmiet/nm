@@ -105,24 +105,28 @@ public class TextuuriController : BaseController
 
     void Start()
     {
-        _spriteRenderers = GetComponentsInParent<SpriteRenderer>();
-        _materials = new Material[_spriteRenderers.Length];
+ 
+            _spriteRenderers = GetComponentsInParent<SpriteRenderer>();
+            _materials = new Material[_spriteRenderers.Length];
 
-        for (int i = 0; i < _spriteRenderers.Length; i++)
-        {
-            // Clone materials to avoid shared material side effects
-            _spriteRenderers[i].material = new Material(konttimateriaali);
-            _materials[i] = _spriteRenderers[i].material;
-        }
+            for (int i = 0; i < _spriteRenderers.Length; i++)
+            {
+                // Clone materials to avoid shared material side effects
+                _spriteRenderers[i].material = new Material(konttimateriaali);
+                _materials[i] = _spriteRenderers[i].material;
+            }
 
 
 
-        //GetComponent<SpriteRenderer>().sprite = overlayTexture;
-        originellitekstuuri = GetComponent<SpriteRenderer>().sprite.texture;
-        //bool graffikaytossa = GraffitiKaytossa();
-        // teeMateriaaliVaihto();
-        AsetaArvot();
-        Muunto();
+            //GetComponent<SpriteRenderer>().sprite = overlayTexture;
+            originellitekstuuri = GetComponent<SpriteRenderer>().sprite.texture;
+            //bool graffikaytossa = GraffitiKaytossa();
+            // teeMateriaaliVaihto();
+            AsetaArvot();
+            Muunto();
+ 
+
+
 
 
     }
@@ -174,7 +178,7 @@ public class TextuuriController : BaseController
         }
 
 
-        if (muunnaUpdatessa)
+            if (muunnaUpdatessa)
         {
 
             laskuri += Time.deltaTime;

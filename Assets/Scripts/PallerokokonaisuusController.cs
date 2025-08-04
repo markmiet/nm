@@ -121,7 +121,7 @@ public class PallerokokonaisuusController : BaseController
         }
         else
         {
-            Debug.Log("muuta");
+          //  Debug.Log("muuta");
         }
     }
 

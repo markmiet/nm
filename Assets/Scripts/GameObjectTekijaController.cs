@@ -7,7 +7,10 @@ public class GameObjectTekijaController : BaseController
     // Start is called before the first frame update
     void Start()
     {
-        
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color c = sr.color;
+        c.a = 0f; // alpha = 0 (fully transparent)
+        sr.color = Color.clear;
     }
     public GameObject gameObjecktiJotaEtsitaan;
     private bool suoritettu = false;
@@ -31,6 +34,7 @@ public class GameObjectTekijaController : BaseController
                 {
                     Instantiate(gameObjecktiJotaEtsitaan, transform.position, Quaternion.identity);
                 }
+                Destroy(gameObject);
             }
         }
     }

@@ -6,16 +6,21 @@ public class FPSDisplay : MonoBehaviour
     GUIStyle style;
     Rect rect;
 
-    public int fontsize = 22;
+    public int fontsize = 18;
     void Start()
     {
-        // Define text style
         style = new GUIStyle();
         style.fontSize = fontsize;
         style.normal.textColor = Color.white;
 
-        // Define text position (top-left corner)
-        rect = new Rect(100 , 100, 200, 40);
+        // Bottom-left corner position
+        float padding = 40f;
+        rect = new Rect(
+            padding,                                   // X: left edge + padding
+            Screen.height - fontsize - padding,        // Y: bottom edge - font size - padding
+            300,                                       // Width (adjust as needed)
+            40                                         // Height (adjust as needed)
+        );
     }
 
     void Update()
@@ -23,14 +28,18 @@ public class FPSDisplay : MonoBehaviour
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
     }
 
+    
     void OnGUI()
     {
 #if UNITY_EDITOR || UNITY_ANDROID || UNITY_IOS
 
         float fps = 1.0f / deltaTime;
         int myInt = Mathf.CeilToInt(fps);
-        string text = string.Format("{0:0.}", myInt);
+        float difficulty = GameManager.Instance.PalautaDifficulty();
+
+        string text = string.Format("{0} FPS / Difficulty: {1:0.00}", myInt, difficulty);
         GUI.Label(rect, text, style);
 #endif
     }
+    
 }

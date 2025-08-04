@@ -983,6 +983,7 @@ public class BaseController : MonoBehaviour
     {
         Kamera k = Camera.main.GetComponent<Kamera>();
 
+         ampumisevoimakkuus = ampumisevoimakkuus * GameManager.Instance.PalautaDifficulty();
 
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
 
@@ -1054,6 +1055,7 @@ public class BaseController : MonoBehaviour
     {
         //Kamera k = Camera.main.GetComponent<Kamera>();
 
+        ampumisevoimakkuus = ampumisevoimakkuus* GameManager.Instance.PalautaDifficulty();
 
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
 
@@ -2843,6 +2845,12 @@ true,
     public bool OnkoOkToimiaUusi(GameObject go)
     {
 
+        /*
+        if (go.tag.Contains("tiili"))
+        {
+            return false;
+        }
+        */
 
 
         if (go == null)
@@ -3201,7 +3209,7 @@ true,
             if (r != null)
             {
                 float speed = r.velocity.magnitude;
-                Debug.Log("ammusnopesu=" + speed);
+            //    Debug.Log("ammusnopesu=" + speed);
             }
         }
         if (syklilaskuri >= tarkistussykli)
@@ -3509,7 +3517,7 @@ true,
     {
         cp = FindRootWithTagContaining(cp, "vihollinen");
         c = FindRootWithTagContaining(c, "vihollinen");
-
+        if (cp == null || c == null || cp == c) return;
         Collider2D[] allColliders = cp.GetComponentsInChildren<Collider2D>();
 
         Collider2D[] allColliders2 = c.GetComponentsInChildren<Collider2D>();
@@ -3520,6 +3528,8 @@ true,
             {
                 //Physics.IgnoreCollision
                 Physics2D.IgnoreCollision(c1, c2);
+
+              
             }
         }
     }

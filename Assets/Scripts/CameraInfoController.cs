@@ -14,7 +14,11 @@ public class CameraInfoController : MonoBehaviour
         main = Camera.main;
         kamera=main.GetComponent<Kamera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        //spriteRenderer.enabled = false;
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color c = sr.color;
+        c.a = 0f; // alpha = 0 (fully transparent)
+        sr.color = Color.clear;
     }
 
     // Update is called once per frame

@@ -4,18 +4,52 @@ using UnityEngine;
 
 public class BonusController : BaseController
 {
-    public float rotationTime = 4f; // Time for a full 360-degree rotation
-    private float elapsedTime = 0f;
+  //  public float rotationTime = 4f; // Time for a full 360-degree rotation
+    //private float elapsedTime = 0f;
 
     // Start is called before the first frame update
     private AudioplayerController ad;
+    /*
+    private SpriteRenderer[] _spriteRenderers;
+    private Material[] _materials;
+    private int _GlowColor = Shader.PropertyToID("_GlowColor");
+    private Color glowColor;
+    public float glowSpeed = 0.1f;
+
+    private Color[] _baseColors;
+    private bool onko = false;
+    */
     void Start()
     {
         ad = FindObjectOfType<AudioplayerController>();
-        
+        /*
+        _spriteRenderers = GetComponentsInParent<SpriteRenderer>();
+        _materials = new Material[_spriteRenderers.Length];
 
+        _baseColors=new Color[_spriteRenderers.Length];
+        for (int i = 0; i < _spriteRenderers.Length; i++)
+        {
+            // Clone materials to avoid shared material side effects
+            _spriteRenderers[i].material = new Material(_spriteRenderers[i].material);
+            _materials[i] = _spriteRenderers[i].material;
+
+            glowColor = _spriteRenderers[i].material.GetColor(_GlowColor);
+            if (glowColor!=null)
+            {
+                onko = true;
+            }
+            else
+            {
+                Debug.Log("ei ole");
+            }
+
+            float originalIntensity = glowColor.maxColorComponent;
+
+            _baseColors[i] = glowColor / Mathf.Max(originalIntensity, 0.0001f);
+
+        }
+        */
     }
-
     void OnBecameInvisible()
     {
         //Debug.Log ("OnBecameInvisible");
@@ -25,25 +59,28 @@ public class BonusController : BaseController
         Destroy(gameObject);
     }
 
+    public float intensityMin = 0.5f;
+    public float intensityMax = 2f;
+    public float pulseSpeed = 1f;
+
     // Update is called once per frame
     void Update()
     {
-        elapsedTime += Time.deltaTime;
+ /*
 
-        // Calculate the Y rotation angle (360 degrees)
-        float angle = (elapsedTime / rotationTime) * 360f;
+       // float intensity = Mathf.PingPong(Time.time * glowSpeed, pingpongylaraja) + pingponlisays;
 
-        // Apply rotation
-      //  transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        float lerpedIntensity = Mathf.Lerp(intensityMin, intensityMax, Mathf.PingPong(Time.time * pulseSpeed, 1f));
 
-        // Reset elapsed time after a full rotation (optional)
-        if (elapsedTime >= rotationTime)
+       // Color glowColoruus = glowColor * intensity;
+
+        for (int i = 0; i < _materials.Length; i++)
         {
-            elapsedTime = 0f;
+            //@todo lerps glowcolor intensity over time
+            Color modulatedColor = _baseColors[i] * lerpedIntensity;
+            _materials[i].SetColor(_GlowColor, modulatedColor);
         }
-
-
-
+        */
     }
 
     bool onkoAlukseenJoTormatty = false;

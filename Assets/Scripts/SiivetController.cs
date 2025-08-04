@@ -190,9 +190,10 @@ public class SiivetController : BaseController, IExplodable
         return spriteRenderer.bounds.size.y;
     }
 
+    public float rajaytysalivetime = 0.5f;
     public void Explode()
     {
-        RajaytaSprite(gameObject, 3, 3, 3, 1);
+        RajaytaSprite(gameObject, 4, 4, 3, rajaytysalivetime);
         Destroy(gameObject);
     }
 

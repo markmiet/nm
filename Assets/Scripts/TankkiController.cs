@@ -19,6 +19,9 @@ public class TankkiController : HitCounter
     // Update is called once per frame
     void Update()
     {
-        
+        if (!OnkoOkToimiaUusi(gameObject))
+        {
+            return;
+        }
     }
 }

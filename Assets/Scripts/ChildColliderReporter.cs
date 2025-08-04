@@ -70,10 +70,19 @@ public class ChildColliderReporter : BaseController
     }
     */
 
-    public void RegisterHit(Vector2 contactPoint)
+    public bool RegisterHit(Vector2 contactPoint)
     {
-        parent?.RegisterHit();
-        tamaHitCounter?.RegisterHit();
+        bool ret1 = false;
+        if (parent!=null)
+        {
+            ret1 = parent.RegisterHit();
+        }
+        bool ret2 = false;
+        if (tamaHitCounter != null)
+        {
+            ret2 = tamaHitCounter.RegisterHit();
+        }
+
 
         if (explosion != null)
         {
@@ -109,7 +118,7 @@ public class ChildColliderReporter : BaseController
         }
 
 
-
+        return ret1 || ret2;
         //80 alkaa palamaan
         //entäs joku 95% loput isot liekit vielä :)
 

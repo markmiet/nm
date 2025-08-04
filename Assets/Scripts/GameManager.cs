@@ -9,6 +9,8 @@ public class GameManager : BaseController
     public static GameManager Instance;
 
     public int lives = 3;
+
+    public int livesvertailuarvo;
     //private TextMeshProUGUI scoreTextMeshProUGUI;
     //public GameObject scoreGameObject;
 
@@ -21,6 +23,59 @@ public class GameManager : BaseController
     public AudioSource gameoverAudioSource;
 
     public AudioSource looserAudioSource;
+
+    private float difficaltymaksimi = 1.0f;
+
+    public float difficultyModifier = 1.0f;//oletuksena
+    public float difficaltychangewhendied = 0.1f;
+
+    public float difficaltymin = 0.5f;
+
+    public float difficaltykasvatusjoseikuole = 0.05f;
+    public float difficaltykasvatussleep = 10.0f;
+
+
+    public void ResetDifficultyGradually()
+    {
+        // Gradually restore difficulty if player survives longer
+        StartCoroutine(RestoreDifficulty());
+    }
+
+    IEnumerator RestoreDifficulty()
+    {
+        while (difficultyModifier < difficaltymaksimi)
+        {
+            yield return new WaitForSeconds(difficaltykasvatussleep);
+            difficultyModifier += difficaltykasvatusjoseikuole;
+            difficultyModifier = Mathf.Min(difficultyModifier, difficaltymaksimi);
+        }
+    }
+
+    //private int playerDeaths = 1;
+
+    private void AdjustDifficulty()
+    {
+        if (lives>= livesvertailuarvo)
+        {
+            difficultyModifier = Mathf.Clamp(difficaltymaksimi, difficaltymin, difficaltymaksimi);
+            ResetDifficultyGradually();
+        }
+        else
+        {
+            int kuolemat = livesvertailuarvo - lives;
+            difficultyModifier = Mathf.Clamp(difficaltymaksimi - kuolemat * difficaltychangewhendied, difficaltymin, difficaltymaksimi);
+        }
+        
+        ResetDifficultyGradually();
+    }
+
+
+    public float PalautaDifficulty()
+    {
+        return difficultyModifier;
+    }
+
+
 
     public void kasvataHighScorea(GameObject go)
     {
@@ -79,7 +134,9 @@ public class GameManager : BaseController
         if (Instance == null)
         {
             Instance = this;
-         //   scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
+            livesvertailuarvo = lives;
+
+            //   scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
 
             DontDestroyOnLoad(gameObject); // Keep across scenes
             DontDestroyOnLoad(gameoverAudioSource); // Keep across scenes
@@ -162,6 +219,9 @@ public class GameManager : BaseController
             GameObject alus = PalautaAlus();
             alus.GetComponent<AlusController>().SetElamienMaara(lives);
             alus.GetComponent<AlusController>().SetkeskellaTextMeshProUGUI("Restart");
+
+            AdjustDifficulty();
+
             siirtymassascenenalkuun = true;
             siirtymassastartmenuun = false;
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);

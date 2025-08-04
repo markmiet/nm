@@ -9949,7 +9949,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4129683153705185143}
@@ -9983,7 +9983,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 272ba847f100d4251bb8260575189042, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10004,7 +10004,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 75129de9378f86b4b9b2815ec83e4fb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f2e9242007dc0777888ce217183fade, type: 3}
   m_Color: {r: 0.9245283, g: 0.8591136, b: 0.8591136, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10027,6 +10027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f905085a7c9e2e08cf1ac0c0c09213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   score: 0
@@ -10094,8 +10095,9 @@ MonoBehaviour:
   nopeusjakoy: 6
   movespeedinKasvatussteppi: 1
   moveSpeed: 50
-  bulletingravityscale: 2
-  bulletinalkuvelocityy: 2
+  ammuksenalkuvelocity: 15
+  bulletingravityscale: 2.5
+  bulletinalkuvelocityy: 2.5
   bulletinalkuxoffsetti: -0.4
   alamaksiminMaarittava: {fileID: 0}
   ylamaksiminMaarittava: {fileID: 0}
@@ -10159,7 +10161,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294481396978785091}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -10188,7 +10190,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.5}
+    oldSize: {x: 0.64, y: 0.32}
     newSize: {x: 0.64, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -10268,7 +10270,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.5}
+    oldSize: {x: 0.64, y: 0.32}
     newSize: {x: 0.64, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -10426,18 +10428,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.13608989, y: -0.0015472695}
+  m_Offset: {x: -0.13608989, y: -0.0058212504}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.5}
+    oldSize: {x: 0.64, y: 0.32}
     newSize: {x: 0.64, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3529312, y: 0.3593015}
+  m_Size: {x: 0.3529312, y: 0.25387818}
   m_EdgeRadius: 0
 --- !u!61 &6250109845015038518
 BoxCollider2D:
@@ -10471,18 +10473,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.20967627, y: -0.020321846}
+  m_Offset: {x: 0.17833462, y: 0.0038971864}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.5}
+    oldSize: {x: 0.64, y: 0.32}
     newSize: {x: 0.64, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.34090424, y: 0.17248476}
+  m_Size: {x: 0.27822095, y: 0.14114258}
   m_EdgeRadius: 0
 --- !u!1 &4573502985864431221
 GameObject:

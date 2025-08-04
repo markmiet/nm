@@ -125,7 +125,8 @@ public class BulletScript : BaseController, IExplodable, IAlas
                 //Destroy(gameObject);
                 // Explode();
 
-                ExplodeLiukutormayksenJalkeen();
+                
+                ExplodeLiukutormayksenJalkeen(col.GetContact(0).point);
 
             }
             else
@@ -294,7 +295,10 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
     public bool rajaytasprite = true;
     public bool teexplosion = true;
-    public void ExplodeLiukutormayksenJalkeen()
+
+
+
+    public void ExplodeLiukutormayksenJalkeen(Vector2 v2)
     {
         if (rajaytasprite)
         {
@@ -323,7 +327,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
         if (teexplosion)
         {
-            GameObject instanssi = Instantiate(explosion, transform.position, Quaternion.identity);
+            GameObject instanssi = Instantiate(explosion,v2, Quaternion.identity);
             Destroy(instanssi, explosionlivetime);
         }
 

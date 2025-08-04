@@ -19,8 +19,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
     // public int elamienmaara = 0;
-    public int score = 0;//tälle se 
-    public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
+   // public int score = 0;//tälle se 
+   // public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
 
 
     public bool uusiohjauskaytossa = true;
@@ -255,7 +255,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private BoxCollider2D boxCollider2D;
     private bool android;
 
-    private LineRenderer lineRenderer;
+ //   private LineRenderer lineRenderer;
     void Start()
     {
         android = Application.platform == RuntimePlatform.Android;
@@ -365,7 +365,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         {
 
         }
-        lineRenderer = GetComponent<LineRenderer>();
+     //   lineRenderer = GetComponent<LineRenderer>();
 
         SetElamienMaara(GameManager.Instance.lives);
 
@@ -2386,8 +2386,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         float aika = Time.fixedDeltaTime;
 
         deltaaikojensumma += aika;
+        //@todoo
+        //pitäisikö vain etsiä cameraviewistä ammusten määrä.
 
-        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive && OnkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
+        //ja mikä on se peruslogiikka taas tässä :) =ampumakertojenvalinenviive0.01
+        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive & OnkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
         {
             //	if (!ammusInstantioitiinviimekerralla) {
             Vector3 v3 =

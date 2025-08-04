@@ -35,7 +35,7 @@ public class LaserController : BaseController
 
     }
 
-    public void Explode()
+    public void Explode(bool teeklooni)
     {
         //GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         //	Destroy(explosionIns, 1.0f);
@@ -45,7 +45,7 @@ public class LaserController : BaseController
 
         if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
         {
-            if (!olenklooni)
+            if (!olenklooni && teeklooni)
             {
                 lisaaAluksenLuomi();
                 GameObject klooni = Instantiate(gameObject);
@@ -152,13 +152,13 @@ public class LaserController : BaseController
             tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
             TeeOsumaExplosion(contactPoint);
 
-            Explode();
+            Explode(false);
 
         }
 
         else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
-
+            bool teeklooni = true;
             //tormattyviholliseen = true;
             //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
             TeeOsumaExplosion(contactPoint);
@@ -200,6 +200,10 @@ public class LaserController : BaseController
                         IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
                         DestroyKaikki(col.gameObject);
                     }
+                    else
+                    {
+                        teeklooni = false;
+                    }
                 }
                 else
                 {
@@ -210,7 +214,11 @@ public class LaserController : BaseController
                         //  LisaaTuhottujenMaaraa(col.gameObject);
                         //tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
 
-                        childColliderReporter.RegisterHit(contactPoint);
+                        bool tuhoituko=childColliderReporter.RegisterHit(contactPoint);
+                        if (!tuhoituko)
+                        {
+                            teeklooni = false;
+                        }
 
                     }
                     else
@@ -237,6 +245,10 @@ public class LaserController : BaseController
                                 IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
 
                             }
+                            else
+                            {
+                                teeklooni = false;
+                            }
 
                             //tuhottujenVihollistenmaara++;
                             //    tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
@@ -254,6 +266,10 @@ public class LaserController : BaseController
                                 if (rajahtiko)
                                 {
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
+                                }
+                                else
+                                {
+                                    teeklooni = false;
                                 }
                                 //tuhottujenVihollistenmaara++;
                                 //      tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
@@ -344,7 +360,7 @@ public class LaserController : BaseController
                 //	Debug.Log("gameobjekcti null");
 
             }
-            Explode();
+            Explode(teeklooni);
         }
 
         //Explode(0.0f);
@@ -660,6 +676,8 @@ public class LaserController : BaseController
 
     }
 
+    public float osumaexplosionkestoaika = 0.5f;
+
     public void TeeOsumaExplosion(Vector2 contactPoint)
     {
         if (osumaExplosion != null)
@@ -668,7 +686,7 @@ public class LaserController : BaseController
 
            GameObject explosionIns = ObjectPoolManager.Instance.GetFromPool(osumaExplosion, contactPoint, Quaternion.identity);
 
-           ObjectPoolManager.Instance.ReturnToPool(osumaExplosion,explosionIns,1.0f);
+           ObjectPoolManager.Instance.ReturnToPool(osumaExplosion,explosionIns, osumaexplosionkestoaika);
 
             //Destroy(explosionIns, 1.0f);
         }

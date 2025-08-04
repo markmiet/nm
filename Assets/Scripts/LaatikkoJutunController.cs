@@ -11,7 +11,9 @@ public class LaatikkoJutunController : BaseController
     public float laukaisuvali = 1.0f;
     private float laukaisusyklilaskuri = 0.0f;
     public Vector2 laukaisuVelocity = new Vector2(0, -1);
-    
+
+    public GameObject[] objektitjoihinCollideIgnore;
+
     void Start()
     {
         
@@ -33,9 +35,26 @@ public class LaatikkoJutunController : BaseController
             {
                 GameObject instanssi=Instantiate(laukaistavaAsia, kohtajostaLaukaistaan.transform.position, Quaternion.identity);
                 IgnoraaCollisiotVihollistenValilla(instanssi, gameObject);
-                GameObject tiili=GameObject.Find("Tilemap");
+                //  GameObject tiili=GameObject.Find("Tilemap");
 
-                IgnoraaCollisiotVihollistenValilla(tiili, instanssi);
+                
+
+                foreach (GameObject g in objektitjoihinCollideIgnore)
+                {
+                    IgnoraaCollisiotVihollistenValilla(g, instanssi);
+                    foreach (Transform child in g.transform)
+                    {
+                        GameObject childObject = child.gameObject;
+                       // Debug.Log("Child: " + childObject.name);
+
+                        IgnoraaCollisiotVihollistenValilla(childObject, instanssi);
+
+                    }
+
+                    
+                }
+
+                //
 
                 Rigidbody2D r =
                 instanssi.GetComponent<Rigidbody2D>();

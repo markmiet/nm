@@ -196,7 +196,9 @@ cameraInfo.GetComponent<CameraInfoController>();
             {
                 Debug.Log("generoi lisaa vihollisia nykymaara=" + maara);
                 GameObject randomGO = go[Random.Range(0, go.Length)];
+                Debug.Log("generoi lisaa vihollisia generoitu oli=" + randomGO);
                 GeneroiViholinen(randomGO);
+
             }
             generointilaskuri = 0;
         }
@@ -288,7 +290,7 @@ cameraInfo.GetComponent<CameraInfoController>();
         return ret;
     }
 
-    public int GetCountOfTheseObjects(Camera camera,GameObject go)
+    public int GetCountOfTheseObjectsVanha(Camera camera,GameObject go)
     {
         int count = 0;
         List<GameObject> lista = GetGameObjectsInCameraView(camera);
@@ -305,6 +307,32 @@ cameraInfo.GetComponent<CameraInfoController>();
         return count;
 
     }
+
+    public int GetCountOfTheseObjects(Camera camera, GameObject referenceObject)
+    {
+
+
+        if (referenceObject == null) return 0;
+
+        var referenceComponent = referenceObject.GetComponent<MonoBehaviour>();
+        if (referenceComponent == null) return 0;
+
+        System.Type typeToMatch = referenceComponent.GetType();
+        int count = 0;
+
+        List<GameObject> objectsInView = GetGameObjectsInCameraView(camera);
+        foreach (var obj in objectsInView)
+        {
+            var component = obj.GetComponent(typeToMatch);
+            if (component != null)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
 
     public float GetCurrentScrollSpeed()
     {

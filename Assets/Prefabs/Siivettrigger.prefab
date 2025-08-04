@@ -4977,6 +4977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd8da23e6f10740a0dc4383ebd5bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   siivetrotatemax: 180
@@ -4991,6 +4992,7 @@ MonoBehaviour:
   sinfrequency: 2
   sinamplitude: 1.5
   randomisointiprossa: 0.1
+  rajaytysalivetime: 0.25
 --- !u!50 &1688580068549664688
 Rigidbody2D:
   serializedVersion: 4
@@ -5030,6 +5032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5cf4385b99140a4f8736b6b516411d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   bonusprefab: {fileID: 0}
