@@ -162,7 +162,8 @@ public class AmmusController : BaseController, IExplodable
         Vector2 contactPoint = col.GetContact(0).point;
         if (col.collider.tag.Contains("tiilivihollinen") || col.collider.tag.Contains("eituhvih"))
         {
-            Explode(contactPoint);
+            Explode(contactPoint, col.collider.tag);
+            return;
         }
 
         else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
@@ -317,7 +318,7 @@ public class AmmusController : BaseController, IExplodable
                 //	Debug.Log("gameobjekcti null");
 
             }
-            Explode(contactPoint);
+            Explode(contactPoint, col.collider.tag);
         }
 
         //Explode(0.0f);
@@ -337,14 +338,32 @@ public class AmmusController : BaseController, IExplodable
 
     public void Explode()
     {
-        Explode(transform.position);
+        Explode(transform.position,null);
     }
-    public void Explode(Vector2 contanctpoint)
+    public string[] erikoistagitjotkaeiaiheutaammusrajahdysta;
+
+    public void Explode(Vector2 contanctpoint,string tag)
     {
         if (explosion!=null)
         {
-            GameObject explosionIns = Instantiate(explosion, contanctpoint, Quaternion.identity);
-            Destroy(explosionIns, rajaytyskestoaika);
+            bool rajayta = true;
+            if (tag!=null && erikoistagitjotkaeiaiheutaammusrajahdysta!=null && erikoistagitjotkaeiaiheutaammusrajahdysta.Length>0)
+            {
+                foreach (string t in erikoistagitjotkaeiaiheutaammusrajahdysta)
+                {
+                    if (tag.Contains(t))
+                    {
+                        rajayta = false;
+                        break;
+                    }
+                }
+            }
+            if (rajayta)
+            {
+                GameObject explosionIns = Instantiate(explosion, contanctpoint, Quaternion.identity);
+                Destroy(explosionIns, rajaytyskestoaika);
+            }
+
         }
         /*
         if (rajaytaspriteexplodenjalkeenpistatamatrueksi)
@@ -430,4 +449,9 @@ public class AmmusController : BaseController, IExplodable
     }
 
 
-}
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("col=" + col);
+    }
+
+ }

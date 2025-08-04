@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NmpalleroController : BaseController
+public class NmpalleroController : BaseController, IExplodable
 {
     // Start is called before the first frame update
     private SpriteRenderer sp;
@@ -30,6 +30,7 @@ public class NmpalleroController : BaseController
     }
     public void OnTriggerEnter2D(Collider2D col)
     {
+        /*
         if (col.CompareTag("alustag"))
         {
 
@@ -65,6 +66,7 @@ col.gameObject.GetComponent<IExplodable>();
             }
             
         }
+        */
 
     }
     public void Explode()

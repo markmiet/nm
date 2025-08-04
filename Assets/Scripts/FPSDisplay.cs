@@ -14,7 +14,7 @@ public class FPSDisplay : MonoBehaviour
         style.normal.textColor = Color.white;
 
         // Bottom-left corner position
-        float padding = 40f;
+        float padding = 60f;
         rect = new Rect(
             padding,                                   // X: left edge + padding
             Screen.height - fontsize - padding,        // Y: bottom edge - font size - padding

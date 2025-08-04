@@ -1353,6 +1353,8 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
         float xsaato, bool addDestroyController, GameObject explosion, bool siirragameobjectinvelocitypaloihin, string tag, string layer
         )
     {
+
+
         SpriteRenderer s = GetComponent<SpriteRenderer>();
         if (s == null)
         {

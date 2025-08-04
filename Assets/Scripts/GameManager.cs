@@ -207,6 +207,13 @@ public class GameManager : BaseController
 
     }
 
+    public void ElamaKeratty()
+    {
+        lives++;
+        GameObject alus = PalautaAlus();
+        alus.GetComponent<AlusController>().SetElamienMaara(lives);
+    }
+
     public void PlayerDied()
     {
         lives--;
