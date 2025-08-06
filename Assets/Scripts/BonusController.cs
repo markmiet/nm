@@ -66,21 +66,23 @@ public class BonusController : BaseController
     // Update is called once per frame
     void Update()
     {
- /*
+        /*
 
-       // float intensity = Mathf.PingPong(Time.time * glowSpeed, pingpongylaraja) + pingponlisays;
+              // float intensity = Mathf.PingPong(Time.time * glowSpeed, pingpongylaraja) + pingponlisays;
 
-        float lerpedIntensity = Mathf.Lerp(intensityMin, intensityMax, Mathf.PingPong(Time.time * pulseSpeed, 1f));
+               float lerpedIntensity = Mathf.Lerp(intensityMin, intensityMax, Mathf.PingPong(Time.time * pulseSpeed, 1f));
 
-       // Color glowColoruus = glowColor * intensity;
+              // Color glowColoruus = glowColor * intensity;
 
-        for (int i = 0; i < _materials.Length; i++)
-        {
-            //@todo lerps glowcolor intensity over time
-            Color modulatedColor = _baseColors[i] * lerpedIntensity;
-            _materials[i].SetColor(_GlowColor, modulatedColor);
-        }
-        */
+               for (int i = 0; i < _materials.Length; i++)
+               {
+                   //@todo lerps glowcolor intensity over time
+                   Color modulatedColor = _baseColors[i] * lerpedIntensity;
+                   _materials[i].SetColor(_GlowColor, modulatedColor);
+               }
+               */
+
+        Tuhoa(gameObject);
     }
 
     bool onkoAlukseenJoTormatty = false;

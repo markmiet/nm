@@ -44,9 +44,10 @@ public class SiivetController : BaseController, IExplodable
     }
     public float randomisointiprossa = 0.10f;
 
-
+    private RaycastHit2D[] hitsBuffer;
     void Start()
     {
+        hitsBuffer = new RaycastHit2D[10];
         spriteRenderer = GetComponent<SpriteRenderer>();
         peruskokoysuunnassa = PalautaSiipienKorkeus();
         aloituslocalposition = transform.localPosition;
@@ -79,7 +80,7 @@ public class SiivetController : BaseController, IExplodable
                 //      boxCollider.size = fixedColliderSize;
             }
             float delta = Time.deltaTime;
-
+            vaistolaskuri += Time.deltaTime;
             rotationTime += delta;
             float currentRotationsiivet = CalculatePingPongRotation(siivetrotatemin, siivetrotatemax, rotationTime, rotatetimeseconds);
 
@@ -98,12 +99,21 @@ public class SiivetController : BaseController, IExplodable
             PyoritaZsuunnassa();
 
             MoveTowardsAlus(delta);
-            Vaista(delta, collisionLayer);
+            if (vaistolaskuri>= vaistosykli)
+            {
+                Vaista(delta, collisionLayer, hitsBuffer);
+                vaistolaskuri = 0.0f;
+            }
+            
         }
 
         Tuhoa(gameObject);
     }
-    
+    private float vaistolaskuri = 0.0f;
+    private float vaistosykli = 0.2f;
+
+
+
     private void MoveTowardsAlus(float delta)
     {
         if (alus == null) return;

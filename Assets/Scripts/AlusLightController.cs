@@ -23,6 +23,14 @@ public class AlusLightController : MonoBehaviour
         light2D.pointLightOuterRadius = originalRadius; // Set initial radius
     }
 
+    public void Update()
+    {
+        //light2D.enabled = true; // Ensure light is enabled at start
+        light2D.intensity = originalIntensity; // Set initial intensity
+        light2D.pointLightOuterRadius = originalRadius; // Set initial radius
+    }
+
+
     public void SetExplosionLights()
     {
         originalIntensity -= valonintensiteetinvahennyskunosaumatuli;

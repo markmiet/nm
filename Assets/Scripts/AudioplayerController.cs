@@ -13,7 +13,7 @@ public class AudioplayerController : MonoBehaviour
 
     public AudioSource alusammuslaser;
 
-
+    public AudioSource elamalisaa;
 
 
     void Start()
@@ -29,6 +29,11 @@ public class AudioplayerController : MonoBehaviour
     public void BonusPlay()
     {
         bonus.Play();
+    }
+
+    public void ElamaLisaaPlay()
+    {
+        elamalisaa.Play();
     }
 
     public void TaustaMusiikkiPlay()

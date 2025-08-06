@@ -18,6 +18,13 @@ public class BaseController : MonoBehaviour
 
     }
 
+    private Camera mainCam;
+
+    void Awake()
+    {
+        mainCam = Camera.main;
+    }
+
 
     public Vector3 palautaScreenpositioneissa(int positionumero)
     {
@@ -37,12 +44,12 @@ public class BaseController : MonoBehaviour
             return false;
         }
 
-        //Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+        //Vector3 screenPosition = mainCam.WorldToScreenPoint(worldPosition);
         //screenPosition = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
         Vector3 screenPosition;
         if (muutaworldpositionScreenpositionin)
         {
-            screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+            screenPosition = mainCam.WorldToScreenPoint(worldPosition);
             screenPosition = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
 
         }
@@ -69,7 +76,7 @@ public class BaseController : MonoBehaviour
         Vector3 screenPosition;
         if (muutaworldpositionScreenpositionin)
         {
-            screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+            screenPosition = mainCam.WorldToScreenPoint(worldPosition);
             screenPosition = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
 
         }
@@ -104,7 +111,7 @@ public class BaseController : MonoBehaviour
         Vector3 screenPosition;
         if (muutaworldpositionScreenpositionin)
         {
-            screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+            screenPosition = mainCam.WorldToScreenPoint(worldPosition);
             screenPosition = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
 
         }
@@ -136,7 +143,7 @@ public class BaseController : MonoBehaviour
         Vector3 screenPosition;
         if (muutaworldpositionScreenpositionin)
         {
-            screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+            screenPosition = mainCam.WorldToScreenPoint(worldPosition);
             screenPosition = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
 
         }
@@ -170,7 +177,7 @@ public class BaseController : MonoBehaviour
         Vector3 screenPosition;
         if (muutaworldpositionScreenpositionin)
         {
-            screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+            screenPosition = mainCam.WorldToScreenPoint(worldPosition);
             screenPosition = new Vector3((int)screenPosition.x, (int)screenPosition.y, screenPosition.z);
         }
         else
@@ -217,7 +224,7 @@ public class BaseController : MonoBehaviour
 
         // Convert to screen position if required
         Vector3 positionToSave = useScreenPosition
-            ? Camera.main.WorldToScreenPoint(worldPosition)
+            ? mainCam.WorldToScreenPoint(worldPosition)
             : worldPosition;
 
         // Round screen position to integers for consistency
@@ -673,7 +680,7 @@ public class BaseController : MonoBehaviour
 
     public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus)
     {
-        Kamera k = Camera.main.GetComponent<Kamera>();
+        Kamera k = mainCam.GetComponent<Kamera>();
 
 
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
@@ -949,7 +956,7 @@ public class BaseController : MonoBehaviour
 
     public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus, GameObject objektijostasijaintilasketaan)
     {
-        Kamera k = Camera.main.GetComponent<Kamera>();
+        Kamera k = mainCam.GetComponent<Kamera>();
 
 
         if (alus == null) return Vector2.zero; // Return zero vector if target is null
@@ -981,7 +988,7 @@ public class BaseController : MonoBehaviour
 
     public Vector2 palautaAmmuksellaVelocityVector(GameObject alus, float ampumisevoimakkuus, Vector3 shooterPosition)
     {
-        Kamera k = Camera.main.GetComponent<Kamera>();
+        Kamera k = mainCam.GetComponent<Kamera>();
 
          ampumisevoimakkuus = ampumisevoimakkuus * GameManager.Instance.PalautaDifficulty();
 
@@ -1053,7 +1060,7 @@ public class BaseController : MonoBehaviour
 
     public Vector2 palautaAmmukselleVelocityVectorKaytaPiippua(GameObject alus, float ampumisevoimakkuus, Vector3 shooterPosition,Vector3 piipuntoinenpaa)
     {
-        //Kamera k = Camera.main.GetComponent<Kamera>();
+        //Kamera k = mainCam.GetComponent<Kamera>();
 
         ampumisevoimakkuus = ampumisevoimakkuus* GameManager.Instance.PalautaDifficulty();
 
@@ -1903,7 +1910,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     {
 
         Vector3 objectPosition = go.transform.position;
-        Vector3 cameraPosition = Camera.main.transform.position;
+        Vector3 cameraPosition = mainCam.transform.position;
 
         // Check if the object is to the left of the camera
         if (objectPosition.x < cameraPosition.x)
@@ -1933,7 +1940,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool OnkoYsuunnassaKamerassa(GameObject gameObject)
     {
-        Camera camera = Camera.main; // Reference to the main camera
+        Camera camera = mainCam; // Reference to the main camera
         GameObject obj = gameObject; // Reference to the object you want to check
 
         // Get the camera's orthographic size and aspect ratio
@@ -2010,8 +2017,8 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
 
         float y = go.transform.position.y;
-        float ykamera = Camera.main.transform.position.y;
-        float koko = Camera.main.orthographicSize;
+        float ykamera = mainCam.transform.position.y;
+        float koko = mainCam.orthographicSize;
 
 
         if (tuhoaJosLiianKorkeallaKameraanverrattuna && (y > ykamera + koko + 1.0f || y < ykamera - koko - 1.0f))
@@ -2032,7 +2039,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         }
         if (tuhoajosoikeallakameraanverrattuna)
         {
-            if (IsObjectRightOfCamera(Camera.main, go.transform))
+            if (IsObjectRightOfCamera(mainCam, go.transform))
             {
                 Destroy(go);
                 return;
@@ -2072,7 +2079,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     public bool IsOffScreen()
     {
         // Convert the world position of the bullet to viewport space
-        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 viewportPosition = mainCam.WorldToViewportPoint(transform.position);
 
         // Check if the bullet is outside the camera's visible area
         if (viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 || viewportPosition.y > 1)
@@ -2126,15 +2133,15 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool IsFullyVisible2D()
     {
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 pos = mainCam.WorldToViewportPoint(transform.position);
         Renderer rend = GetComponent<Renderer>();
         if (rend == null) return false;
 
         float halfWidth = rend.bounds.size.x / 2;
         float halfHeight = rend.bounds.size.y / 2;
 
-        Vector3 leftBottom = Camera.main.WorldToViewportPoint(transform.position - new Vector3(halfWidth, halfHeight, 0));
-        Vector3 rightTop = Camera.main.WorldToViewportPoint(transform.position + new Vector3(halfWidth, halfHeight, 0));
+        Vector3 leftBottom = mainCam.WorldToViewportPoint(transform.position - new Vector3(halfWidth, halfHeight, 0));
+        Vector3 rightTop = mainCam.WorldToViewportPoint(transform.position + new Vector3(halfWidth, halfHeight, 0));
 
         return leftBottom.x >= 0 && leftBottom.y >= 0 &&
                rightTop.x <= 1 && rightTop.y <= 1;
@@ -2143,7 +2150,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     public bool IsMoreThanHalfOnLeft()
     {
         Renderer rend = GetComponent<Renderer>();
-        if (rend == null || Camera.main == null) return false;
+        if (rend == null || mainCam == null) return false;
 
         Bounds bounds = rend.bounds;
 
@@ -2155,7 +2162,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         {
             float t = i / (float)sampleCount;
             Vector3 worldPoint = new Vector3(Mathf.Lerp(bounds.min.x, bounds.max.x, t), bounds.center.y, bounds.center.z);
-            Vector3 viewportPoint = Camera.main.WorldToViewportPoint(worldPoint);
+            Vector3 viewportPoint = mainCam.WorldToViewportPoint(worldPoint);
 
             if (viewportPoint.x < 0.5f && viewportPoint.z > 0) // z > 0 = in front of camera
             {
@@ -2172,10 +2179,10 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         {
             return false;
         }
-        Camera mainCamera = Camera.main;
+        Camera mainCamera = mainCam;
         foreach (GameObject go in gos)
         {
-            if (Camera.main == null) return false; // Ensure there is a main camera
+            if (mainCam == null) return false; // Ensure there is a main camera
             if (go == null || go.transform == null)
             {
                 continue;
@@ -2219,10 +2226,10 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool IsGameObjectVisible()
     {
-        if (Camera.main == null) return false; // Ensure there is a main camera
+        if (mainCam == null) return false; // Ensure there is a main camera
 
         // Get the main camera
-        Camera mainCamera = Camera.main;
+        Camera mainCamera = mainCam;
 
         // Convert the target's position to viewport coordinates
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
@@ -2237,10 +2244,10 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool IsGameObjectVisible(float xoffset)
     {
-        if (Camera.main == null) return false; // Ensure there is a main camera
+        if (mainCam == null) return false; // Ensure there is a main camera
 
         // Get the main camera
-        Camera mainCamera = Camera.main;
+        Camera mainCamera = mainCam;
 
         // Convert the target's position to viewport coordinates
         Vector3 uusi = new Vector3(transform.position.x + xoffset, transform.position.y, transform.position.z);
@@ -2261,7 +2268,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     private void OnDrawGizmos()
     {
-        Camera cam = Camera.main;
+        Camera cam = mainCam;
         if (cam == null || !cam.orthographic) return;
 
         Gizmos.color = gizmoColoraaaa;
@@ -2379,7 +2386,10 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
 
 
-    public bool OnkoVasemmallaVaistettavaa(int rayCount, float rayDistance, LayerMask collisionLayer)
+    public bool OnkoVasemmallaVaistettavaa(int rayCount, float rayDistance, LayerMask collisionLayer,
+
+    RaycastHit2D[] hitsBuffer 
+        )
     {
         (float top, float bottom) = GetFromAllColliders();
 
@@ -2403,11 +2413,10 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
             Vector2 rayOrigin = new Vector2(transform.position.x + 2, i);
 
-
-
-
             // Cast the ray
-            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            //RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, Vector2.left, hitsBuffer, rayDistance, collisionLayer);
+            /*
             foreach (RaycastHit2D hit in hits)
             {
                 // Visualize the ray in the Scene view
@@ -2421,6 +2430,21 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
                     return true;
                 }
             }
+            */
+
+            for (int j = 0; j < hitCount; j++)
+            {
+                RaycastHit2D hit = hitsBuffer[j];
+                // do something with hit
+                if (hit.collider != null && hit.collider.gameObject != gameObject &&
+                    (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("vihollinen")))
+                {
+                    //   Debug.Log("Obstacle detected at: " + hit.collider.name);
+
+                    return true;
+                }
+            }
+
         }
         return false;
 
@@ -2452,7 +2476,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
     public bool OlisikoylhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer)
     {
-        float yloskulunmaksi = CalculateMoveUpDistance(Camera.main, transform.position);
+        float yloskulunmaksi = CalculateMoveUpDistance(mainCam, transform.position);
         (float top, float bottom) = GetFromAllColliders();
         top = top + yloskulunmaksi;
         float ero = top - bottom;
@@ -2493,7 +2517,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool OlisikoalhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer)
     {
-        float yloskulunmaksi = CalculateMoveDownDistance(Camera.main, transform.position);
+        float yloskulunmaksi = CalculateMoveDownDistance(mainCam, transform.position);
         (float top, float bottom) = GetFromAllColliders();
         bottom = bottom - yloskulunmaksi;
         float ero = top - bottom;
@@ -2534,22 +2558,22 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     public Vector3 GetCameraMaxWorldPosition()
     {
         // Calculate the camera's dimensions in world space
-        float height = Camera.main.orthographicSize * 2;
-        float width = height * Camera.main.aspect;
+        float height = mainCam.orthographicSize * 2;
+        float width = height * mainCam.aspect;
 
         // Top-right corner of the camera's view in world space
-        Vector3 maxWorldPosition = Camera.main.transform.position + new Vector3(width / 2, height / 2, 0);
+        Vector3 maxWorldPosition = mainCam.transform.position + new Vector3(width / 2, height / 2, 0);
 
         return maxWorldPosition;
     }
     public Vector3 GetCameraMinWorldPosition()
     {
         // Calculate the camera's dimensions in world space
-        float height = Camera.main.orthographicSize * 2;
-        float width = height * Camera.main.aspect;
+        float height = mainCam.orthographicSize * 2;
+        float width = height * mainCam.aspect;
 
         // Bottom-left corner of the camera's view in world space
-        Vector3 minWorldPosition = Camera.main.transform.position - new Vector3(width / 2, height / 2, 0);
+        Vector3 minWorldPosition = mainCam.transform.position - new Vector3(width / 2, height / 2, 0);
 
         return minWorldPosition;
     }
@@ -2574,9 +2598,9 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
 
 
-    public void Vaista(float delta, LayerMask collisionLayer)
+    public void Vaista(float delta, LayerMask collisionLayer, RaycastHit2D[] hitsBuffer)
     {
-        bool vasen = OnkoVasemmallaVaistettavaa(rayCount, rayDistance, collisionLayer);
+        bool vasen = OnkoVasemmallaVaistettavaa(rayCount, rayDistance, collisionLayer,  hitsBuffer);
         //Debug.Log("vasen=" + vasen);
 
         if (vasen)
@@ -2753,8 +2777,8 @@ true,
         // Debug.Log("This code runs only in builds, not in the Unity Editor.");
         TuhoaReal(go, false, -1, true, 5.0f, true, alaoffsetti, true, offsettiylapuolellakavaisyyn,
 true,
-600,
-1, false,null
+6000,
+5, false,null
 );
 
     }
@@ -2885,7 +2909,7 @@ true,
         return false;
         */
         SpriteRenderer s = go.GetComponent<SpriteRenderer>();
-        bool nakyvilla = IsVisibleFrom(s, Camera.main);
+        bool nakyvilla = IsVisibleFrom(s, mainCam);
         /*
         Rigidbody2D rb = null;
 
@@ -2954,8 +2978,8 @@ true,
 
 
 
-
-    Dictionary<string, Vector3> GetAllWorldPositions(Transform parent)
+    /*
+    Dictionary<string, Vector3> GetAllWorldPositionsVanha(Transform parent)
     {
         Dictionary<string, Vector3> posDict = new Dictionary<string, Vector3>();
 
@@ -2974,6 +2998,25 @@ true,
 
         return posDict;
     }
+    */
+
+    Dictionary<Transform, Vector3> GetAllWorldPositions(Transform parent)
+    {
+        Dictionary<Transform, Vector3> posDict = new Dictionary<Transform, Vector3>();
+        CollectPositions(parent, posDict);
+        return posDict;
+    }
+
+    void CollectPositions(Transform t, Dictionary<Transform, Vector3> dict)
+    {
+        dict[t] = t.position;
+        foreach (Transform child in t)
+        {
+            CollectPositions(child, dict);
+        }
+    }
+
+
 
 
     private float viimeisinTarkistusAika = -1f;
@@ -3025,12 +3068,12 @@ true,
 
     public bool OnkoKameranVasemmassaReunassa(GameObject go, float percentKamerasta)
     {
-        if (Camera.main == null || go == null)
+        if (mainCam == null || go == null)
             return false;
 
         // Kamera-arvot
-        float camHeight = Camera.main.orthographicSize * 2f;
-        float camWidth = camHeight * Camera.main.aspect;
+        float camHeight = mainCam.orthographicSize * 2f;
+        float camWidth = camHeight * mainCam.aspect;
         Vector3 cameraMin = GetCameraMinWorldPosition(); // vasen alakulma
 
         // Lasketaan raja x-koordinaatille, jonka sisällä objekti on "vasemmassa reunassa"
@@ -3059,11 +3102,33 @@ true,
         return OnkoKameranOikeallaPuolella(go, 0.1f);
     }
 
-
     public bool OnkoKameranVasemmallaPuolella(GameObject go, float offset)
     {
+        Camera cam = mainCam;
+
+        // Calculate the left edge of the camera in world space
+        float cameraLeftX = cam.transform.position.x - cam.orthographicSize * cam.aspect;
+
+        // Get the object's visual bounds
+        Renderer renderer = go.GetComponentInChildren<Renderer>();
+        if (renderer == null)
+            return false; // No visual bounds
+
+        float objectRightX = renderer.bounds.max.x;
+
+        // Check if the object's right edge is completely to the left of the camera view + offset
+        return objectRightX < cameraLeftX - offset;
+    }
+
+
+
+    public bool OnkoKameranVasemmallaPuolellaVanha(GameObject go, float offset)
+    {
         Vector3 kameraminimi = GetCameraMinWorldPosition();
-        Dictionary<string, Vector3> positions = GetAllWorldPositions(transform);
+        //Dictionary<string, Vector3> positions = GetAllWorldPositions(transform);
+
+        Dictionary<Transform, Vector3> positions = GetAllWorldPositions(go.transform);
+
         //eli kaikki pitää olla vasemmalla jolloin true, muuten false
         foreach (var entry in positions)
         {
@@ -3092,12 +3157,36 @@ true,
 
     }
 
+    public bool OnkoKameranOikeallaPuolella(GameObject go, float offset)
+    {
+        Camera cam = mainCam;
 
-    public bool OnkoKameranOikeallaPuolella(GameObject go,float offset)
+        // Calculate the right edge of the camera in world space
+        float cameraRightX = cam.transform.position.x + cam.orthographicSize * cam.aspect;
+
+        // Get the object's Renderer (includes children)
+        Renderer renderer = go.GetComponentInChildren<Renderer>();
+        if (renderer == null)
+            return false; // No visible parts
+
+        float objectLeftX = renderer.bounds.min.x;
+
+        // Check if the object is fully to the right of the camera by offset
+        return objectLeftX > cameraRightX + offset;
+    }
+
+
+
+    public bool OnkoKameranOikeallaPuolellaVanha(GameObject go,float offset)
     {
         Vector3 kameraminimi = GetCameraMaxWorldPosition();
 
-        Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+        //Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+
+        Dictionary<Transform, Vector3> positions = GetAllWorldPositions(go.transform);
+
+
+
         //eli kaikki pitää olla vasemmalla jolloin true, muuten false
         foreach (var entry in positions)
         {
@@ -3127,8 +3216,30 @@ true,
 
     private bool OnkoKameranAlaPuolella(GameObject go, float offset)
     {
+        Camera cam = mainCam;
+
+        // Get the bottom Y of the camera in world space
+        float cameraBottomY = cam.transform.position.y - cam.orthographicSize;
+
+        // Get the Renderer (e.g., SpriteRenderer)
+        Renderer renderer = go.GetComponentInChildren<Renderer>();
+        if (renderer == null)
+            return false; // No visible parts to evaluate
+
+        float objectTopY = renderer.bounds.max.y;
+
+        // Return true if the whole object is below the bottom of the camera by offset
+        return objectTopY < cameraBottomY - offset;
+    }
+
+    private bool OnkoKameranAlaPuolellaVanha(GameObject go, float offset)
+    {
         Vector3 kameraminimi = GetCameraMinWorldPosition();
-        Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+        //Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+
+        Dictionary<Transform, Vector3> positions = GetAllWorldPositions(go.transform);
+
+
         foreach (var entry in positions)
         {
 
@@ -3155,10 +3266,34 @@ true,
 
     }
 
+
     private bool OnkoKameranYlaPuolella(GameObject go, float offset)
     {
+        Camera cam = mainCam;
+
+        // Get the top Y of the camera in world space
+        float cameraTopY = cam.transform.position.y + cam.orthographicSize;
+
+        // Try to get the Renderer bounds
+        Renderer renderer = go.GetComponentInChildren<Renderer>();
+        if (renderer == null)
+            return false; // No visible bounds to check
+
+        float objectBottomY = renderer.bounds.min.y;
+
+        return objectBottomY > cameraTopY + offset;
+    }
+
+
+
+    private bool OnkoKameranYlaPuolellaVanha(GameObject go, float offset)
+    {
         Vector3 kameramax = GetCameraMaxWorldPosition();
-        Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+        //Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
+
+        Dictionary<Transform, Vector3> positions = GetAllWorldPositions(go.transform);
+
+
         foreach (var entry in positions)
         {
 
@@ -3473,13 +3608,14 @@ true,
     public static string[] tagitjotkaAluksenShieldiTuhoaa = { "Apple", "Banana", "Cherry" };
 
 
-
+    /*
     public static float GetKameranSkrolliMaara()
     {
 
-        return Camera.main.GetComponent<Kamera>().skrollimaara;
+        return mainCam.GetComponent<Kamera>().skrollimaara;
 
     }
+    */
 
     public static Vector2 PalautaKaikkienCollidereidenKeskipiste(GameObject go)
     {
@@ -3509,7 +3645,7 @@ true,
     public float GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin(float alkuperainenNopeus)
     {
         return
-                    Camera.main.GetComponent<Kamera>().GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin(alkuperainenNopeus, 1.5f);
+                    mainCam.GetComponent<Kamera>().GetKorjattuArvoPerustuenSkrollimaaraanTamaSiksiEttaAmmusLentaaNopeamminVasemmaltaOikealleSilloinKunKameraLiikkuuNopeammin(alkuperainenNopeus, 1.5f);
 
 
 

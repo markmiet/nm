@@ -4842,8 +4842,8 @@ GameObject:
   - component: {fileID: 6677324041162820012}
   - component: {fileID: 3130448313051056783}
   - component: {fileID: 3419758873635484216}
-  - component: {fileID: 1688580068549664688}
   - component: {fileID: 2085740590482598612}
+  - component: {fileID: 3730993143506198496}
   m_Layer: 10
   m_Name: Siivet
   m_TagString: siivetvihollinenexplode
@@ -4992,33 +4992,6 @@ MonoBehaviour:
   sinamplitude: 1.5
   randomisointiprossa: 0.1
   rajaytysalivetime: 0.25
---- !u!50 &1688580068549664688
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4429820925521456841}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0.5
-  m_AngularDrag: 0.5
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!58 &2085740590482598612
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5051,6 +5024,33 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03329391, y: -0.063282035}
+  m_Offset: {x: -0.03329391, y: -0.07825811}
   serializedVersion: 2
-  m_Radius: 0.06340639
+  m_Radius: 0.07838246
+--- !u!50 &3730993143506198496
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4429820925521456841}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
