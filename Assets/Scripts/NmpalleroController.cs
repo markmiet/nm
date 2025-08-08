@@ -117,6 +117,6 @@ col.gameObject.GetComponent<IExplodable>();
             
         }
         RajaytaSprite(gameObject, 3, 3, 1.0f, 0.5f);
-      //  Destroy(gameObject);
+     //   Destroy(gameObject);
     }
 }

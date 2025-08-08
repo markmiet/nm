@@ -10079,6 +10079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9993b0d086e101b47b6ef33dadc19c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   boxsizeylhaalla: {x: 0.1, y: 0.1}
@@ -10450,7 +10451,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9019045805720289250, guid: 0c8878f615f981c4ebabcd116300fec0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

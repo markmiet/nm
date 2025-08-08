@@ -9,10 +9,11 @@ public class MainMenu : MonoBehaviour
     public GameObject loadteksti;
 
     public AudioSource menu;
-
+    public bool soitatausta = false;
     public void Start()
     {
-        if (menu!=null)
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (soitatausta && menu != null)
         {
             menu.loop = true;
             menu.Play();
@@ -26,10 +27,11 @@ public class MainMenu : MonoBehaviour
         Debug.Log("PlayLevel1");
 
         Time.timeScale = 1.0f; // Stop game time
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene("Level1");
         
 
-       // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void PlayLevel2()
@@ -37,7 +39,16 @@ public class MainMenu : MonoBehaviour
         Debug.Log("PlayLevel2");
 
         Time.timeScale = 1.0f; // Stop game time
-        SceneManager.LoadScene("Level2");
+        SceneManager.LoadScene("Level1");
+
+        GameObject[] allObstacles = GameObject.FindGameObjectsWithTag("alustag");
+        foreach (GameObject c in allObstacles)
+        {
+            if (c.GetComponent<AlusController>() != null)
+            {
+                c.GetComponent<AlusController>().enabloiboxcollider = false;
+            }
+        }
 
 
         // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -61,8 +72,13 @@ public class MainMenu : MonoBehaviour
 
     public void Update()
     {
-        if (CrossPlatformInputManager.GetButtonDown("Play1") || CrossPlatformInputManager.GetButtonUp("Play1")) {
+        if (CrossPlatformInputManager.GetButtonDown("Play1") || CrossPlatformInputManager.GetButtonUp("Play1")
+
+            )
+        {
             Debug.Log("GetButtonDown");
+
+            pistaboxcolliderpoispaalta = false;
 
             //SetTeksti("Loading");
 
@@ -72,6 +88,26 @@ public class MainMenu : MonoBehaviour
             // SetTeksti("");
 
         }
+        else if (
+            CrossPlatformInputManager.GetButtonDown("Play2") || CrossPlatformInputManager.GetButtonUp("Play2")
+
+            )
+        {
+            Debug.Log("GetButtonDown");
+
+            pistaboxcolliderpoispaalta = true;
+
+
+            //SetTeksti("Loading");
+
+            //PlayLevel1();
+            StartCoroutine(LoadLevelWithText("Loading..."));
+
+            // SetTeksti("");
+
+        }
+
+
         /*
         else if ( CrossPlatformInputManager.GetButton("Play1"))
         {
@@ -124,7 +160,7 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForEndOfFrame(); // Forces Unity to render this frame
 
         // Optional: wait a tiny bit longer to make sure the user sees it
-       // yield return new WaitForSeconds(0.1f);
+        // yield return new WaitForSeconds(0.1f);
 
         // Start async scene load
         //AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level1");
@@ -136,7 +172,24 @@ public class MainMenu : MonoBehaviour
         //    yield return null;
         //}
 
-       
+
     }
 
+    private bool pistaboxcolliderpoispaalta = false;
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log(scene);
+        if (scene.name.Equals("Level1"))
+        {
+            //GameManager.Instance.pistaboxcolliderpoispaalta = pistaboxcolliderpoispaalta;
+
+            GameObject alus = GameObject.FindWithTag("alustag");
+            if (pistaboxcolliderpoispaalta)
+            {
+                alus.GetComponent<AlusController>().enabloiboxcollider = false;
+            }
+            
+        }
+    }
 }

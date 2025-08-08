@@ -45,6 +45,8 @@ public class HitCounter : BaseController
     }
     public void Update()
     {
+
+
         TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
     }

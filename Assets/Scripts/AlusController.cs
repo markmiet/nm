@@ -2774,11 +2774,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //color.r = r;
         //color.g = g;
         //color.b = b;
-        damagenmaara += damagemaarakasvastatuskunsavutaan;
+        //antaa savuta, mutta ei kasvateta damagea :)
+      //  damagenmaara += damagemaarakasvastatuskunsavutaan;
         color.g = PalautaGvari();
 
         m_SpriteRenderer.color = color;
-        PaivitaDamagePalkkia();
+        //PaivitaDamagePalkkia();
+
+        //sitten jos tehdään damagepalkilla niin sitten vasta vaikuttaa damage määrään
 
     }
     private bool OnkoSeinaOikealla()
@@ -2855,8 +2858,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         //}
      
-        if (enabloiboxcollider && BaseController.TuhoaakoAluksen(col.collider.tag))
+        if (enabloiboxcollider && col.enabled && BaseController.TuhoaakoAluksen(col.collider.tag))
         {
+            GameObject go = col.gameObject;
+            
+            GameObject klooni = Instantiate(go);
+            Collider2D[] ccc=  klooni.GetComponents<Collider2D>();
+            foreach(Collider2D c in ccc)
+            {
+                c.enabled = false;
+            }
+            klooni.transform.localScale = klooni.transform.localScale * 3f;
+
+            SetruudunvasenylakulmatekstiTextMeshProUGUI("col="+go.name);
+
             Debug.Log("collisiontagi joka tuhoaa=" + col.collider.tag);
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
@@ -2881,7 +2896,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //     enemyHealth.TakeDamage(10);
         // }
         //   }
-
+        //eli tämä tarvitaan sitä kalaskeletonia varten
         if (enabloiboxcollider &&  other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
         {
             damagenmaara += maksimimaaradamageajokakestetaan;
@@ -3086,8 +3101,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     {
        // Debug.Log("OnTriggerEnter2D " + col);
 
-        if (enabloiboxcollider && BaseController.TuhoaakoAluksen(col.tag))
+        if (enabloiboxcollider && col.enabled && BaseController.TuhoaakoAluksen(col.tag))
         {
+            GameObject go = col.gameObject;
+
+
             Debug.Log("collisiontagi joka tuhoaa=" + col.tag);
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();

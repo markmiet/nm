@@ -266,12 +266,19 @@ public class GameManager : BaseController
     {
         if (lives > 0)
         {
+            /*
             GameObject alus = GameObject.FindWithTag("Player");
             if (alus != null)
             {
             //    alus.GetComponent<AlusController>().SetElamienMaara(lives);
                 // Resetoi damaget tässä
+
+                if (pistaboxcolliderpoispaalta)
+                {
+                    alus.GetComponent<AlusController>().enabloiboxcollider = false;
+                }
             }
+            */
 
             /*
             GameObject scoreGameObject = GameObject.Find("ScoreText"); // Use the correct name

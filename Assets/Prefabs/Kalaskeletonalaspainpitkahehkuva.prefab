@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7342497266035935814}
   - component: {fileID: 3106064032298843331}
   - component: {fileID: 1792598509260228201}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_1
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -85,8 +85,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 150
+    m_UpperAngle: 200
 --- !u!58 &3106064032298843331
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -134,10 +134,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &1564642896346204646
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +159,7 @@ GameObject:
   - component: {fileID: 662525053598459548}
   - component: {fileID: 347556068670906728}
   - component: {fileID: 6310063891865950470}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_2
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -188,7 +196,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -216,15 +224,15 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.68446237, y: -0.04437815}
+  m_ConnectedAnchor: {x: -0.6844604, y: -0.04437647}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 10
+    m_UpperAngle: 0
 --- !u!58 &347556068670906728
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -272,10 +280,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &1935503235823541703
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +305,7 @@ GameObject:
   - component: {fileID: 3856523556693626002}
   - component: {fileID: 1678934182435160001}
   - component: {fileID: 1013519380239495467}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_5
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -326,7 +342,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -354,15 +370,15 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.921001, y: 0.00000068545324}
+  m_ConnectedAnchor: {x: 0.9210017, y: 0.000008066183}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 10
+    m_UpperAngle: 0
 --- !u!58 &1678934182435160001
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -410,10 +426,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &3005960115081227347
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +451,7 @@ GameObject:
   - component: {fileID: 7748113501881802924}
   - component: {fileID: 7543280730645121669}
   - component: {fileID: 4783474291497261477}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_4
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -464,7 +488,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -492,15 +516,15 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.8089701, y: 0.00000050663925}
+  m_ConnectedAnchor: {x: 0.8089665, y: -0.0000023040916}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 10
+    m_UpperAngle: 0
 --- !u!58 &7543280730645121669
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -548,10 +572,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &3136754979068625250
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,7 +597,7 @@ GameObject:
   - component: {fileID: 3121567289318341570}
   - component: {fileID: 2396773020574746422}
   - component: {fileID: 7852685236858502886}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_3
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -602,7 +634,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -630,15 +662,15 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.777682, y: 0.00000011920933}
+  m_ConnectedAnchor: {x: 0.77768624, y: -0.0000010784953}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 10
+    m_UpperAngle: 0
 --- !u!58 &2396773020574746422
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -686,10 +718,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &3157940040573357101
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,7 +743,7 @@ GameObject:
   - component: {fileID: 6374283526244486065}
   - component: {fileID: 1354283314020007815}
   - component: {fileID: 119532721979419671}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_7
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -740,7 +780,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -765,18 +805,18 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 5675792318911320862}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_BreakAction: 3
+  m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.94162714, y: 0.000001966953}
+  m_ConnectedAnchor: {x: 0.94163215, y: -0.0000032074745}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 20
+    m_UpperAngle: 0
 --- !u!58 &1354283314020007815
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -824,10 +864,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &4948184551557135737
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,7 +889,7 @@ GameObject:
   - component: {fileID: 4435309316779351892}
   - component: {fileID: 7641558031483419574}
   - component: {fileID: 8651593868523338015}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_6
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -878,7 +926,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -903,18 +951,18 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 2979355089164788962}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_BreakAction: 3
+  m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.0439404, y: 0.0000062733866}
+  m_ConnectedAnchor: {x: 1.043938, y: -0.00000091083336}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -10
-    m_UpperAngle: 10
+    m_LowerAngle: 10
+    m_UpperAngle: 0
 --- !u!58 &7641558031483419574
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -962,10 +1010,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &4959349520890395775
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +1034,7 @@ GameObject:
   - component: {fileID: 2865604992253948685}
   - component: {fileID: 2308298515277429080}
   - component: {fileID: 8002939148847555797}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Anchor
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1015,7 +1071,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 0.1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1043,15 +1099,15 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -64.352455, y: 4.0203524}
+  m_ConnectedAnchor: {x: -145.58977, y: 5.4305263}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: 50
+    m_UpperAngle: 120
 --- !u!114 &8002939148847555797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,10 +1120,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &6480704542879379006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,7 +1150,7 @@ GameObject:
   - component: {fileID: 8510493099976572356}
   - component: {fileID: 4205597600161226235}
   - component: {fileID: 7306407767548301717}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bone_8
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1148,10 +1212,10 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 5908597939246025331}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_BreakAction: 3
+  m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.2894894, y: -0.0000032186501}
+  m_ConnectedAnchor: {x: 1.2894852, y: 0.0000059660515}
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 2
@@ -1207,11 +1271,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c245591ae1f0fc24fa59113a684e764f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  forceMin: 5
-  forceMax: 10
-  maxSpeed: 2
+  forceMin: 35
+  forceMax: 40
+  maxSpeed: 5
   rangetimemin: 0.5
   rangetimemax: 0.7
 --- !u!61 &739983474068804912
@@ -1830,7 +1895,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 150
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -5134,8 +5199,8 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 253439
-    maxCollisionShapes: 256
+      m_Bits: 8
+    maxCollisionShapes: 32
     quality: 0
     voxelSize: 0.5
     collisionMessages: 1
@@ -6200,10 +6265,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
 --- !u!1 &7328802966418509897
 GameObject:
   m_ObjectHideFlags: 0
@@ -6216,7 +6289,8 @@ GameObject:
   - component: {fileID: 1865820523151365260}
   - component: {fileID: 1843781103014683477}
   - component: {fileID: 4514931212545512597}
-  m_Layer: 0
+  - component: {fileID: 774122104271994897}
+  m_Layer: 10
   m_Name: Kalaskeletonalaspainpitkahehkuva
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -6338,17 +6412,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  hitThreshold: 100
+  hitThreshold: 50
+  hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 0.5
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 5
   sirpalemass: 1
-  gravityscale: 0.5
+  gravityscale: 0.2
   adddestroycontroller: 1
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+--- !u!114 &774122104271994897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328802966418509897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57524dae2ec2d9342907fecd35c14d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
+  voikotoimia: 0

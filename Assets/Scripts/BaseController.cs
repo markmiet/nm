@@ -2946,6 +2946,68 @@ true,
     }
 
 
+    public bool OnkoOkToimiaUusiKasitteleMyosChildienRigidBodyt(GameObject go)
+    {
+
+
+
+        if (go == null)
+        {
+            Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
+            return false;
+        }
+
+
+        onkoOkToimiaTarkistuksensyklilaskuri += Time.deltaTime;
+        if (onkoOkToimiaTarkistuksensyklilaskuri >= onkoOkToimiaTarkistussykli)
+        {
+            onkoOkToimiaTarkistuksensyklilaskuri = 0.0f;
+        }
+        else
+        {
+            return viimeinentarkistustulos;
+        }
+
+
+        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+        bool nakyvilla = false;
+        if (s!=null)
+        {
+            nakyvilla = IsPartiallyVisibleFrom(s, mainCam);
+        }
+        else
+        {
+            nakyvilla=!IsOffScreen();
+        }
+
+        if (!nakyvilla)
+        {
+            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
+            foreach(Rigidbody2D r in rigidbodies)
+            {
+                if (r != null)
+                {
+                    r.simulated = false;
+                }
+            }
+
+        }
+        else
+        {
+            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
+            foreach (Rigidbody2D r in rigidbodies)
+            {
+                if (r != null)
+                {
+                    r.simulated = true;
+                }
+            }
+        }
+        viimeinentarkistustulos = nakyvilla;
+        return nakyvilla;
+    }
+
+
     private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
     {
         if (!renderer || !camera)
@@ -2975,6 +3037,78 @@ true,
             spriteBounds.size.y
         ));
     }
+
+    private bool IsPartiallyVisibleFrom3d(SpriteRenderer renderer, Camera camera)
+    {
+        if (!renderer || !camera)
+            return false;
+
+        Bounds spriteBounds = renderer.bounds;
+
+        spriteBounds.extents *= 2.0f;
+
+        float camHeight = camera.orthographicSize * 2;
+        float camWidth = camHeight * camera.aspect;
+        Vector3 camPosition = camera.transform.position;
+
+        Bounds cameraBounds = new Bounds(
+            camPosition,
+            new Vector3(camWidth, camHeight, float.MaxValue) // Infinite Z range for 2D
+        );
+
+        return cameraBounds.Intersects(spriteBounds);
+    }
+
+    private bool IsPartiallyVisibleFrom(SpriteRenderer renderer, Camera camera)
+    {
+        if (!renderer || !camera)
+            return false;
+
+        Bounds spriteBounds = renderer.bounds;
+        spriteBounds.extents *= 2.5f;
+
+        // Sprite rect in 2D (X/Y only)
+        Rect spriteRect = new Rect(
+            spriteBounds.min.x,
+            spriteBounds.min.y,
+            spriteBounds.size.x,
+            spriteBounds.size.y
+        );
+
+        // Get the center of the original rect
+        Vector2 center = spriteRect.center;
+
+        // Scale the size
+        Vector2 newSize = spriteRect.size * 2.0f;// tätä muutetaan vain
+
+        // Create a new rect centered at the same point
+        spriteRect = new Rect(
+            center - newSize / 2f,
+            newSize
+        );
+
+
+        // Camera rect in 2D (X/Y only)
+        float camHeight = camera.orthographicSize * 2f;
+        float camWidth = camHeight * camera.aspect;
+        Vector3 camPos = camera.transform.position;
+
+        Rect cameraRect = new Rect(
+            camPos.x - camWidth / 2f,
+            camPos.y - camHeight / 2f,
+            camWidth,
+            camHeight
+        );
+
+        // Check if the 2D rectangles overlap
+        bool ret= cameraRect.Overlaps(spriteRect);
+
+
+       // Debug.Log("overlap"+ ret);
+        
+        return ret;
+    }
+
 
 
 

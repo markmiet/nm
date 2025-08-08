@@ -21,10 +21,14 @@ public class RandomForcesController : BaseController
         rb = GetComponent<Rigidbody2D>();
         target = PalautaAlus().transform;
         nextForceTime = Time.time + Random.Range(rangetimemin, rangetimemax);
+        okc = GetComponentInParent<OnkoOkToimiaController>();
     }
+    private OnkoOkToimiaController okc;
     void Update()
     {
-        if (Time.time >= nextForceTime)
+ 
+
+        if (okc!=null && okc.voikotoimia && Time.time >= nextForceTime)
         {
             ApplyRandomForce();
             nextForceTime = Time.time + Random.Range(rangetimemin, rangetimemax);

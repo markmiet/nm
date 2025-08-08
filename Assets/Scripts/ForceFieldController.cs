@@ -13,7 +13,7 @@ public class ForceFieldController : MonoBehaviour
 
 
     public int hittienmaaraJokaKestetaan = 10;
-    private int hittienmaara = 0;
+    public int hittienmaara = 0;
 
     //0.8,0,1, 0.8
     // public bool partikkelitEnabloituna = true;
@@ -33,6 +33,7 @@ public class ForceFieldController : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("start ff " + gameObject.name);
         particleSystem = GetComponent<ParticleSystem>();
         // main = particleSystem.main;
         // var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
@@ -42,30 +43,74 @@ public class ForceFieldController : MonoBehaviour
         //    renderer.material.color = new Color(color.r, color.g, color.b, alphaValueAloitusArvo);
         //}
         alus = GameObject.FindGameObjectWithTag("alustag");
+        renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
         VaihdaAlphaa();
         SetOnkotoiminnassa(IsOnkotoiminnassa());
         // SetActive(false);
-    }
 
+    }
+    private ParticleSystemRenderer renderer;
     // Update is called once per frame
     void Update()
     {
+
+
+        //float alphaValueNykyarvo = Mathf.Lerp(alphaValueAloitusArvo, alphaValueLopetusArvo, (float)hittienmaara / hittienmaaraJokaKestetaan);
         /*
-        if (partikkelitEnabloituna)
+        main = particleSystem.main;
+      
+        if (renderer != null && renderer.material != null)
         {
-            if (!particleSystem.isPlaying)
-            {
-                particleSystem.Play();
-            }
-
-
-        }
-        else
-        {
-            particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            Color color = renderer.material.color;
+            renderer.material.color = new Color(color.r, color.g, color.b, alphaValueNykyarvo);
         }
         */
+
+        if (hittienmaara + 1 >= hittienmaaraJokaKestetaan)
+        {
+            //vilkuta
+            timer += Time.deltaTime;
+
+            if (timer >= blinkInterval)
+            {
+                timer = 0f;
+                visible = !visible;
+
+                Color color = renderer.material.color;
+                float newAlpha = visible ? 1f : 0f;
+
+                renderer.material.color = new Color(color.r, color.g, color.b, newAlpha);
+            }
+        }
+
     }
+
+    public float blinkInterval = 0.2f;
+
+    private float timer = 0f;
+    private bool visible = true;
+
+
+    /*
+    if (partikkelitEnabloituna)
+    {
+        if (!particleSystem.isPlaying)
+        {
+            particleSystem.Play();
+        }
+
+
+    }
+    else
+    {
+        particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+    */
+
+
+
+
+
     /*
     void OnParticleCollision(GameObject other)
     {
@@ -360,8 +405,9 @@ public class ForceFieldController : MonoBehaviour
                     //Destroy(col.gameObject);
 
                 }
-                PoltaValo();
                 hittienmaara++;
+                PoltaValo();
+                
                 Debug.Log("hittienmäärä=" + hittienmaara);
                 //tähän se himmennys eli partikkelien määräää vähennetään tms
                 if (hittienmaara > hittienmaaraJokaKestetaan)
@@ -392,7 +438,19 @@ public class ForceFieldController : MonoBehaviour
 
         if (active)
         {
-            particleSystem.Play();
+            /*
+                public float alphaValueAloitusArvo = 0.5f;
+    public float alphaValueLopetusArvo = 0.1f;
+    public float alphaValueNykyarvo = 0.5f;
+*/
+            alphaValueNykyarvo = alphaValueAloitusArvo;
+            hittienmaara = 0;
+            PoltaValo();
+
+            if (!particleSystem.isPlaying)
+            {
+                particleSystem.Play();
+            }
         }
         else
         {
@@ -400,10 +458,6 @@ public class ForceFieldController : MonoBehaviour
 
             particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
-
-
-
-
     }
 
     public bool IsOnkotoiminnassa()
@@ -439,10 +493,14 @@ public class ForceFieldController : MonoBehaviour
 
     private void VaihdaAlphaa()
     {
+        if (particleSystem==null)
+        {
+            return;
+        }
         alphaValueNykyarvo = Mathf.Lerp(alphaValueAloitusArvo, alphaValueLopetusArvo, (float)hittienmaara / hittienmaaraJokaKestetaan);
 
         main = particleSystem.main;
-        var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
+        //var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
         if (renderer != null && renderer.material != null)
         {
             Color color = renderer.material.color;
