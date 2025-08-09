@@ -2791,9 +2791,13 @@ true,
         bool tuhoaJosKameranVasemmallaPuolella = true;
         float offsettijokasallitaanvasemmallakavaisyyn = 1.5f;
         bool tuhoaJosKameranAlapuolella = true;
-        float offsettijokasallitaanAlhaallaKavaisyyn = 0.1f;
+        //float offsettijokasallitaanAlhaallaKavaisyyn = 0.1f;
+        float offsettijokasallitaanAlhaallaKavaisyyn = 5.0f;
+
         bool tuhoaJosKameranYlapuolella = true;
-        float offsettijokasallitaanYlapuolellaKavaisyyn = 2.0f;
+        //float offsettijokasallitaanYlapuolellaKavaisyyn = 2.0f;
+        float offsettijokasallitaanYlapuolellaKavaisyyn = 5.0f;
+
         bool tuhoajosliiankauanhengissa = true;
         float hengissaolonraja = 600f;//tarkista
         float tarkistussykli = 0.01f;
@@ -3501,7 +3505,7 @@ true,
                 if (r != null)
                 {
                     float speed = r.velocity.magnitude;
-                    if (speed <= nopeusJonkaAlletuhotaan)
+                     if (speed <= nopeusJonkaAlletuhotaan)
                     {
                         if (prefap==null)
                         {

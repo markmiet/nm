@@ -33,7 +33,7 @@ public class RandomForcesController : BaseController
             ApplyRandomForce();
             nextForceTime = Time.time + Random.Range(rangetimemin, rangetimemax);
         }
-        
+
     }
 
     void ApplyRandomForce()
@@ -44,7 +44,6 @@ public class RandomForcesController : BaseController
 
         // Apply force to the main object
         rb.AddForce(directionToTarget * randomForce, ForceMode2D.Impulse);
-
 
 
         // After applying the force, clamp the speed of this object
