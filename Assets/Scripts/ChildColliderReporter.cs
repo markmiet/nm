@@ -20,6 +20,9 @@ public class ChildColliderReporter : BaseController
     public float oikeallemenemisenVelocityrajaarvo = 3.0f;
     public float rajoituskerto = 0.1f;
     private Rigidbody2D rb;
+
+    public float aiheutavoimaaRigidbodyyn = 0.0f;
+
     private bool PitaakoLiekinTulla()
     {
         float prossa = PalautaHittienMaaraKokonaisuudestaProsentteina();
@@ -70,7 +73,32 @@ public class ChildColliderReporter : BaseController
     }
     */
 
-    public bool RegisterHit(Vector2 contactPoint)
+    private void AiheutaVoimaa(GameObject go)
+    {
+        if (rb!=null && aiheutavoimaaRigidbodyyn > 0.0f)
+        {
+            Rigidbody2D r =
+            go.GetComponent<Rigidbody2D>();
+            if (r!=null)
+            {
+
+                Vector2 suunta = r.velocity.normalized;
+
+                rb.AddForce(suunta * aiheutavoimaaRigidbodyyn, ForceMode2D.Impulse);
+            }
+            /*
+            Vector2 alku = piipunToinenPaa.transform.position;
+            Vector2 loppu = piipunpaaJohonGameObjectInstantioidaan.transform.position;
+
+            Vector2 suunta = alku - loppu;
+
+           rb.AddForce(suunta * aiheutavoimaaRigidbodyyn, ForceMode2D.Impulse);
+            */
+        }
+    }
+
+
+    public bool RegisterHit(Vector2 contactPoint,GameObject go)
     {
         bool ret1 = false;
         if (parent!=null)
@@ -116,7 +144,7 @@ public class ChildColliderReporter : BaseController
             liekki.transform.SetParent(transform, worldPositionStays: true);
             Destroy(liekki, osumanSavunKesto); // HUOM: k‰ytet‰‰n samaa arvoa
         }
-
+        AiheutaVoimaa(go);
 
         return ret1 || ret2;
         //80 alkaa palamaan

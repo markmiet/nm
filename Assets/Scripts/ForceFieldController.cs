@@ -323,7 +323,8 @@ public class ForceFieldController : MonoBehaviour
                     {
                         break;
                     }
-                    childColliderReporter.RegisterHit(estimatedContactPoint);
+                    
+                    childColliderReporter.RegisterHit(estimatedContactPoint,col.gameObject);
                     hittienmaara++;
                     if (hittienmaara >= hittienmaaraJokaKestetaan)
                     {

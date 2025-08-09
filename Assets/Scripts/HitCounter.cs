@@ -13,8 +13,37 @@ public class HitCounter : BaseController
     public GameObject osumanSavu;
     public float osumanSavunKesto = 0.5f;
 
+    public bool rekisteroihittivainjosobjektillaEiOleJointtia = false;
+
+
+    private bool JointEhtoToteutuu()
+    {
+        if (!rekisteroihittivainjosobjektillaEiOleJointtia)
+        {
+            return true;
+        }
+        Joint2D[] j=
+        GetComponents<Joint2D>();
+        foreach(Joint2D jj in j)
+        {
+            if (jj.enabled && jj.connectedBody!=null)
+            {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+
     public bool RegisterHit()
     {
+        if (!JointEhtoToteutuu())
+        {
+            return false;
+        }
+
         hitCount++;
         if (hitCount >= hitThreshold)
         {
@@ -43,11 +72,16 @@ public class HitCounter : BaseController
         return ret;
 
     }
+
+    public bool tuhoajosollaanKameranVasemmallaPuolella = true;
     public void Update()
     {
 
+        if (tuhoajosollaanKameranVasemmallaPuolella)
+        {
+            TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
-        TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+        }
 
     }
 

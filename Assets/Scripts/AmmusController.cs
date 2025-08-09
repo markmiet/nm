@@ -200,9 +200,9 @@ public class AmmusController : BaseController, IExplodable
                     ChildColliderReporter childColliderReporter = col.gameObject.GetComponent<ChildColliderReporter>();
                     if (childColliderReporter != null)
                     {
-
+                        
                      
-                        childColliderReporter.RegisterHit(contactPoint);
+                        childColliderReporter.RegisterHit(contactPoint, col.collider.gameObject);
 
                     }
                     else

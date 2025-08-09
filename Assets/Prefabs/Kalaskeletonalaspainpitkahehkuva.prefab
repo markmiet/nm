@@ -50,7 +50,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -61,7 +61,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!233 &7342497266035935814
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -83,7 +83,7 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 150
     m_UpperAngle: 200
@@ -119,9 +119,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000641296, y: -0.0183642}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.20247242
 --- !u!114 &1792598509260228201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &1564642896346204646
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +197,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -207,7 +208,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!233 &662525053598459548
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -224,12 +225,12 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.6844604, y: -0.04437647}
+  m_ConnectedAnchor: {x: -0.68446076, y: -0.044378884}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 10
     m_UpperAngle: 0
@@ -265,9 +266,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000000015832127, y: 0.012648523}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.19787842
 --- !u!114 &6310063891865950470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +293,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &1935503235823541703
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +344,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -370,12 +372,12 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.9210017, y: 0.000008066183}
+  m_ConnectedAnchor: {x: 0.9210004, y: 0.0000002970917}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 10
     m_UpperAngle: 0
@@ -411,9 +413,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0007335323, y: 0.037389886}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.30054867
 --- !u!114 &1013519380239495467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +440,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &3005960115081227347
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +491,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -516,12 +519,12 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.8089665, y: -0.0000023040916}
+  m_ConnectedAnchor: {x: 0.80896986, y: 0.0000017378469}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 10
     m_UpperAngle: 0
@@ -557,9 +560,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0001333098, y: 0.011999042}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.23495783
 --- !u!114 &4783474291497261477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,6 +587,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &3136754979068625250
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +638,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -662,12 +666,12 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.77768624, y: -0.0000010784953}
+  m_ConnectedAnchor: {x: 0.7776871, y: -0.0000012829213}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 10
     m_UpperAngle: 0
@@ -703,9 +707,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.00090852287, y: 0.023924086}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.19994885
 --- !u!114 &7852685236858502886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,6 +734,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &3157940040573357101
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +785,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -808,12 +813,12 @@ HingeJoint2D:
   m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.94163215, y: -0.0000032074745}
+  m_ConnectedAnchor: {x: 0.9416283, y: 0.0000004973261}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 20
     m_UpperAngle: 0
@@ -849,9 +854,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0010884348, y: 0.06855272}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.36911
 --- !u!114 &119532721979419671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,6 +881,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &4948184551557135737
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +932,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -954,12 +960,12 @@ HingeJoint2D:
   m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.043938, y: -0.00000091083336}
+  m_ConnectedAnchor: {x: 1.0439394, y: 0.000006623562}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 10
     m_UpperAngle: 0
@@ -995,9 +1001,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0005418506, y: -0.02492554}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.30054867
 --- !u!114 &8651593868523338015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,6 +1028,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
 --- !u!1 &4959349520890395775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,6 +1041,7 @@ GameObject:
   - component: {fileID: 2865604992253948685}
   - component: {fileID: 2308298515277429080}
   - component: {fileID: 8002939148847555797}
+  - component: {fileID: 1041907825264728747}
   m_Layer: 10
   m_Name: Anchor
   m_TagString: haukivihollinenexplodetag
@@ -1071,7 +1079,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1082,7 +1090,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!233 &2308298515277429080
 HingeJoint2D:
   m_ObjectHideFlags: 0
@@ -1099,12 +1107,12 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -145.58977, y: 5.4305263}
+  m_ConnectedAnchor: {x: -141.03894, y: 2.779534}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: 50
     m_UpperAngle: 120
@@ -1132,6 +1140,26 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 10
+--- !u!255 &1041907825264728747
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4959349520890395775}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 4237161474401075231}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_DampingRatio: 0
+  m_Frequency: 0
 --- !u!1 &6480704542879379006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1215,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1215,12 +1243,12 @@ HingeJoint2D:
   m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.2894852, y: 0.0000059660515}
+  m_ConnectedAnchor: {x: 1.2894833, y: -0.0000017136321}
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 2
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
     m_LowerAngle: -10
     m_UpperAngle: 10
@@ -1256,9 +1284,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000889442, y: 0.06600871}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.43398532
 --- !u!114 &5082545472597630072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,7 +1339,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.42784908, y: 0.07800436}
+  m_Offset: {x: 0.42784905, y: 0.03645964}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1322,7 +1350,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4199758, y: 0.53654003}
+  m_Size: {x: 2.4199758, y: 0.45345065}
   m_EdgeRadius: 0
 --- !u!198 &1093901169365490832
 ParticleSystem:
@@ -1407,7 +1435,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
+      scalar: 0.5
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -1895,7 +1923,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 150
+    maxNumParticles: 10
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -6277,6 +6305,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 20
 --- !u!1 &7328802966418509897
 GameObject:
   m_ObjectHideFlags: 0
@@ -6290,6 +6319,7 @@ GameObject:
   - component: {fileID: 1843781103014683477}
   - component: {fileID: 4514931212545512597}
   - component: {fileID: 774122104271994897}
+  - component: {fileID: 8536836273624329542}
   m_Layer: 10
   m_Name: Kalaskeletonalaspainpitkahehkuva
   m_TagString: haukivihollinenexplodetag
@@ -6307,7 +6337,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.60876137, w: 0.7933534}
   m_LocalPosition: {x: -68.2, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2844392205361782290}
@@ -6446,3 +6476,19 @@ MonoBehaviour:
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   voikotoimia: 0
+  viive: 0.5
+  toimiviiveella: 0
+--- !u!114 &8536836273624329542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328802966418509897}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a7b8ec15c5fa64297a71747b6f47db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 1
+  moveAmount: {x: -0.1, y: 0, z: 0}

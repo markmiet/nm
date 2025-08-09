@@ -191,7 +191,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
                     {
 
                         Vector2 contactPoint = col.GetContact(0).point;
-                        childColliderReporter.RegisterHit(contactPoint);
+                        childColliderReporter.RegisterHit(contactPoint, col.collider.gameObject);
 
                     }
                     else

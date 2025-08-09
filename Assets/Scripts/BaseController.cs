@@ -2789,7 +2789,7 @@ true,
         bool tuhoajosliianhidas = false;
         float nopeusJonkaAlletuhotaan = 10f;
         bool tuhoaJosKameranVasemmallaPuolella = true;
-        float offsettijokasallitaanvasemmallakavaisyyn = 0.5f;
+        float offsettijokasallitaanvasemmallakavaisyyn = 1.5f;
         bool tuhoaJosKameranAlapuolella = true;
         float offsettijokasallitaanAlhaallaKavaisyyn = 0.1f;
         bool tuhoaJosKameranYlapuolella = true;

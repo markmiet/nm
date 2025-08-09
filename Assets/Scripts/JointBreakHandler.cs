@@ -10,7 +10,7 @@ public class JointBreakHandler : MonoBehaviour
     private bool tehtyExplodeksi = false;
     private Rigidbody2D rb;
     public bool oneBreaksAllBreaks = false;
-
+    private AudioplayerController ad;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,6 +21,7 @@ public class JointBreakHandler : MonoBehaviour
             f.breakForce = Mathf.Infinity;// alunForce;
             f.breakTorque = Mathf.Infinity;// alunForce;
         }
+        ad = FindObjectOfType<AudioplayerController>();
     }
 
     private float aikalaskuri = 0f;
@@ -98,8 +99,8 @@ public class JointBreakHandler : MonoBehaviour
     {
         // Your custom logic when joint breaks
         // Example: play sound, spawn particles, notify game manager, etc.
-     //   Debug.Log("Custom break action triggered for: " + joint.name);
-
+        //   Debug.Log("Custom break action triggered for: " + joint.name);
+        ad.KolineKivetPlay();
 
         if (oneBreaksAllBreaks)
         {

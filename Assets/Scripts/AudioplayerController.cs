@@ -15,7 +15,7 @@ public class AudioplayerController : MonoBehaviour
 
     public AudioSource elamalisaa;
 
-
+    public AudioSource kolinakivet;
     void Start()
     {
         
@@ -35,7 +35,11 @@ public class AudioplayerController : MonoBehaviour
     {
         elamalisaa.Play();
     }
-
+    
+    public void KolineKivetPlay()
+    {
+       // kolinakivet.Play();
+    }
     public void TaustaMusiikkiPlay()
     {
         taustamusiikki.loop = true;  

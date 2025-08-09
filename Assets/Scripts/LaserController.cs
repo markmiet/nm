@@ -215,7 +215,7 @@ public class LaserController : BaseController
                         //tuhottujenVihollistenmaara = laserkaytossamontakotuhotaan;
 
                         bool tuhoituko=
-                            childColliderReporter.RegisterHit(contactPoint);
+                            childColliderReporter.RegisterHit(contactPoint,col.collider.gameObject);
                         if (!tuhoituko)
                         {
                             teeklooni = false;

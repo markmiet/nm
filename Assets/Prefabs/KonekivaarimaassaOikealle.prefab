@@ -193,6 +193,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 1
   tankinAmmus: {fileID: 4665176215325690238, guid: 42afbbbe4a82b7845946ed2576cb2eb9,
     type: 3}
   ammusmaara: 1
@@ -217,6 +218,7 @@ MonoBehaviour:
   teeHylsyja: 1
   piippuosoittaaVasemmalle: 1
   motorSpeedGain: 5
+  ampumisenjalkeinaikajolloinkulmaaeimuuteta: 1
   ignoraaAmmuttaessaAimingToleranceKokonaan: 0
 --- !u!233 &6438379370280498797
 HingeJoint2D:
@@ -672,6 +674,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 1
 --- !u!61 &7068941883837411069
 BoxCollider2D:
   m_ObjectHideFlags: 0
