@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class ParticleAttractor : MonoBehaviour
+public class ParticleAttractor : BaseController
 {
     public ParticleSystem particleSystem;  // Reference to your particle system
-    public Transform target;               // The target object
+    private Transform target;               // The target object
 
     private ParticleSystem.Particle[] particles;
     public float speed = 2f; // Adjust speed here
+
+    public void Start()
+    {
+        target = PalautaAlus().transform;
+    }
 
     void LateUpdate()
     {

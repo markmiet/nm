@@ -49,7 +49,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -142,7 +142,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.41154492
+  m_Distance: 0.41161105
   m_MaxDistanceOnly: 1
 --- !u!61 &1915785776112921557
 BoxCollider2D:
@@ -274,7 +274,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -524,7 +524,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -624,7 +624,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
-  aiheutavoimaaRigidbodyyn: 0.5
+  aiheutavoimaaRigidbodyyn: 5
 --- !u!232 &1220790815318334202
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -643,7 +643,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.6263564
+  m_Distance: 0.6263999
   m_MaxDistanceOnly: 1
 --- !u!58 &6770397292278071023
 CircleCollider2D:
@@ -729,7 +729,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -829,7 +829,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
-  aiheutavoimaaRigidbodyyn: 0.5
+  aiheutavoimaaRigidbodyyn: 5
 --- !u!232 &203384824133282972
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -848,7 +848,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.5526006
+  m_Distance: 0.55261296
   m_MaxDistanceOnly: 1
 --- !u!70 &5566276649611737512
 CapsuleCollider2D:
@@ -933,7 +933,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -1033,7 +1033,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
-  aiheutavoimaaRigidbodyyn: 0.5
+  aiheutavoimaaRigidbodyyn: 5
 --- !u!232 &2675732044525223022
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -1052,7 +1052,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.4853807
+  m_Distance: 0.48550686
   m_MaxDistanceOnly: 1
 --- !u!1 &3157940040573357101
 GameObject:
@@ -1103,7 +1103,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
-  aiheutavoimaaRigidbodyyn: 0.5
+  aiheutavoimaaRigidbodyyn: 5
 --- !u!232 &7564299808564879001
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -1222,7 +1222,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.7736876
+  m_Distance: 0.77372277
   m_MaxDistanceOnly: 1
 --- !u!70 &2763206584116502456
 CapsuleCollider2D:
@@ -1308,7 +1308,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -1408,7 +1408,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
-  aiheutavoimaaRigidbodyyn: 0.5
+  aiheutavoimaaRigidbodyyn: 5
 --- !u!232 &3612124720477903103
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -1427,7 +1427,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.5649833
+  m_Distance: 0.5650315
   m_MaxDistanceOnly: 1
 --- !u!70 &658368365755081687
 CapsuleCollider2D:
@@ -1589,7 +1589,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.04871303
+  m_Distance: 0.048852548
   m_MaxDistanceOnly: 1
 --- !u!61 &3208292863953170291
 BoxCollider2D:
@@ -1690,7 +1690,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -1780,11 +1780,11 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  forceMin: 35
-  forceMax: 55
-  maxSpeed: 5
-  rangetimemin: 0.3
-  rangetimemax: 0.5
+  forceMin: 40
+  forceMax: 60
+  maxSpeed: 10
+  rangetimemin: 0.1
+  rangetimemax: 0.2
 --- !u!61 &739983474068804912
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1838,8 +1838,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6480704542879379006}
   serializedVersion: 8
-  lengthInSec: 0.2
-  simulationSpeed: 4
+  lengthInSec: 0.4
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -1913,8 +1913,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.1
+      scalar: 0.4
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2084,8 +2084,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.25
+      scalar: 0.4
+      minScalar: 0.35
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2400,7 +2400,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
+    gravitySource: 1
     maxNumParticles: 0
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -2408,8 +2408,8 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -1
-      minScalar: 0
+      scalar: 0
+      minScalar: -1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2770,7 +2770,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    m_BurstCount: 2
+    m_BurstCount: 3
     m_Bursts:
     - serializedVersion: 2
       time: 0
@@ -2882,6 +2882,64 @@ ParticleSystem:
             weightedMode: 0
             inWeight: 0
             outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      cycleCount: 1
+      repeatInterval: 0.01
+      probability: 1
+    - serializedVersion: 2
+      time: 0.1
+      countCurve:
+        serializedVersion: 2
+        minMaxState: 3
+        scalar: 100
+        minScalar: 50
+        maxCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        minCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
@@ -6756,8 +6814,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07259893a0b61b948956f8d4778a8d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   particleSystem: {fileID: 1093901169365490832}
-  target: {fileID: 0}
   speed: 4
 --- !u!114 &7306407767548301717
 MonoBehaviour:
@@ -6784,7 +6844,7 @@ MonoBehaviour:
   rajoitaOikealleMenemista: 0
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
-  aiheutavoimaaRigidbodyyn: 0.5
+  aiheutavoimaaRigidbodyyn: 5
 --- !u!232 &2396865850026743341
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -6803,7 +6863,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.7736876
+  m_Distance: 0.77372277
   m_MaxDistanceOnly: 0
 --- !u!70 &8948521790529551370
 CapsuleCollider2D:
@@ -6853,6 +6913,8 @@ GameObject:
   - component: {fileID: 1843781103014683477}
   - component: {fileID: 4514931212545512597}
   - component: {fileID: 774122104271994897}
+  - component: {fileID: 1498056798682871275}
+  - component: {fileID: 8272495863849255242}
   m_Layer: 10
   m_Name: Kalaskeletonalaspainpitkahehkuva
   m_TagString: haukivihollinenexplodetag
@@ -6870,7 +6932,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.60876137, w: 0.7933534}
   m_LocalPosition: {x: -68.2, y: 3, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2844392205361782290}
@@ -6926,7 +6988,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 125d2285488c5ac4fb9ee9a1bd6abe2d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.90188676, g: 0.78106797, b: 0.78106797, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6978,10 +7040,9 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  hitThreshold: 25
+  hitThreshold: 1000
   hitCount: 0
-  explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
-    type: 3}
+  explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
@@ -7013,3 +7074,36 @@ MonoBehaviour:
   voikotoimia: 0
   viive: 0.5
   toimiviiveella: 0
+--- !u!114 &1498056798682871275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328802966418509897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveamount: 0.44
+  dissolveScale: 113
+  verficaldissolve: 0.3
+--- !u!114 &8272495863849255242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328802966418509897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c5b9a086769f84fadc873e51e3a96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
+  bone8: {fileID: 6480704542879379006}
+  distancemin: 2
+  distancemax: 10
