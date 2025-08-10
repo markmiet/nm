@@ -15,6 +15,18 @@ public class HitCounter : BaseController
 
     public bool rekisteroihittivainjosobjektillaEiOleJointtia = false;
 
+    private DissolveMatController p;
+    private float dissolveoriginal;
+    public void Start()
+    {
+        p = GetComponent<DissolveMatController>();
+        if (p != null)
+        {
+            dissolveoriginal = p.dissolveamount;
+        }
+        SaadaDissolveAmountVerrattunaOsumiin();
+    }
+
 
     private bool JointEhtoToteutuu()
     {
@@ -53,6 +65,7 @@ public class HitCounter : BaseController
             Destroy(gameObject);
             return true;
         }
+        SaadaDissolveAmountVerrattunaOsumiin();
         return false;
     }
     public bool RegisterHit(Vector2 contactPoint)
@@ -69,6 +82,7 @@ public class HitCounter : BaseController
             GameObject instanssi2 = Instantiate(osumanSavu, contactPoint, Quaternion.identity);
             Destroy(instanssi2, osumanSavunKesto);
         }
+        SaadaDissolveAmountVerrattunaOsumiin();
         return ret;
 
     }
@@ -152,5 +166,21 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
 
     public bool teerajaytasprite = true;
     public bool teeExplosion = false;
+
+
+    public bool saadaDissolveamount = false;
+
+    private void SaadaDissolveAmountVerrattunaOsumiin()
+    {
+        if (saadaDissolveamount && p != null)
+        {
+            //float prosentit = ( (float)hitCount / (float)hitThreshold) * 100.0f;
+            float prosentit = Mathf.Clamp01(hitCount / (float)hitThreshold) * 100f;
+            float maksimidissolve = dissolveoriginal;
+            float minimidissolve = 0.0f;
+            float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
+            p.dissolveamount = uusiarvo;
+        }
+    }
 
 }

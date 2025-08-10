@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8100783798141651438}
   - component: {fileID: 6944476239486967549}
   - component: {fileID: 3499659908122711092}
+  - component: {fileID: 7804559058819995237}
+  - component: {fileID: 6926932030351493162}
   m_Layer: 12
   m_Name: Vihollinenlaserylos
   m_TagString: makitavihollinenammusexplodetag
@@ -31,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 20, z: 1}
+  m_LocalScale: {x: 0.9, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 272ba847f100d4251bb8260575189042, type: 2}
+  - {fileID: 2100000, guid: 23fd3f0174cec644fb9831d5d499f997, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: ffddf61c9622c9a3981beb9a8bdf2cba, type: 3}
-  m_Color: {r: 0.28536, g: 0.9622642, b: 0.1216447, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9229787cfaa3d6942a9506af52b3d315, type: 3}
+  m_Color: {r: 0.9607843, g: 0.2430186, b: 0.121568605, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -111,10 +113,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &8100783798141651438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.12}
+    oldSize: {x: 0.32, y: 1.28}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -193,7 +195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4665176215325690238}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b712f7dd5326bea4889952f7c4404395, type: 3}
   m_Name: 
@@ -201,3 +203,34 @@ MonoBehaviour:
   minAlpha: 0.2
   maxAlpha: 1
   speed: 5
+--- !u!114 &7804559058819995237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665176215325690238}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveamount: 0.8
+  dissolveScale: 1
+  verficaldissolve: 0
+--- !u!114 &6926932030351493162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665176215325690238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c98f5b3b979c15841902b9b1884223e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilinx: 1
+  tiliyx: 1
+  offsetx: 0
+  offsety: 0

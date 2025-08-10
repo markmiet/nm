@@ -42,12 +42,21 @@ public class ChildColliderReporter : BaseController
     }
 
 
-
+    //private DissolveMatController p;
+    //private float dissolveoriginal;
     protected virtual void Start()
     {
         parent = GetComponentInParent<HitCounter>();
         tamaHitCounter = GetComponent<HitCounter>();
         rb = GetComponent<Rigidbody2D>();
+        /*
+        p = GetComponent<DissolveMatController>();
+        if (p != null)
+        {
+            dissolveoriginal = p.dissolveamount;
+        }
+        SaadaDissolveAmountVerrattunaOsumiin();
+        */
     }
 
 
@@ -145,7 +154,7 @@ public class ChildColliderReporter : BaseController
             Destroy(liekki, osumanSavunKesto); // HUOM: k‰ytet‰‰n samaa arvoa
         }
         AiheutaVoimaa(go);
-
+        //SaadaDissolveAmountVerrattunaOsumiin();
         return ret1 || ret2;
         //80 alkaa palamaan
         //ent‰s joku 95% loput isot liekit viel‰ :)
@@ -190,6 +199,17 @@ public class ChildColliderReporter : BaseController
         return prossa * 100.0f;
 
     }
-
-
+    /*
+    private void SaadaDissolveAmountVerrattunaOsumiin()
+    {
+        if (p!=null)
+        {
+            float prosentit = PalautaHittienMaaraKokonaisuudestaProsentteina();
+            float maksimidissolve = dissolveoriginal;
+            float minimidissolve = 0.0f;
+            float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
+            p.dissolveamount = uusiarvo;
+        }
+    }
+    */
 }

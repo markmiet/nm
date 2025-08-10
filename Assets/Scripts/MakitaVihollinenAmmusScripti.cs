@@ -47,15 +47,16 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
         if (_material.HasProperty(BaseColorID))
         {
             // Color tint = _material.GetColor("_TintColor");
-            Debug.Log("Material does have _TintColor property");
-        
+            //   Debug.Log("Material does have _TintColor property");
+            _baseColor = _material.GetColor(BaseColorID);
+
         }
         else
         {
-            Debug.Log("Material does not have _TintColor property");
+        //    Debug.Log("Material does not have _TintColor property");
         }
 
-        _baseColor = _material.GetColor(BaseColorID);
+      
     }
     /*
 	private bool VihollinenCollideIgnore()
@@ -141,13 +142,17 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
         }
         //blink osuus
 
-        float t = Mathf.PingPong(Time.time * blinkSpeed, 1f);
-        float intensity = Mathf.Lerp(intensityMin, intensityMax, t);
+        if (_baseColor!=null)
+        {
+            float t = Mathf.PingPong(Time.time * blinkSpeed, 1f);
+            float intensity = Mathf.Lerp(intensityMin, intensityMax, t);
 
-        // Multiply the original color by the blinking intensity
-        Color blinkingColor = _baseColor * intensity;
+            // Multiply the original color by the blinking intensity
+            Color blinkingColor = _baseColor * intensity;
 
-        _material.SetColor(BaseColorID, blinkingColor);
+            _material.SetColor(BaseColorID, blinkingColor);
+        }
+
     }
 
 
