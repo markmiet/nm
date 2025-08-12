@@ -17,7 +17,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
     //blinkit
 
-    public GameObject prefap;
+  //  public GameObject prefap;
 
     private Rigidbody2D m_Rigidbody2D;
 
@@ -97,20 +97,21 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
     void Update()
     {
 
-//        Tuhoa(prefap,gameObject, speedjonkaalletuhotaan);
+        //        Tuhoa(prefap,gameObject, speedjonkaalletuhotaan);
 
-        
-        if (prefap != null)
-        {
-            bool tuhoutui=TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(prefap, gameObject, maksimiaikaMinkaVoiOllaHengissa, speedjonkaalletuhotaan);
 
-        }
-        
-        else
-        {
-            Tuhoa(gameObject, speedjonkaalletuhotaan);
-        }
-        
+        //  if (prefap != null)
+        //  {
+        //     bool tuhoutui=TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GetPrefap(), gameObject, maksimiaikaMinkaVoiOllaHengissa, speedjonkaalletuhotaan);
+        /*
+                }
+
+                else
+                {
+                    Tuhoa(gameObject, speedjonkaalletuhotaan);
+                }
+                */
+        Tuhoa(gameObject, speedjonkaalletuhotaan);
 
         /*
         if (Time.time >= nextCheckTime)
@@ -162,7 +163,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
         // Destroy the enemy
         //tuhoa = true;
         hengissaoloaika = 0.0f;
-        ObjectPoolManager.Instance.ReturnToPool(prefap, gameObject);
+        //ObjectPoolManager.Instance.ReturnToPool(prefap, gameObject);
         //Destroy(gameObject);
     }
     public float damagemaarajokaaiheutetaan = 1.0f;
@@ -219,7 +220,7 @@ col.gameObject.GetComponent<IDamagedable>();
         {
             //Destroy(gameObject);
             hengissaoloaika = 0.0f;
-            ObjectPoolManager.Instance.ReturnToPool(prefap, gameObject);
+            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
 
             //Explode();
 
@@ -306,7 +307,7 @@ col.gameObject.GetComponent<IDamagedable>();
         //0.5f
 
         hengissaoloaika = 0.0f;
-        ObjectPoolManager.Instance.ReturnToPool(prefap, gameObject);
+        ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
 
         //Destroy(gameObject);
 

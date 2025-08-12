@@ -9,7 +9,7 @@ public class HylsyController : BaseController
     {
         
     }
-    public GameObject prefap;
+  //  public GameObject prefap;
     public float elamisenmaksimiaikaraja = 5.0f;
 
     public float nopeudenalaraja = 0.0f;
@@ -17,7 +17,7 @@ public class HylsyController : BaseController
     void Update()
     {
         //liian hidas niin tuhoa
-        if (prefap!=null)
-        TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(prefap,gameObject, elamisenmaksimiaikaraja, nopeudenalaraja);
+    //    if (prefap!=null)
+        TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GetPrefap(),gameObject, elamisenmaksimiaikaraja, nopeudenalaraja);
     }
 }

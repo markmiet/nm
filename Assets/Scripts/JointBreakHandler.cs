@@ -118,6 +118,13 @@ public class JointBreakHandler : MonoBehaviour
                     c.prefabExplosion = explosion;
                     c.explode = true;
                 }
+                OutlineSmokeEmitter o=
+                jointtu.connectedBody.gameObject.GetComponent<OutlineSmokeEmitter>();
+                if (o!=null)
+                {
+                    o.emitInUpdate = true;
+                }
+
                 Destroy(jointtu);
 
             }
@@ -138,6 +145,12 @@ public class JointBreakHandler : MonoBehaviour
                 {
                     c.prefabExplosion = explosion;
                     c.explode = true;
+                }
+                OutlineSmokeEmitter o =
+joint.connectedBody.gameObject.GetComponent<OutlineSmokeEmitter>();
+                if (o != null)
+                {
+                    o.emitInUpdate = true;
                 }
                 Destroy(joint);
             }

@@ -251,13 +251,16 @@ public class TankkiPiippuController : ChildColliderReporter
 
             GameObject instanssi = ObjectPoolManager.Instance.GetFromPool(tankinAmmus, piipunpaaJohonGameObjectInstantioidaan.transform.position, Quaternion.identity);
 
+
+            instanssi.GetComponent<BaseController>().SetPreFap(tankinAmmus);
+
+
+
             IgnoraaCollisiotVihollistenValilla(instanssi, gameObject);
             MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();
             if (m != null)
             {
                 m.SetCreator(this.gameObject);
-                if (m.prefap==null)
-                     m.prefap = tankinAmmus;
 
 
                 //
@@ -281,9 +284,14 @@ public class TankkiPiippuController : ChildColliderReporter
                 //GameObject instanssihylsy = Instantiate(hylsy, hylsynpaikka.transform.position, Quaternion.identity);
 
                 GameObject instanssihylsy = ObjectPoolManager.Instance.GetFromPool(hylsy, hylsynpaikka.transform.position, Quaternion.identity);
-                if (instanssihylsy.GetComponent<HylsyController>().prefap==null)
+
+
+                instanssihylsy.GetComponent<BaseController>().SetPreFap(hylsy);
+                /*
+                if (instanssihylsy.GetComponent<HylsyController>().GetPrefap()==null)
                     instanssihylsy.GetComponent<HylsyController>().prefap = hylsy;
 
+                */
 
                 IgnoraaCollisiotVihollistenValilla(instanssihylsy, gameObject);
 

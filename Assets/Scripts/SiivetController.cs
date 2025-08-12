@@ -32,6 +32,9 @@ public class SiivetController : BaseController, IExplodable
     private BoxCollider2D boxCollider;
     private LayerMask collisionLayer;
 
+    public GameObject firePrefabbi;
+     public GameObject smokePrefab;
+
     private void Randomize()
     {
         float randomNumber = Random.Range(1 - randomisointiprossa, 1 + randomisointiprossa);
@@ -67,6 +70,26 @@ public class SiivetController : BaseController, IExplodable
             Debug.LogError("No BoxCollider2D found on this GameObject!");
         }
         Randomize();
+
+        if (firePrefabbi != null)
+        {
+            Vector2 k = transform.position;
+            k.y = 0.5f;
+           GameObject fire= Instantiate(firePrefabbi,k ,Quaternion.identity,transform);
+           fire.transform.localPosition = Vector3.zero;
+
+        }
+
+        if (smokePrefab!=null)
+        {
+
+            Vector2 k = transform.position;
+            k.y += 0.5f;
+            GameObject smoke = Instantiate(smokePrefab, transform.position, Quaternion.identity, transform);
+            smoke.transform.localPosition = Vector3.zero;
+        }
+
+
     }
 
     // Update is called once per frame

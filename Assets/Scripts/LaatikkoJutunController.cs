@@ -33,7 +33,13 @@ public class LaatikkoJutunController : BaseController
             laukaisusyklilaskuri += Time.deltaTime;
             if (laukaisusyklilaskuri >= laukaisuvali)
             {
-                GameObject instanssi=Instantiate(laukaistavaAsia, kohtajostaLaukaistaan.transform.position, Quaternion.identity);
+                //GameObject instanssi=Instantiate(laukaistavaAsia, kohtajostaLaukaistaan.transform.position, Quaternion.identity);
+                GameObject instanssi= ObjectPoolManager.Instance.GetFromPool(laukaistavaAsia,
+                    kohtajostaLaukaistaan.transform.position, Quaternion.identity);
+                instanssi.GetComponent<BaseController>().SetPreFap(laukaistavaAsia);
+
+
+
                 IgnoraaCollisiotVihollistenValilla(instanssi, gameObject);
                 //  GameObject tiili=GameObject.Find("Tilemap");
 

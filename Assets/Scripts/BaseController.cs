@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BaseController : MonoBehaviour
+public class BaseController : MonoBehaviour, ReturnToPoolAble
 {
     // Start is called before the first frame update
+
+    private GameObject prefap;
+    public GameObject GetPrefap()
+    {
+        return prefap;
+    }
+
+    public void SetPreFap(GameObject g)
+    {
+        prefap = g;
+    }
 
     void Start()
     {
@@ -2474,7 +2485,8 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         return distanceToMoveDown;
     }
-    public bool OlisikoylhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer)
+    public bool OlisikoylhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer,
+        RaycastHit2D[] hitsBuffer)
     {
         float yloskulunmaksi = CalculateMoveUpDistance(mainCam, transform.position);
         (float top, float bottom) = GetFromAllColliders();
@@ -2490,10 +2502,14 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             //Vector2 rayOrigin = new Vector2(transform.position.x, Mathf.Lerp(top, top+ yloskulunmaksi, t));
             Vector2 rayOrigin = new Vector2(transform.position.x, i);
             // Cast the ray
-            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+           // RaycastHit2D[] hits = Physics2D.RaycastNonAlloc(rayOrigin, Vector2.left, rayDistance, collisionLayer, hitsBuffer);
+
+            int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, Vector2.left, hitsBuffer, rayDistance, collisionLayer);
+
             bool onkoosumaa = false;
-            foreach (RaycastHit2D hit in hits)
+            for (int j = 0; j < hitCount; j++)
             {
+                RaycastHit2D hit = hitsBuffer[j];
                 // Visualize the ray in the Scene view
                 Debug.DrawRay(rayOrigin, Vector2.left * rayDistance, Color.green);
                 // Check if a relevant obstacle was detected
@@ -2515,7 +2531,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     }
 
-    public bool OlisikoalhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer)
+    public bool OlisikoalhaallaVaistotilaa(int rayCount, float rayDistance, LayerMask collisionLayer,RaycastHit2D[] hitsBuffer)
     {
         float yloskulunmaksi = CalculateMoveDownDistance(mainCam, transform.position);
         (float top, float bottom) = GetFromAllColliders();
@@ -2531,10 +2547,12 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             //Vector2 rayOrigin = new Vector2(transform.position.x, Mathf.Lerp(top, top+ yloskulunmaksi, t));
             Vector2 rayOrigin = new Vector2(transform.position.x, i);
             // Cast the ray
-            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.left, rayDistance, collisionLayer);
+            int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, Vector2.left, hitsBuffer, rayDistance, collisionLayer);
+
             bool onkoosumaa = false;
-            foreach (RaycastHit2D hit in hits)
+            for (int j = 0; j < hitCount; j++)
             {
+                RaycastHit2D hit = hitsBuffer[j];
                 // Visualize the ray in the Scene view
                 Debug.DrawRay(rayOrigin, Vector2.left * rayDistance, Color.green);
                 // Check if a relevant obstacle was detected
@@ -2606,7 +2624,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         if (vasen)
         {
             bool ylos =
-                OlisikoylhaallaVaistotilaa(rayCount, rayDistance, collisionLayer);
+                OlisikoylhaallaVaistotilaa(rayCount, rayDistance, collisionLayer, hitsBuffer);
 
             //Debug.Log("ylos=" + ylos);
             if (ylos)
@@ -2616,7 +2634,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             }
             else
             {
-                bool alas = OlisikoalhaallaVaistotilaa(rayCount, rayDistance, collisionLayer);
+                bool alas = OlisikoalhaallaVaistotilaa(rayCount, rayDistance, collisionLayer, hitsBuffer);
                 //  Debug.Log("alas=" + alas);
                 if (alas)
                 {
@@ -2695,6 +2713,10 @@ true,
         syklilaskuri += Time.deltaTime;
         if (syklilaskuri >= tarkistussykli)
         {
+            if (prefap == null)
+            {
+                prefap = GetPrefap();
+            }
 
             syklilaskuri = 0.0f;
             hengissaoloaika += tarkistussykli;
@@ -2703,8 +2725,17 @@ true,
             {
                 //Destroy(go);
                 hengissaoloaika = 0.0f;
-                ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                return true;
+                if (prefap == null)
+                {
+                    Destroy(go);
+                    return true;
+                }
+                else
+                {
+                    hengissaoloaika = 0.0f;
+                    ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                    return true;
+                }
             }
 
             bool liianylhaalla = OnkoKameranYlaPuolella(go, 5.0f);
@@ -3478,6 +3509,7 @@ true,
     {
 
         syklilaskuri += Time.deltaTime;
+        /*
         if (go.GetComponent<MakitaVihollinenAmmusScripti>() != null)
         {
             Rigidbody2D r = go.GetComponent<Rigidbody2D>();
@@ -3487,8 +3519,14 @@ true,
             //    Debug.Log("ammusnopesu=" + speed);
             }
         }
+        */
         if (syklilaskuri >= tarkistussykli)
         {
+            if (prefap==null)
+            {
+                prefap = GetPrefap();
+            }
+
             /*
             syklilaskuri = 0.0f;
             hengissaoloaika += tarkistussykli;

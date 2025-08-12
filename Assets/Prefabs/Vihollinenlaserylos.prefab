@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9229787cfaa3d6942a9506af52b3d315, type: 3}
-  m_Color: {r: 0.9607843, g: 0.2430186, b: 0.121568605, a: 1}
+  m_Color: {r: 0.7433963, g: 0.41354775, b: 0.35767177, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -135,7 +135,6 @@ MonoBehaviour:
   blinkSpeed: 2
   intensityMin: 0.5
   intensityMax: 1.5
-  prefap: {fileID: 4665176215325690238}
   kaannaObjektiLiikkeenSuuntaiseksi: 0
   speedjonkaalletuhotaan: 0.1
   maksimiaikaMinkaVoiOllaHengissa: 10
@@ -230,7 +229,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98f5b3b979c15841902b9b1884223e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilinx: 1
-  tiliyx: 1
-  offsetx: 0
-  offsety: 0
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
+  offsetkerto: 2
+  muutax: 1
+  muutay: 0
+  originelliVari: {r: 0, g: 0, b: 1, a: 1}
+  kloonivari: {r: 1, g: 0, b: 0, a: 1}

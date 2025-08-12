@@ -112,12 +112,12 @@ public class ChildColliderReporter : BaseController
         bool ret1 = false;
         if (parent!=null)
         {
-          parent.RegisterHit();
+          ret1=parent.RegisterHit();
         }
         bool ret2 = false;
         if (tamaHitCounter != null)
         {
-            tamaHitCounter.RegisterHit();
+            ret2=tamaHitCounter.RegisterHit();
         }
 
 

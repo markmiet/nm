@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaserController : BaseController
 {
-    public Color cloneColor;
+  //  public Color cloneColor;
     public int laserkaytossamontakotuhotaan = 3;
     private int tuhottujenmaara;
     //eli ei rigidbodya ollenkaan joo
@@ -64,7 +64,7 @@ public class LaserController : BaseController
                 //originalColor.a *= 0.1f;
 
                 // Apply new color
-                sr.color = cloneColor;
+              //  sr.color = cloneColor;
 
 
                 //vaihdetaanko klooni puolta pienemmäksi :) hihii tai väriä sehän on cooli tai jotain hih
@@ -158,6 +158,8 @@ public class LaserController : BaseController
 
         else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
+            Debug.Log("viholliseen tormatty lasercontroller " + olenklooni);
+
             bool teeklooni = true;
             //tormattyviholliseen = true;
             //	Debug.Log("explodeeeeeeeeeeeeeeeee ");
@@ -702,7 +704,7 @@ public class LaserController : BaseController
         //System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
         //Debug.Log(stackTrace.ToString());
 
-        Debug.Log("D olen klooni="+olenklooni);
+     //   Debug.Log("Destroy olen klooni="+olenklooni);
 
 
         if (aluksenluoma && alus != null)
