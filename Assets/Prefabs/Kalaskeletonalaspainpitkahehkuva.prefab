@@ -49,7 +49,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.7
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -59,10 +59,10 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 2
+    m_Bits: 4294967295
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!233 &7342497266035935814
 HingeJoint2D:
@@ -142,7 +142,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.41161105
+  m_Distance: 0.41158995
   m_MaxDistanceOnly: 1
 --- !u!61 &1915785776112921557
 BoxCollider2D:
@@ -274,7 +274,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.7
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -284,10 +284,10 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 2
+    m_Bits: 4294967295
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!233 &662525053598459548
 HingeJoint2D:
@@ -393,7 +393,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.46661377
+  m_Distance: 0.46664295
   m_MaxDistanceOnly: 1
 --- !u!61 &7561387785243834693
 BoxCollider2D:
@@ -643,7 +643,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.6263999
+  m_Distance: 0.62637645
   m_MaxDistanceOnly: 1
 --- !u!58 &6770397292278071023
 CircleCollider2D:
@@ -740,7 +740,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -848,7 +848,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.55261296
+  m_Distance: 0.55260485
   m_MaxDistanceOnly: 1
 --- !u!70 &5566276649611737512
 CapsuleCollider2D:
@@ -933,7 +933,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.7
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -943,10 +943,10 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 2
+    m_Bits: 4294967295
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!233 &3121567289318341570
 HingeJoint2D:
@@ -980,7 +980,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3136754979068625250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1052,7 +1052,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.48550686
+  m_Distance: 0.48550147
   m_MaxDistanceOnly: 1
 --- !u!1 &3157940040573357101
 GameObject:
@@ -1222,7 +1222,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.77372277
+  m_Distance: 0.77373093
   m_MaxDistanceOnly: 1
 --- !u!70 &2763206584116502456
 CapsuleCollider2D:
@@ -1427,7 +1427,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.5650315
+  m_Distance: 0.5650657
   m_MaxDistanceOnly: 1
 --- !u!70 &658368365755081687
 CapsuleCollider2D:
@@ -1512,7 +1512,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -1522,10 +1522,10 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 2
+    m_Bits: 4294967295
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!233 &2308298515277429080
 HingeJoint2D:
@@ -1589,7 +1589,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.048852548
+  m_Distance: 0.048843466
   m_MaxDistanceOnly: 1
 --- !u!61 &3208292863953170291
 BoxCollider2D:
@@ -6862,7 +6862,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.77372277
+  m_Distance: 0.77373093
   m_MaxDistanceOnly: 0
 --- !u!1 &7328802966418509897
 GameObject:
@@ -7020,6 +7020,7 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 0
   teeExplosion: 0
+  saadaDissolveamount: 0
 --- !u!114 &774122104271994897
 MonoBehaviour:
   m_ObjectHideFlags: 0

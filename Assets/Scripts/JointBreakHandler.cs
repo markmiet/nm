@@ -188,6 +188,13 @@ joint.connectedBody.gameObject.GetComponent<OutlineSmokeEmitter>();
                 c.prefabExplosion = explosion;
                 c.explode = true;
                 tehtyExplodeksi = true;
+
+                OutlineSmokeEmitter o =
+ transform.gameObject.GetComponent<OutlineSmokeEmitter>();
+                if (o != null)
+                {
+                    o.emitInUpdate = true;
+                }
             }
         }
     }
