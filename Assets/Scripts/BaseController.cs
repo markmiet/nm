@@ -1153,6 +1153,21 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 
     }
 
+    private AudioplayerController audioplayerControllerBaseControllerissa;
+
+    public AudioplayerController PalautaAudioplayerController()
+    {
+        if (audioplayerControllerBaseControllerissa != null)
+        {
+            return audioplayerControllerBaseControllerissa;
+        }
+        audioplayerControllerBaseControllerissa = FindObjectOfType<AudioplayerController>();
+        return audioplayerControllerBaseControllerissa;
+    }
+    
+
+
+
     private GameObject tilemaptieto;
 
     public GameObject PalautaTilemap()
@@ -2237,10 +2252,12 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
     public bool IsGameObjectVisible()
     {
-        if (mainCam == null) return false; // Ensure there is a main camera
-
+        
         // Get the main camera
         Camera mainCamera = mainCam;
+
+        if (mainCam == null) return false; // Ensure there is a main camera
+
 
         // Convert the target's position to viewport coordinates
         Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
@@ -3276,6 +3293,12 @@ true,
         Camera cam = mainCam;
 
         // Calculate the left edge of the camera in world space
+
+        if (cam==null)
+        {
+            Debug.Log("cami nuli");
+        }
+
         float cameraLeftX = cam.transform.position.x - cam.orthographicSize * cam.aspect;
 
         // Get the object's visual bounds
@@ -3507,6 +3530,11 @@ true,
         GameObject prefap
         )
     {
+
+        if (go==null)
+        {
+            Debug.Log("no nulli");
+        }
 
         syklilaskuri += Time.deltaTime;
         /*

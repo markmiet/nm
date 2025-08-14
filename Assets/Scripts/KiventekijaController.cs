@@ -24,7 +24,7 @@ public class KiventekijaController : BaseController
 
     void Update()
     {
-        bool nakyvissa = IsObjectInView(Camera.main, transform);
+        bool nakyvissa = IsGameObjectVisible();
         if (!nakyvissa) return;
 
         if (!pallottehty && !coroutineKaynnissa)
@@ -100,6 +100,7 @@ public class KiventekijaController : BaseController
         Gizmos.DrawWireCube((Vector2)transform.position + alabocenter, boxsizealhaalla);
     }
 
+    /*
     bool IsObjectInView(Camera cam, Transform objTransform)
     {
         Vector3 viewportPoint = cam.WorldToViewportPoint(objTransform.position);
@@ -107,4 +108,5 @@ public class KiventekijaController : BaseController
                viewportPoint.y > 0 && viewportPoint.y < 1 &&
                viewportPoint.z > 0;
     }
+    */
 }

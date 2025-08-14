@@ -56,8 +56,13 @@ public class DestroyController : BaseController,IExplodable
                 pieceRigidbody.simulated = false;
                 //if (explosionlaskuri >= explosiontahti)
                 //{
+                //tahan laitetaan vertical dissolve?
                     if (explosion!=null)
-                        Instantiate(explosion, transform.position, Quaternion.identity);
+                {
+                    GameObject instanssi=Instantiate(explosion, transform.position, Quaternion.identity);
+                    Destroy(instanssi, alivetime / 10);
+                }
+                        
                 //    explosionlaskuri = 0.0f;
                     Destroy(gameObject);
                 //}

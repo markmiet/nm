@@ -9,7 +9,7 @@ public class HaukiSilmaController : BaseController, IExplodable
 	private AudioplayerController ad;
 	void Start()
 	{
-		ad = FindObjectOfType<AudioplayerController>();
+		ad = PalautaAudioplayerController();
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 	}
 

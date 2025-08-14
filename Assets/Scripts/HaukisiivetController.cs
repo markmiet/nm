@@ -8,7 +8,7 @@ public class HaukisiivetController : BaseController, IExplodable
     private AudioplayerController ad;
     void Start()
     {
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
 
     }
 

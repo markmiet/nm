@@ -306,7 +306,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         bbc.Sort((a, b) => a.order.CompareTo(b.order));
 
 
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         ad.TaustaMusiikkiPlay();
 
         //TeeOptioni();

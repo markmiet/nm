@@ -21,7 +21,7 @@ public class BonusController : BaseController
     */
     void Start()
     {
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         /*
         _spriteRenderers = GetComponentsInParent<SpriteRenderer>();
         _materials = new Material[_spriteRenderers.Length];

@@ -58,7 +58,7 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
     }
     void Start()
     {
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         piipunboxit = GetComponentInChildren<BoxCollider2D>();
 
 

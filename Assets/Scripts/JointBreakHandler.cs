@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class JointBreakHandler : MonoBehaviour
+public class JointBreakHandler : BaseController
 {
     public float breakForce = 300f;
     public float breakTorque = 300f;
@@ -21,7 +21,7 @@ public class JointBreakHandler : MonoBehaviour
             f.breakForce = Mathf.Infinity;// alunForce;
             f.breakTorque = Mathf.Infinity;// alunForce;
         }
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
     }
 
     private float aikalaskuri = 0f;

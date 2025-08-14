@@ -49,7 +49,7 @@ public class PalleroScripti : BaseController, IExplodable
     private AudioplayerController ad;
     void Start()
     {
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         //aloituspisteen perusteella 
         //transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));

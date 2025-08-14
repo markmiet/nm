@@ -69,7 +69,7 @@ public class KattopalliController : BaseController, IExplodable
     void Start()
     {
 
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         //   mainCamera = Camera.main;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 

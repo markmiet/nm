@@ -38,10 +38,10 @@ public class AmmusController : BaseController, IExplodable
 
 
 
-    private AudioplayerController ad;
+    public AudioplayerController ad;
     void Start()
     {
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
         m_Animator = GetComponent<Animator>();

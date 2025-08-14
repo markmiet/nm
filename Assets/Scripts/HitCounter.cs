@@ -55,6 +55,7 @@ public class HitCounter : BaseController
         {
             return false;
         }
+        KaynnistaParticleEmitti();
 
         hitCount++;
         if (hitCount >= hitThreshold)
@@ -68,13 +69,31 @@ public class HitCounter : BaseController
         SaadaDissolveAmountVerrattunaOsumiin();
         return false;
     }
+  //  private float lasttimeexplosion = 0;
+  //  private float mindelayexplosions = 1.0f;
+
     public bool RegisterHit(Vector2 contactPoint)
     {
         bool ret=RegisterHit();
         if (teeExplosion && explosion != null)
         {
-            GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
-            Destroy(instanssi2, alivetime);
+            KaynnistaParticleEmitti();
+
+                if (explosion != null)
+                {
+                   // if (Time.time- lasttimeexplosion > mindelayexplosions)
+                   // {
+                    GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
+
+                   // lasttimeexplosion = Time.time;
+                    float kesto = Mathf.Min(alivetime, 0.5f);
+                    Destroy(instanssi2, kesto);
+                // }
+                Debug.Log("rajaytys");
+ 
+                }
+     
+
 
         }
         if (osumanSavu!=null)
@@ -93,7 +112,13 @@ public class HitCounter : BaseController
 
         if (tuhoajosollaanKameranVasemmallaPuolella)
         {
-            TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+
+            if (gameObject==null)
+            {
+                Debug.Log("no nulli");
+            }
+                TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+                
 
         }
 
@@ -124,8 +149,9 @@ public class HitCounter : BaseController
                     if (keski!=Vector2.zero)
                     {
                         GameObject instanssi2 = Instantiate(explosion, keski, Quaternion.identity);
-                        
-                        Destroy(instanssi2, alivetime);
+                        float kesto = Mathf.Min(alivetime, 0.5f);
+                        Destroy(instanssi2, kesto);
+                       
 
                     }
                     else
@@ -180,6 +206,37 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
             float minimidissolve = 0.0f;
             float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
             p.dissolveamount = uusiarvo;
+        }
+    }
+
+
+    public bool kaynnistaParticleEmit = false;
+
+
+
+    private Vector2 originellisizerange = Vector2.zero;
+    public void KaynnistaParticleEmitti()
+    {
+        if (kaynnistaParticleEmit)
+        {
+            OutlineSmokeEmitter o =
+            GetComponent<OutlineSmokeEmitter>();
+            if (o!=null)
+            {
+                o.emitInUpdate = true;
+                //sizeRange
+
+                float prosentit = Mathf.Clamp01(hitCount / (float)hitThreshold);
+                //@todoo lipulla
+                if (originellisizerange.x==0 && originellisizerange.y==0)
+                {
+                    originellisizerange = o.sizeRange;
+                }
+
+                Vector2 uusi = originellisizerange * prosentit;
+                o.sizeRange = uusi;
+
+            }
         }
     }
 

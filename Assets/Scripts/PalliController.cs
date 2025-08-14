@@ -79,7 +79,7 @@ public class PalliController : BaseController, IDamagedable
         maincamera = Camera.main;
         kamera=maincamera.GetComponent<Kamera>();
 
-        ad = FindObjectOfType<AudioplayerController>();
+        ad = PalautaAudioplayerController();
         //   mainCamera = Camera.main;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         if (m_SpriteRenderer == null)
