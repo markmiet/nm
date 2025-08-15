@@ -146,6 +146,77 @@ public class OutlineSmokeEmitter : MonoBehaviour
 
     void EmitOutlineSmoke()
     {
+        if (sprite == null || smokeSystem == null || sr == null) return;
+
+        if (!smokeSystem.isPlaying)
+            smokeSystem.Play();
+
+        int shapeCount = sprite.GetPhysicsShapeCount();
+        ParticleSystem.EmitParams ep = new ParticleSystem.EmitParams();
+
+        for (int s = 0; s < shapeCount; s++)
+        {
+            List<Vector2> shape = new List<Vector2>();
+            sprite.GetPhysicsShape(s, shape);
+
+            if (shape.Count < 2) continue;
+
+            for (int i = 0; i < shape.Count; i++)
+            {
+                Vector2 a = shape[i];
+                Vector2 b = shape[(i + 1) % shape.Count];
+
+                // Apply SpriteRenderer flip flags BEFORE scaling
+                if (sr.flipX)
+                {
+                    a.x = -a.x;
+                    b.x = -b.x;
+                }
+                if (sr.flipY)
+                {
+                    a.y = -a.y;
+                    b.y = -b.y;
+                }
+
+                // Scale according to Transform's lossyScale (handles negative scale flips too)
+                Vector2 scaledA = Vector2.Scale(a, sr.transform.lossyScale);
+                Vector2 scaledB = Vector2.Scale(b, sr.transform.lossyScale);
+
+                float edgeLen = Vector2.Distance(scaledA, scaledB);
+                if (edgeLen <= Mathf.Epsilon) continue;
+
+                int samples = Mathf.Max(1, Mathf.CeilToInt(edgeLen / spacing));
+
+                for (int k = 0; k < samples; k++)
+                {
+                    float t = (k + 0.5f) / samples;
+
+                    // Interpolate between scaled points
+                    Vector2 localScaledPos = Vector2.Lerp(scaledA, scaledB, t);
+
+                    // Convert to world space (rotation + position)
+                    Vector3 worldPos = sr.transform.TransformPoint(localScaledPos);
+
+                    // Add jitter for randomness
+                    worldPos += (Vector3)(Random.insideUnitCircle * jitter);
+
+                    // Particle system local space position
+                    ep.position = smokeSystem.transform.InverseTransformPoint(worldPos);
+                    ep.startSize = Random.Range(sizeRange.x, sizeRange.y);
+                    ep.startColor = Color.gray;
+                    ep.rotation = Random.Range(0f, 360f);
+                    ep.applyShapeToPosition = false;
+
+                    smokeSystem.Emit(ep, 1);
+                }
+            }
+        }
+    }
+
+
+
+    void EmitOutlineSmokeeifliptoimi()
+    {
         if (sprite == null || smokeSystem == null) return;
 
         if (!smokeSystem.isPlaying)

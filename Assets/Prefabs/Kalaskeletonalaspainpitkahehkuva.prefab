@@ -1427,7 +1427,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.5650657
+  m_Distance: 0.56506574
   m_MaxDistanceOnly: 1
 --- !u!70 &658368365755081687
 CapsuleCollider2D:
@@ -7004,13 +7004,14 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  hitThreshold: 1000
+  hitThreshold: 11
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 5
@@ -7020,7 +7021,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 0
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &774122104271994897
 MonoBehaviour:
   m_ObjectHideFlags: 0

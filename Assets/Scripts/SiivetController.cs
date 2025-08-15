@@ -227,6 +227,10 @@ public class SiivetController : BaseController, IExplodable
     public void Explode()
     {
         RajaytaSprite(gameObject, 4, 4, 3, rajaytysalivetime);
+
+
+        //    RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime, rajaytaSpritenExplosion, rajaytaspritenviive);
+//        RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, 0.001f, rajaytysalivetime);
         Destroy(gameObject);
     }
 

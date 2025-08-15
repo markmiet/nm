@@ -175,12 +175,18 @@ public class HitCounter : BaseController
 sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
   0.0f, adddestroycontroller, explosion);
         }
-
+        if (teerajaytaspriteuusiversio)
+        {
+            RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime, rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan);
+        }
 
         //RajaytaUudellaTavalla();
 
         // }
     }
+
+    public GameObject gameJostaRajaytyksenPistelasketaan;
+
     public int rajahdysrowcol = 16;
     public float rajahdysvoima = 0.1f;
     public float alivetime = 5.0f;
@@ -194,7 +200,16 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
     public bool teeExplosion = false;
 
 
+    public GameObject rajaytaSpritenExplosion;
+
+
+    [Tooltip("Eli kun ollaan FadeSlicessa ja ollaan instantioitu rajahdys, tama maaraa ajan jonka explosion kestaa")]
+    public float rajaytaspritenviive = 0.5f;
+
     public bool saadaDissolveamount = false;
+
+
+    public bool teerajaytaspriteuusiversio = false;
 
     private void SaadaDissolveAmountVerrattunaOsumiin()
     {

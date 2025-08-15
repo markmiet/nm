@@ -1276,6 +1276,214 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         Destroy(go);
     }
 
+    public void RajaytaSpriteUusiMonimutkaisin(GameObject go, int rows, int columns, float explosionForce, float aliveTime, GameObject fadeexplosion =null ,float fadeDuration = 0.5f,
+        GameObject gameObjectjostalasketaanPosition = null )
+    {
+        SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
+        Sprite originalSprite = originalSR.sprite;
+        Texture2D texture = originalSprite.texture;
+
+        int sliceWidth = texture.width / columns;
+        int sliceHeight = texture.height / rows;
+
+        float spriteWidthUnits = originalSprite.bounds.size.x * transform.localScale.x;
+        float spriteHeightUnits = originalSprite.bounds.size.y * transform.localScale.y;
+
+        float pieceWidthUnits = spriteWidthUnits / columns;
+        float pieceHeightUnits = spriteHeightUnits / rows;
+
+        //Vector3 centerPos = transform.position;
+        //Quaternion rotation = transform.rotation;
+        Vector3 centerPos;
+        Quaternion rotation;
+        if (gameObjectjostalasketaanPosition != null)
+        {
+            centerPos = gameObjectjostalasketaanPosition.transform.position;
+            rotation = gameObjectjostalasketaanPosition.transform.rotation;
+
+
+            Debug.Log("centerposi=" + centerPos);
+            Debug.Log("centerposi2=" + transform.position);
+
+        }
+        else
+        {
+             centerPos = transform.position;
+            rotation = transform.rotation;
+        }
+
+        Vector2 originalVelocity = Vector2.zero;
+        Rigidbody2D originalRB = go.GetComponent<Rigidbody2D>();
+        if (originalRB != null)
+            originalVelocity = originalRB.velocity;
+
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
+
+                Sprite newSprite = Sprite.Create(
+                    texture,
+                    sliceRect,
+                    new Vector2(0.5f, 0.5f),
+                    originalSprite.pixelsPerUnit
+                );
+
+                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
+                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                sr.sprite = newSprite;
+                sr.sortingLayerID = originalSR.sortingLayerID;
+                sr.sortingOrder = originalSR.sortingOrder;
+
+                Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
+                pieceRigidbody.gravityScale = 0.5f;
+                pieceRigidbody.velocity = originalVelocity;
+
+                sliceObject.layer = LayerMask.NameToLayer("Tiililayer");
+
+                pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
+                pieceRigidbody.excludeLayers=  LayerMask.GetMask("AlusLayer", "AlusammusLayer","AmmusLayer", "Default");
+
+
+
+
+                BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
+                collider.size = new Vector2(
+                    sliceWidth / originalSprite.pixelsPerUnit,
+                    sliceHeight / originalSprite.pixelsPerUnit
+                );
+
+
+
+
+                Vector3 localOffset = new Vector3(
+                    (-spriteWidthUnits / 2f) + pieceWidthUnits * (x + 0.5f),
+                    (-spriteHeightUnits / 2f) + pieceHeightUnits * (y + 0.5f),
+                    0
+                );
+
+                sliceObject.transform.position = centerPos + rotation * localOffset;
+                sliceObject.transform.rotation = rotation;
+                sliceObject.transform.localScale = transform.localScale;
+
+                Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
+                pieceRigidbody.AddForce(dirFromCenter * explosionForce, ForceMode2D.Impulse);
+                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
+
+                // Start fade & destroy on this slice
+                sliceObject.AddComponent<FadeSlice>().Init(sr, aliveTime, fadeDuration, fadeexplosion);
+            }
+        }
+
+        // Destroy the original GameObject immediately
+        Destroy(go);
+    }
+
+
+    public void RajaytaSpriteUusiMonimutkaisinsss(GameObject go, int rows, int columns, float explosionForce, float aliveTime, float fadeDuration = 0.5f)
+    {
+        SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
+        Sprite originalSprite = originalSR.sprite;
+        Texture2D texture = originalSprite.texture;
+
+        int sliceWidth = texture.width / columns;
+        int sliceHeight = texture.height / rows;
+
+        // Sprite size in world units (scale included)
+        float spriteWidthUnits = originalSprite.bounds.size.x * transform.localScale.x;
+        float spriteHeightUnits = originalSprite.bounds.size.y * transform.localScale.y;
+
+        // Size of each piece in world units
+        float pieceWidthUnits = spriteWidthUnits / columns;
+        float pieceHeightUnits = spriteHeightUnits / rows;
+
+        Vector3 centerPos = transform.position;
+        Quaternion rotation = transform.rotation;
+
+        // Get original velocity (if object has Rigidbody2D)
+        Vector2 originalVelocity = Vector2.zero;
+        Rigidbody2D originalRB = go.GetComponent<Rigidbody2D>();
+        if (originalRB != null)
+            originalVelocity = originalRB.velocity;
+
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
+
+                Sprite newSprite = Sprite.Create(
+                    texture,
+                    sliceRect,
+                    new Vector2(0.5f, 0.5f),
+                    originalSprite.pixelsPerUnit
+                );
+
+                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
+                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                sr.sprite = newSprite;
+                sr.sortingLayerID = originalSR.sortingLayerID;
+                sr.sortingOrder = originalSR.sortingOrder;
+
+                Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
+                pieceRigidbody.gravityScale = 0.5f;
+                pieceRigidbody.velocity = originalVelocity; // Inherit motion
+
+                BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
+                collider.size = new Vector2(
+                    sliceWidth / originalSprite.pixelsPerUnit,
+                    sliceHeight / originalSprite.pixelsPerUnit
+                );
+
+                // Position relative to the center (local space)
+                Vector3 localOffset = new Vector3(
+                    (-spriteWidthUnits / 2f) + pieceWidthUnits * (x + 0.5f),
+                    (-spriteHeightUnits / 2f) + pieceHeightUnits * (y + 0.5f),
+                    0
+                );
+
+                // Apply rotation & world position
+                sliceObject.transform.position = centerPos + rotation * localOffset;
+                sliceObject.transform.rotation = rotation;
+                sliceObject.transform.localScale = transform.localScale;
+
+                // Explosion force in world direction
+                Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
+                pieceRigidbody.AddForce(dirFromCenter * explosionForce, ForceMode2D.Impulse);
+                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
+
+                // Start fade & destroy
+                StartCoroutine(FadeAndDestroy(sr, aliveTime, fadeDuration));
+            }
+        }
+
+        // Destroy the original GameObject immediately
+        Destroy(go);
+    }
+
+    private IEnumerator FadeAndDestroy(SpriteRenderer sr, float aliveTime, float fadeDuration)
+    {
+        // Ensure fade starts only when there's time
+        yield return new WaitForSeconds(Mathf.Max(0f, aliveTime - fadeDuration));
+
+        Color originalColor = sr.color;
+        float elapsed = 0f;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+            sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        Destroy(sr.gameObject);
+    }
+
+
+
+
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime
        )
     {
