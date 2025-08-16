@@ -4,7 +4,7 @@ using UnityEngine;
 //[ExecuteInEditMode]
 
 //[ExecuteAlways]
-public class ForceFieldController : MonoBehaviour
+public class ForceFieldController : BaseController
 {
     // Start is called before the first frame update
     private ParticleSystem particleSystem;
@@ -42,14 +42,14 @@ public class ForceFieldController : MonoBehaviour
         //    Color color = renderer.material.color;
         //    renderer.material.color = new Color(color.r, color.g, color.b, alphaValueAloitusArvo);
         //}
-        alus = GameObject.FindGameObjectWithTag("alustag");
-        renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
+        alus = PalautaAlus();
+        renderoija = particleSystem.GetComponent<ParticleSystemRenderer>();
         VaihdaAlphaa();
         SetOnkotoiminnassa(IsOnkotoiminnassa());
         // SetActive(false);
 
     }
-    private ParticleSystemRenderer renderer;
+    private ParticleSystemRenderer renderoija;
     // Update is called once per frame
     void Update()
     {
@@ -76,10 +76,10 @@ public class ForceFieldController : MonoBehaviour
                 timer = 0f;
                 visible = !visible;
 
-                Color color = renderer.material.color;
+                Color color = renderoija.material.color;
                 float newAlpha = visible ? 1f : 0f;
 
-                renderer.material.color = new Color(color.r, color.g, color.b, newAlpha);
+                renderoija.material.color = new Color(color.r, color.g, color.b, newAlpha);
             }
         }
 
@@ -502,10 +502,10 @@ public class ForceFieldController : MonoBehaviour
 
         main = particleSystem.main;
         //var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
-        if (renderer != null && renderer.material != null)
+        if (renderoija != null && renderoija.material != null)
         {
-            Color color = renderer.material.color;
-            renderer.material.color = new Color(color.r, color.g, color.b, alphaValueNykyarvo);
+            Color color = renderoija.material.color;
+            renderoija.material.color = new Color(color.r, color.g, color.b, alphaValueNykyarvo);
         }
         /*
             public float simulationspeedAloitusArvo = 5f;

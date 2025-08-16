@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class KiventekijaController : BaseController
 {
+
+
+    public bool vaihdakivenvelocitya = false;
+    public Vector2 vaihdakivenVelocityksiTama = Vector2.zero;
+
+    public bool vaihdakiventorque = false;
+    public float vaihdakiventorqueksitama = 0.0f;
+
+
     private GameObject alus;
     public int maaraJokaTehdaan = 10;
     private int pallojennykymaara = 0;
@@ -66,6 +75,35 @@ public class KiventekijaController : BaseController
             {
                 Vector3 v3 = new Vector3(seuraavaX, transform.position.y + yarvo, 0);
                 GameObject instanssi = Instantiate(PalautaGameObjectRandomina(), v3, Quaternion.identity);
+
+          
+                    KiviController[] rbs =
+
+instanssi.GetComponentsInChildren<KiviController>();
+
+
+                    foreach(KiviController k in rbs)
+                    {
+                        if (vaihdakivenvelocitya)
+                        {
+                            k.velocity = vaihdakivenVelocityksiTama;
+                        }
+                        if (vaihdakiventorque)
+                        {
+                            k.kiertomaara = vaihdakiventorqueksitama;
+                        }
+                    }
+
+
+                    /*
+                     *     public bool vaihdakiventorque = false;
+    public float vaihdakiventorqueksitama = 0.0f;
+                    */
+
+              
+
+
+
                 pallojennykymaara++;
                 yield return new WaitForSeconds(viiveVali); // optional delay
             }
@@ -109,4 +147,4 @@ public class KiventekijaController : BaseController
                viewportPoint.z > 0;
     }
     */
-}
+                }

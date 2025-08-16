@@ -1336,6 +1336,16 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                 sr.sortingLayerID = originalSR.sortingLayerID;
                 sr.sortingOrder = originalSR.sortingOrder;
 
+
+                SpriteRenderer srori=go.GetComponent<SpriteRenderer>();
+
+                if (srori!=null)
+                {
+                    sr.material = srori.material;
+                }
+
+
+
                 Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
                 pieceRigidbody.gravityScale = 0.5f;
                 pieceRigidbody.velocity = originalVelocity;

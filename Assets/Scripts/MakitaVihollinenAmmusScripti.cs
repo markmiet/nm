@@ -276,6 +276,8 @@ col.gameObject.GetComponent<IDamagedable>();
     public void Explode()
     {
         Explode(Vector2.zero);
+        //Destroy(gameObject);
+        ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
     }
     public void Explode(Vector2 contactPoint)
     {
@@ -292,6 +294,7 @@ col.gameObject.GetComponent<IDamagedable>();
             }
 
             Destroy(explosionIns, explosionkesto);
+            Destroy(gameObject);
 
 
             //	RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);

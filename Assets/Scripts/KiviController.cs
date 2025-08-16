@@ -33,7 +33,6 @@ public class KiviController : MonoBehaviour
             rigidbody2D.AddTorque(kiertomaara); // positive value = counter-clockwise
         }
     }
-
     // Update is called once per frame
     void Update()
     {

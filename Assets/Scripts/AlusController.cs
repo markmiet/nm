@@ -109,6 +109,9 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
     public bool laserkaytossa = true;
+
+    public bool forcefieldkaytossa = false;
+
     public GameObject laserPrefab;
 
     //ylos/alla
@@ -370,6 +373,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         SetElamienMaara(GameManager.Instance.lives);
 
         SetEnabloiboxcollider(enabloiboxcollider);
+
+
     }
 
 
@@ -1277,6 +1282,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void Update()
     {
+
+        if (forcefieldkaytossa)
+        {
+            AsetaForceFieldiNakyviin();
+        }
+
         if (uusiohjauskaytossa & !osuudetasetettu)
         {
             //   sormi.transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -2390,7 +2401,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //pitäisikö vain etsiä cameraviewistä ammusten määrä.
 
         //ja mikä on se peruslogiikka taas tässä :) =ampumakertojenvalinenviive0.01
-        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive & OnkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla())
+        if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive & OnkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla()
+
+            &&
+            !onkoAluksenAmmuksetDisabloitu()
+            )
         {
             //	if (!ammusInstantioitiinviimekerralla) {
             Vector3 v3 =
@@ -2698,7 +2713,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             GameObject rajahdys = Instantiate(explosion, vektori, Quaternion.identity);
             //RajaytaSprite(gameObject, 4, 4, 1, aikamaarajokajatketaangameoverinjalkeen);
-            m_SpriteRenderer.enabled = false;
+            //m_SpriteRenderer.enabled = false;antaa spriten nakya
 
             //  Destroy(instanssiOption, 10);
 
@@ -2715,7 +2730,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //Image image = GetComponent<Image>();
             if (spriteRenderer != null)
             {
-                spriteRenderer.enabled = false; // Hides the sprite
+              //  spriteRenderer.enabled = false; // Hides the sprite
             }
             //gameoverinajankohta = Time.realtimeSinceStartup;
 
@@ -2735,6 +2750,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             return;
         }
         damagenmaara = maksimimaaradamageajokakestetaan;
+
+
+        NaytaIsollaSeJohonTormattiin(null, "Explode");
+
         PaivitaDamagePalkkia();
 
     }
@@ -2860,19 +2879,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
      
         if (enabloiboxcollider && col.enabled && BaseController.TuhoaakoAluksen(col.collider.tag))
         {
-            GameObject go = col.gameObject;
-            
-            GameObject klooni = Instantiate(go);
-            Collider2D[] ccc=  klooni.GetComponents<Collider2D>();
-            foreach(Collider2D c in ccc)
-            {
-                c.enabled = false;
-            }
-            klooni.transform.localScale = klooni.transform.localScale * 3f;
 
-            SetruudunvasenylakulmatekstiTextMeshProUGUI("col="+go.name);
-
-            Debug.Log("collisiontagi joka tuhoaa=" + col.collider.tag);
+            NaytaIsollaSeJohonTormattiin(col.gameObject, "OnCollisionEnter2D ");
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
@@ -2899,6 +2907,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //eli tämä tarvitaan sitä kalaskeletonia varten
         if (enabloiboxcollider &&  other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
         {
+
+            GameObject go = other;
+
+            GameObject klooni = Instantiate(go);
+            Collider2D[] ccc = klooni.GetComponents<Collider2D>();
+            foreach (Collider2D c in ccc)
+            {
+                c.enabled = false;
+            }
+            klooni.transform.localScale = klooni.transform.localScale * 3f;
+
+            SetruudunvasenylakulmatekstiTextMeshProUGUI("part=" + go.name);
+
+
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
@@ -3047,11 +3069,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
 
+    /*
     public void AlustaForceFied()
     {
         bool onko = GetComponentInChildren<ForceFieldController>().IsOnkotoiminnassa();
         GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(onko);
     }
+    */
 
     public void AsetaForceFieldiButtonEnabloiduksi()
     {
@@ -3096,6 +3120,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     }
 
+    public bool onkoAluksenAmmuksetDisabloitu()
+    {
+        Kamera k = mainCamera.GetComponent<Kamera>();
+        return k.onkoAluksenAmmuksetDisabloitu();
+    }
+
 
     public void OnTriggerEnter2D(Collider2D col)
     {
@@ -3105,15 +3135,47 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         {
             GameObject go = col.gameObject;
 
+            NaytaIsollaSeJohonTormattiin(go, "OnTriggerEnter2D");
+            Debug.Log("OnTriggerEnter2D collisiontagi joka tuhoaa=" + col.tag);
 
-            Debug.Log("collisiontagi joka tuhoaa=" + col.tag);
+            /* otettu pois mikä on tämä triggeri muka joka tarvitaan
+             * akita-ammus ei oo triggeri mutta silti tuli muka collision
             damagenmaara += maksimimaaradamageajokakestetaan;
             //ExplodeTarvittaesssa();
             PaivitaDamagePalkkia();
+
+
+            */
         }
 
     }
 
+
+    public void NaytaIsollaSeJohonTormattiin(GameObject go,string info)
+    {
+
+        if (go!=null)
+        {
+            GameObject klooni = Instantiate(go);
+            Collider2D[] ccc = klooni.GetComponents<Collider2D>();
+            foreach (Collider2D c in ccc)
+            {
+                c.enabled = false;
+            }
+            klooni.transform.localScale = klooni.transform.localScale * 3f;
+
+
+            SetruudunvasenylakulmatekstiTextMeshProUGUI(info + " " + go.name);
+
+            Debug.Log(info + " collisiontagi joka tuhoaa=" + go.tag+ "nimi on="+go.name);
+        }
+        else
+        {
+            SetruudunvasenylakulmatekstiTextMeshProUGUI("nulli" + " " + go.name);
+        }
+
+
+    }
 
 
 }

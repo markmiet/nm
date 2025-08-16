@@ -74,7 +74,9 @@ public class CameraInfoController : MonoBehaviour
     public GameObject tausta2;
     public GameObject tausta3;
 
+    public string lisateksti;
 
+    public bool disablealuksenammukset = false;
 
     private bool IsObjectInOrthographicView(Transform target, Camera camera)
     {

@@ -168,13 +168,38 @@ cameraInfo.GetComponent<CameraInfoController>();
 
     public string PalautaOdotusAikaKunnesLiikkuu()
     {
+        string lisateksti = "";
+        if (cameraInfo!=null)
+        {
+            if (cameraInfo.GetComponent<CameraInfoController>().lisateksti!=null)
+            {
+                lisateksti = cameraInfo.GetComponent<CameraInfoController>().lisateksti;
+            }
+        }
+
+
         if (paljonkopitaavielaodottaa >= 0)
         {
-            return "" + paljonkopitaavielaodottaa;
+            return lisateksti + paljonkopitaavielaodottaa;
         }
         {
             return "";
         }
+    }
+
+
+    public bool onkoAluksenAmmuksetDisabloitu()
+    {
+
+
+        
+        if (cameraInfo != null)
+        {
+            return cameraInfo.GetComponent<CameraInfoController>().disablealuksenammukset;
+            
+        }
+
+        return false;
     }
 
     private float generointilaskuri = 0.0f;

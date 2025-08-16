@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7350423431185513502}
   - component: {fileID: 4439438126707630016}
   - component: {fileID: 8910806765399722590}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinavasenala
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -255,6 +255,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -264,7 +265,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &8910806765399722590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +288,7 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05
 --- !u!1 &3565820419885112365
 GameObject:
@@ -5130,7 +5136,7 @@ GameObject:
   - component: {fileID: 6999322648514492399}
   - component: {fileID: 3369801267370126993}
   - component: {fileID: 2381748729078430881}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinaala
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -5361,6 +5367,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -5370,7 +5377,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &2381748729078430881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5389,6 +5400,7 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05
 --- !u!1 &5849496958974730654
 GameObject:
@@ -5469,6 +5481,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.1
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 1
@@ -5478,7 +5491,11 @@ MonoBehaviour:
   teeBoxCollider2d: 0
   teerajaytasprite: 0
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!1 &5946862513396872771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5495,7 +5512,7 @@ GameObject:
   - component: {fileID: 98338440234946085}
   - component: {fileID: 2432802966506744671}
   - component: {fileID: 529128060891354544}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinayla
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -5732,6 +5749,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -5741,7 +5759,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &529128060891354544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5760,6 +5782,7 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05
 --- !u!1 &6120803244385276267
 GameObject:
@@ -5785,7 +5808,7 @@ GameObject:
   - component: {fileID: 3330467946697640357}
   - component: {fileID: 2263558327977387514}
   - component: {fileID: 2118176774585492162}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinakeski
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -5898,6 +5921,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9fb073a5f44c5418e86669d246f54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
   breakForce: 80
   breakTorque: 100
   alkuaika: 0.3
@@ -6020,7 +6046,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.41400146, y: -0.07100001}
+  m_ConnectedAnchor: {x: -0.41400146, y: -0.07099998}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6529054811690583326
@@ -6039,7 +6065,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.60198975, y: 0.261}
+  m_ConnectedAnchor: {x: -0.602005, y: 0.26100004}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6764962299784263069
@@ -6058,7 +6084,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.25201416, y: 0.355}
+  m_ConnectedAnchor: {x: 0.2519989, y: 0.35500002}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &5319302625981387797
@@ -6077,7 +6103,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.6209717, y: -0.132}
+  m_ConnectedAnchor: {x: 0.62099457, y: -0.13199997}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &3739189312699407847
@@ -6096,7 +6122,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.190979, y: -0.50100005}
+  m_ConnectedAnchor: {x: 0.19099426, y: -0.5009999}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6370649533784083762
@@ -6115,7 +6141,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.23999023, y: 0.51199996}
+  m_ConnectedAnchor: {x: -0.2400055, y: 0.512}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &3330467946697640357
@@ -6166,6 +6192,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -6175,7 +6202,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &2118176774585492162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6194,6 +6225,7 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05
 --- !u!1 &7114319154363093881
 GameObject:
@@ -6211,7 +6243,7 @@ GameObject:
   - component: {fileID: 5862677843240771191}
   - component: {fileID: 4768094699742543300}
   - component: {fileID: 7474415097179948310}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinaoikeaala2
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -6441,6 +6473,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -6450,7 +6483,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &7474415097179948310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6469,6 +6506,7 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05
 --- !u!1 &8131530751040039414
 GameObject:
@@ -6486,7 +6524,7 @@ GameObject:
   - component: {fileID: 933802031293982169}
   - component: {fileID: 641927251375693784}
   - component: {fileID: 6216610010642364888}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinaoikeaala
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -6713,6 +6751,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -6722,7 +6761,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &6216610010642364888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6741,6 +6784,7 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05
 --- !u!1 &9137062989882900548
 GameObject:
@@ -6758,7 +6802,7 @@ GameObject:
   - component: {fileID: 6615194648604133072}
   - component: {fileID: 3373883643977657993}
   - component: {fileID: 8891395422442073743}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: tiilikulmikasosinavasenyla
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -6992,6 +7036,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -7001,7 +7046,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!114 &8891395422442073743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7020,4 +7069,5 @@ MonoBehaviour:
   sizeRange: {x: 0.1, y: 0.13}
   emitInStart: 0
   emitInUpdate: 0
+  emitInUpdateMaxLength: 10000
   emitInterval: 0.05

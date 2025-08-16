@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2350730144878406560}
   - component: {fileID: 806714550713547404}
   - component: {fileID: 5614787266556466163}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Savu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4845,7 +4845,7 @@ GameObject:
   - component: {fileID: 1688580068549664688}
   - component: {fileID: 3884943110193439385}
   - component: {fileID: 2114010107760528757}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Siivettrigger
   m_TagString: siivetvihollinenexplode
   m_Icon: {fileID: 0}
@@ -4991,6 +4991,8 @@ MonoBehaviour:
   eroalukseen: 0.5
   sinfrequency: 2
   sinamplitude: 1.5
+  firePrefabbi: {fileID: 0}
+  smokePrefab: {fileID: 0}
   randomisointiprossa: 0.1
   rajaytysalivetime: 0.25
 --- !u!50 &1688580068549664688
