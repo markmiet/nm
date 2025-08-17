@@ -31,6 +31,11 @@ public class KiventekijaController : BaseController
     public Vector2 boxsizealhaalla = new Vector2(2, 2);
     public LayerMask layerMask;
 
+    public bool huomioivaikeustaso = false;
+
+
+    
+
     void Update()
     {
         bool nakyvissa = IsGameObjectVisible();
@@ -64,7 +69,13 @@ public class KiventekijaController : BaseController
     IEnumerator LuoKivetCoroutine()
     {
         coroutineKaynnissa = true;
-        while (pallojennykymaara < maaraJokaTehdaan)
+        int maara = maaraJokaTehdaan;
+        if (huomioivaikeustaso)
+        {
+            maara = Mathf.RoundToInt(maaraJokaTehdaan * GameManager.Instance.PalautaDifficulty());
+        }
+
+        while (pallojennykymaara < maara)
         {
             float yarvo =  Random.Range(-1*ysuunnassaRandomisointiVali, ysuunnassaRandomisointiVali);
             float xrandomin = Random.Range(0, xsuunnassaRandomisointiVali);
@@ -75,6 +86,7 @@ public class KiventekijaController : BaseController
             {
                 Vector3 v3 = new Vector3(seuraavaX, transform.position.y + yarvo, 0);
                 GameObject instanssi = Instantiate(PalautaGameObjectRandomina(), v3, Quaternion.identity);
+                instanssi.name = instanssi.name +"_"+ pallojennykymaara;
 
           
                     KiviController[] rbs =

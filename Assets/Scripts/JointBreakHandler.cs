@@ -107,7 +107,7 @@ public class JointBreakHandler : BaseController
             FixedJoint2D[] fixedJoint = GetComponents<FixedJoint2D>();
             foreach (FixedJoint2D jointtu in fixedJoint)
             {
-                jointtu.connectedBody.transform.gameObject.tag = "makitavihollinenexplodetag";
+                jointtu.connectedBody.transform.gameObject.tag = "tiilivihollinenkiviexplodetag";
                 jointtu.connectedBody.transform.gameObject.layer = LayerMask.NameToLayer("Default");
                 //joint.connectedBody.transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
 
@@ -133,7 +133,7 @@ public class JointBreakHandler : BaseController
         {
             if (joint != null && joint.connectedBody != null)
             {
-                joint.connectedBody.transform.gameObject.tag = "makitavihollinenexplodetag";
+                joint.connectedBody.transform.gameObject.tag = "tiilivihollinenkiviexplodetag";
                 joint.connectedBody.transform.gameObject.layer = LayerMask.NameToLayer("Default");
 
 
@@ -181,7 +181,7 @@ joint.connectedBody.gameObject.GetComponent<OutlineSmokeEmitter>();
             KiviIExplodaple olemassaOleva = transform.gameObject.GetComponent<KiviIExplodaple>();
             if (olemassaOleva!=null)
             {
-                transform.gameObject.tag = "makitavihollinenexplodetag";
+                transform.gameObject.tag = "tiilivihollinenkiviexplodetag";
                 transform.gameObject.layer = LayerMask.NameToLayer("Default");
                 //transform.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
                 KiviIExplodaple c = transform.gameObject.GetComponent<KiviIExplodaple>();

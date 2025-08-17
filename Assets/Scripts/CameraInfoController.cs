@@ -2,23 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraInfoController : MonoBehaviour
+public class CameraInfoController : BaseController
 {
 
     Camera main;
     Kamera kamera;
     SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
+    private AudioplayerController ad;
     void Start()
     {
         main = Camera.main;
-        kamera=main.GetComponent<Kamera>();
+        kamera = main.GetComponent<Kamera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         //spriteRenderer.enabled = false;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color c = sr.color;
         c.a = 0f; // alpha = 0 (fully transparent)
         sr.color = Color.clear;
+
+
+        ad = PalautaAudioplayerController();
     }
 
     // Update is called once per frame
@@ -32,14 +36,14 @@ public class CameraInfoController : MonoBehaviour
         {
             GameObject olemassa =
             kamera.cameraInfo;
-            if (olemassa!=null)
+            if (olemassa != null)
             {
-                bool onkotoinen=IsObjectInCameraView(olemassa.transform.position);
+                bool onkotoinen = IsObjectInCameraView(olemassa.transform.position);
                 if (!onkotoinen)
                 {
                     kamera.cameraInfo = this.gameObject;
                 }
-                else if (transform.position.x>olemassa.transform.position.x)
+                else if (transform.position.x > olemassa.transform.position.x)
                 {
                     kamera.cameraInfo = this.gameObject;
                 }
@@ -48,8 +52,39 @@ public class CameraInfoController : MonoBehaviour
             {
                 kamera.cameraInfo = this.gameObject;
             }
+            if (!taustamusavaihdettu)
+            {
+                if (taustamusa != null)
+                {
+                    ad.TaustaMusiikkiStop();
+                    ad.taustamusiikki = taustamusa;
+                    ad.TaustaMusiikkiPlay();
+                }
+
+                taustamusavaihdettu = true;
+            }
+            if (aaniefekti != null && !aaniefektisoitettu)
+            {
+
+                aaniefektilaskuri += Time.deltaTime;
+
+                if (aaniefektilaskuri >= aaniefektinsoittoaika)
+                {
+                    aaniefekti.Play();
+                    aaniefektisoitettu = true;
+                    aaniefektilaskuri = 0;
+                }
+            }
         }
     }
+
+    private bool taustamusavaihdettu = false;
+
+    private bool aaniefektisoitettu = false;
+    public float aaniefektinsoittoaika = 10.0f;
+
+    private float aaniefektilaskuri = 0.0f;
+
 
     public float scrollspeedx = 3.0f;
     public float scrollspeedy = 3.0f;
@@ -89,7 +124,7 @@ public class CameraInfoController : MonoBehaviour
     private bool IsObjectInCameraView(Vector3 worldPosition)
     {
         Vector3 viewportPosition = main.WorldToViewportPoint(worldPosition);
-        bool viewportissa= viewportPosition.x > 0 && viewportPosition.x < 1 &&
+        bool viewportissa = viewportPosition.x > 0 && viewportPosition.x < 1 &&
                viewportPosition.y > 0 && viewportPosition.y < 1 &&
                viewportPosition.z > 0; // Ensure the object is in front of the camera
 
@@ -105,5 +140,13 @@ public class CameraInfoController : MonoBehaviour
         }
         return false;
     }
+
+    public AudioSource taustamusa;
+
+    public AudioSource aaniefekti;
+
+
+
+
 
 }

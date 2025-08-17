@@ -26,6 +26,9 @@ public class DamageablePart :BaseController, IDamagedable
             sr.sprite.pixelsPerUnit
         );
         sr.sprite = newSprite;
+
+        //eli tämä on vain sitä varten jos on semmonen olio kuten
+        //skelekumi alaspäin joka koostuu miljoonasta eri osasta, tämä vain tuhoaa osan kerrallaan
     }
 
     public void DamageAt(Vector2 worldPoint)

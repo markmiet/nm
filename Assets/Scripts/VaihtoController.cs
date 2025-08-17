@@ -8,6 +8,8 @@ public class VaihtoController : MonoBehaviour
 {
     //@todo ota turhat pois
 
+    //käytä tätä konttimateriaalin kanssa
+
     //yleisesti ottaen käytetään vain niin että taustaumuoto on olemassa
     //ja sitten asetetaan vain tekstuuri jolla se täytetään
 
@@ -392,15 +394,57 @@ public class VaihtoController : MonoBehaviour
             */
 
 
-        public void OnCollisionEnter2D(Collision2D col)
+    public string[] tagijohonreagoidaan = new string[] { "ammus" };
+
+
+    private bool Reagoidaanko(string tag)
+    {
+        if (tagijohonreagoidaan==null || tagijohonreagoidaan.Length==0)
+        {
+            return false;
+        }
+        foreach(string t in tagijohonreagoidaan)
+        {
+            if (tag.Contains(t))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool tutkitormaysvoima = false;
+
+    public float tormaysvoimajokavaaditaan = 10.0f;
+
+    public void OnCollisionEnter2D(Collision2D col)
     {
         if (!bulletholemode)
         {
             return;
         }
-
-        if (col.collider.tag.Contains("ammus"))
+        //tutki voima
+        if (Reagoidaanko( col.collider.tag))
+    
         {
+
+            if (tutkitormaysvoima)
+            {
+                // collision2D.relativeVelocity = törmäyksen suhteellinen nopeus
+                float voimakkuus = col.relativeVelocity.magnitude;
+                if (voimakkuus >= tormaysvoimajokavaaditaan)
+                {
+                    Debug.Log($"Reagoidaan törmäykseen tagilla {col.collider.tag}, voima {voimakkuus}");
+                    // Tee haluttu toiminto (esim. lisää bullet hole)
+                }
+                else
+                {
+                    Debug.Log($"EI REAGOIDA törmäykseen tagilla {col.collider.tag}, voima {voimakkuus}");
+                    return;
+                }
+            }
+            
+
             float currentTime = Time.time;
 
             // Rate limit

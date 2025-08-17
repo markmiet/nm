@@ -76,7 +76,7 @@ public class KiviIExplodaple : BaseController, IExplodable
         float relativeVelocity = col.relativeVelocity.magnitude;
        // Debug.Log("kivihomman relativeVelocity=" + relativeVelocity);
 
-        if (relativeVelocity>= nopeusjokapitaaYlittaaJottaKaikkituhoutuu && col.collider.CompareTag("tiilivihollinentag"))
+        if (relativeVelocity>= nopeusjokapitaaYlittaaJottaKaikkituhoutuu && col.collider.CompareTag("tiilivihollinenkiviexplodetag"))
         {
             JointBreakHandler j=
             transform.parent.GetComponentInChildren<JointBreakHandler>();
