@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4277517907431031458
 Transform:
   m_ObjectHideFlags: 0
@@ -132,12 +132,14 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 1
   blinkSpeed: 2
   intensityMin: 0.5
   intensityMax: 1.5
   kaannaObjektiLiikkeenSuuntaiseksi: 0
   speedjonkaalletuhotaan: 0.1
   maksimiaikaMinkaVoiOllaHengissa: 10
+  maksimiaikajonkavoiollahengissa: 100
   damagemaarajokaaiheutetaan: 1
   explosionkesto: 0.2
   alivetimeRajahdyksenJalkeen: 0.5
@@ -232,8 +234,10 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
   offsetkerto: 2
   muutax: 1
   muutay: 0
+  texturescale: {x: 1, y: 1}
   originelliVari: {r: 0, g: 0, b: 1, a: 1}
   kloonivari: {r: 1, g: 0, b: 0, a: 1}

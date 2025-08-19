@@ -47,6 +47,11 @@ GetComponents<BoxCollider2D>();
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         Tuhoa(gameObject);
         rotationTime += Time.deltaTime;
         float t = Mathf.PingPong(rotationTime / rotatetimeseconds, 1f);

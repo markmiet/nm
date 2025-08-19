@@ -45,7 +45,7 @@ public class ForceFieldController : BaseController
         alus = PalautaAlus();
         renderoija = particleSystem.GetComponent<ParticleSystemRenderer>();
         VaihdaAlphaa();
-        SetOnkotoiminnassa(IsOnkotoiminnassa());
+       // SetOnkotoiminnassa(IsOnkotoiminnassa());
         // SetActive(false);
 
     }
@@ -200,11 +200,25 @@ public class ForceFieldController : BaseController
 
     public float damagemaarajokaaiheutataan = 10.0f;
 
+    public int maksimihittienmaara = 1;
+
     //vaihda t‰m‰kin normicolladeriksi
     //     IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);
     //pakko olla triggeri?
-    public void OnTriggerEnter2D(Collider2D col)
+
+    void OnCollisionEnter2D(Collision2D col)
     {
+
+        Debug.Log("ff coll" + col.otherCollider.name);
+    }
+
+        public void OnTriggerEnter2D(Collider2D col)
+    {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (col.tag.Contains("eituhvih"))
         {
 
@@ -243,8 +257,8 @@ public class ForceFieldController : BaseController
         */
         if (col.tag.Contains("vihollinen") && !col.tag.Contains("tiili"))
         {
-            if (alreadyTriggered.Contains(col))
-                return;
+            //if (alreadyTriggered.Contains(col))
+              //  return;
 
             alreadyTriggered.Add(col);
 
@@ -262,7 +276,8 @@ public class ForceFieldController : BaseController
 
                 //tuhottujenVihollistenmaara++;
                 //LisaaTuhottujenMaaraa(col.gameObject);
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                BaseDestroy();
                 return;
 
             }
@@ -272,10 +287,10 @@ public class ForceFieldController : BaseController
                 HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
                 if (hc == null)
                 {
-                    if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
-                    {
-                        return;
-                    }
+                  //  if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
+                 //   {
+                   //     return;
+                  //  }
                     parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
                 }
             }
@@ -284,7 +299,7 @@ public class ForceFieldController : BaseController
 
             if (hitcounter != null)
             {
-                col.enabled = false;
+                //col.enabled = false;
                 /*
                 Vector2 thisPosition = transform.position;
                 Vector2 otherPosition = col.transform.position;
@@ -292,15 +307,32 @@ public class ForceFieldController : BaseController
                 Vector2 estimatedContactPoint = (thisPosition + otherPosition) / 2f;
                 */
 
-                int maara = hitcounter.hitThreshold;
+                int maara = Mathf.Min(hitcounter.hitThreshold, maksimihittienmaara);
+
+                /**/
+
                 for (int i = 0; i < maara; i++)
                 {
                     hitcounter.RegisterHit(estimatedContactPoint);
+                    hittienmaara++;
                 }
+                //Destroy(col.gameObject);
+
 
                 //hitcounter.RegisterHit(estimatedContactPoint);
-                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
-                SetOnkotoiminnassa(false);
+                //alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                //SetOnkotoiminnassa(false);
+
+                if (hittienmaara > hittienmaaraJokaKestetaan)
+                {
+                    // gameObject.SetActive(false);
+                    //
+                    //  alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                    //SetOnkotoiminnassa(false);
+                    //Destroy(gameObject);
+                    BaseDestroy();
+
+                }
                 return;
                 
             }
@@ -315,6 +347,9 @@ public class ForceFieldController : BaseController
                 */
                 //n‰in saadaan r‰j‰ht‰m‰‰n
                 int maara = childColliderReporter.PalautaVaadittuHittienMaara();//t‰m‰ kuluttaa aina sen verran mit‰ vaaditaan ko. objekti tuhoamiseen
+
+                maara = Mathf.Min(maara, maksimihittienmaara);
+
                 for (int i=0;i<maara;i++)
                 {
                     int nykymaara = childColliderReporter.PalautaNykyinenOsumienMaara();
@@ -336,9 +371,10 @@ public class ForceFieldController : BaseController
                 {
                     // gameObject.SetActive(false);
                     //
-                    alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
-                    SetOnkotoiminnassa(false);
-
+                    //  alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                    //SetOnkotoiminnassa(false);
+                  //  Destroy(gameObject);
+                    BaseDestroy();
                 }
 
                 //alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
@@ -363,8 +399,11 @@ public class ForceFieldController : BaseController
                 GameManager.Instance.kasvataHighScorea(col.gameObject);
                 //tuhottujenVihollistenmaara++;
                 //LisaaTuhottujenMaaraa(col.gameObject);
-                alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
-                SetOnkotoiminnassa(false);
+                // alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                //Destroy(gameObject);
+                BaseDestroy();
+
+                //SetOnkotoiminnassa(false);
 
             }
             else
@@ -415,8 +454,10 @@ public class ForceFieldController : BaseController
                 {
                     // gameObject.SetActive(false);
                     //
-                    alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
-                    SetOnkotoiminnassa(false);
+                    //alus.GetComponent<AlusController>().AsetaForceFieldiButtonEnabloiduksi();
+                    //SetOnkotoiminnassa(false);
+                    //Destroy(gameObject);
+                    BaseDestroy();
 
                 }
             }
@@ -424,6 +465,7 @@ public class ForceFieldController : BaseController
 
     }
 
+    /*
     public void SetOnkotoiminnassa(bool active)
     {
         //gameObject.SetActive(active);
@@ -439,11 +481,6 @@ public class ForceFieldController : BaseController
 
         if (active)
         {
-            /*
-                public float alphaValueAloitusArvo = 0.5f;
-    public float alphaValueLopetusArvo = 0.1f;
-    public float alphaValueNykyarvo = 0.5f;
-*/
             alphaValueNykyarvo = alphaValueAloitusArvo;
             hittienmaara = 0;
             PoltaValo();
@@ -460,16 +497,23 @@ public class ForceFieldController : BaseController
             particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
     }
-
+    */
+    /*
     public bool IsOnkotoiminnassa()
     {
         return onkotoiminnassa;
     }
+    */
 
     private void PoltaValo()
     {
-        valo.GetComponent<AlusLightController>().SetExplosionLights();
+       // if (true)
+       //     return;
+
+        //valo.GetComponent<AlusLightController>().SetExplosionLights();
         VaihdaAlphaa();
+
+
         //float alpha = newColor.a;
         //ParticleSystem.MainModule main = particleSystem.main; // Get a fresh MainModule reference
 
@@ -494,6 +538,8 @@ public class ForceFieldController : BaseController
 
     private void VaihdaAlphaa()
     {
+
+
         if (particleSystem==null)
         {
             return;

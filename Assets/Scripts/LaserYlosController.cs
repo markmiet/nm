@@ -35,6 +35,13 @@ public class LaserYlosController : BaseController
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
+        TuhoaAmmukset(GetPrefap(), gameObject);
+
         Vector2 offset = rend.material.GetTextureOffset("_MainTex");
         if (muutax)
             offset.x += Time.deltaTime * offsetkerto;

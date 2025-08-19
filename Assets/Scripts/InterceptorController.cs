@@ -27,6 +27,11 @@ public class InterceptorController : BaseController
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         //tutkitaan ollaanko ruudun vasemman reunan viimeisessä 20%
         //jos näin niin sitten moottorit käyntiin aina...
 
@@ -106,7 +111,8 @@ public class InterceptorController : BaseController
                 //}
             }
             
-            Destroy(transform.parent.gameObject);
+            //Destroy(transform.parent.gameObject);
+            BaseDestroy(transform.parent.gameObject);
             return;
         }
        
@@ -450,7 +456,7 @@ GetComponents<WheelJoint2D>();
         //tai sitten tekee childcollider reporterin ominaisuudeksi tämän
         //tai sitten sinne ammuksien collidereihin
 
-        Debug.Log("MUISTA KOOOOODATAAAAA");
+        ///Debug.Log("MUISTA KOOOOODATAAAAA");
         if (true)
             return;
 

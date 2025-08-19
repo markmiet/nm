@@ -154,6 +154,11 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
 
     void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
 
         if (!OnkoOkLiikkua())
         {
@@ -278,7 +283,9 @@ m_Rigidbody2D.position.x , m_Rigidbody2D.position.y, 0);
         ad.ExplodePlay();
         // pallerotkokonaisuus = null;
         RajaytaSprite(gameObject, 10, 10, 10.0f, 0.1f);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BaseDestroy();
+
 
     }
 

@@ -34,11 +34,11 @@ public class HitCounter : BaseController
         {
             return true;
         }
-        Joint2D[] j=
+        Joint2D[] j =
         GetComponents<Joint2D>();
-        foreach(Joint2D jj in j)
+        foreach (Joint2D jj in j)
         {
-            if (jj.enabled && jj.connectedBody!=null)
+            if (jj.enabled && jj.connectedBody != null)
             {
                 return false;
             }
@@ -51,6 +51,12 @@ public class HitCounter : BaseController
 
     public bool RegisterHit()
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return true;
+        }
+
         if (!JointEhtoToteutuu())
         {
             return false;
@@ -60,8 +66,8 @@ public class HitCounter : BaseController
         hitCount++;
         if (hitCount >= hitThreshold)
         {
-            if (gameObject!=null)
-             GameManager.Instance.kasvataHighScorea(gameObject);
+            if (gameObject != null)
+                GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
             Destroy(gameObject);
             return true;
@@ -69,34 +75,39 @@ public class HitCounter : BaseController
         SaadaDissolveAmountVerrattunaOsumiin();
         return false;
     }
-  //  private float lasttimeexplosion = 0;
-  //  private float mindelayexplosions = 1.0f;
+    //  private float lasttimeexplosion = 0;
+    //  private float mindelayexplosions = 1.0f;
 
     public bool RegisterHit(Vector2 contactPoint)
     {
-        bool ret=RegisterHit();
+
+        if (IsGoingToBeDestroyed())
+        {
+            return true;
+        }
+        bool ret = RegisterHit();
         if (teeExplosion && explosion != null)
         {
             KaynnistaParticleEmitti();
 
-                if (explosion != null)
-                {
-                   // if (Time.time- lasttimeexplosion > mindelayexplosions)
-                   // {
-                    GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
+            if (explosion != null)
+            {
+                // if (Time.time- lasttimeexplosion > mindelayexplosions)
+                // {
+                GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
 
-                   // lasttimeexplosion = Time.time;
-                    float kesto = Mathf.Min(alivetime, 0.5f);
-                    Destroy(instanssi2, kesto);
+                // lasttimeexplosion = Time.time;
+                float kesto = Mathf.Min(alivetime, 0.5f);
+                Destroy(instanssi2, kesto);
                 // }
                 Debug.Log("rajaytys");
- 
-                }
-     
+
+            }
+
 
 
         }
-        if (osumanSavu!=null)
+        if (osumanSavu != null)
         {
             GameObject instanssi2 = Instantiate(osumanSavu, contactPoint, Quaternion.identity);
             Destroy(instanssi2, osumanSavunKesto);
@@ -113,12 +124,12 @@ public class HitCounter : BaseController
         if (tuhoajosollaanKameranVasemmallaPuolella)
         {
 
-            if (gameObject==null)
+            if (gameObject == null)
             {
                 Debug.Log("no nulli");
             }
-                TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
-                
+            TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+
 
         }
 
@@ -144,22 +155,22 @@ public class HitCounter : BaseController
                 }
                 if (teeExplosion && explosion != null)
                 {
-                    Vector2 keski=PalautaKaikkienCollidereidenKeskipiste(tt.gameObject);
+                    Vector2 keski = PalautaKaikkienCollidereidenKeskipiste(tt.gameObject);
 
-                    if (keski!=Vector2.zero)
+                    if (keski != Vector2.zero)
                     {
                         GameObject instanssi2 = Instantiate(explosion, keski, Quaternion.identity);
                         float kesto = Mathf.Min(alivetime, 0.5f);
                         Destroy(instanssi2, kesto);
-                       
+
 
                     }
                     else
                     {
-                      //  GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
+                        //  GameObject instanssi2 = Instantiate(explosion, transform.position, Quaternion.identity);
                     }
-                   
-                   //
+
+                    //
 
                 }
 
@@ -174,10 +185,15 @@ public class HitCounter : BaseController
             RajaytaSprite(gameObject, rajahdysrowcol, rajahdysrowcol, rajahdysvoima, alivetime,
 sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
   0.0f, adddestroycontroller, explosion);
+            //Destroy(gameObject);
         }
         if (teerajaytaspriteuusiversio)
         {
-            RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime, rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan);
+            Debug.Log("RajaytaSpriteUusiMonimutkaisin " + Time.realtimeSinceStartup);
+                 RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
+                     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan);
+            //Destroy(gameObject);
+
         }
 
         //RajaytaUudellaTavalla();
@@ -236,14 +252,14 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
         {
             OutlineSmokeEmitter o =
             GetComponent<OutlineSmokeEmitter>();
-            if (o!=null)
+            if (o != null)
             {
                 o.emitInUpdate = true;
                 //sizeRange
 
                 float prosentit = Mathf.Clamp01(hitCount / (float)hitThreshold);
                 //@todoo lipulla
-                if (originellisizerange.x==0 && originellisizerange.y==0)
+                if (originellisizerange.x == 0 && originellisizerange.y == 0)
                 {
                     originellisizerange = o.sizeRange;
                 }

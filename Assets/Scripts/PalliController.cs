@@ -160,6 +160,11 @@ public class PalliController : BaseController, IDamagedable
     void Update()
 
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
 
         /*
         //nykyinenosuminenmaara;
@@ -328,6 +333,10 @@ public class PalliController : BaseController, IDamagedable
 
     public void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         if (alusGameObject != null)
         {
@@ -1399,7 +1408,8 @@ public class PalliController : BaseController, IDamagedable
         RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
 
         // Destroy(explosionIns,1.0f);
-        Destroy(gameObject);
+        BaseDestroy();
+     //   Destroy(gameObject);
 
 
         Vector3 v3 =

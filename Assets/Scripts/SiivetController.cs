@@ -95,6 +95,11 @@ public class SiivetController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (OnkoOkToimiaUusi(gameObject))
         {
 
@@ -231,12 +236,19 @@ public class SiivetController : BaseController, IExplodable
 
         //    RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime, rajaytaSpritenExplosion, rajaytaspritenviive);
 //        RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, 0.001f, rajaytysalivetime);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BaseDestroy();
+
     }
 
     private bool tormatty = false;
     void OnCollisionEnter2D(Collision2D col)
     {
+       if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+        
         //haukisilmavihollinenexplodetag
 
         //explodetag

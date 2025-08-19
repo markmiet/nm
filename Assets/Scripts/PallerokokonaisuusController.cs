@@ -39,6 +39,8 @@ public class PallerokokonaisuusController : BaseController
     //  public float nopeusy = 0.01f;
     private void Start()
     {
+
+       // Time.fixedDeltaTime = 0.02f; // 50 Hz (50 kertaa sekunnissa)
         sp = GetComponent<SpriteRenderer>();
         sp.enabled = false;
         currentPhase = MovementPhase.MoveLeft;
@@ -68,32 +70,56 @@ public class PallerokokonaisuusController : BaseController
 
     private bool tehty = false;
 
+    public float palleroidenValinenViiveSekunneissa = 0.2f;
 
-    private void Tee()
+    private void TeePallerot()
     {
-        Vector3 uusi = new Vector3(transform.position.x + offsetttiminneluodaan, transform.position.y, transform.position.z);
-        // Instantiate the leader and followers
+        tehty = true;
+
+            StartCoroutine(Tee());
+        
+    }
+
+    IEnumerator Tee()
+    {
+
         for (int i = 0; i < numberOfFollowers; i++)
         {
+            // odota ennen kuin luodaan seuraava
+            yield return new WaitForSeconds(palleroidenValinenViiveSekunneissa);
+
+
+            Vector3 uusi = new Vector3(transform.position.x + offsetttiminneluodaan, transform.position.y, transform.position.z);
+            // Instantiate the leader and followers
+
+            //Vector3 uusipaikka = new Vector3(uusi.x + i*2.0f, uusi.y, uusi.z);
+
             GameObject obj = Instantiate(prefab, uusi, Quaternion.identity); // Start on the right
             NmpalleroController aa = obj.GetComponent<NmpalleroController>();
             if (aa != null)
             {
                 aa.setPallerokokonaisuusController(this);
+
+                aa.movekesto = movekesto;
+                aa.moveSpeed = moveSpeed;
+                aa.patternMovementPhase = patternMovementPhase;
+                
+                aa.randomisointiprossa = randomisointiprossa;
+                aa.sinamplitude = sinamplitude;
+                aa.sinfrequency = sinfrequency;
+                
             }
-
-
             followers.Add(obj);
+            // }
+            //alaspain = IsInUpperPartOfScreen(gameObject);
+            IgnoreCollisions(followers);
+            //Randomize();
         }
-        //alaspain = IsInUpperPartOfScreen(gameObject);
-        IgnoreCollisions(followers);
-        Randomize();
-        tehty = true;
     }
 
 
 
-    void FixedUpdate()
+    void Update()
     {
         //  public float offsetttiminneluodaan = 1.0f;
         //isgameobject visible toteutuu ensin joka tekee tuon tee
@@ -102,22 +128,28 @@ public class PallerokokonaisuusController : BaseController
         {
             if (!tehty)
             {
-                Tee();
+                TeePallerot();
             }
-            MoveLeader();
-            UpdateFollowers();
-            TarkistaOnkoAmmuttu();
+            //MoveLeader();
+            //UpdateFollowers();
+            //TarkistaOnkoAmmuttu();
         }
         else if ( OnkoKameranVasemmallaPuolella(gameObject,1.0f) && !IsAnyOfGameObjectVisible(followers))
         {
+            /*
+            //tässä tuhotaan kaikki
             foreach (GameObject c in followers)
             {
                 if (c != null)
                 {
-                    Destroy(c);
+                    //Destroy(c);
+                    BaseDestroy(c);
                 }
             }
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
+            */
+
         }
         else
         {
@@ -127,7 +159,7 @@ public class PallerokokonaisuusController : BaseController
 
     public void OnBecameInvisible()
     {
-
+        /*
         foreach (GameObject c in followers)
         {
             if (c != null)
@@ -136,9 +168,12 @@ public class PallerokokonaisuusController : BaseController
             }
         }
         Destroy(gameObject);
+        BaseDestroy(ga)
+            */
     }
     public bool TarkistaOnkoAmmuttu()
     {
+        /*
         bool kaikkiammuttu = true;
         foreach (GameObject c in followers)
         {
@@ -150,8 +185,21 @@ public class PallerokokonaisuusController : BaseController
             }
         }
         return kaikkiammuttu;
-    }
+        */
+        foreach (GameObject c in followers)
+        {
+            if (c!=null && c.GetComponent<BaseController>()!=null)
+            {
+                bool elossa =! c.GetComponent<BaseController>().isGoingToBeDestroyed;
 
+                if (elossa)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     private MovementPhase Palautaseuraava()
     {
         return patternMovementPhase[movennumero];
@@ -171,7 +219,18 @@ public class PallerokokonaisuusController : BaseController
         {
             if (c != null)
             {
-                return c;
+                BaseController bc = c.GetComponent<BaseController>();
+                if (bc!=null)
+                {
+                    if (!bc.isGoingToBeDestroyed)
+                    {
+                        return c;
+                    }
+                }
+                else
+                {
+                    return c;
+                }
             }
         }
         return null;
@@ -390,7 +449,12 @@ public class PallerokokonaisuusController : BaseController
                 Vector3 targetPosition = positions.ToArray()[index];
                 if (followers[i] != null)
                 {
-                    followers[i].transform.position = targetPosition;
+                    BaseController bc = followers[i].GetComponent<BaseController>();
+                    if (bc!=null && !bc.isGoingToBeDestroyed)
+                    {
+                        followers[i].transform.position = targetPosition;
+                    }
+                    
                 }
 
             }

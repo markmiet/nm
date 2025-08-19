@@ -129,6 +129,7 @@ public class GameManager : BaseController
     void Awake()
     {
         Application.targetFrameRate = 60;//t‰rke‰‰‰
+        //Time.fixedDeltaTime = 0.02f; // 50 Hz (50 kertaa sekunnissa)
 
         //Application.targetFrameRate = Screen.currentResolution.refreshRateRatio.value;
         if (Instance == null)
@@ -375,5 +376,16 @@ public class GameManager : BaseController
         
     }
 
+    public bool IsGoingToBeDestroyed(GameObject go)
+    {
+        if (go==null)
+        {
+            return true;
+        }
+        BaseController be = go.GetComponent<BaseController>();
+
+        return be != null && be.IsGoingToBeDestroyed();
+
+    }
 
 }

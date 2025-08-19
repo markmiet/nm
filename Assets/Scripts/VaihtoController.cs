@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class VaihtoController : MonoBehaviour
+public class VaihtoController : BaseController
 {
     //@todo ota turhat pois
 
@@ -76,6 +76,8 @@ public class VaihtoController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+      //  Time.fixedDeltaTime = 0.001f;
         _spriteRenderers = GetComponent<SpriteRenderer>();
         _materials = new Material(_spriteRenderers.material);
         // _spriteRenderers.material = _materials;
@@ -86,7 +88,7 @@ public class VaihtoController : MonoBehaviour
         maintekstuuri.SetPixels(original.GetPixels());
         maintekstuuri.Apply();
         TeeMainTekstuuriVaihto();
-
+        collisiolaskuri = minimiaikaMikaPitaaOllaCollisioidenValissa;
         //  _spriteRenderers.material = _materials;
 
         // gameObject.AddComponent<PolygonCollider2D>();
@@ -247,13 +249,15 @@ public class VaihtoController : MonoBehaviour
        // Debug.Log("maara=" + maara);
         if (maara < pikseliminimimaara)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
             return;
         }
         int korkeus = GetSpriteHeightInPixels();
         if (korkeus < spritenkorkeudenmini)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
             return;
         }
 
@@ -266,7 +270,9 @@ public class VaihtoController : MonoBehaviour
             float ala = xkoko * ykoko;
             if (ala< minimipintaala)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                BaseDestroy();
+
             }
         }
 
@@ -417,16 +423,61 @@ public class VaihtoController : MonoBehaviour
 
     public float tormaysvoimajokavaaditaan = 10.0f;
 
+
+
+    public bool ignoraaOsaCollisioista = false;
+
+  
+    public float minimiaikaMikaPitaaOllaCollisioidenValissa = 0.1f;
+    private float collisiolaskuri = 0.0f;
+
+    public bool tutkiFps=false;
+    public float minFPS = 59f; // raja, alle tätä ei instansioida
+
+
     public void OnCollisionEnter2D(Collision2D col)
     {
+        if (IsGoingToBeDestroyed()) {
+            return;
+        }
+
         if (!bulletholemode)
         {
             return;
         }
+        if (ignoraaOsaCollisioista)
+        {
+            collisiolaskuri += Time.deltaTime;
+        }
+
+
         //tutki voima
         if (Reagoidaanko( col.collider.tag))
-    
         {
+            if (tutkiFps)
+            {
+                float smoothFPS = 1f / Time.smoothDeltaTime;
+                if (smoothFPS < minFPS)
+                {
+                    Debug.Log("fps oli " + smoothFPS + " joka on alle rajan " + minFPS);
+                    return;
+                }
+            }
+            if (ignoraaOsaCollisioista)
+            {
+                
+                if (collisiolaskuri < minimiaikaMikaPitaaOllaCollisioidenValissa)
+                {
+
+                    return;
+                }
+                else
+                {
+                    collisiolaskuri = 0.0f;
+                }
+            }
+
+
 
             if (tutkitormaysvoima)
             {
@@ -434,12 +485,12 @@ public class VaihtoController : MonoBehaviour
                 float voimakkuus = col.relativeVelocity.magnitude;
                 if (voimakkuus >= tormaysvoimajokavaaditaan)
                 {
-                    Debug.Log($"Reagoidaan törmäykseen tagilla {col.collider.tag}, voima {voimakkuus}");
+                 //   Debug.Log($"Reagoidaan törmäykseen tagilla {col.collider.tag}, voima {voimakkuus}");
                     // Tee haluttu toiminto (esim. lisää bullet hole)
                 }
                 else
                 {
-                    Debug.Log($"EI REAGOIDA törmäykseen tagilla {col.collider.tag}, voima {voimakkuus}");
+                   // Debug.Log($"EI REAGOIDA törmäykseen tagilla {col.collider.tag}, voima {voimakkuus}");
                     return;
                 }
             }
@@ -940,7 +991,7 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
                     {
                         int index = texY * width + texX;
                         Color32 c = pixels[index];
-                        Vector2Int pixelCoord = new Vector2Int(texX, texY);
+                        //Vector2Int pixelCoord = new Vector2Int(texX, texY);
 
   
                         // Only clear non-transparent pixels
@@ -1060,7 +1111,11 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         float ppu = originalSprite.pixelsPerUnit;
         Vector2 pivotPx = originalSprite.pivot;
 
-        Color[] pixels = originalTex.GetPixels();
+//        Color[] pixels = originalTex.GetPixels();//mjm nopeutuuko?
+
+        Color32[] pixels = originalTex.GetPixels32();
+
+
         bool[,] alphaMask = new bool[width, height];
 
         // Build alpha mask
@@ -1253,7 +1308,12 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
         // Destroy the original object
         if (jokutehtiin)
-            Destroy(gameObject);
+        {
+            //Destroy(gameObject);
+            BaseDestroy();
+
+        }
+           
         return true;
     }
 

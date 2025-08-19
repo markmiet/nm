@@ -104,6 +104,11 @@ public class TankkiPiippuController : ChildColliderReporter
  //   private float viimeksiammuttu = 0.0f;
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (spaceship == null) return;
 
         

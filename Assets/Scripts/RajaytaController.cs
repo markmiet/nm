@@ -43,7 +43,9 @@ public class RajaytaController : BaseController, IExplodable
         }
 
         //ammuksen massa oli 0.06
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BaseDestroy();
+
 
     }
 }

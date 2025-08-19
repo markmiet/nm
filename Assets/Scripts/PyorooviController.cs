@@ -33,6 +33,11 @@ public class PyorooviController : BaseController
     void Update()
     {
 
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
      //   m_SpriteRenderer = GetComponent<SpriteRenderer>();
       //  rb = GetComponent<Rigidbody2D>();
 

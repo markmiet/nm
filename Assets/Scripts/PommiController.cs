@@ -24,6 +24,11 @@ public class PommiController : BaseController, IExplodable
     private bool rajaytetty = false;
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         Tuhoa(gameObject);
         delta += Time.deltaTime;
 
@@ -146,7 +151,8 @@ public class PommiController : BaseController, IExplodable
         GameObject instanssi = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(instanssi, 2);
 
-        Destroy(gameObject);
+        //  Destroy(gameObject);
+        BaseDestroy();
     }
 
     bool IsInLayerMask(GameObject obj)

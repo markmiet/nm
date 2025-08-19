@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonKoiraController : MonoBehaviour
+public class SkeletonKoiraController : BaseController
 {
     //[SerializeField]
     //   public bool hyppaa = false;
@@ -334,6 +334,11 @@ public class SkeletonKoiraController : MonoBehaviour
     }
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         /*
         if (animator != null && animationStates.Count > 0)
         {

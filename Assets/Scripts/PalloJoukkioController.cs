@@ -34,6 +34,11 @@ public class PalloJoukkioController : BaseController
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
 
         //  GameObject instanssi= Instantiate(pallo);
 
@@ -101,7 +106,8 @@ transform.position.x + viimeisinx, transform.position.y + yarvo, 0);
                         }
                     }
                 }
-                Destroy(gameObject);
+              //  Destroy(gameObject);
+            BaseDestroy();
            
         }
 

@@ -41,6 +41,11 @@ public class LaserController : BaseController
         //	Destroy(explosionIns, 1.0f);
 
 
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         //ammuksen massa oli 0.06
 
         if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
@@ -69,7 +74,9 @@ public class LaserController : BaseController
 
                 //vaihdetaanko klooni puolta pienemmäksi :) hihii tai väriä sehän on cooli tai jotain hih
             }
-            Destroy(gameObject);   
+            BaseDestroy();
+            //Destroy(gameObject);
+            
         }
     }
     public bool olenklooni = false;
@@ -79,26 +86,37 @@ public class LaserController : BaseController
         // Destroy the enemy
         //tuhoa = true;
         //Explode();
-        Destroy(gameObject);
+      //  Destroy(gameObject);
     }
 
 
     // Update is called once per frame
     void Update()
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
         if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
             return;
         }
 
-      //  float delta = Time.deltaTime;
-    //    transform.position += new Vector3(delta * nopeusx, 0, 0f);
+        //  float delta = Time.deltaTime;
+        //    transform.position += new Vector3(delta * nopeusx, 0, 0f);
 
+        TuhoaAmmukset(null, gameObject);
+
+        /*
         if (OnkoKameranOikeallaPuolella(gameObject))
         {
             Destroy(gameObject);
         }
+        */
+
         /*
         else
         {
@@ -132,9 +150,16 @@ public class LaserController : BaseController
     void OnCollisionEnter2D(Collision2D col)
     {
 
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (tuhottujenVihollistenmaara >= laserkaytossamontakotuhotaan)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
             return;
         }
 

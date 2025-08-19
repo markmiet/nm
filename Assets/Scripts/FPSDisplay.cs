@@ -38,7 +38,7 @@ public class FPSDisplay : MonoBehaviour
         int myInt = Mathf.CeilToInt(fps);
         float difficulty = GameManager.Instance.PalautaDifficulty();
 
-        string text = string.Format("{0} FPS / Difficulty: {1:0.00}", myInt, difficulty);
+        string text = string.Format("{0} FPS / Difficulty: {1:0.00}  {2:0.00} ", myInt, difficulty, Time.fixedDeltaTime);
         GUI.Label(rect, text, style);
 #endif
     }

@@ -24,7 +24,10 @@ public class RengasController : BaseController
 
     void FixedUpdate()
     {
-
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
 
         if (spaceship == null)

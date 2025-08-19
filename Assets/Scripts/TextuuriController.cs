@@ -172,6 +172,12 @@ public class TextuuriController : BaseController
 
 
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
+
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;

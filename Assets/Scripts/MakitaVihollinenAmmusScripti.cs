@@ -94,11 +94,17 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
     //private float checkInterval = 0.3f;
     //private float nextCheckTime;
     //public float nopeusjonkaalletuhotaan;
+
     void Update()
     {
 
-        //        Tuhoa(prefap,gameObject, speedjonkaalletuhotaan);
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
+        TuhoaAmmukset(GetPrefap(),gameObject);
+        //Tuhoa(gameObject);
 
         //  if (prefap != null)
         //  {
@@ -111,7 +117,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
                     Tuhoa(gameObject, speedjonkaalletuhotaan);
                 }
                 */
-        Tuhoa(gameObject, speedjonkaalletuhotaan);
+       // Tuhoa(gameObject, speedjonkaalletuhotaan);
 
         /*
         if (Time.time >= nextCheckTime)
@@ -159,12 +165,22 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
     void OnBecameInvisible()
     {
+        if (true)
+        {
+            Debug.Log("OnBecameInvisible"+gameObject.name);
+            return;
+        }
+
         //	Debug.Log ("OnBecameInvisible");
         // Destroy the enemy
         //tuhoa = true;
         hengissaoloaika = 0.0f;
-        //ObjectPoolManager.Instance.ReturnToPool(prefap, gameObject);
+        if (GetPrefap() != null)
+            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        else
+            BaseDestroy();
         //Destroy(gameObject);
+
     }
     public float damagemaarajokaaiheutetaan = 1.0f;
 
@@ -172,6 +188,11 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+        
         if (col.collider.tag.Contains("vihollinen") && !col.collider.tag.Contains("tiili"))
         {
             Debug.Log("viholliseen osui");
@@ -277,7 +298,13 @@ col.gameObject.GetComponent<IDamagedable>();
     {
         Explode(Vector2.zero);
         //Destroy(gameObject);
-        ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        //ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+
+        if (GetPrefap() != null)
+            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        else
+            BaseDestroy();
+
     }
     public void Explode(Vector2 contactPoint)
     {
@@ -294,7 +321,8 @@ col.gameObject.GetComponent<IDamagedable>();
             }
 
             Destroy(explosionIns, explosionkesto);
-            Destroy(gameObject);
+         //   BaseDestroy();MJMMMMMM
+            //Destroy(gameObject);
 
 
             //	RajaytaSprite(gameObject, 3, 3, 1.0f, alivetimeRajahdyksenJalkeen);
@@ -310,7 +338,12 @@ col.gameObject.GetComponent<IDamagedable>();
         //0.5f
 
         hengissaoloaika = 0.0f;
-        ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        //ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+
+        if (GetPrefap() != null)
+            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        else
+            BaseDestroy();
 
         //Destroy(gameObject);
 

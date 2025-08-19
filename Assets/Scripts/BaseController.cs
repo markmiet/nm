@@ -1215,70 +1215,37 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     }
 
 
-    public void RajaytaSpriteUUsi(GameObject go, int rows, int columns, float explosionForce, float alivetime)
+
+
+
+    public void RajaytaSpriteUusiMonimutkaisin(
+    GameObject go,
+    int rows,
+    int columns,
+    float explosionForce,
+    float aliveTime,
+    GameObject fadeexplosion = null,
+    float fadeDuration = 0.5f,
+    GameObject gameObjectjostalasketaanPosition = null,
+    int maksimimaara = 36, bool teerigidbody = true, float gravityscale = 0.5f
+)
     {
-        Sprite originalSprite = GetComponent<SpriteRenderer>().sprite;
-
-        // Get the original sprite's texture
-        Texture2D texture = originalSprite.texture;
-
-        // Calculate slice dimensions
-        int sliceWidth = texture.width / columns;
-        int sliceHeight = texture.height / rows;
-
-        for (int y = 0; y < rows; y++)
+        if (IsGoingToBeDestroyed())
         {
-            for (int x = 0; x < columns; x++)
-            {
-                // Create slice rectangle
-                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
-
-                // Create sprite from the slice
-                Sprite newSprite = Sprite.Create(
-                    texture,
-                    sliceRect,
-                    new Vector2(0.5f, 0.5f), // Pivot
-                    originalSprite.pixelsPerUnit
-                );
-
-                // Create GameObject for the slice
-                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
-                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
-                sr.sprite = newSprite;
-
-                // Add Rigidbody2D for physics
-                Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
-                pieceRigidbody.gravityScale = 0.5f;
-
-                // Optional: Add BoxCollider2D for physics interaction
-                BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
-                collider.size = new Vector2(sliceWidth / originalSprite.pixelsPerUnit, sliceHeight / originalSprite.pixelsPerUnit);
-
-                // Position the slice
-                sliceObject.transform.position = new Vector3(
-                    transform.position.x + x * sliceWidth / originalSprite.pixelsPerUnit,
-                    transform.position.y + y * sliceHeight / originalSprite.pixelsPerUnit,
-                    0
-                );
-
-                // Apply random force and torque
-                Vector2 randomDirection = Random.insideUnitCircle.normalized;
-                float randomForce = Random.Range(explosionForce * 0.5f, explosionForce);
-                pieceRigidbody.AddForce(randomDirection * randomForce, ForceMode2D.Impulse);
-                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
-
-                // Destroy slice after a given time
-                Destroy(sliceObject, alivetime);
-            }
+            return;
         }
 
-        // Optionally destroy the original GameObject
-        Destroy(go);
-    }
 
-    public void RajaytaSpriteUusiMonimutkaisin(GameObject go, int rows, int columns, float explosionForce, float aliveTime, GameObject fadeexplosion =null ,float fadeDuration = 0.5f,
-        GameObject gameObjectjostalasketaanPosition = null )
-    {
+        // Laske neliömäinen ruudukko jos rows*columns ylittää maksimin
+        if (columns * rows > maksimimaara)
+        {
+            columns = (int)Mathf.Sqrt(maksimimaara);
+            rows = Mathf.CeilToInt(maksimimaara / (float)columns);
+        }
+
+        if (columns < 2) columns = 2;
+        if (rows < 2) rows = 2;
+
         SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
         Sprite originalSprite = originalSR.sprite;
         Texture2D texture = originalSprite.texture;
@@ -1292,23 +1259,17 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         float pieceWidthUnits = spriteWidthUnits / columns;
         float pieceHeightUnits = spriteHeightUnits / rows;
 
-        //Vector3 centerPos = transform.position;
-        //Quaternion rotation = transform.rotation;
+        // Keskipiste
         Vector3 centerPos;
         Quaternion rotation;
         if (gameObjectjostalasketaanPosition != null)
         {
             centerPos = gameObjectjostalasketaanPosition.transform.position;
             rotation = gameObjectjostalasketaanPosition.transform.rotation;
-
-
-            Debug.Log("centerposi=" + centerPos);
-            Debug.Log("centerposi2=" + transform.position);
-
         }
         else
         {
-             centerPos = transform.position;
+            centerPos = transform.position;
             rotation = transform.rotation;
         }
 
@@ -1317,11 +1278,18 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         if (originalRB != null)
             originalVelocity = originalRB.velocity;
 
+        int slicemaara = 0;
         for (int y = 0; y < rows; y++)
         {
             for (int x = 0; x < columns; x++)
             {
-                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
+                slicemaara++;
+
+                // HUOM: viimeinen rivi/sarake voi olla leveämpi/korkeampi jos ei mene tasan
+                int thisSliceWidth = (x == columns - 1) ? texture.width - x * sliceWidth : sliceWidth;
+                int thisSliceHeight = (y == rows - 1) ? texture.height - y * sliceHeight : sliceHeight;
+
+                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, thisSliceWidth, thisSliceHeight);
 
                 Sprite newSprite = Sprite.Create(
                     texture,
@@ -1336,36 +1304,40 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                 sr.sortingLayerID = originalSR.sortingLayerID;
                 sr.sortingOrder = originalSR.sortingOrder;
 
-
-                SpriteRenderer srori=go.GetComponent<SpriteRenderer>();
-
-                if (srori!=null)
+                SpriteRenderer srori = go.GetComponent<SpriteRenderer>();
+                if (srori != null)
                 {
                     sr.material = srori.material;
                 }
 
+                if (teerigidbody)
+                {
+
+                    //ei tehdä tätä
+                    BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
+                    collider.size = new Vector2(
+                        thisSliceWidth / originalSprite.pixelsPerUnit,
+                        thisSliceHeight / originalSprite.pixelsPerUnit
+                    );
+
+
+
+                }
 
 
                 Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
-                pieceRigidbody.gravityScale = 0.5f;
+                pieceRigidbody.gravityScale = gravityscale;
                 pieceRigidbody.velocity = originalVelocity;
+                pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
+                pieceRigidbody.excludeLayers = LayerMask.GetMask("AlusLayer", "AlusammusLayer", "AmmusLayer", "Default");
+
+                Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
+                pieceRigidbody.AddForce(dirFromCenter * explosionForce, ForceMode2D.Impulse);
+                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
 
                 sliceObject.layer = LayerMask.NameToLayer("Tiililayer");
 
-                pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
-                pieceRigidbody.excludeLayers=  LayerMask.GetMask("AlusLayer", "AlusammusLayer","AmmusLayer", "Default");
-
-
-
-
-                BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
-                collider.size = new Vector2(
-                    sliceWidth / originalSprite.pixelsPerUnit,
-                    sliceHeight / originalSprite.pixelsPerUnit
-                );
-
-
-
+                // HUOM: vain uudemmissa Unityissä toimii include/excludeLayers
 
                 Vector3 localOffset = new Vector3(
                     (-spriteWidthUnits / 2f) + pieceWidthUnits * (x + 0.5f),
@@ -1377,101 +1349,20 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                 sliceObject.transform.rotation = rotation;
                 sliceObject.transform.localScale = transform.localScale;
 
-                Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
-                pieceRigidbody.AddForce(dirFromCenter * explosionForce, ForceMode2D.Impulse);
-                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
 
-                // Start fade & destroy on this slice
+                // fade ja destroy
                 sliceObject.AddComponent<FadeSlice>().Init(sr, aliveTime, fadeDuration, fadeexplosion);
             }
         }
 
-        // Destroy the original GameObject immediately
-        Destroy(go);
+        Debug.Log($"Created {slicemaara} slices ({rows}x{columns}) from {go.name}");
+        BaseDestroy();
+        //Destroy(go);
+
     }
 
 
-    public void RajaytaSpriteUusiMonimutkaisinsss(GameObject go, int rows, int columns, float explosionForce, float aliveTime, float fadeDuration = 0.5f)
-    {
-        SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
-        Sprite originalSprite = originalSR.sprite;
-        Texture2D texture = originalSprite.texture;
-
-        int sliceWidth = texture.width / columns;
-        int sliceHeight = texture.height / rows;
-
-        // Sprite size in world units (scale included)
-        float spriteWidthUnits = originalSprite.bounds.size.x * transform.localScale.x;
-        float spriteHeightUnits = originalSprite.bounds.size.y * transform.localScale.y;
-
-        // Size of each piece in world units
-        float pieceWidthUnits = spriteWidthUnits / columns;
-        float pieceHeightUnits = spriteHeightUnits / rows;
-
-        Vector3 centerPos = transform.position;
-        Quaternion rotation = transform.rotation;
-
-        // Get original velocity (if object has Rigidbody2D)
-        Vector2 originalVelocity = Vector2.zero;
-        Rigidbody2D originalRB = go.GetComponent<Rigidbody2D>();
-        if (originalRB != null)
-            originalVelocity = originalRB.velocity;
-
-        for (int y = 0; y < rows; y++)
-        {
-            for (int x = 0; x < columns; x++)
-            {
-                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, sliceWidth, sliceHeight);
-
-                Sprite newSprite = Sprite.Create(
-                    texture,
-                    sliceRect,
-                    new Vector2(0.5f, 0.5f),
-                    originalSprite.pixelsPerUnit
-                );
-
-                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
-                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
-                sr.sprite = newSprite;
-                sr.sortingLayerID = originalSR.sortingLayerID;
-                sr.sortingOrder = originalSR.sortingOrder;
-
-                Rigidbody2D pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
-                pieceRigidbody.gravityScale = 0.5f;
-                pieceRigidbody.velocity = originalVelocity; // Inherit motion
-
-                BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
-                collider.size = new Vector2(
-                    sliceWidth / originalSprite.pixelsPerUnit,
-                    sliceHeight / originalSprite.pixelsPerUnit
-                );
-
-                // Position relative to the center (local space)
-                Vector3 localOffset = new Vector3(
-                    (-spriteWidthUnits / 2f) + pieceWidthUnits * (x + 0.5f),
-                    (-spriteHeightUnits / 2f) + pieceHeightUnits * (y + 0.5f),
-                    0
-                );
-
-                // Apply rotation & world position
-                sliceObject.transform.position = centerPos + rotation * localOffset;
-                sliceObject.transform.rotation = rotation;
-                sliceObject.transform.localScale = transform.localScale;
-
-                // Explosion force in world direction
-                Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
-                pieceRigidbody.AddForce(dirFromCenter * explosionForce, ForceMode2D.Impulse);
-                pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
-
-                // Start fade & destroy
-                StartCoroutine(FadeAndDestroy(sr, aliveTime, fadeDuration));
-            }
-        }
-
-        // Destroy the original GameObject immediately
-        Destroy(go);
-    }
-
+    
     private IEnumerator FadeAndDestroy(SpriteRenderer sr, float aliveTime, float fadeDuration)
     {
         // Ensure fade starts only when there's time
@@ -1487,7 +1378,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
             sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
             yield return null;
         }
-
+        //BaseDestroy();
         Destroy(sr.gameObject);
     }
 
@@ -1601,10 +1492,14 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
 
     public void RajaytaSprite(GameObject go, int rows, int columns, float explosionForce, float alivetime,
     float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, float gravityscale,
-        float xsaato, bool addDestroyController, GameObject explosion, bool siirragameobjectinvelocitypaloihin, string tag, string layer
+        float xsaato, bool addDestroyController, GameObject explosion, bool siirragameobjectinvelocitypaloihin, string tag, 
+        string layer, int maksimimaara=36
         )
     {
-
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         SpriteRenderer s = GetComponent<SpriteRenderer>();
         if (s == null)
@@ -1620,6 +1515,13 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
         {
             columns = 2;
         }
+
+        if (columns * rows > maksimimaara)
+        {
+            columns = (int)Mathf.Sqrt(maksimimaara);
+            rows = Mathf.CeilToInt(maksimimaara / (float)columns);
+        }
+
         float currentTime = Time.time;
 
         // Remove timestamps older than 1 second
@@ -1638,6 +1540,8 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
         else
         {
             Debug.Log("Explosion rate limit reached (max 5 per second).");
+            BaseDestroy();
+
             return;
         }
 
@@ -1653,6 +1557,8 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
 
         if (originalSprite == null)
         {
+            BaseDestroy();
+
             return;
         }
 
@@ -1948,6 +1854,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
             }
         }
 
+        BaseDestroy();
 
         //  Debug.Log("Slicing completed. Number of slices: " + slicedSprites.Count);
 
@@ -2128,11 +2035,19 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
         for (int i = 0; i < lista.Count; i++)
         {
             GameObject go1 = lista[i];
+            if (go1==null)
+            {
+                continue;
+            }
             Collider2D[] colliders1 = go1.GetComponentsInChildren<Collider2D>();
 
             for (int j = i + 1; j < lista.Count; j++) // Avoid duplicate comparisons
             {
                 GameObject go2 = lista[j];
+                if (go2==null)
+                {
+                    continue;
+                }
                 Collider2D[] colliders2 = go2.GetComponentsInChildren<Collider2D>();
 
                 // Ignore collisions between all colliders in go1 and go2
@@ -2338,7 +2253,9 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     {
         if (IsOffScreen())
         {
-            Destroy(go);
+            BaseDestroy();
+            //Destroy(go);
+
         }
     }
     public bool OnkoAndroidi()
@@ -2941,6 +2858,56 @@ true,
     }
 
 
+    public bool TuhoaKiinteatObjektit(GameObject prefap, GameObject go)
+    {
+        //@todoo
+        syklilaskuri += Time.deltaTime;
+        if (syklilaskuri >= tarkistussykli)
+        {
+            //sallitaan pienet alitukset ja ylitykset näille....
+            if (!IsGameObjectVisible())
+            {
+                BaseDestroy(go, prefap);
+                return true;
+            }       
+        }
+        return false;
+    }
+
+    public bool TuhoaAmmukset(GameObject prefap, GameObject go, float hengissaolonraja = 100.0f, float liikkeenmininopeus = 1.0f)
+    {
+
+        hengissaoloaika += Time.deltaTime;
+
+        if (hengissaoloaika >= hengissaolonraja)
+        {
+            //Destroy(go);
+            BaseDestroy(go,prefap);
+            return true;
+        }
+        syklilaskuri += Time.deltaTime;
+        if (syklilaskuri >= tarkistussykli)
+        {
+            //sallitaan pienet alitukset ja ylitykset
+            if (!IsGameObjectVisible())
+            {
+                BaseDestroy(go, prefap);
+                return true;
+            }
+            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (r != null)
+            {
+                float speed = r.velocity.magnitude;
+                if (speed <= liikkeenmininopeus)
+                {
+                    BaseDestroy(go, prefap);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public bool TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GameObject prefap, GameObject go, float hengissaolonraja,float nopeudenalaraja)
     {
@@ -2962,7 +2929,8 @@ true,
                 hengissaoloaika = 0.0f;
                 if (prefap == null)
                 {
-                    Destroy(go);
+                   // Destroy(go);
+                    BaseDestroy();
                     return true;
                 }
                 else
@@ -2990,7 +2958,8 @@ true,
                 {
                     if (prefap == null)
                     {
-                        Destroy(go);
+                        //Destroy(go);
+                        BaseDestroy();
                         return true;
                     }
                     else
@@ -3140,6 +3109,12 @@ true,
     //sitten
     public bool OnkoOkToimiaUusi(GameObject go)
     {
+
+        if (GameManager.Instance.isGoingToBeDestroyed)
+        {
+            return false;
+        }
+
 
         /*
         if (go.tag.Contains("tiili"))
@@ -3733,7 +3708,7 @@ true,
 
     private float syklilaskuri = 0.0f;
     // private float tarkistussykli = 5.0f;
-    public float hengissaoloaika = 0.0f;
+    public float hengissaoloaika = 0.0f;//tämä siis mittaa sitä hengissäoloaikaa
     private void TuhoaReal(GameObject go, bool tuhoajosliianhidas, float nopeusJonkaAlletuhotaan,
         bool tuhoaJosKameranVasemmallaPuolella,
         float offsettijokasallitaanvasemmallakavaisyyn,
@@ -3753,7 +3728,7 @@ true,
         {
             Debug.Log("no nulli");
         }
-
+        hengissaoloaika += Time.deltaTime;
         syklilaskuri += Time.deltaTime;
         /*
         if (go.GetComponent<MakitaVihollinenAmmusScripti>() != null)
@@ -3776,13 +3751,24 @@ true,
             /*
             syklilaskuri = 0.0f;
             hengissaoloaika += tarkistussykli;
-
+            */
             if (tuhoajosliiankauanhengissa && hengissaoloaika >= hengissaolonraja)
             {
-                Destroy(go);
+                if (prefap == null)
+                {
+                    //Destroy(go);
+                    BaseDestroy();
+                    return;
+                }
+                else
+                {
+                    hengissaoloaika = 0.0f;
+                    ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                    return;
+                }
                 return;
             }
-            */
+            
             if (tuhoajosliianhidas)
             {
                 Rigidbody2D r = go.GetComponent<Rigidbody2D>();
@@ -3793,7 +3779,8 @@ true,
                     {
                         if (prefap==null)
                         {
-                            Destroy(go);
+                            //Destroy(go);
+                            BaseDestroy();
                             return;
                         }
                         else
@@ -3814,7 +3801,9 @@ true,
                 {
                     if (prefap == null)
                     {
-                        Destroy(go);
+                        BaseDestroy();
+                        //Destroy(go);
+
                         return;
                     }
                     else
@@ -3835,7 +3824,8 @@ true,
                 {
                     if (prefap == null)
                     {
-                        Destroy(go);
+                        //Destroy(go);
+                        BaseDestroy();
                         return;
                     }
                     else
@@ -3852,7 +3842,8 @@ true,
                 {
                     if (prefap == null)
                     {
-                        Destroy(go);
+                        // Destroy(go);
+                        BaseDestroy();
                         return;
                     }
                     else
@@ -3870,7 +3861,8 @@ true,
                 {
                     if (prefap == null)
                     {
-                        Destroy(go);
+                        //Destroy(go);
+                        BaseDestroy();
                         return;
                     }
                     else
@@ -3890,104 +3882,11 @@ true,
 
 
     //private Texture2D image; // The source image
-    public int uusirajaytyscolumns = 10;  // Number of horizontal slices
-    public int uusirajaytysrows = 10;     // Number of vertical slices
+    public int uusirajaytyscolumns = 8;  // Number of horizontal slices
+    public int uusirajaytysrows = 8;     // Number of vertical slices
     //private Vector2 startPosition; // The original position of the SpriteRenderer
 
-    public void RajaytaUudellaTavalla()
-    {
-        Vector2 startPosition;
-        Texture2D image;
-        SpriteRenderer originalRenderer = GetComponent<SpriteRenderer>();
-        if (originalRenderer == null || originalRenderer.sprite == null)
-        {
-            Debug.LogError("No SpriteRenderer or Sprite found!");
-            return;
-        }
-
-        image = originalRenderer.sprite.texture;
-        originalRenderer.enabled = false; // Hide the original image
-
-        startPosition = transform.position;
-
-        // Ensure pixel-perfect rendering
-        image.filterMode = FilterMode.Point;
-
-        // Get the original sprite's size in world units
-        Vector2 spriteWorldSize = originalRenderer.bounds.size;
-
-        // Get individual slice sizes in world units
-        float sliceWidth = spriteWorldSize.x / uusirajaytyscolumns;
-        float sliceHeight = spriteWorldSize.y / uusirajaytysrows;
-
-        // Get individual slice sizes in pixels
-        int pixelWidth = image.width / uusirajaytyscolumns;
-        int pixelHeight = image.height / uusirajaytysrows;
-
-        // Loop through rows and columns
-        for (int y = 0; y < uusirajaytysrows; y++)
-        {
-            for (int x = 0; x < uusirajaytyscolumns; x++)
-            {
-                // Fix texture bleeding by expanding the rect slightly to ensure there is no gap between slices
-                //int extraPixel = 1;  // No need for extra pixel expansion, this can be adjusted if needed
-                int extraPixel = 1;  // No need for extra pixel expansion, this can be adjusted if needed
-
-                int invertedY = (uusirajaytysrows - 1 - y) * pixelHeight;
-
-                Rect rect = new Rect(
-                    Mathf.Max(0, x * pixelWidth - extraPixel),  // Starting X position
-                    Mathf.Max(0, invertedY - extraPixel),        // Starting Y position (inverted for the image coordinates)
-                    Mathf.Min(pixelWidth + extraPixel * 2, image.width - x * pixelWidth),  // Ensure width fits within bounds
-                    Mathf.Min(pixelHeight + extraPixel * 2, image.height - invertedY)    // Ensure height fits within bounds
-                );
-
-                if (!HasNonTransparentPixels(rect, image))
-                {
-                    continue; // Skip this slice if it's completely transparent
-                }
-
-                // Create a sprite for the slice
-                //                Sprite sprite = Sprite.Create(image, rect, new Vector2(0.5f, 0.5f), image.width / spriteWorldSize.x);
-
-                Texture2D sliceTexture = new Texture2D(Mathf.FloorToInt(rect.width), Mathf.FloorToInt(rect.height));
-
-                // Get the pixels from the original texture
-                Color[] slicePixels = image.GetPixels(Mathf.FloorToInt(rect.x), Mathf.FloorToInt(rect.y), Mathf.FloorToInt(rect.width), Mathf.FloorToInt(rect.height));
-                sliceTexture.SetPixels(slicePixels);
-
-                // Apply changes to the new texture
-                sliceTexture.Apply();
-
-                // Create a new sprite from the new texture
-                Sprite sliceSprite = Sprite.Create(sliceTexture, new Rect(0, 0, sliceTexture.width, sliceTexture.height), new Vector2(0.5f, 0.5f), image.width / spriteWorldSize.x);
-
-
-                // Create a new GameObject for this slice
-                GameObject newObject = new GameObject($"Piece_{y}_{x}");
-
-                newObject.tag = gameObject.tag;
-
-                newObject.layer = LayerMask.NameToLayer("Default");
-                SpriteRenderer renderer = newObject.AddComponent<SpriteRenderer>();
-                renderer.sprite = sliceSprite;
-
-                // Add BoxCollider2D to the new object
-                BoxCollider2D collider = newObject.AddComponent<BoxCollider2D>();
-                collider.size = new Vector2(sliceWidth, sliceHeight);
-
-                // Calculate local position for perfect alignment
-                float posX = startPosition.x - (spriteWorldSize.x / 2) + (x * sliceWidth) + (sliceWidth / 2);
-                float posY = startPosition.y + (spriteWorldSize.y / 2) - (y * sliceHeight) - (sliceHeight / 2);
-
-                // Set position to exactly match original image
-                newObject.transform.position = new Vector2(posX, posY);
-
-                // Optionally, add additional logic or components as needed
-                newObject.AddComponent<SliceController>();
-            }
-        }
-    }
+    
 
     // Helper method to check if there are any non-transparent pixels in the slice
     private bool HasNonTransparentPixels(Rect rect, Texture2D image)
@@ -4095,4 +3994,85 @@ true,
     }
 
 
+    public void IgnoraaChildienCollisiot()
+    {
+        Collider2D[] allColliders = GetComponentsInChildren<Collider2D>();
+
+        foreach(Collider2D c in allColliders)
+        {
+            foreach (Collider2D b in allColliders)
+            {
+                Physics2D.IgnoreCollision(c, b);
+
+            }
+        }
+    }
+
+    public bool isGoingToBeDestroyed = false;
+
+    public void BaseDestroy()
+    {
+        isGoingToBeDestroyed = true;
+
+        Destroy(gameObject);
+    }
+
+    public bool IsGoingToBeDestroyed()
+    {
+        return isGoingToBeDestroyed;
+    }
+
+
+    public void BaseDestroy(GameObject go)
+    {
+        BaseController bc = go.GetComponent<BaseController>();
+        if (bc!=null)
+        {
+            bc.isGoingToBeDestroyed = true;
+            if (bc.GetPrefap()!=null)
+            {
+                ObjectPoolManager.Instance.ReturnToPool(bc.GetPrefap(), go);
+                return;
+            }
+
+        }
+
+        Destroy(go);
+    }
+
+    public void BaseDestroy(GameObject go,GameObject prefap)
+    {
+        BaseController bc = go.GetComponent<BaseController>();
+        if (bc != null)
+        {
+            bc.isGoingToBeDestroyed = true;
+            if (prefap != null)
+            {
+                ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                return;
+            }
+            if (bc.GetPrefap() != null)
+            {
+                ObjectPoolManager.Instance.ReturnToPool(bc.GetPrefap(), go);
+                return;
+            }
+        }
+        Destroy(go);
+    }
+
+    public void BaseDestroy(GameObject go,float time)
+    {
+        BaseController bc = go.GetComponent<BaseController>();
+        if (bc != null)
+        {
+            bc.isGoingToBeDestroyed = true;
+            if (bc.GetPrefap() != null)
+            {
+                ObjectPoolManager.Instance.ReturnToPool(bc.GetPrefap(), go);
+                return;
+            }
+        }
+
+        Destroy(go,time);
+    }
 }

@@ -17,7 +17,12 @@ public class HylsyController : BaseController
     void Update()
     {
         //liian hidas niin tuhoa
-    //    if (prefap!=null)
+        //    if (prefap!=null)
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GetPrefap(),gameObject, elamisenmaksimiaikaraja, nopeudenalaraja);
     }
 }

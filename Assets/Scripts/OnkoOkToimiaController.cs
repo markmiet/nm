@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class OnkoOkToimiaController : BaseController
 {
+
+    public bool estaChilderienTormayksetToisiinsa = true;
     // Start is called before the first frame update
     void Start()
     {
+        if (estaChilderienTormayksetToisiinsa)
+        {
+            IgnoraaChildienCollisiot();
+        }
         
     }
     public bool voikotoimia = false;

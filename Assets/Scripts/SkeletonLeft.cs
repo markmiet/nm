@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonLeft : MonoBehaviour
+public class SkeletonLeft : BaseController
 {
     // Start is called before the first frame update
     SkeletonController sc;
@@ -20,7 +20,9 @@ public class SkeletonLeft : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-
+        if (IsGoingToBeDestroyed()) {
+            return;
+        }
 
 
 

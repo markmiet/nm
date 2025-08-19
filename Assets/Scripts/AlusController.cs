@@ -154,6 +154,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
 
+    public GameObject forceFieldEtuOsa;
+    public GameObject forceFieldEtuosanPaikka;
 
 
 
@@ -301,6 +303,13 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
 
             //       Debug.Log("btc.order=" + btc.order + " btc.selected=" + btc.selected + " btc.usedcount=" + btc.usedcount);
+
+            if (btc.bonusbuttontype.Equals(BonusButtonController.Bonusbuttontype.Option))
+            {
+                btc.maxusedCount = optioidenmaksimaara;
+            }
+
+
             bbc.Add(btc);
 
         }
@@ -375,8 +384,44 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         SetEnabloiboxcollider(enabloiboxcollider);
 
 
+        for (int i=0;i<nykyinenoptioidenmaara;i++)
+        {
+            TeeOptioni();
+        }
+        ForceField(forcefieldkaytossa);
+        
+
     }
 
+    private void ForceField(bool kayttoon)
+    {
+        /*
+            public GameObject forceFieldEtuOsa;
+    public GameObject forceFieldEtuosanPaikka;
+    */
+
+
+        if (kayttoon)
+        {
+            ForceFieldController ff = GetComponent<ForceFieldController>();
+            if (ff == null)
+            {
+                GameObject obj=Instantiate(forceFieldEtuOsa, forceFieldEtuosanPaikka.transform.position, Quaternion.identity);
+
+                obj.transform.SetParent(gameObject.transform, true);
+            }
+        }
+        else
+        {
+            ForceFieldController ff = GetComponent<ForceFieldController>();
+            if (ff != null)
+            {
+                Destroy(ff.gameObject);
+            }
+        }
+    }
+
+    
 
 
 
@@ -1283,10 +1328,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     void Update()
     {
 
+        /*
+
         if (forcefieldkaytossa)
         {
             AsetaForceFieldiNakyviin();
         }
+        */
+
+        AsetaForceFieldiButtoni();
 
         if (uusiohjauskaytossa & !osuudetasetettu)
         {
@@ -2833,7 +2883,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         return false;
 
     }
-
+    /*
     private bool OnkoForceFieldPaalla()
     {
         ForceFieldController c = GetComponentInChildren<ForceFieldController>();
@@ -2843,6 +2893,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         }
         return c.IsOnkotoiminnassa();
     }
+    */
 
 
 
@@ -3065,7 +3116,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void AsetaForceFieldiNakyviin()
     {
-        GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
+
+        ForceField(true);
+     //   GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
 
     }
 
@@ -3077,7 +3130,24 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
     */
 
-    public void AsetaForceFieldiButtonEnabloiduksi()
+    private bool OnkoForceFieldiKaytossa()
+    {
+        ForceFieldController ff =
+        GetComponentInChildren<ForceFieldController>();
+
+        return ff != null;
+
+    }
+
+    private void AsetaForceFieldiButtoni()
+    {
+        bool onko = OnkoForceFieldiKaytossa();//jos force field kaytossa 
+        AsetaForceFieldiButtonTila(onko);
+
+    }
+
+
+    public void AsetaForceFieldiButtonTila(bool onkoJoKaytossa)
     {
         foreach (BonusButtonController btc in bbc)
         {
@@ -3085,8 +3155,16 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             {
                 //  Debug.Log("missile()");
                 //missileUpCollected++;
-                btc.enabled = true;
-                btc.usedcount = 0;
+                //btc.enabled = enable;
+                if (onkoJoKaytossa)
+                {
+                    btc.usedcount = 1;
+                }
+                else
+                {
+                    btc.usedcount = 0;
+                }
+               
             }
         }
 

@@ -36,6 +36,11 @@ public class LisaelamaController : BaseController
     public void OnTriggerEnter2D(Collider2D col)
     {
 
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         //  Debug.Log($"This object's collider: {col.collider.name}");
         //  Debug.Log($"Other object's collider: {col.otherCollider.name}");
         if (!onkoAlukseenJoTormatty && col.CompareTag("alustag"))
@@ -43,7 +48,9 @@ public class LisaelamaController : BaseController
             onkoAlukseenJoTormatty = true;
             GetComponent<Collider2D>().enabled = false;//t‰m‰n pit‰isi riitt‰‰
             RajaytaSprite(gameObject, 4, 4, 3.0f, 2f);
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            BaseDestroy(gameObject);
+
             if (ad!=null)
             {
                 ad.ElamaLisaaPlay();

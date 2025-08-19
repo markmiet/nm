@@ -13,6 +13,11 @@ public class TiilijonkavoituhotaController : BaseController /*, IExplodable*/
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         //TuhoaJosVaarassaPaikassa(gameObject);
         Tuhoa(gameObject);
 
@@ -21,7 +26,8 @@ public class TiilijonkavoituhotaController : BaseController /*, IExplodable*/
 
     public void Explode()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BaseDestroy();
 
         RajaytaSprite(gameObject, 10, 10, explosionForce, 0.3f);
         //mit‰ jos vain aluksen ampumilla voi siirt‰‰

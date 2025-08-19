@@ -114,6 +114,11 @@ public class KattopalliAmmusController1 : BaseController, IExplodable
         */
         //  Debug.Log("alpha=" + startAlpha);
 
+        if (IsGoingToBeDestroyed() )
+        {
+            return;
+        }
+
         Tuhoa(gameObject); 
 
 
@@ -163,6 +168,10 @@ public class KattopalliAmmusController1 : BaseController, IExplodable
 
     public void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         if (alusGameObject != null)
         {
@@ -523,7 +532,8 @@ public class KattopalliAmmusController1 : BaseController, IExplodable
         //MJM 18.12.2023 OTA POIS KOMMENTEISTA
         if (tuhoaJosOnBecameInvisible)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+          //  BaseDestroy();
         }
         // 
 
@@ -720,8 +730,8 @@ public class KattopalliAmmusController1 : BaseController, IExplodable
 
             GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(explosionIns, 1.0f);
-            Destroy(gameObject);
-        
+            //Destroy(gameObject);
+        BaseDestroy();
 
 
 

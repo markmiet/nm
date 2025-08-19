@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PallovihollinensavuController : MonoBehaviour
+public class PallovihollinensavuController : BaseController
 {
 
     private ParticleSystem particleSystem;
@@ -24,7 +24,7 @@ public class PallovihollinensavuController : MonoBehaviour
     void Update()
     {
         // Continuously align the BoxCollider2D with the Particle System
-        AlignColliderWithParticleSystem();
+      //  AlignColliderWithParticleSystem();
 
     }
 
@@ -50,6 +50,14 @@ public class PallovihollinensavuController : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D col)
     {
+        if (true)
+            return;
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (col.CompareTag("alustag"))
         {
 

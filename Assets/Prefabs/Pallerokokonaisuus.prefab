@@ -45,15 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866ab0bbc1659bb4c8445ce0a2c26996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 10
+  uusirajaytysrows: 10
+  bonusPrefabit: []
   prefab: {fileID: 3550328174410917367, guid: 4da83c8f7b78c914a89c0605bfe4f736, type: 3}
   numberOfFollowers: 5
   moveSpeed: 2.5
   positionDelay: 10
-  xsekuntienmaara: 1.5
-  ysekuntienmaara: 1
   offsetttiminneluodaan: 5
-  suorakulmainenliikkuminen: 1
   patternMovementPhase: 
+  movekesto: []
+  sinfrequency: 2
+  sinamplitude: 0.5
+  randomisointiprossa: 0.25
 --- !u!212 &529066061834914731
 SpriteRenderer:
   m_ObjectHideFlags: 0

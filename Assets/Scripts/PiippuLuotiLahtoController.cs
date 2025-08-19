@@ -16,7 +16,14 @@ public class PiippuLuotiLahtoController : BaseController
 
     // Update is called once per frame
     void Update()
+
+
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
         if (!OnkoOkToimiaUusi(gameObject.transform.parent.gameObject))
         {
             return;

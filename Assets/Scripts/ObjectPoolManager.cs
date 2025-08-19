@@ -45,7 +45,16 @@ public class ObjectPoolManager : MonoBehaviour
         if (obj == null) return Instantiate(prefab);
 
         obj.transform.SetPositionAndRotation(position, rotation);
+        BaseController bc = obj.GetComponent<BaseController>();
+        if (bc!=null)
+        {
+            bc.isGoingToBeDestroyed = false;
+            bc.hengissaoloaika = 0.0f;
+        }
+        
         obj.SetActive(true);
+
+        
 
         ParticleSystem particle = obj.GetComponentInChildren<ParticleSystem>(true);
         if (particle != null && particle.gameObject != null)
@@ -60,6 +69,13 @@ public class ObjectPoolManager : MonoBehaviour
     public void ReturnToPool(GameObject prefab, GameObject obj)
     {
         if (obj == null) return;
+
+
+        BaseController bc = obj.GetComponent<BaseController>();
+        if (bc != null)
+        {
+            bc.isGoingToBeDestroyed = true;
+        }
 
         obj.SetActive(false);
 

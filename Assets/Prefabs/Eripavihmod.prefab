@@ -314,8 +314,18 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
   bonusprefab: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468,
     type: 3}
+  explosionforce: 5
+  explosiontime: 10
+  gravityscale: 2
+  moveSpeed: 1
+  patternMovementPhase: 
+  movekesto: []
+  sinfrequency: 2
+  sinamplitude: 0.5
+  randomisointiprossa: 0.25
 --- !u!1001 &8248400944725571975
 PrefabInstance:
   m_ObjectHideFlags: 0

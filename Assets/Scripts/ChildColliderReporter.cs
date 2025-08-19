@@ -62,6 +62,11 @@ public class ChildColliderReporter : BaseController
 
     public void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
          if (rajoitaOikealleMenemista && rb!=null)
         {
             // Tarkistetaan onko liike oikealle
@@ -109,6 +114,11 @@ public class ChildColliderReporter : BaseController
 
     public bool RegisterHit(Vector2 contactPoint,GameObject go)
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return true;
+        }
         bool ret1 = false;
         if (parent!=null)
         {

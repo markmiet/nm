@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuosteController : MonoBehaviour
+public class RuosteController : BaseController
 {
     private int _DissolveAmount = Shader.PropertyToID("_DissolveAmount");
     private int _VerticalDissolve = Shader.PropertyToID("_VerticalDissolve");
@@ -94,6 +94,10 @@ public class RuosteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed()) {
+            return;
+        }
+
         /*
         // Satunnaista RGB ja Alpha ±20 %
         float newR = Mathf.Clamp01(original.r * (1f + GenerateRandomFromPosition(-randomOutLineColor/100.0f, randomOutLineColor / 100.0f)));

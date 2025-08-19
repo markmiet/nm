@@ -31,6 +31,12 @@ public class JointBreakHandler : BaseController
     public float topSpeedThreshold = 10f;
     void Update()
     {
+        if (GameManager.Instance.IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
+
         CheckIfHasAnyJoints();
         if (breakEnabled)
         {

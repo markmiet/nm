@@ -124,6 +124,12 @@ public class MakitaVihollinenScripti : BaseController, IExplodable
 
     void Update()
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         //TuhoaJosVaarassaPaikassaErikois(gameObject,true,false);
         Tuhoa(gameObject);
 
@@ -821,7 +827,8 @@ piipunboxit.gameObject.transform.position.x;
         GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         RajaytaSprite(gameObject, 3, 3, 2.0f, 1.2f);
         Destroy(explosionIns, 1.0f);
-        Destroy(gameObject);
+        BaseDestroy();
+       // Destroy(gameObject);
 
         Vector3 v3 =
 new Vector3(

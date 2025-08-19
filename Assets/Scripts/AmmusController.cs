@@ -81,20 +81,32 @@ public class AmmusController : BaseController, IExplodable
 
     public void Update()
     {
+
+
         if (tormattyviholliseen)
         {
-            Destroy(gameObject);
+            BaseDestroy();
             return;
         }
 
+        if (GameManager.Instance.IsGoingToBeDestroyed())
+        {
+            return;
+        }
+        /*
         if (OnkoKameranOikeallaPuolella(gameObject))
         {
-            Destroy(gameObject);
+           // Destroy(gameObject);
+            BaseDestroy();
+
         }
         else
         {
             TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
         }
+        */
+
+        TuhoaAmmukset(GetPrefap(), gameObject);
 
 
         //
@@ -150,6 +162,11 @@ public class AmmusController : BaseController, IExplodable
     private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (GameManager.Instance.IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (col.collider.tag.Equals("alustag"))
         {
             return;
@@ -179,10 +196,12 @@ public class AmmusController : BaseController, IExplodable
                     HitCounter hc = col.gameObject.transform.parent.gameObject.GetComponent<HitCounter>();
                     if (hc == null)
                     {
+                        /*
                         if (parentalreadyTriggered.Contains(col.gameObject.transform.parent.gameObject))
                         {
                             return;
                         }
+                        */
                         parentalreadyTriggered.Add(col.gameObject.transform.parent.gameObject);
                     }
                 }
@@ -333,7 +352,9 @@ public class AmmusController : BaseController, IExplodable
         // Destroy the enemy
         //tuhoa = true;
         //Explode();
-        Destroy(gameObject);
+        //Destroy(gameObject);
+      //  BaseDestroy();
+
     }
 
     public void Explode()
@@ -374,7 +395,9 @@ public class AmmusController : BaseController, IExplodable
 
         //ammuksen massa oli 0.06
 
-         Destroy(gameObject);
+        // Destroy(gameObject);
+        BaseDestroy();
+
 
     }
 

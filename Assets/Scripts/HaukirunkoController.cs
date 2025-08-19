@@ -566,7 +566,7 @@ public class HaukirunkoController : BaseController, IExplodable
         // Destroy the enemy
         //tuhoa = true;
 
-        Destroy(gameObject);
+      //  Destroy(gameObject);
     }
     /*
     private bool TuhoaJosKameranAlla()

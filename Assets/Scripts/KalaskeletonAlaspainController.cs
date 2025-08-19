@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KalaskeletonAlaspainController : MonoBehaviour
+public class KalaskeletonAlaspainController : BaseController
 {
     public float forceAmount = 10f; // Amount of vertical force to apply
     public float interval = 1f;    // Time interval in seconds between applying force
@@ -31,6 +31,11 @@ public class KalaskeletonAlaspainController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {  
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (rb!=null && forceAmount>0)
         {
             // Increment the timer

@@ -13,6 +13,11 @@ public class PiippuluotiController : BaseController,IDamagedable
 	// Update is called once per frame
 	void Update()
 	{
+		if (IsGoingToBeDestroyed())
+        {
+			return;
+        }
+
 		if (ve!=null)
 		GetComponent<Rigidbody2D>().velocity = ve;
 
@@ -26,15 +31,22 @@ public class PiippuluotiController : BaseController,IDamagedable
 		// Destroy the enemy
 		//tuhoa = true;
 
-			Destroy (gameObject);
+		//	Destroy (gameObject);
+	//	BaseDestroy();
 	}
 	public Vector2 ve;
 	void OnCollisionEnter2D(Collision2D col)
 	{
+		if (IsGoingToBeDestroyed())
+		{
+			return;
+		}
 		if (col.collider.tag.Contains("alus"))
 		{
-			Destroy(gameObject);
+			//Destroy(gameObject);
 			//Explode();
+			BaseDestroy();
+
 
 		}
 		else if (col.collider.tag.Contains("tiili"))
@@ -61,7 +73,10 @@ public class PiippuluotiController : BaseController,IDamagedable
 
 	public void Explode()
 	{
-		Destroy(gameObject);
+		//Destroy(gameObject);
+		BaseDestroy();
+
+
 	}
 	public float osumiemaarajokaTarvitaanRajahdykseen = 1000f;
 	private float nykyinenosuminenmaara = 0;

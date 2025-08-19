@@ -26,7 +26,10 @@ public class RandomForcesController : BaseController
     private OnkoOkToimiaController okc;
     void Update()
     {
- 
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         if (okc!=null && okc.voikotoimia && Time.time >= nextForceTime)
         {

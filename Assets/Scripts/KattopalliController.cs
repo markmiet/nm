@@ -107,6 +107,11 @@ public class KattopalliController : BaseController, IExplodable
 
     {
 
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         /*
         //nykyinenosuminenmaara;
         Color color = m_SpriteRenderer.color;
@@ -175,6 +180,11 @@ public class KattopalliController : BaseController, IExplodable
 
     public void FixedUpdate()
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         if (alusGameObject != null)
         {
@@ -598,7 +608,8 @@ public class KattopalliController : BaseController, IExplodable
         //MJM 18.12.2023 OTA POIS KOMMENTEISTA
         if (tuhoaJosOnBecameInvisible)
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            //BaseDestroy();
         }
         // 
 
@@ -827,10 +838,11 @@ public class KattopalliController : BaseController, IExplodable
             GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
 
         }
-         
+
 
         // Destroy(explosionIns,1.0f);
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        BaseDestroy();
 
 
         Vector3 v3 =

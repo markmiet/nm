@@ -65,16 +65,23 @@ public class SliceController : BaseController
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
         if (!ammukseentormatty && collision.gameObject.tag.Contains("ammus")) {
             ammukseentormatty = true;
             RajaytaSprite(gameObject, 2, 2);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
         }
         if (!ammukseentormatty && collision.gameObject.tag.Contains("pallovihollinen"))
         {
             ammukseentormatty = true;
             RajaytaSprite(gameObject, 2, 2);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
         }
 
     }
@@ -85,6 +92,7 @@ public class SliceController : BaseController
         if (originalRenderer == null || originalRenderer.sprite == null)
         {
             Debug.LogError("No SpriteRenderer or Sprite found!");
+            BaseDestroy();
             return;
         }
 
@@ -183,7 +191,9 @@ public class SliceController : BaseController
                 newObject.AddComponent<SliceController>();
                 s.level = level + 1;
                 // newObject.AddComponent<SliceController>();
-                Destroy(newObject, 4);
+                //Destroy(newObject, 4);
+                BaseDestroy(newObject, 4);
+
             }
         }
     }

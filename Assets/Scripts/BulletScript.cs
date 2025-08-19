@@ -24,9 +24,15 @@ public class BulletScript : BaseController, IExplodable, IAlas
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
-        TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
+        //TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
 
+
+        TuhoaAmmukset(GetPrefap(), gameObject);
 
         /*
         if (!android)
@@ -111,6 +117,11 @@ public class BulletScript : BaseController, IExplodable, IAlas
     void OnCollisionEnter2D(Collision2D col)
     {
         //  Debug.Log("alaosa collidoi");
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         if (col.collider.tag.Contains("tiili") || col.collider.tag.Contains("laatikkovihollinenexplodetag") || col.collider.tag.Contains("eituhvih"))
         {
@@ -270,7 +281,8 @@ public class BulletScript : BaseController, IExplodable, IAlas
         //tuhoa = true;
         if (android)
         {
-            Destroy(gameObject);
+          //  Destroy(gameObject);
+          //  BaseDestroy();
         }
 
     }
@@ -278,11 +290,16 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
     public void Explode()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
         if (rajaytasprite)
         {
             RajaytaSprite(gameObject, uusirajaytyscolumns, uusirajaytysrows, 1.0f, explosionlivetime);
         }
-        Destroy(gameObject);
+        BaseDestroy();
+        //Destroy(gameObject);
     }
 
     public float force = 1;
@@ -331,8 +348,8 @@ public class BulletScript : BaseController, IExplodable, IAlas
             Destroy(instanssi, explosionlivetime);
         }
 
-
-        Destroy(gameObject);
+        BaseDestroy();
+       // Destroy(gameObject);
     }
 
 

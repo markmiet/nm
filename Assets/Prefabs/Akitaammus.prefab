@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4277517907431031458
 Transform:
   m_ObjectHideFlags: 0
@@ -164,13 +164,14 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 1
   blinkSpeed: 2
   intensityMin: 1
   intensityMax: 1.5
-  prefap: {fileID: 4665176215325690238}
   kaannaObjektiLiikkeenSuuntaiseksi: 0
   speedjonkaalletuhotaan: 0.1
   maksimiaikaMinkaVoiOllaHengissa: 60
+  maksimiaikajonkavoiollahengissa: 100
   damagemaarajokaaiheutetaan: 1
   explosionkesto: 0.2
   alivetimeRajahdyksenJalkeen: 0.5

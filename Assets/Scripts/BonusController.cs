@@ -56,7 +56,9 @@ public class BonusController : BaseController
         // Destroy the enemy
         //tuhoa = true;
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        //BaseDestroy();
+
     }
 
     public float intensityMin = 0.5f;
@@ -88,6 +90,11 @@ public class BonusController : BaseController
     bool onkoAlukseenJoTormatty = false;
     public void OnTriggerEnter2D(Collider2D col)
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
         
       //  Debug.Log($"This object's collider: {col.collider.name}");
       //  Debug.Log($"Other object's collider: {col.otherCollider.name}");
@@ -96,7 +103,9 @@ public class BonusController : BaseController
             onkoAlukseenJoTormatty = true;
             GetComponent<Collider2D>().enabled = false;//tämän pitäisi riittää
             RajaytaSprite(gameObject, 3, 3, 2.0f, 1f);
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            BaseDestroy();
+
             ad.BonusPlay();
 
             AlusController myScript = col.gameObject.GetComponent<AlusController>();

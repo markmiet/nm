@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KonttiController : MonoBehaviour
+public class KonttiController : BaseController
 {
     /*
     [NoScaleOffset] _NoiseTex("NoiseTex", 2D) = "white" {}
@@ -64,6 +64,11 @@ public class KonttiController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         if (muunnaUpdatessa)
         {
 

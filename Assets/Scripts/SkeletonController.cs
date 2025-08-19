@@ -91,6 +91,11 @@ public class SkeletonController : BaseController, IExplodable
     public float kaatotahti = -3.0f;
     void Update()
     {
+
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
         if (!OnkoOkToimiaUusi(gameObject))
         {
                return;
@@ -336,7 +341,8 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
         }
         if (destroy)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
 
         }
         else
@@ -395,7 +401,8 @@ rajaytyksenysaato, true, rajahdysgravity, rajaytaspritexsaata, true, destroycont
             if (destroy)
             {
                 rajaytetty = true;
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                BaseDestroy();
             }
 
             hitcount = 0;

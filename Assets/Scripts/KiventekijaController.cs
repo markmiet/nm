@@ -66,6 +66,8 @@ public class KiventekijaController : BaseController
     public float xsuunnassaRandomisointiVali = 1.0f;
 
 
+    public float xsuunnanlisaysTamaSiksiEttaLuodaanKiviHiukanKameranOikeallePuolen = 1.0f;
+
     IEnumerator LuoKivetCoroutine()
     {
         coroutineKaynnissa = true;
@@ -80,7 +82,7 @@ public class KiventekijaController : BaseController
             float yarvo =  Random.Range(-1*ysuunnassaRandomisointiVali, ysuunnassaRandomisointiVali);
             float xrandomin = Random.Range(0, xsuunnassaRandomisointiVali);
 
-            float seuraavaX = transform.position.x + viimeisinx;
+            float seuraavaX = transform.position.x + viimeisinx + xsuunnanlisaysTamaSiksiEttaLuodaanKiviHiukanKameranOikeallePuolen;
 
             if (voikoInstantioida(seuraavaX, yarvo))
             {

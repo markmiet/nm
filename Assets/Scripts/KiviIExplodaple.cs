@@ -13,6 +13,10 @@ public class KiviIExplodaple : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
 
         if (explode && explodeHeti)
         {
@@ -28,7 +32,8 @@ public class KiviIExplodaple : BaseController, IExplodable
         prefabExplosion, transform.position, Quaternion.identity);
                 Destroy(raj, 1.0f);
             }
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            BaseDestroy();
         }
         else
         {
@@ -55,7 +60,8 @@ public class KiviIExplodaple : BaseController, IExplodable
             Destroy(raj, 1.0f);
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BaseDestroy();
 
     }
 
@@ -65,12 +71,18 @@ public class KiviIExplodaple : BaseController, IExplodable
         // Destroy the enemy
         //tuhoa = true;
         //Explode();
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        BaseDestroy();
     }
 
     public float nopeusjokapitaaYlittaaJottaKaikkituhoutuu = 1.0f;
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
         //tiilivihollinentag on se oikea tiili
         //tämä onkin tiilivihollinenkivitag
         float relativeVelocity = col.relativeVelocity.magnitude;
