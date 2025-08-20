@@ -432,7 +432,7 @@ public class VaihtoController : BaseController
     private float collisiolaskuri = 0.0f;
 
     public bool tutkiFps=false;
-    public float minFPS = 59f; // raja, alle tätä ei instansioida
+    private float minFPS = 50f; // raja, alle tätä ei instansioida
 
 
     public void OnCollisionEnter2D(Collision2D col)
