@@ -95,6 +95,8 @@ public class BonusController : BaseController
         {
             return;
         }
+
+
         
       //  Debug.Log($"This object's collider: {col.collider.name}");
       //  Debug.Log($"Other object's collider: {col.otherCollider.name}");

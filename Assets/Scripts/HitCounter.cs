@@ -136,6 +136,8 @@ public class HitCounter : BaseController
     }
 
 
+    public float rajaytaspritenScaleFactorProsentti = 100.0f;
+
     public void RajaytaChildrenit()
     {
         //if (explosion!=null)
@@ -152,7 +154,21 @@ public class HitCounter : BaseController
                 if (c != null && teerajaytasprite)
                 {
                     c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
+
+                   // c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4,4, 1.0f, alivetime);
+
                 }
+                if (c != null && teerajaytaspriteuusiversio)
+                {
+                   // c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
+
+                    //c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4, 4, 1.0f, alivetime);
+
+                    c.RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
+    rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti);
+
+                }
+
                 if (teeExplosion && explosion != null)
                 {
                     Vector2 keski = PalautaKaikkienCollidereidenKeskipiste(tt.gameObject);
