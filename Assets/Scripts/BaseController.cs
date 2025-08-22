@@ -4424,6 +4424,26 @@ true,
         }
     }
 
+    public void IgnoraaCollisiotVihollistenValillaALakasittelevihollinen(GameObject cp, GameObject c)
+    {
+        if (cp == null || c == null || cp == c) return;
+        Collider2D[] allColliders = cp.GetComponentsInChildren<Collider2D>();
+
+        Collider2D[] allColliders2 = c.GetComponentsInChildren<Collider2D>();
+
+        foreach (Collider2D c1 in allColliders)
+        {
+            foreach (Collider2D c2 in allColliders2)
+            {
+                //Physics.IgnoreCollision
+                Physics2D.IgnoreCollision(c1, c2);
+
+
+            }
+        }
+    }
+
+
 
     public void IgnoraaChildienCollisiot()
     {
@@ -4438,6 +4458,9 @@ true,
             }
         }
     }
+
+
+
 
     public bool isGoingToBeDestroyed = false;
 

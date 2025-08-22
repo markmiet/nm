@@ -198,8 +198,8 @@ public class SnakeCollSmoothFollow : BaseController
             currentAngles.Add(0f);
             allParts.Add(part);
         }
-
-        IgnoreCollisions(allParts);
+        IgnoraaChildienCollisiot();
+      //  IgnoreCollisions(allParts);
     }
 
     void Update()
@@ -398,45 +398,7 @@ public class SnakeCollSmoothFollow : BaseController
 
 
 
-    void UpdatePolygonColliderssd()
-    {
-        if ( bodyParts.Count < 2) return;
-
-        List<Vector2> upper = new List<Vector2>();
-        List<Vector2> lower = new List<Vector2>();
-        float scale = scalePolygonColliderInPercents / 100f;
-
-        for (int i = 0; i < bodyParts.Count - 1; i++)
-        {
-            Vector3 start = bodyParts[i].position;
-            Vector3 end = bodyParts[i + 1].position;
-
-            for (int j = 0; j <= colliderPointsPerSegment; j++)
-            {
-                float t = j / (float)colliderPointsPerSegment;
-                Vector3 pos = Vector3.Lerp(start, end, t);
-
-                Vector3 dir = (i == 0)
-                    ? (bodyParts[i + 1].position - bodyParts[i].position).normalized
-                    : (bodyParts[i + 1].position - bodyParts[i - 1].position).normalized;
-
-                float halfWidth = line.widthCurve.Evaluate((i + t) / (bodyParts.Count - 1)) / 2f * scale;
-                Vector3 perp = new Vector3(-dir.y, dir.x, 0) * halfWidth;
-
-                upper.Add(transform.InverseTransformPoint(pos + perp));
-                lower.Add(transform.InverseTransformPoint(pos - perp));
-            }
-        }
-
-        // Combine upper and lower
-        int total = upper.Count + lower.Count;
-        Vector2[] points = new Vector2[total];
-        for (int i = 0; i < upper.Count; i++) points[i] = upper[i];
-        for (int i = 0; i < lower.Count; i++) points[total - 1 - i] = lower[i];
-
-        polyCollider.SetPath(0, points);
-    }
-
+    
     public void AddBodyPart()
     {
         Transform tail = bodyParts[bodyParts.Count - 1];
