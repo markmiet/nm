@@ -106,7 +106,7 @@ public class AmmusController : BaseController, IExplodable
         }
         */
 
-        TuhoaAmmukset(GetPrefap(), gameObject);
+        TuhoaAmmukset( gameObject);
 
 
         //
@@ -231,7 +231,7 @@ public class AmmusController : BaseController, IExplodable
                         if (sc != null)
                         {
                             //col.collider.enabled = false;
-                            GetComponent<Collider2D>().enabled = false;
+                           // GetComponent<Collider2D>().enabled = false;
                            // Vector2 contactPoint = col.GetContact(0).point;
 
                             bool rajahtiko = sc.Explode(contactPoint);
@@ -269,8 +269,8 @@ public class AmmusController : BaseController, IExplodable
                 col.gameObject.GetComponent<IExplodable>();
                                 if (o != null)
                                 {
-                                    col.collider.enabled = false;
-                                    GetComponent<Collider2D>().enabled = false;
+                                   // col.collider.enabled = false;
+                                    //GetComponent<Collider2D>().enabled = false;
 
                                     if (col.gameObject!=null)
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
@@ -445,7 +445,7 @@ public class AmmusController : BaseController, IExplodable
         Debug.Log("no niin");
     }
 
-    public void OnDestroy()
+    public override void OnDestroyPoolinlaittaessa()
     {
         //System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
         //Debug.Log(stackTrace.ToString());

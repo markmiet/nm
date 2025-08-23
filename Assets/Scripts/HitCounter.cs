@@ -69,7 +69,7 @@ public class HitCounter : BaseController
             if (gameObject != null)
                 GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
-            Destroy(gameObject);
+           // BaseDestroy();
             return true;
         }
         SaadaDissolveAmountVerrattunaOsumiin();
@@ -140,6 +140,8 @@ public class HitCounter : BaseController
 
     public void RajaytaChildrenit()
     {
+
+        bool tuhoaminenkaynnissa = false;
         //if (explosion!=null)
         // {
         Transform[] t =
@@ -163,6 +165,8 @@ public class HitCounter : BaseController
                    // c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
 
                     //c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4, 4, 1.0f, alivetime);
+
+                    
 
                     c.RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti);
@@ -198,6 +202,7 @@ public class HitCounter : BaseController
         //RajaytaSprite(go, rows, columns, explosionForce, alivetime, -1, false, 0, false, 0.0f, -0.2f, false, null);
         if (teerajaytasprite)
         {
+            tuhoaminenkaynnissa = true;
             RajaytaSprite(gameObject, rajahdysrowcol, rajahdysrowcol, rajahdysvoima, alivetime,
 sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
   0.0f, adddestroycontroller, explosion);
@@ -205,9 +210,13 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
         }
         if (teerajaytaspriteuusiversio)
         {
-            Debug.Log("RajaytaSpriteUusiMonimutkaisin " + Time.realtimeSinceStartup);
+            tuhoaminenkaynnissa = true;
+            //Debug.Log("RajaytaSpriteUusiMonimutkaisin " + Time.realtimeSinceStartup);
                  RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
-                     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan);
+                     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,
+                     36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti
+
+                     );
             //Destroy(gameObject);
 
         }
@@ -215,6 +224,10 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
         //RajaytaUudellaTavalla();
 
         // }
+        if (!tuhoaminenkaynnissa)
+        {
+            BaseDestroy();
+        }
     }
 
     public GameObject gameJostaRajaytyksenPistelasketaan;

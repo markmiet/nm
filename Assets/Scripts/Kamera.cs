@@ -36,16 +36,17 @@ public class Kamera : MonoBehaviour
     void Start()
     {
         float y = 0f;
-        y = alus.transform.position.y;
+        //y = alus.transform.position.y;
         if (alus != null)
         {
+            
             float ero = alus.transform.position.x - transform.position.x;
             if (Mathf.Abs(ero) > 8)
             {
                 alus.transform.position = new Vector3(transform.position.x, y, 0);
-                alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
+               // alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
             }
-
+            
 
         }
         if (cameraInfo != null)

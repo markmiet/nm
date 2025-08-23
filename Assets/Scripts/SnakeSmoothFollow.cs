@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -49,6 +50,12 @@ public class SnakeSmootFollow : BaseController
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
+        try
+        {
+
+        Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
+
         // Trail
         Gizmos.color = Color.yellow;
         if (positions != null && positions.Count > 1)
@@ -79,6 +86,14 @@ public class SnakeSmootFollow : BaseController
                 DrawBoxCastGizmo(origin, RotateVector(dir, -angleOffset), raycastDistance);
             }
         }
+
+
+        }
+        catch (Exception ex)
+        {
+            //just i
+        }
+#endif
     }
 
     void Start()

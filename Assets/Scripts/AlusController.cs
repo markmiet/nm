@@ -2484,7 +2484,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             else
             {
                 ad.AlusammusPlay();
-                instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+                //instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+
+                instanssi=
+                ObjectPoolManager.Instance.GetFromPool(ammusPrefab,v3, Quaternion.identity);
 
                 AmmusController aa = instanssi.GetComponent<AmmusController>();
                 //aa.SetLaserkaytossa(laserkaytossa);

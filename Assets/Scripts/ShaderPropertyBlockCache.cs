@@ -20,12 +20,13 @@ public class ShaderPropertyBlockCache
 
     public void SetFloat(int propertyID, float value)
     {
-        if (!_floats.TryGetValue(propertyID, out var current) || !Mathf.Approximately(current, value))
-        {
-            _block.SetFloat(propertyID, value);
-            _floats[propertyID] = value;
-            Apply();
-        }
+            if (!_floats.TryGetValue(propertyID, out var current) || !Mathf.Approximately(current, value))
+            {
+                _block.SetFloat(propertyID, value);
+                _floats[propertyID] = value;
+                Apply();
+            }
+
     }
 
     public void SetColor(int propertyID, Color value)

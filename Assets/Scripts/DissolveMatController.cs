@@ -97,14 +97,24 @@ public class DissolveMatController : MonoBehaviour
 
     private void Update()
     {
-        _cache.SetFloat(_propIDs["_DissolveAmount"], dissolveamount);
-        _cache.SetFloat(_propIDs["_DissolveScale"], dissolveScale);
-        _cache.SetFloat(_propIDs["_VerticalDissolve"], verficaldissolve);
-        _cache.SetFloat(_propIDs["_SpiralStrength"], spiralStrength);
-        _cache.SetFloat(_propIDs["_RotationAmount"], rotationAngle);
+        try
+        {
 
-        if (maintexuusi != null)
-            _cache.SetTexture(_propIDs["_MainTex"], maintexuusi);
+            _cache.SetFloat(_propIDs["_DissolveAmount"], dissolveamount);
+            _cache.SetFloat(_propIDs["_DissolveScale"], dissolveScale);
+            _cache.SetFloat(_propIDs["_VerticalDissolve"], verficaldissolve);
+            _cache.SetFloat(_propIDs["_SpiralStrength"], spiralStrength);
+            _cache.SetFloat(_propIDs["_RotationAmount"], rotationAngle);
+
+            if (maintexuusi != null)
+                _cache.SetTexture(_propIDs["_MainTex"], maintexuusi);
+        }
+
+        catch (KeyNotFoundException)
+        {
+            Debug.LogWarning($"PropertyID xxx not found in _floats dictionary. {gameObject.name} ");
+        }
+
     }
 
     /*

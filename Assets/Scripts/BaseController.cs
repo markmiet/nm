@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 
@@ -29,12 +30,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 
     }
 
-    private Camera mainCam;
 
-    void Awake()
-    {
-        mainCam = Camera.main;
-    }
 
 
     public Vector3 palautaScreenpositioneissa(int positionumero)
@@ -1215,9 +1211,59 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 
     }
 
+    //public float force = 5f;        // explosion force
+    //public float lifetime = 2f;     // destroy pieces after this time
+    public int fragmentPixelSize = 16; // size of each fragment in pixels
+
+    /// <summary>
+    /// Explodes a LineRenderer worm into physics fragments that match the material texture.
+    /// </summary>
+    public void ShatterWorm(LineRenderer worm, GameObject expl, float lifetime=2.0f,float prosenttiosuus=1.0f)
+    {
+        int points = worm.positionCount;
+
+        int pointsprossat = (int)( points * prosenttiosuus);
+
+
+        int steppi = points / pointsprossat;
+
+        for (int i = 0; i < points; i+=steppi)
+        {
+            Vector3 pos = worm.GetPosition(i);
+
+            //GameObject piece=Instantiate(expl, pos, Quaternion.identity);
+            GameObject piece=
+            ObjectPoolManager.Instance.GetFromPool(expl,pos, Quaternion.identity);
+
+
+            // Cleanup
+            //Destroy(piece, lifetime);
+            ObjectPoolManager.Instance.ReturnToPool( piece, lifetime);
+        }
+
+        // Destroy the original worm
+       
+    }
+
+
+
+    public void Shatterwormi()
+    {
+        HitCounter hc = GetComponent<HitCounter>();
+
+        if (GetComponent<LineRenderer>() != null & hc != null && hc.rajaytaSpritenExplosion!=null)
+
+        {
+
+            ShatterWorm(GetComponent<LineRenderer>(), hc.rajaytaSpritenExplosion, hc.alivetime);
+            return;
+        }
+
+    }
+
 
     public void RajaytaSpriteUusiMonimutkaisin(
-    GameObject go,
+    GameObject parenttigameobjekti,
     int rows,
     int columns,
     float explosionForce,
@@ -1244,12 +1290,23 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
         if (originalSR == null)
         {
-            Debug.Log("ei spriterendereria " + go.name);
+            //Debug.Log("ei spriterendereria " + name);
+            Shatterwormi( );
             BaseDestroy();
             return;
         }
 
         Sprite originalSprite = originalSR.sprite;
+
+        if (originalSR.sprite == null)
+        {
+           // Debug.Log("ei spritea " + name);
+            Shatterwormi();
+            BaseDestroy();
+
+            return;
+        }
+
         Texture2D texture = originalSprite.texture;
 
         int sliceWidth = texture.width / columns;
@@ -1269,26 +1326,64 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
             gameObjectjostalasketaanPosition.transform.rotation : transform.rotation;
 
         Vector2 originalVelocity = Vector2.zero;
-        Rigidbody2D originalRB = go.GetComponent<Rigidbody2D>();
+        Rigidbody2D originalRB = parenttigameobjekti.GetComponent<Rigidbody2D>();
+
+        Vector3 originellilokaaliskale =
+        transform.localScale;
+        bool massaoli = false;
+        Rigidbody2D r = GetComponent<Rigidbody2D>();
+        float massa = 0.0f;
+        if (r!=null)
+        {
+            massa = r.mass;
+            massaoli = true;
+        }
+
         if (originalRB != null)
             originalVelocity = originalRB.velocity;
 
         int slicemaara = 0;
 
         float scale = scalefactor / 100f;
-
+        //SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
         for (int y = 0; y < rows; y++)
         {
             for (int x = 0; x < columns; x++)
             {
                 slicemaara++;
+                // Flip X → reverse columns
+                int sliceX = originalSR.flipX ? (columns - 1) - x : x;
+
+                // Flip Y → reverse rows
+                int sliceY = originalSR.flipY ? (rows - 1) - y : y;
+
+                // Handle edges so last slices fit exactly
+                int thisSliceWidth = (sliceX == columns - 1) ? texture.width - sliceX * sliceWidth : sliceWidth;
+                int thisSliceHeight = (sliceY == rows - 1) ? texture.height - sliceY * sliceHeight : sliceHeight;
+
+                Rect sliceRect = new Rect(
+                    sliceX * sliceWidth,
+                    sliceY * sliceHeight,
+                    thisSliceWidth,
+                    thisSliceHeight
+                );
+
+                /*
+                int sliceX = x;
+                if (originalSR.flipX)
+                {
+                    // Reverse order → right to left
+                    sliceX = (columns - 1) - x;
+                }
 
                 // Allow last slices to fit properly
-                int thisSliceWidth = (x == columns - 1) ? texture.width - x * sliceWidth : sliceWidth;
+                int thisSliceWidth = (sliceX == columns - 1) ? texture.width - sliceX * sliceWidth : sliceWidth;
                 int thisSliceHeight = (y == rows - 1) ? texture.height - y * sliceHeight : sliceHeight;
 
-                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, thisSliceWidth, thisSliceHeight);
+                Rect sliceRect = new Rect(sliceX * sliceWidth, y * sliceHeight, thisSliceWidth, thisSliceHeight);
 
+
+                */
                 Sprite newSprite = Sprite.Create(
                     texture,
                     sliceRect,
@@ -1296,14 +1391,23 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                     originalSprite.pixelsPerUnit
                 );
 
+                
+
                 GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                //flippi ei toimi
+               // sr.flipX = originalSR.flipX;
+               // sr.flipY = originalSR.flipY;
+
                 sr.sprite = newSprite;
                 sr.sortingLayerID = originalSR.sortingLayerID;
                 sr.sortingOrder = originalSR.sortingOrder;
+                sr.color = originalSR.color;
 
                 if (originalSR.material != null)
                     sr.material = originalSR.material;
+
+
 
                 Rigidbody2D pieceRigidbody = null;
 
@@ -1311,10 +1415,36 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                 {
                     // Collider scaled
                     BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
+
+                    /*
+                    if (scale==1.0f)
+                    {
+                        collider.size = new Vector2(
+    thisSliceWidth / originalSprite.pixelsPerUnit,
+    thisSliceHeight / originalSprite.pixelsPerUnit
+) * 
+                    }
+
+                    else
+                    {
+                        collider.size = new Vector2(
+    thisSliceWidth / originalSprite.pixelsPerUnit,
+    thisSliceHeight / originalSprite.pixelsPerUnit
+) * scale;
+                    }
+
+                    */
                     collider.size = new Vector2(
-                        thisSliceWidth / originalSprite.pixelsPerUnit,
-                        thisSliceHeight / originalSprite.pixelsPerUnit
-                    ) * scale;
+thisSliceWidth / originalSprite.pixelsPerUnit,
+thisSliceHeight / originalSprite.pixelsPerUnit
+) * scale * 0.5f;//nämä tehdään aina tarkoituksella liian pieniksi
+
+                    /*
+                    collider.size = new Vector2(
+                       thisSliceWidth / originalSprite.pixelsPerUnit,
+                       thisSliceHeight / originalSprite.pixelsPerUnit
+                   ) ;
+                    */
 
 
                 }
@@ -1323,9 +1453,14 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                 pieceRigidbody.gravityScale = gravityscale;
                 pieceRigidbody.velocity = originalVelocity;
 
+                if (massaoli)
+                {
+                    pieceRigidbody.mass = massa;
+                }
+
                 pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
                 pieceRigidbody.excludeLayers = LayerMask.GetMask("AlusLayer", "AlusammusLayer", "AmmusLayer", "Default");
-
+               
                 sliceObject.layer = LayerMask.NameToLayer("Tiililayer");
 
                 // Placement uses ORIGINAL grid size → keeps fragments together
@@ -1339,7 +1474,13 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                 sliceObject.transform.rotation = rotation;
 
                 // Scale DOWN the fragment visually
-                sliceObject.transform.localScale = Vector3.one * scale;
+                //sliceObject.transform.localScale = Vector2.one * scale;
+
+                // sliceObject.transform.localScale = new Vector3(scale, scale, 1f);
+
+                sliceObject.transform.localScale = originellilokaaliskale * scale;
+
+              //  Debug.Log( $"scale={scale}  {sliceObject.name} scale after assignment: {sliceObject.transform.localScale}, parent scale: {sliceObject.transform.parent?.localScale}");
 
                 // Explosion
                 if (pieceRigidbody != null)
@@ -1355,7 +1496,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
             }
         }
 
-        Debug.Log($"Created {slicemaara} slices ({rows}x{columns}, scale {scalefactor}%) from {go.name}");
+       // Debug.Log($"Created {slicemaara} slices ({rows}x{columns}, scale {scalefactor}%) from {go.name}");
         BaseDestroy();
     }
 
@@ -3288,7 +3429,7 @@ true,
 
     }
 
-
+    /*
     public bool TuhoaKiinteatObjektit(GameObject prefap, GameObject go)
     {
         //@todoo
@@ -3304,8 +3445,9 @@ true,
         }
         return false;
     }
+    */
 
-    public bool TuhoaAmmukset(GameObject prefap, GameObject go, float hengissaolonraja = 100.0f, float liikkeenmininopeus = 1.0f)
+    public bool TuhoaAmmukset( GameObject go, float hengissaolonraja = 100.0f, float liikkeenmininopeus = 1.0f)
     {
 
         hengissaoloaika += Time.deltaTime;
@@ -3313,7 +3455,7 @@ true,
         if (hengissaoloaika >= hengissaolonraja)
         {
             //Destroy(go);
-            BaseDestroy(go, prefap);
+            BaseDestroy(go);
             return true;
         }
         syklilaskuri += Time.deltaTime;
@@ -3322,7 +3464,7 @@ true,
             //sallitaan pienet alitukset ja ylitykset
             if (!IsGameObjectVisible())
             {
-                BaseDestroy(go, prefap);
+                BaseDestroy(go);
                 return true;
             }
             Rigidbody2D r = go.GetComponent<Rigidbody2D>();
@@ -3331,7 +3473,7 @@ true,
                 float speed = r.velocity.magnitude;
                 if (speed <= liikkeenmininopeus)
                 {
-                    BaseDestroy(go, prefap);
+                    BaseDestroy(go);
                     return true;
                 }
             }
@@ -3358,26 +3500,20 @@ true,
             {
                 //Destroy(go);
                 hengissaoloaika = 0.0f;
-                if (prefap == null)
-                {
-                    // Destroy(go);
+                
                     BaseDestroy();
                     return true;
-                }
-                else
-                {
-                    hengissaoloaika = 0.0f;
-                    ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                    return true;
-                }
+                
             }
 
             bool liianylhaalla = OnkoKameranYlaPuolella(go, 5.0f);
             if (liianylhaalla)
             {
-                hengissaoloaika = 0.0f;
-                ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                //hengissaoloaika = 0.0f;
+                //ObjectPoolManager.Instance.ReturnToPool(prefap, go);
+                BaseDestroy();
                 return true;
+
             }
 
 
@@ -3387,18 +3523,10 @@ true,
                 float speed = r.velocity.magnitude;
                 if (speed <= nopeudenalaraja)
                 {
-                    if (prefap == null)
-                    {
-                        //Destroy(go);
+                    
                         BaseDestroy();
                         return true;
-                    }
-                    else
-                    {
-                        hengissaoloaika = 0.0f;
-                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                        return true;
-                    }
+                    
 
                 }
             }
@@ -4185,19 +4313,10 @@ true,
             */
             if (tuhoajosliiankauanhengissa && hengissaoloaika >= hengissaolonraja)
             {
-                if (prefap == null)
-                {
-                    //Destroy(go);
+                
                     BaseDestroy();
                     return;
-                }
-                else
-                {
-                    hengissaoloaika = 0.0f;
-                    ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                    return;
-                }
-                return;
+                
             }
 
             if (tuhoajosliianhidas)
@@ -4208,18 +4327,10 @@ true,
                     float speed = r.velocity.magnitude;
                     if (speed <= nopeusJonkaAlletuhotaan)
                     {
-                        if (prefap == null)
-                        {
-                            //Destroy(go);
+                      
                             BaseDestroy();
                             return;
-                        }
-                        else
-                        {
-                            hengissaoloaika = 0.0f;
-                            ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                            return;
-                        }
+                        
 
                     }
                 }
@@ -4230,9 +4341,13 @@ true,
                 OnkoKameranVasemmallaPuolella(go, offsettijokasallitaanvasemmallakavaisyyn);
                 if (vasen)
                 {
+                    /*
                     if (prefap == null)
                     {
+                        */
                         BaseDestroy();
+                    return;
+                    /*
                         //Destroy(go);
 
                         return;
@@ -4243,6 +4358,7 @@ true,
                         ObjectPoolManager.Instance.ReturnToPool(prefap, go);
                         return;
                     }
+                    */
 
 
 
@@ -4253,36 +4369,18 @@ true,
             {
                 if (OnkoKameranOikeallaPuolella(go))
                 {
-                    if (prefap == null)
-                    {
                         //Destroy(go);
                         BaseDestroy();
                         return;
-                    }
-                    else
-                    {
-                        hengissaoloaika = 0.0f;
-                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                        return;
-                    }
+                    
                 }
             }
             if (tuhoaJosKameranAlapuolella)
             {
                 if (OnkoKameranAlaPuolella(go, offsettijokasallitaanAlhaallaKavaisyyn))
                 {
-                    if (prefap == null)
-                    {
-                        // Destroy(go);
                         BaseDestroy();
-                        return;
-                    }
-                    else
-                    {
-                        hengissaoloaika = 0.0f;
-                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                        return;
-                    }
+                    return;
 
                 }
             }
@@ -4290,18 +4388,8 @@ true,
             {
                 if (OnkoKameranYlaPuolella(go, offsettijokasallitaanYlapuolellaKavaisyyn))
                 {
-                    if (prefap == null)
-                    {
-                        //Destroy(go);
                         BaseDestroy();
-                        return;
-                    }
-                    else
-                    {
-                        hengissaoloaika = 0.0f;
-                        ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                        return;
-                    }
+                    return;
 
                 }
             }
@@ -4468,7 +4556,8 @@ true,
     {
         isGoingToBeDestroyed = true;
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BaseDestroy(gameObject);
     }
 
     public bool IsGoingToBeDestroyed()
@@ -4483,36 +4572,23 @@ true,
         if (bc != null)
         {
             bc.isGoingToBeDestroyed = true;
-            if (bc.GetPrefap() != null)
-            {
-                ObjectPoolManager.Instance.ReturnToPool(bc.GetPrefap(), go);
-                return;
-            }
 
         }
 
-        Destroy(go);
-    }
-
-    public void BaseDestroy(GameObject go, GameObject prefap)
-    {
-        BaseController bc = go.GetComponent<BaseController>();
-        if (bc != null)
+        if (go.GetComponent<PooledObject>() != null)
         {
-            bc.isGoingToBeDestroyed = true;
-            if (prefap != null)
-            {
-                ObjectPoolManager.Instance.ReturnToPool(prefap, go);
-                return;
-            }
-            if (bc.GetPrefap() != null)
-            {
-                ObjectPoolManager.Instance.ReturnToPool(bc.GetPrefap(), go);
-                return;
-            }
+            ObjectPoolManager.Instance.ReturnToPool( go);
+            return;
+
         }
-        Destroy(go);
+        else
+        {
+            Destroy(go);
+        }
+       
     }
+
+
 
     public void BaseDestroy(GameObject go, float time)
     {
@@ -4520,13 +4596,65 @@ true,
         if (bc != null)
         {
             bc.isGoingToBeDestroyed = true;
-            if (bc.GetPrefap() != null)
-            {
-                ObjectPoolManager.Instance.ReturnToPool(bc.GetPrefap(), go);
-                return;
-            }
         }
 
-        Destroy(go, time);
+        if (go.GetComponent<PooledObject>() != null)
+        {
+            ObjectPoolManager.Instance.ReturnToPool(go,time);
+            return;
+        }
+        else
+        {
+            Destroy(go, time);
+        }
     }
+
+    public virtual void OnDestroyPoolinlaittaessa()
+    {
+
+    }
+
+
+    private Dictionary<FieldInfo, object> _initialValues;
+
+    public void SaveInitialState()
+    {
+        _initialValues = new Dictionary<FieldInfo, object>();
+
+        // Haetaan kaikki kentät (myös private/protected)
+        var fields = GetType().GetFields(
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+        foreach (var field in fields)
+        {
+            // tallennetaan alkuarvo
+            _initialValues[field] = field.GetValue(this);
+        }
+    }
+
+    public void ResetState()
+    {
+        if (_initialValues == null) return;
+
+        foreach (var kvp in _initialValues)
+        {
+            kvp.Key.SetValue(this, kvp.Value);
+        }
+    }
+
+    private Camera mainCam;
+
+    void Awakevanha()
+    {
+        mainCam = Camera.main;
+    }
+
+    // Käytetään Awake:ssa automaattisesti tallennukseen
+    protected virtual void Awake()
+    {
+        mainCam = Camera.main;
+        SaveInitialState();
+    }
+
+
 }

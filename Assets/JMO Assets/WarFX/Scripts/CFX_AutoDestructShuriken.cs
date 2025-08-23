@@ -8,14 +8,16 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 	
 	void OnEnable()
 	{
-		StartCoroutine("CheckIfAlive");
+		OnlyDeactivate = true;
+	//	StartCoroutine("CheckIfAlive");
 	}
-	
+	/*
 	IEnumerator CheckIfAlive ()
 	{
+		//MJM muutti tämän vain on
 		while(true)
 		{
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(2f);
 			if(!GetComponent<ParticleSystem>().IsAlive(true))
 			{
 				if(OnlyDeactivate)
@@ -32,4 +34,5 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 			}
 		}
 	}
+	*/
 }

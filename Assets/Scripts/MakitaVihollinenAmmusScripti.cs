@@ -103,7 +103,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
             return;
         }
 
-        TuhoaAmmukset(GetPrefap(),gameObject);
+        TuhoaAmmukset(gameObject);
         //Tuhoa(gameObject);
 
         //  if (prefap != null)
@@ -156,8 +156,8 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
 
             // Multiply the original color by the blinking intensity
             Color blinkingColor = _baseColor * intensity;
-
-            _material.SetColor(BaseColorID, blinkingColor);
+            if (_material!=null)
+                _material.SetColor(BaseColorID, blinkingColor);
         }
 
     }
@@ -175,9 +175,10 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
         // Destroy the enemy
         //tuhoa = true;
         hengissaoloaika = 0.0f;
-        if (GetPrefap() != null)
-            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
-        else
+        //if (GetPrefap() != null)
+        //    ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        //else
+
             BaseDestroy();
         //Destroy(gameObject);
 
@@ -240,8 +241,9 @@ col.gameObject.GetComponent<IDamagedable>();
         if (col.collider.tag.Contains("alus"))
         {
             //Destroy(gameObject);
-            hengissaoloaika = 0.0f;
-            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+            //hengissaoloaika = 0.0f;
+            //ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+            BaseDestroy();
 
             //Explode();
 
@@ -300,9 +302,10 @@ col.gameObject.GetComponent<IDamagedable>();
         //Destroy(gameObject);
         //ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
 
-        if (GetPrefap() != null)
-            ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
-        else
+        //if (GetPrefap() != null)
+        //    ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
+        //else
+
             BaseDestroy();
 
     }
@@ -339,10 +342,11 @@ col.gameObject.GetComponent<IDamagedable>();
 
         hengissaoloaika = 0.0f;
         //ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
-
+        /*
         if (GetPrefap() != null)
             ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
         else
+            */
             BaseDestroy();
 
         //Destroy(gameObject);

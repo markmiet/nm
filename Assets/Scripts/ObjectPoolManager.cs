@@ -10,7 +10,6 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton setup
         if (Instance == null)
         {
             Instance = this;
@@ -40,46 +39,77 @@ public class ObjectPoolManager : MonoBehaviour
         else
         {
             obj = Instantiate(prefab);
+            // Attach tracking component
+            var po = obj.GetComponent<PooledObject>();
+            if (po == null) po = obj.AddComponent<PooledObject>();
+            po.prefab = prefab;
         }
 
-        if (obj == null) return Instantiate(prefab);
+        if (obj == null)
+        {
+
+            obj = Instantiate(prefab);
+            // Attach tracking component
+            var po = obj.GetComponent<PooledObject>();
+            if (po == null) po = obj.AddComponent<PooledObject>();
+            po.prefab = prefab;
+
+        }
+        else
+        {
+          //  Debug.Log("saatiin sielta jotain sentaan"+prefab.name);
+        }
 
         obj.transform.SetPositionAndRotation(position, rotation);
+
         BaseController bc = obj.GetComponent<BaseController>();
-        if (bc!=null)
+        if (bc != null)
         {
             bc.isGoingToBeDestroyed = false;
             bc.hengissaoloaika = 0.0f;
+
+            bc.ResetState();
         }
-        
+
         obj.SetActive(true);
-
-        
-
-        ParticleSystem particle = obj.GetComponentInChildren<ParticleSystem>(true);
-        if (particle != null && particle.gameObject != null)
-        {
-            particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            particle.Play();
-        }
 
         return obj;
     }
+    /*
+    public void ReturnToPool(GameObject prefapjokaturha,GameObject obj)
+    {
+        //@tod poista
+        
+        ReturnToPool(obj);
 
-    public void ReturnToPool(GameObject prefab, GameObject obj)
+    }
+    */
+
+        public void ReturnToPool(GameObject obj)
     {
         if (obj == null) return;
 
+        var po = obj.GetComponent<PooledObject>();
+        if (po == null || po.prefab == null)
+        {
+            Debug.LogWarning($"[ObjectPoolManager] Tried to return {obj.name} but it has no PooledObject prefab reference!");
+            Destroy(obj); // safer than enqueuing incorrectly
+            return;
+        }
 
         BaseController bc = obj.GetComponent<BaseController>();
         if (bc != null)
         {
             bc.isGoingToBeDestroyed = true;
+
+            bc.OnDestroyPoolinlaittaessa();
         }
 
         obj.SetActive(false);
 
-        int prefabId = prefab.GetInstanceID();
+
+
+        int prefabId = po.prefab.GetInstanceID();
         if (!poolDict.ContainsKey(prefabId))
         {
             poolDict[prefabId] = new Queue<GameObject>();
@@ -88,18 +118,25 @@ public class ObjectPoolManager : MonoBehaviour
         poolDict[prefabId].Enqueue(obj);
     }
 
-    public void ReturnToPool(GameObject prefab, GameObject obj, float secondsAfterReturnToPool)
+    
+
+
+    /*
+    public void ReturnToPool(GameObject prefappijokasiisturha,GameObject obj, float secondsAfterReturnToPool)
+    {
+        //@todoo poista
+        ReturnToPool(obj, secondsAfterReturnToPool);
+    }
+    */
+    public void ReturnToPool(GameObject obj, float secondsAfterReturnToPool)
     {
         if (obj == null) return;
-        StartCoroutine(ReturnAfterDelay(prefab, obj, secondsAfterReturnToPool));
+        StartCoroutine(ReturnAfterDelay(obj, secondsAfterReturnToPool));
     }
 
-    private IEnumerator ReturnAfterDelay(GameObject prefab, GameObject obj, float delay)
+    private IEnumerator ReturnAfterDelay(GameObject obj, float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (obj != null)
-        {
-            ReturnToPool(prefab, obj);
-        }
+        if (obj != null) ReturnToPool(obj);
     }
 }

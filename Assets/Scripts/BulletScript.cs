@@ -32,7 +32,7 @@ public class BulletScript : BaseController, IExplodable, IAlas
         //TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
 
 
-        TuhoaAmmukset(GetPrefap(), gameObject);
+        TuhoaAmmukset( gameObject);
 
         /*
         if (!android)

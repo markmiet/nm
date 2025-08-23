@@ -482,7 +482,7 @@ GetComponents<WheelJoint2D>();
                     
                     GameObject instanssisavu = ObjectPoolManager.Instance.GetFromPool(c.explosion, transform.position, Quaternion.identity);
 
-                    ObjectPoolManager.Instance.ReturnToPool(c.explosion, instanssisavu, 1.0f);
+                    ObjectPoolManager.Instance.ReturnToPool( instanssisavu, 1.0f);
                 }
             }
 

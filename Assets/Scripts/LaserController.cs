@@ -108,7 +108,7 @@ public class LaserController : BaseController
         //  float delta = Time.deltaTime;
         //    transform.position += new Vector3(delta * nopeusx, 0, 0f);
 
-        TuhoaAmmukset(null, gameObject);
+        TuhoaAmmukset(gameObject);
 
         /*
         if (OnkoKameranOikeallaPuolella(gameObject))
@@ -714,7 +714,7 @@ public class LaserController : BaseController
 
            GameObject explosionIns = ObjectPoolManager.Instance.GetFromPool(osumaExplosion, contactPoint, Quaternion.identity);
 
-           ObjectPoolManager.Instance.ReturnToPool(osumaExplosion,explosionIns, osumaexplosionkestoaika);
+           ObjectPoolManager.Instance.ReturnToPool(explosionIns, osumaexplosionkestoaika);
 
             //Destroy(explosionIns, 1.0f);
         }

@@ -22,7 +22,11 @@ public class SnakeCollSmoothFollow : BaseController
     public float rotationSmoothTime = 0.05f;
     public float tailFollowFactor = 0.2f;
 
-   
+
+    [Header("Raycast Settings")]
+    public float raycastDistance = 1f;
+    public Vector2 raycastBoxSize = new Vector2(0.3f, 0.3f); // paksuus
+
     [Range(10f, 200f)]
     public float scalePolygonColliderInPercents = 100f;
     [Range(1, 10)]
@@ -136,7 +140,7 @@ public class SnakeCollSmoothFollow : BaseController
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosdssssssssss()
     {
         // Draw a wire sphere at this GameObject's position
         Gizmos.color = Color.green;
@@ -264,11 +268,11 @@ public class SnakeCollSmoothFollow : BaseController
             lastHeadPos = bodyParts[0].position;
             lastTailPos = bodyParts[^1].position;
 
-            Debug.Log("coll update");
+        //    Debug.Log("coll update");
         }
         else
         {
-            Debug.Log("ei coll update");
+        //    Debug.Log("ei coll update");
         }
 
 
@@ -277,7 +281,7 @@ public class SnakeCollSmoothFollow : BaseController
     private Vector3 lastHeadPos;
     private Vector3 lastTailPos;
 
-    void MoveHead()
+    void MoveHeadOld()
     {
         if (target == null) return;
 
@@ -297,6 +301,32 @@ public class SnakeCollSmoothFollow : BaseController
         if (positions.Count == 0 || Vector3.Distance(bodyParts[0].position, positions[positions.Count - 1]) >= minDistance / 2f)
             positions.Add(bodyParts[0].position);
     }
+
+    void MoveHead()
+    {
+        if (target == null) return;
+
+        Vector2 dir = GetBestDirection(bodyParts[0].position, target.position, raycastDistance);
+
+        Vector3 targetPos = bodyParts[0].position + (Vector3)(dir * headSpeed * Time.fixedDeltaTime);
+        Vector3 tempVel = velocities[0];
+        bodyParts[0].position = Vector3.SmoothDamp(bodyParts[0].position, targetPos, ref tempVel, movementSmoothTime);
+        velocities[0] = tempVel;
+
+        float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float tempRot = rotationVelocities[0];
+        currentAngles[0] = Mathf.SmoothDampAngle(currentAngles[0], targetAngle, ref tempRot, rotationSmoothTime);
+        rotationVelocities[0] = tempRot;
+        bodyParts[0].rotation = Quaternion.Euler(0, 0, currentAngles[0] + angleadd);
+
+        if (positions.Count == 0 || Vector3.Distance(bodyParts[0].position, positions[positions.Count - 1]) >= minDistance / 2f)
+        {
+            positions.Add(bodyParts[0].position);
+            while (positions.Count > bodyParts.Count)
+                positions.RemoveAt(0);
+        }
+    }
+
 
     void MoveBody()
     {
@@ -419,4 +449,137 @@ public class SnakeCollSmoothFollow : BaseController
             Destroy(collision.gameObject);
         }
     }
+
+    Vector2 GetBestDirection(Vector2 currentPos, Vector2 targetPos, float checkDistance)
+    {
+        Vector2 desiredDir = (targetPos - currentPos).normalized;
+
+        if (IsDirectionClear(currentPos, desiredDir, checkDistance))
+            return desiredDir;
+
+        Vector2 bestDir = desiredDir;
+        float closestDistance = float.PositiveInfinity;
+
+        for (int angleOffset = 15; angleOffset <= 360; angleOffset += 15)
+        {
+            Vector2[] testDirs = new Vector2[]
+            {
+                RotateVector(desiredDir, angleOffset),
+                RotateVector(desiredDir, -angleOffset)
+            };
+
+            foreach (var dir in testDirs)
+            {
+                if (IsDirectionClear(currentPos, dir, checkDistance))
+                {
+                    float dist = Vector2.Distance(currentPos + dir * checkDistance, targetPos);
+                    if (dist < closestDistance)
+                    {
+                        closestDistance = dist;
+                        bestDir = dir;
+                    }
+                }
+            }
+        }
+
+        return bestDir;
+
+
+    }
+
+
+
+
+    bool IsDirectionClear(Vector2 origin, Vector2 dir, float distance)
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            origin,
+            raycastBoxSize,
+            0f,
+            dir,
+            distance
+        );
+
+        foreach (var hit in hits)
+        {
+            if (hit.collider == null) continue;
+            if (hit.collider.transform.IsChildOf(transform)) continue;
+            if (hit.collider.tag.Contains("vihollinen"))
+                return false;
+        }
+        return true;
+    }
+
+
+    Vector2 RotateVector(Vector2 v, float degrees)
+    {
+        float rad = degrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(rad);
+        float sin = Mathf.Sin(rad);
+        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos).normalized;
+    }
+
+    void IgnoreSelfCollisions(GameObject root)
+    {
+        Collider2D[] colliders = root.GetComponentsInChildren<Collider2D>();
+        for (int i = 0; i < colliders.Length; i++)
+            for (int j = i + 1; j < colliders.Length; j++)
+                Physics2D.IgnoreCollision(colliders[i], colliders[j], true);
+    }
+
+    void DrawBoxCastGizmo(Vector2 origin, Vector2 dir, float distance)
+    {
+        Color col = IsDirectionClear(origin, dir, distance) ? Color.green : Color.red;
+        Gizmos.color = col;
+
+        Quaternion rot = Quaternion.LookRotation(Vector3.forward, dir);
+        Vector3 center = origin + dir * distance * 0.5f;
+        Vector3 size = new Vector3(raycastBoxSize.x, distance, raycastBoxSize.y);
+
+        Gizmos.matrix = Matrix4x4.TRS(center, rot, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, size);
+        Gizmos.matrix = Matrix4x4.identity;
+    }
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+
+        Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
+#endif
+
+
+        // Trail
+        Gizmos.color = Color.yellow;
+        if (positions != null && positions.Count > 1)
+        {
+            for (int i = 1; i < positions.Count; i++)
+                Gizmos.DrawLine(positions[i - 1], positions[i]);
+        }
+
+        // Body connections
+        Gizmos.color = Color.cyan;
+        if (bodyParts != null && bodyParts.Count > 1)
+        {
+            for (int i = 1; i < bodyParts.Count; i++)
+                Gizmos.DrawLine(bodyParts[i - 1].position, bodyParts[i].position);
+        }
+
+        // BoxCast visualization
+        if (bodyParts != null && bodyParts.Count > 0 && target != null)
+        {
+            Vector2 origin = bodyParts[0].position;
+            Vector2 dir = (target.position - bodyParts[0].position).normalized;
+
+            DrawBoxCastGizmo(origin, dir, raycastDistance);
+
+            for (int angleOffset = 15; angleOffset <= 180; angleOffset += 15)
+            {
+                DrawBoxCastGizmo(origin, RotateVector(dir, angleOffset), raycastDistance);
+                DrawBoxCastGizmo(origin, RotateVector(dir, -angleOffset), raycastDistance);
+            }
+        }
+    }
+
+
 }
