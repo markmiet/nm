@@ -112,6 +112,19 @@ public class OnkoOkToimiaController : BaseController
     private Coroutine teeCoroutine;
     private IEnumerator StartTeeDelayed(bool voiko, float delay)
     {
+        Rigidbody2D[] rigidbodies = GetComponentsInChildren<Rigidbody2D>();
+
+        foreach (Rigidbody2D r in rigidbodies)
+        {
+            if (r != null)
+            {
+                if (freezeYposition)
+                {
+                    r.simulated = voiko;
+                }
+            }
+        }
+
         yield return new WaitForSeconds(delay);
         Tee(voiko);
         teeCoroutine = null;
@@ -125,12 +138,15 @@ public class OnkoOkToimiaController : BaseController
         {
             if (r != null)
             {
+                
                 r.simulated = voiko;
+
                 if (freezeYposition)
                 {
                     if (voiko)
                     {
                         r.constraints &= ~RigidbodyConstraints2D.FreezePositionY;//unlock freeze y
+                        r.gravityScale = 2 * r.gravityScale;
                     }
                     else
                     {

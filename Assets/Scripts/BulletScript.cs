@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : BaseController, IExplodable, IAlas
+public class BulletScript : BaseController, IExplodable, PoolNotAble
 {
 
     public bool alas = true;
@@ -19,6 +19,24 @@ public class BulletScript : BaseController, IExplodable, IAlas
 
     public float nopeusjonkaalleTuhoutuu = 0.2f;
 
+
+    private bool aluksenluoma = false;
+    public GameObject alus;
+
+
+    public GameObject option;
+    public void SetOption(GameObject p_option)
+    {
+        option = p_option;
+    }
+
+    public void SetAluksenluoma(bool arvo)
+    {
+        aluksenluoma = arvo;
+    }
+
+
+
     //public float maksimiAikajonkavoiollaElossa = 10.0f;
     //private float eloaika = 0.0f;
     // Update is called once per frame
@@ -28,6 +46,13 @@ public class BulletScript : BaseController, IExplodable, IAlas
         {
             return;
         }
+        /*
+        bool onko=IsOffScreen();
+        if (onko)
+        {
+            BaseDestroy(gameObject);
+        }
+        */
 
         //TuhoaJosOikeallaPuolenKameraaTutkimuitakainEsimNopeus(gameObject, nopeusjonkaalleTuhoutuu);
 
@@ -351,6 +376,56 @@ public class BulletScript : BaseController, IExplodable, IAlas
         BaseDestroy();
        // Destroy(gameObject);
     }
+    public void OnDestroy()
+    {
+        OnDestroyPoolinlaittaessa();
+    }
+
+    public override void OnDestroyPoolinlaittaessa()
+    {
+        //System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
+        //Debug.Log(stackTrace.ToString());
+
+        //   Debug.Log("Destroy olen klooni="+olenklooni);
+
+
+        if (aluksenluoma && alus != null)
+        {
+            //aluscontrollerin 
+            if (alas)
+            {
+                alus.GetComponent<AlusController>().VahennaaluksenluomienElossaOlevienAlasAmmustenMaaraa();
+            }
+            else
+            {
+                alus.GetComponent<AlusController>().VahennaaluksenluomienElossaOlevienYlosAmmustenMaaraa();
+            }
+           
+        }
+        else if (option != null)
+        {
+            if (option.GetComponent<OptionController>() != null)
+            {
+                if (alas)
+                {
+                    option.GetComponent<OptionController>().VahennOptionLuomienElossaOlevienAlasAmmustenMaaraa();
+                }
+                else
+                {
+                    option.GetComponent<OptionController>().VahennOptionLuomienElossaOlevienYlosAmmustenMaaraa();
+                }
+                
+
+            }
+            else
+            {
+
+                Debug.Log("mitaa");
+            }
+
+        }
+    }
+
 
 
 }

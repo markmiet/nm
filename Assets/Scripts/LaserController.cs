@@ -724,7 +724,7 @@ public class LaserController : BaseController
     public GameObject alus;
 
     public GameObject option;
-    void OnDestroy()
+    public override void OnDestroyPoolinlaittaessa()
     {
         //System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace(true);
         //Debug.Log(stackTrace.ToString());

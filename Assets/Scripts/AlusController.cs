@@ -68,6 +68,10 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
     private int aluksenluomienElossaOlevienAmmustenMaara;
 
+    private int aluksenluomienElossaOlevienAlasAmmustenMaara;
+        private int aluksenluomienElossaOlevienYlosAmmustenMaara;
+
+
     /*
     public InputActionReference moveInputActionReference;
 
@@ -149,8 +153,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private bool restartscene = false;
 
 
-    private GameObject instanssiBulletAlas;
-    private GameObject instanssiBulletYlos;
+   // private GameObject instanssiBulletAlas;
+    //private GameObject instanssiBulletYlos;
 
 
 
@@ -2477,8 +2481,14 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             if (laserkaytossa)
             {
                 ad.AluslaserPlay();
-                instanssi = Instantiate(
-                    laserPrefab, v3, Quaternion.identity);
+//                instanssi = Instantiate(
+  //                  laserPrefab, v3, Quaternion.identity);
+
+                instanssi =
+                ObjectPoolManager.Instance.GetFromPool(laserPrefab, v3, Quaternion.identity);
+
+
+
 
                 instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(ammuksenalkuvelocity, 0);
 
@@ -2498,6 +2508,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 instanssi=
                 ObjectPoolManager.Instance.GetFromPool(ammusPrefab,v3, Quaternion.identity);
 
+
                 AmmusController aa = instanssi.GetComponent<AmmusController>();
                 //aa.SetLaserkaytossa(laserkaytossa);
                 aa.alus = this.gameObject;
@@ -2506,13 +2517,17 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
                 instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(ammuksenalkuvelocity, 0);
 
+                
             }
+            InstantioiBulletAlasTarvittaessa();
 
+            InstantioiBulletYlosTarvittaessa();
+            AmmuOptioneilla();
 
             aluksenluomienElossaOlevienAmmustenMaara++;
 
 
-            AmmuOptioneilla();
+           
 
             ammusinstantioitiin = true;
             deltaaikojensumma = 0;
@@ -2522,9 +2537,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             //alas tippuva
             // missileDownCollected
-            InstantioiBulletAlasTarvittaessa();
 
-            InstantioiBulletYlosTarvittaessa();
 
         }
         ammusInstantioitiinviimekerralla = ammusinstantioitiin;
@@ -2544,54 +2557,79 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     private void InstantioiBulletAlasTarvittaessa()
     {
-        if (missileDownCollected >= 1 && instanssiBulletAlas == null)
+        // if (missileDownCollected >= 1 && (instanssiBulletAlas == null ||
+        //     instanssiBulletAlas.GetComponent<BaseController>().IsGoingToBeDestroyed()) )
+        // {
+
+        if (missileDownCollected >= 1 &&   OnkoAlasAmmustenMaaraAlleMaksimin())
         {
 
+        aluksenluomienElossaOlevienAlasAmmustenMaara++;
+   // private int aluksenluomienElossaOlevienYlosAmmustenMaara;
 
-            Vector3 v3alas =
+    Vector3 v3alas =
 new Vector3(bulletinalkuxoffsetti +
 m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
 
+            GameObject instanssiBulletAlas = ObjectPoolManager.Instance.GetFromPool(bulletPrefab, v3alas, Quaternion.identity);
 
 
-            instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
+
+            instanssiBulletAlas.GetComponent<BulletScript>().alus = this.gameObject;
+
+            instanssiBulletAlas.GetComponent<BulletScript>().SetAluksenluoma(true);
+
+
+            //  instanssiBulletAlas = Instantiate(bulletPrefab, v3alas, Quaternion.identity);
 
             // instanssiBulletAlas.gameObject.transform.rotation = Quaternion.Euler(0, 0, 90.0f);
+            instanssiBulletAlas.GetComponent<BulletScript>().alas = true;
 
-
-            IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
-            if (alas != null)
-            {
+            //IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
+            //if (alas != null)
+           // {
                 //instanssiBulletAlas.SendMessage("Alas", true);
-                alas.Alas(true);
+              //  alas.Alas(true);
                 instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, -bulletinalkuvelocityy);
                 instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = bulletingravityscale;
-            }
+            //}
+
+            //}
 
         }
+
     }
 
     private void InstantioiBulletYlosTarvittaessa()
     {
-        if (missileUpCollected >= 1 && instanssiBulletYlos == null)
+        if (missileUpCollected >= 1 && OnkoYlosAmmustenMaaraAlleMaksimin())
         {
 
-
+            aluksenluomienElossaOlevienYlosAmmustenMaara++;
             Vector3 v3ylos =
 new Vector3(bulletinalkuxoffsetti +
 m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
 
 
 
-            instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
+            //instanssiBulletYlos = Instantiate(bulletPrefab, v3ylos, Quaternion.identity);
+
+            GameObject instanssiBulletYlos = ObjectPoolManager.Instance.GetFromPool(bulletPrefab, v3ylos, Quaternion.identity);
+
+            instanssiBulletYlos.GetComponent<BulletScript>().alus = this.gameObject;
+
+            instanssiBulletYlos.GetComponent<BulletScript>().SetAluksenluoma(true);
+
+            instanssiBulletYlos.GetComponent<BulletScript>().alas = false;
+
             //instanssiBulletYlos.SendMessage("Alas", false);
 
-            IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
-            if (alas != null)
-            {
+           // IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
+           // if (alas != null)
+           // {
                 //instanssiBulletAlas.SendMessage("Alas", true);
-                alas.Alas(false);
-            }
+             //   alas.Alas(false);
+           // }
 
             instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
 
@@ -2613,6 +2651,18 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
         aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara + 1;
        
     }
+
+    public void VahennaaluksenluomienElossaOlevienAlasAmmustenMaaraa()
+    {
+        aluksenluomienElossaOlevienAlasAmmustenMaara = aluksenluomienElossaOlevienAlasAmmustenMaara - 1;
+    }
+
+    public void VahennaaluksenluomienElossaOlevienYlosAmmustenMaaraa()
+    {
+        aluksenluomienElossaOlevienYlosAmmustenMaara = aluksenluomienElossaOlevienYlosAmmustenMaara - 1;
+    }
+
+
 
     public void SetEnabloiboxcollider(bool arvo)
     {
@@ -3192,7 +3242,26 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
 
 
-        void OnParticleTrigger()
+    private bool OnkoAlasAmmustenMaaraAlleMaksimin()
+    {
+        int maksimi = ammustenmaksimaaraProperty;
+        // int nykymaara = palautaAmmustenMaara();
+        int nykymaara = aluksenluomienElossaOlevienAlasAmmustenMaara;
+        return nykymaara < maksimi;
+    }
+
+    private bool OnkoYlosAmmustenMaaraAlleMaksimin()
+    {
+        int maksimi = ammustenmaksimaaraProperty;
+        // int nykymaara = palautaAmmustenMaara();
+        int nykymaara = aluksenluomienElossaOlevienYlosAmmustenMaara;
+        return nykymaara < maksimi;
+    }
+
+
+    
+
+    void OnParticleTrigger()
     {
         // Debug.Log($"OnParticleTrigger hit: {other.name}");
         Debug.Log("OnParticleTrigger");

@@ -117,6 +117,22 @@ public class OptionController : MonoBehaviour
         return nykymaara < maksimi;
     }
 
+    private bool OnkoAlasAmmustenMaaraAlleMaksimin()
+    {
+        int maksimi = PalautaAmmustenMaksimimaara();
+        // int nykymaara = palautaAmmustenMaara();
+        int nykymaara = alasammusaluksenluomienElossaOlevienAmmustenMaara;
+        return nykymaara < maksimi;
+    }
+
+    private bool OnkoYlosAmmustenMaaraAlleMaksimin()
+    {
+        int maksimi = PalautaAmmustenMaksimimaara();
+        // int nykymaara = palautaAmmustenMaara();
+        int nykymaara = ylosammusaluksenluomienElossaOlevienAmmustenMaara;
+        return nykymaara < maksimi;
+    }
+
     public void ammuNormilaukaus(GameObject ammusPrefab,Vector2 aa)
     {
 
@@ -125,8 +141,11 @@ public class OptionController : MonoBehaviour
             Vector3 v3 =
     new Vector3(0.1f +
     m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
+            GameObject instanssi=
+            ObjectPoolManager.Instance.GetFromPool(ammusPrefab, v3, Quaternion.identity);
 
-            GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+
+            //GameObject instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
             // instanssi.
             //       instanssi.tag = "optionammustag";tama kommentoitu
 
@@ -162,17 +181,45 @@ public class OptionController : MonoBehaviour
     }
 
 
+    private int alasammusaluksenluomienElossaOlevienAmmustenMaara = 0;
+    public void VahennOptionLuomienElossaOlevienAlasAmmustenMaaraa()
+    {
+        alasammusaluksenluomienElossaOlevienAmmustenMaara = alasammusaluksenluomienElossaOlevienAmmustenMaara - 1;
+    }
 
-    GameObject instanssiBulletAlas;
-    GameObject instanssiBulletYlos;
+    public void LisaaaOptionLuomienElossaOlevienAlasAmmustenMaaraa()
+    {
+        alasammusaluksenluomienElossaOlevienAmmustenMaara = alasammusaluksenluomienElossaOlevienAmmustenMaara + 1;
+    }
+
+
+    private int ylosammusaluksenluomienElossaOlevienAmmustenMaara = 0;
+    public void VahennOptionLuomienElossaOlevienYlosAmmustenMaaraa()
+    {
+        ylosammusaluksenluomienElossaOlevienAmmustenMaara = ylosammusaluksenluomienElossaOlevienAmmustenMaara - 1;
+    }
+
+    public void LisaaaOptionLuomienElossaOlevienYlosAmmustenMaaraa()
+    {
+        ylosammusaluksenluomienElossaOlevienAmmustenMaara = ylosammusaluksenluomienElossaOlevienAmmustenMaara + 1;
+    }
+
+
+    //GameObject instanssiBulletAlas;
+    // GameObject instanssiBulletYlos;
 
     public void ammuAlaslaukaus(GameObject bulletPrefab,Vector2 bulletinalkuvelocity,float bulletgravityscale)
     {
-          if (instanssiBulletAlas == null)
+        //   if (instanssiBulletAlas == null ||
+        //       instanssiBulletAlas.GetComponent<BaseController>().IsGoingToBeDestroyed()
+        //     )
+        // {
+        if (OnkoAlasAmmustenMaaraAlleMaksimin())
         {
+
             Vector3 v3 =
 new Vector3(0.1f +
-m_Rigidbody2D.position.x, m_Rigidbody2D.position.y-0.0f, 0);
+m_Rigidbody2D.position.x, m_Rigidbody2D.position.y - 0.0f, 0);
 
 
             /*
@@ -181,48 +228,80 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y-0.0f, 0);
             instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -bulletingravityscale;
 
             */
-            instanssiBulletAlas = Instantiate(bulletPrefab, v3, Quaternion.identity);
+
+
+            //instanssiBulletAlas = Instantiate(bulletPrefab, v3, Quaternion.identity);
+
+            GameObject instanssiBulletAlas = ObjectPoolManager.Instance.GetFromPool(bulletPrefab, v3, Quaternion.identity);
+            alasammusaluksenluomienElossaOlevienAmmustenMaara++;
+
+
+            instanssiBulletAlas.GetComponent<BulletScript>().SetAluksenluoma(false);
+            instanssiBulletAlas.GetComponent<BulletScript>().SetOption(gameObject);
+
+
             //instanssiBulletAlas.SendMessage("Alas", true);
 
+            instanssiBulletAlas.GetComponent<BulletScript>().alas = true;
+
+            /*
             IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
             if (alas != null)
             {
                 alas.Alas(true);
             }
+            */
 
             instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = bulletinalkuvelocity;
 
 
             instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = bulletgravityscale;
+            //}
         }
-
     }
 
     public void ammuYloslaukaus(GameObject bulletPrefab, Vector2 bulletinalkuvelocity, float bulletgravityscale)
     {
-        if (instanssiBulletYlos == null)
+        // if (instanssiBulletYlos == null ||
+        //       instanssiBulletYlos.GetComponent<BaseController>().IsGoingToBeDestroyed())
+        // {
+
+        if (OnkoYlosAmmustenMaaraAlleMaksimin())
         {
+
             Vector3 v3 =
 new Vector3(0.1f +
 m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
+            ylosammusaluksenluomienElossaOlevienAmmustenMaara++;
 
 
-            instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
+            //instanssiBulletYlos = Instantiate(bulletPrefab, v3, Quaternion.identity);
+
+
+            GameObject instanssiBulletYlos = ObjectPoolManager.Instance.GetFromPool(bulletPrefab, v3, Quaternion.identity);
+
+            instanssiBulletYlos.GetComponent<BulletScript>().SetAluksenluoma(false);
+            instanssiBulletYlos.GetComponent<BulletScript>().SetOption(gameObject);
+
+            instanssiBulletYlos.GetComponent<BulletScript>().alas = false;
+
             //instanssiBulletYlos.SendMessage("Alas", false);
 
+            /*
             IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
             if (alas != null)
             {
                 alas.Alas(false);
             }
+            */
 
             instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = bulletinalkuvelocity;
 
             instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = bulletgravityscale;
 
+            // }
         }
-
     }
 
 }

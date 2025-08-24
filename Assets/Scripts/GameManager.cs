@@ -126,9 +126,11 @@ public class GameManager : BaseController
 
 
     public int score = 0;
+
+    public int targetFrameRate = 120;
     void Awake()
     {
-        Application.targetFrameRate = 60;//t‰rke‰‰‰
+        Application.targetFrameRate = targetFrameRate;//t‰rke‰‰‰
         //Time.fixedDeltaTime = 0.02f; // 50 Hz (50 kertaa sekunnissa)
 
         //Application.targetFrameRate = Screen.currentResolution.refreshRateRatio.value;

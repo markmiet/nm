@@ -10,6 +10,8 @@ using UnityEditor;
 [RequireComponent(typeof(EdgeCollider2D))]
 public class SnakeSmootFollow : BaseController
 {
+
+    private bool developmentflag = false;
     [Header("Snake Setup")]
     public GameObject bodyPartPrefab;
 
@@ -219,7 +221,7 @@ public class SnakeSmootFollow : BaseController
     }
     public float sykli = 10.0f;
     float laskuri = 0.0f;
-    private bool developmentflag = true;
+
 
     public bool saadapaanDissolveamount = false;
 

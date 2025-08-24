@@ -4759,7 +4759,8 @@ true,
 
         foreach (var kvp in _initialValues)
         {
-            kvp.Key.SetValue(this, kvp.Value);
+            if (kvp.Value!=null) 
+                kvp.Key.SetValue(this, kvp.Value);
         }
         poolistapalautusmaara = originellipoolistapalautusmaara;
 
