@@ -395,7 +395,7 @@ public class HaukirunkoController : BaseController, IExplodable
     {
         // alabocenter, boxsizealhaalla
 
-        return onkoTagiaBoxissa("vihollinen", boxsizealhaalla, alabocenter, layerMask);
+        return onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation("vihollinen", boxsizealhaalla, alabocenter, layerMask);
 
     }
 
@@ -407,7 +407,7 @@ public class HaukirunkoController : BaseController, IExplodable
     {
 
 
-        return onkoTagiaBoxissa("vihollinen", boxsizeylhaalla, ylaboxcenter, layerMask);
+        return onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation("vihollinen", boxsizeylhaalla, ylaboxcenter, layerMask);
 
 
         /*

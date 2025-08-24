@@ -227,6 +227,16 @@ public class SnakeCollSmoothFollow : BaseController
 
     void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
+        if (!OnkoOkToimiaUusi(gameObject))
+        {
+            return;
+        }
+
 
         MoveHead();
         MoveBody();

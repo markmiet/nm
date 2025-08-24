@@ -384,7 +384,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     }
     */
 
-    public bool onkoTagiaBoxissa(string name, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
+    public bool onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation(string name, Vector2 boxsize, Vector2 boxlocation, LayerMask layerMask)
     {
         Vector2 uusi = (Vector2)transform.position + boxlocation;
 
@@ -3665,6 +3665,45 @@ true,
 
     private bool viimeinentarkistustulos = false;
 
+
+    public bool IsVisibleUseMargin(GameObject go)
+    {
+        Camera cam = PalautaMainCam();
+
+
+        Vector3 viewportPos = cam.WorldToViewportPoint(go.transform.position);
+
+        float margin = 0.2f; // 10% buffer
+        bool isVisible = viewportPos.z > 0 &&
+                         viewportPos.x >= -margin && viewportPos.x <= 1 + margin &&
+                         viewportPos.y >= -margin && viewportPos.y <= 1 + margin;
+
+        return isVisible;
+
+    }
+
+
+    public bool AnyChildVisibleUseMargin(GameObject go)
+    {
+        Camera cam = PalautaMainCam();
+
+        foreach (Transform child in go.transform)
+        {
+            Vector3 viewportPos = cam.WorldToViewportPoint(child.position);
+
+            float margin = 0.2f; // 10% buffer
+            bool isVisible = viewportPos.z > 0 &&
+                             viewportPos.x >= -margin && viewportPos.x <= 1 + margin &&
+                             viewportPos.y >= -margin && viewportPos.y <= 1 + margin;
+
+            if (isVisible) return true;
+        }
+
+        return false;
+    }
+
+
+
     //sitten
     public bool OnkoOkToimiaUusi(GameObject go)
     {
@@ -3713,20 +3752,31 @@ true,
         return false;
         */
         SpriteRenderer s = go.GetComponent<SpriteRenderer>();
-        bool nakyvilla = IsVisibleFrom(s, mainCam);
-        /*
-        Rigidbody2D rb = null;
-
-        // Try to get Rigidbody2D from cache
-        if (!rigidbodyCache.TryGetValue(go, out rb))
+        bool nakyvilla;
+        if (s==null)
         {
-            rb = go.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            nakyvilla = false;
+            SpriteRenderer[] ss= go.GetComponentsInChildren<SpriteRenderer>();
+            foreach(SpriteRenderer m in ss)
             {
-                rigidbodyCache[go] = rb; // Cache it for future use
+                bool tmp = IsVisibleFrom(m, mainCam);
+                if (tmp)
+                {
+                    nakyvilla = tmp;
+                    break;
+                }
             }
+            if (!nakyvilla)
+            {
+                nakyvilla = IsVisibleUseMargin(go);
+            }
+            
         }
-        */
+        else
+        {
+            nakyvilla = IsVisibleFrom(s, mainCam);
+
+        }
 
 
         if (!nakyvilla)
@@ -3743,6 +3793,68 @@ true,
             if (r != null)
             {
                 r.simulated = true;
+            }
+        }
+        viimeinentarkistustulos = nakyvilla;
+        return nakyvilla;
+    }
+
+
+    public bool OnkoOkToimiaUusiKasitteleMyosChildienRigidBodytVanha(GameObject go)
+    {
+
+
+
+        if (go == null)
+        {
+            Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
+            return false;
+        }
+
+
+        onkoOkToimiaTarkistuksensyklilaskuri += Time.deltaTime;
+        if (onkoOkToimiaTarkistuksensyklilaskuri >= onkoOkToimiaTarkistussykli)
+        {
+            onkoOkToimiaTarkistuksensyklilaskuri = 0.0f;
+        }
+        else
+        {
+            return viimeinentarkistustulos;
+        }
+
+
+        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
+        bool nakyvilla = false;
+        if (s != null)
+        {
+            nakyvilla = IsPartiallyVisibleFrom(s, mainCam);
+        }
+        else
+        {
+            nakyvilla = !IsOffScreen();
+        }
+
+        if (!nakyvilla)
+        {
+            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
+            foreach (Rigidbody2D r in rigidbodies)
+            {
+                if (r != null)
+                {
+                    r.simulated = false;
+                }
+            }
+
+        }
+        else
+        {
+            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
+            foreach (Rigidbody2D r in rigidbodies)
+            {
+                if (r != null)
+                {
+                    r.simulated = true;
+                }
             }
         }
         viimeinentarkistustulos = nakyvilla;
@@ -3810,6 +3922,7 @@ true,
         viimeinentarkistustulos = nakyvilla;
         return nakyvilla;
     }
+
 
 
     private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
@@ -3909,6 +4022,11 @@ true,
 
 
         // Debug.Log("overlap"+ ret);
+
+        if (ret)
+        {
+            Debug.Log(name);
+        }
 
         return ret;
     }
@@ -4575,7 +4693,7 @@ true,
 
         }
 
-        if (go.GetComponent<PooledObject>() != null)
+        if (go.GetComponent<PooledObject>() != null && go.GetComponent<PoolNotAble>() == null)
         {
             ObjectPoolManager.Instance.ReturnToPool( go);
             return;
@@ -4598,7 +4716,7 @@ true,
             bc.isGoingToBeDestroyed = true;
         }
 
-        if (go.GetComponent<PooledObject>() != null)
+        if (go.GetComponent<PooledObject>() != null && go.GetComponent<PoolNotAble>()==null)
         {
             ObjectPoolManager.Instance.ReturnToPool(go,time);
             return;
@@ -4632,14 +4750,29 @@ true,
         }
     }
 
+
+    public int poolistapalautusmaara = 0;
     public void ResetState()
     {
+        int originellipoolistapalautusmaara = poolistapalautusmaara;
         if (_initialValues == null) return;
 
         foreach (var kvp in _initialValues)
         {
             kvp.Key.SetValue(this, kvp.Value);
         }
+        poolistapalautusmaara = originellipoolistapalautusmaara;
+
+        //@todoo
+        /*
+        Collider2D[] c=
+        GetComponentsInChildren<Collider2D>();
+
+        foreach(Collider2D cc in c)
+        {
+            cc.enabled = true;
+        }
+        */
     }
 
     private Camera mainCam;
@@ -4647,6 +4780,7 @@ true,
     void Awakevanha()
     {
         mainCam = Camera.main;
+   
     }
 
     // Käytetään Awake:ssa automaattisesti tallennukseen
@@ -4656,5 +4790,9 @@ true,
         SaveInitialState();
     }
 
+    public Camera PalautaMainCam()
+    {
+        return mainCam;
+    }
 
 }

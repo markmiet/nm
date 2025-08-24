@@ -125,7 +125,7 @@ transform.position.x + viimeisinx, transform.position.y + yarvo, 0);
     {
         Vector2 uusi = new Vector2(alabocenter.x + pos, alabocenter.y + posy);
         //return !onkoTagiaBoxissa("vihollinen", boxsizealhaalla, uusi, layerMask);
-        return !onkoTagiaBoxissa("vihollinen", boxsizealhaalla, uusi, layerMask);
+        return !onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation("vihollinen", boxsizealhaalla, uusi, layerMask);
 
 
 

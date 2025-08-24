@@ -78,6 +78,9 @@ public class HitCounter : BaseController
     //  private float lasttimeexplosion = 0;
     //  private float mindelayexplosions = 1.0f;
 
+
+
+
     public bool RegisterHit(Vector2 contactPoint)
     {
 
@@ -268,6 +271,8 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
             p.dissolveamount = uusiarvo;
         }
     }
+
+
 
 
     public bool kaynnistaParticleEmit = false;

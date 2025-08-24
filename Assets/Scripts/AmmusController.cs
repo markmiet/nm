@@ -162,7 +162,13 @@ public class AmmusController : BaseController, IExplodable
     private HashSet<GameObject> parentalreadyTriggered = new HashSet<GameObject>();
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (GameManager.Instance.IsGoingToBeDestroyed())
+        /*
+        Debug.Log("ammus" + col.otherCollider.name + " isgoing" +
+            col.otherCollider.GetComponent<BaseController>().isGoingToBeDestroyed+"poolista="+
+            poolistapalautusmaara
+            );
+        */
+        if (IsGoingToBeDestroyed())
         {
             return;
         }

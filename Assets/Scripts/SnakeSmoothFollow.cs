@@ -44,7 +44,7 @@ public class SnakeSmootFollow : BaseController
     private List<float> currentAngles = new List<float>();
     private List<Vector3> positions = new List<Vector3>();
 
-    public GameObject toinenMato;
+    public GameObject[] objektitjoihincollisiotIgnorataan;
 
     public bool enableEdgeCollider = false;
 
@@ -54,38 +54,38 @@ public class SnakeSmootFollow : BaseController
         try
         {
 
-        Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
+            Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
 
-        // Trail
-        Gizmos.color = Color.yellow;
-        if (positions != null && positions.Count > 1)
-        {
-            for (int i = 1; i < positions.Count; i++)
-                Gizmos.DrawLine(positions[i - 1], positions[i]);
-        }
-
-        // Body connections
-        Gizmos.color = Color.cyan;
-        if (bodyParts != null && bodyParts.Count > 1)
-        {
-            for (int i = 1; i < bodyParts.Count; i++)
-                Gizmos.DrawLine(bodyParts[i - 1].position, bodyParts[i].position);
-        }
-
-        // BoxCast visualization
-        if (bodyParts != null && bodyParts.Count > 0 && target != null)
-        {
-            Vector2 origin = bodyParts[0].position;
-            Vector2 dir = (target.position - bodyParts[0].position).normalized;
-
-            DrawBoxCastGizmo(origin, dir, raycastDistance);
-
-            for (int angleOffset = 15; angleOffset <= 180; angleOffset += 15)
+            // Trail
+            Gizmos.color = Color.yellow;
+            if (positions != null && positions.Count > 1)
             {
-                DrawBoxCastGizmo(origin, RotateVector(dir, angleOffset), raycastDistance);
-                DrawBoxCastGizmo(origin, RotateVector(dir, -angleOffset), raycastDistance);
+                for (int i = 1; i < positions.Count; i++)
+                    Gizmos.DrawLine(positions[i - 1], positions[i]);
             }
-        }
+
+            // Body connections
+            Gizmos.color = Color.cyan;
+            if (bodyParts != null && bodyParts.Count > 1)
+            {
+                for (int i = 1; i < bodyParts.Count; i++)
+                    Gizmos.DrawLine(bodyParts[i - 1].position, bodyParts[i].position);
+            }
+
+            // BoxCast visualization
+            if (bodyParts != null && bodyParts.Count > 0 && target != null)
+            {
+                Vector2 origin = bodyParts[0].position;
+                Vector2 dir = (target.position - bodyParts[0].position).normalized;
+
+                DrawBoxCastGizmo(origin, dir, raycastDistance);
+
+                for (int angleOffset = 15; angleOffset <= 180; angleOffset += 15)
+                {
+                    DrawBoxCastGizmo(origin, RotateVector(dir, angleOffset), raycastDistance);
+                    DrawBoxCastGizmo(origin, RotateVector(dir, -angleOffset), raycastDistance);
+                }
+            }
 
 
         }
@@ -95,6 +95,8 @@ public class SnakeSmootFollow : BaseController
         }
 #endif
     }
+
+    private HitCounter hc = null;
 
     void Start()
     {
@@ -106,19 +108,40 @@ public class SnakeSmootFollow : BaseController
         GameObject targetObj = PalautaAlus();
         target = targetObj.transform;
         InitializeSnake();
-        IgnoreSelfCollisions(gameObject);
         //muuta niin että etitään madot kamerasta ja tehdään ignore
 
-        if (toinenMato != null)
+        if (objektitjoihincollisiotIgnorataan != null)
         {
-            IgnoraaCollisiotVihollistenValillaALakasittelevihollinen(gameObject, toinenMato);
+            foreach (GameObject g in objektitjoihincollisiotIgnorataan)
+            {
+                IgnoraaCollisiotVihollistenValillaALakasittelevihollinen(gameObject, g);
+            }
+
         }
+        hc = GetComponent<HitCounter>();
 
     }
     private GameObject head;
+
+
     void InitializeSnake()
     {
         //GameObject head = new GameObject("Head");
+
+        if (head != null)
+        {
+            Destroy(head);
+        }
+        foreach (Transform t in bodyParts)
+        {
+            Destroy(t.gameObject);
+        }
+        bodyParts.Clear();
+        velocities.Clear();
+        rotationVelocities.Clear();
+        currentAngles.Clear();
+
+
 
         head = Instantiate(headPartPrerab, transform.position, Quaternion.identity, transform);
         head.transform.SetParent(transform);
@@ -131,26 +154,35 @@ public class SnakeSmootFollow : BaseController
         currentAngles.Add(0f);
 
         int maxPartsByLength = Mathf.FloorToInt(maxSnakeLength / minDistance);
+
+
         initialBodyParts = Mathf.Min(maxPartsByLength, maxInitialParts);
 
         Vector3 initialDir = Vector3.left;
         positions.Clear();
         for (int i = 0; i <= initialBodyParts; i++)
+        {
             positions.Add(head.transform.position - initialDir * minDistance * i);
+
+            //            positions.Add(head.transform.position);
+
+        }
+
 
 
         Transform prev = head.transform;
         for (int i = 0; i < initialBodyParts; i++)
         {
             GameObject part = Instantiate(bodyPartPrefab, positions[i + 1], Quaternion.identity, transform);
+            //GameObject part = Instantiate(bodyPartPrefab, positions[i], Quaternion.identity, transform);
+
             bodyParts.Add(part.transform);
             velocities.Add(Vector3.zero);
             rotationVelocities.Add(0f);
             currentAngles.Add(0f);
-
-
-
         }
+        IgnoreSelfCollisions(gameObject);
+
     }
     private bool jointitlisatty = true;
     public float jointtitekokohta = 1.0f;
@@ -162,7 +194,7 @@ public class SnakeSmootFollow : BaseController
             return;
         }
         jointtilaskuri += Time.fixedDeltaTime;
-        if (jointtilaskuri>=jointtitekokohta)
+        if (jointtilaskuri >= jointtitekokohta)
         {
             Transform prev = head.transform;
             for (int i = 1; i < bodyParts.Count; i++)
@@ -185,16 +217,86 @@ public class SnakeSmootFollow : BaseController
         }
 
     }
+    public float sykli = 10.0f;
+    float laskuri = 0.0f;
+    private bool developmentflag = true;
 
+    public bool saadapaanDissolveamount = false;
+
+    private float dissolveoriginal;
+    private DissolveMatController dissovlpaa = null;
+    private void Update()
+    {
+        if (developmentflag)
+        {
+            laskuri += Time.deltaTime;
+
+            if (laskuri >= sykli)
+            {
+                InitializeSnake();
+                laskuri = 0.0f;
+            }
+        }
+        if (saadapaanDissolveamount && hc!=null)
+        {
+
+            //GetComponentInChildren<DissolveMatController>()
+            if (head != null)
+            {
+                if (dissovlpaa == null)
+                {
+                    dissovlpaa =
+                head.GetComponentInChildren<DissolveMatController>();
+                    if (dissovlpaa!=null)
+                    dissolveoriginal = dissovlpaa.dissolveamount;
+
+                }
+                //pistetaan vain pää hehkumaan, oisko nätimpi jos koko vartalo hehkuis
+                //pää punaisena :)
+                if (dissovlpaa != null)
+                {
+                    float prosentit = Mathf.Clamp01(hc.hitCount / (float)hc.hitThreshold) * 100f;
+                    float maksimidissolve = dissolveoriginal;
+                    float minimidissolve = 0.0f;
+                    float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
+                    dissovlpaa.dissolveamount = uusiarvo;
+                }
+
+            }
+       //     float arvo =hc.PalautaDissolveAmountLaskettunaosumista();
+
+            /*
+             *     public float PalautaDissolveAmountLaskettunaosumista()
+    {
+        float prosentit = Mathf.Clamp01(hitCount / (float)hitThreshold) * 100f;
+        float maksimidissolve = dissolveoriginal;
+        float minimidissolve = 0.0f;
+        float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
+        return uusiarvo;
+    }*/
+        }
+    }
 
     void FixedUpdate()
     {
+        if (IsGoingToBeDestroyed())
+        {
+            return;
+        }
+
+        if (!OnkoOkToimiaUusi(gameObject))
+        {
+            return;
+        }
         MoveHead();
         MoveBody();
         UpdateLineRenderer();
         UpdateEdgeCollider();
-        LisaaJointit();
+        //LisaaJointit();
     }
+
+
+
 
     void MoveHead()
     {

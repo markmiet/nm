@@ -28,7 +28,7 @@ public class Kamera : MonoBehaviour
             y = alus.transform.position.y;
             float ero = alus.transform.position.x - transform.position.x;
                 alus.transform.position = new Vector3(transform.position.x, y, 0);
-                alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
+              //  alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
          
         }
     }
@@ -44,7 +44,7 @@ public class Kamera : MonoBehaviour
             if (Mathf.Abs(ero) > 8)
             {
                 alus.transform.position = new Vector3(transform.position.x, y, 0);
-               // alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
+            //    alus.GetComponent<AlusController>().UusiohjauskaytossaAsetaSormi();
             }
             
 

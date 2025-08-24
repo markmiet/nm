@@ -44,26 +44,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572db0cc497e9dd4d8f9914964dbb113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  vaihdakivenvelocitya: 0
-  vaihdakivenVelocityksiTama: {x: 0, y: 0}
+  isGoingToBeDestroyed: 0
+  vaihdakivenvelocitya: 1
+  vaihdakivenVelocityksiTama: {x: -44, y: 0}
   vaihdakiventorque: 0
   vaihdakiventorqueksitama: 0
-  maaraJokaTehdaan: 10
-  xsuunnanLisays: 1.5
+  maaraJokaTehdaan: 1
+  xsuunnanLisays: 3
   viiveVali: 0.05
-  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  gizmoColor: {r: 0, g: 0, b: 1, a: 1}
   gizmoRadius: 0.5
   kivet:
   - {fileID: 5849496958974730654, guid: 4a0f6db24b4f6ac4bb8687d8ebaaa6c6, type: 3}
-  alabocenter: {x: 0, y: 0}
   boxsizealhaalla: {x: 2, y: 2}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  huomioivaikeustaso: 0
-  ysuunnassaRandomisointiVali: 1
-  xsuunnassaRandomisointiVali: 1
-  xsuunnanlisaysTamaSiksiEttaLuodaanKiviHiukanKameranOikeallePuolen: 3.5
+  huomioivaikeustaso: 1
+  ysuunnassaRandomisointiVali: 0
+  xsuunnassaRandomisointiVali: 0.1
+  xsuunnanlisaysTamaSiksiEttaLuodaanKiviHiukanKameranOikeallePuolen: 3

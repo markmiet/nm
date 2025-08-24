@@ -23,6 +23,14 @@ public class ObjectPoolManager : MonoBehaviour
 
     public GameObject GetFromPool(GameObject prefab, Vector3 position, Quaternion rotation)
     {
+        PoolNotAble p =
+        GetComponent<PoolNotAble>();
+        if (p != null)
+        {
+            return Instantiate(prefab, position, Quaternion.identity);
+        }
+
+
         int prefabId = prefab.GetInstanceID();
 
         if (!poolDict.ContainsKey(prefabId))
@@ -57,7 +65,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else
         {
-          //  Debug.Log("saatiin sielta jotain sentaan"+prefab.name);
+            //  Debug.Log("saatiin sielta jotain sentaan"+prefab.name);
         }
 
         obj.transform.SetPositionAndRotation(position, rotation);
@@ -69,6 +77,8 @@ public class ObjectPoolManager : MonoBehaviour
             bc.hengissaoloaika = 0.0f;
 
             bc.ResetState();
+            int maara = bc.poolistapalautusmaara;
+            bc.poolistapalautusmaara = ++maara;
         }
 
         obj.SetActive(true);
@@ -85,29 +95,39 @@ public class ObjectPoolManager : MonoBehaviour
     }
     */
 
-        public void ReturnToPool(GameObject obj)
+    public void ReturnToPool(GameObject obj)
     {
+
         if (obj == null) return;
 
-        var po = obj.GetComponent<PooledObject>();
-        if (po == null || po.prefab == null)
+
+
+        PoolNotAble p =
+GetComponent<PoolNotAble>();
+        if (p != null)
         {
-            Debug.LogWarning($"[ObjectPoolManager] Tried to return {obj.name} but it has no PooledObject prefab reference!");
             Destroy(obj); // safer than enqueuing incorrectly
             return;
         }
+
 
         BaseController bc = obj.GetComponent<BaseController>();
         if (bc != null)
         {
             bc.isGoingToBeDestroyed = true;
-
             bc.OnDestroyPoolinlaittaessa();
         }
 
+        var po = obj.GetComponent<PooledObject>();
+        if (po == null || po.prefab == null)
+        {
+            Debug.LogWarning($"[ObjectPoolManager] Tried to return {obj.name} but it has no PooledObject prefab reference!");
+
+            Destroy(obj); // safer than enqueuing incorrectly
+            return;
+        }
+
         obj.SetActive(false);
-
-
 
         int prefabId = po.prefab.GetInstanceID();
         if (!poolDict.ContainsKey(prefabId))
@@ -118,7 +138,7 @@ public class ObjectPoolManager : MonoBehaviour
         poolDict[prefabId].Enqueue(obj);
     }
 
-    
+
 
 
     /*

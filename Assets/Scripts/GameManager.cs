@@ -375,7 +375,7 @@ public class GameManager : BaseController
         }
         
     }
-
+    /*
     public bool IsGoingToBeDestroyed(GameObject go)
     {
         if (go==null)
@@ -387,5 +387,6 @@ public class GameManager : BaseController
         return be != null && be.IsGoingToBeDestroyed();
 
     }
+    */
 
 }

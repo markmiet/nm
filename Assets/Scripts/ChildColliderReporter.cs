@@ -23,6 +23,12 @@ public class ChildColliderReporter : BaseController
 
     public float aiheutavoimaaRigidbodyyn = 0.0f;
 
+
+    public int tamanchildcolliderreporterinOsumienMaara = 0;
+
+    public bool saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia = false;
+
+
     private bool PitaakoLiekinTulla()
     {
         float prossa = PalautaHittienMaaraKokonaisuudestaProsentteina();
@@ -42,21 +48,20 @@ public class ChildColliderReporter : BaseController
     }
 
 
-    //private DissolveMatController p;
-    //private float dissolveoriginal;
+    private DissolveMatController p;
+    private float dissolveoriginal;
     protected virtual void Start()
     {
         parent = GetComponentInParent<HitCounter>();
         tamaHitCounter = GetComponent<HitCounter>();
         rb = GetComponent<Rigidbody2D>();
-        /*
+        
         p = GetComponent<DissolveMatController>();
         if (p != null)
         {
             dissolveoriginal = p.dissolveamount;
         }
-        SaadaDissolveAmountVerrattunaOsumiin();
-        */
+
     }
 
 
@@ -119,6 +124,9 @@ public class ChildColliderReporter : BaseController
         {
             return true;
         }
+
+        tamanchildcolliderreporterinOsumienMaara++;
+
         bool ret1 = false;
         if (parent!=null)
         {
@@ -164,7 +172,7 @@ public class ChildColliderReporter : BaseController
             Destroy(liekki, osumanSavunKesto); // HUOM: k‰ytet‰‰n samaa arvoa
         }
         AiheutaVoimaa(go);
-        //SaadaDissolveAmountVerrattunaOsumiin();
+        SaadaDissolveAmountVerrattunaOsumiin();
         return ret1 || ret2;
         //80 alkaa palamaan
         //ent‰s joku 95% loput isot liekit viel‰ :)
@@ -209,17 +217,18 @@ public class ChildColliderReporter : BaseController
         return prossa * 100.0f;
 
     }
-    /*
+    
     private void SaadaDissolveAmountVerrattunaOsumiin()
     {
-        if (p!=null)
+        if (p!=null && saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia)
         {
-            float prosentit = PalautaHittienMaaraKokonaisuudestaProsentteina();
-            float maksimidissolve = dissolveoriginal;
-            float minimidissolve = 0.0f;
-            float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
+            int threadshold = PalautaVaadittuHittienMaara();
+
+
+            float prossat = (float)tamanchildcolliderreporterinOsumienMaara / (float) threadshold;
+            float uusiarvo = prossat * dissolveoriginal;
             p.dissolveamount = uusiarvo;
         }
     }
-    */
+    
 }

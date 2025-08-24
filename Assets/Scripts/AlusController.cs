@@ -371,7 +371,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
                 mainCamera);
 
 
-            UusiohjauskaytossaAsetaSormi();
+   //         UusiohjauskaytossaAsetaSormi();
         }
         else
         {
@@ -2451,6 +2451,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //pitäisikö vain etsiä cameraviewistä ammusten määrä.
 
         //ja mikä on se peruslogiikka taas tässä :) =ampumakertojenvalinenviive0.01
+        /*
+        if (spaceNappiaPainettu)
+        {
+            Debug.Log("deltaaikojensumma=" + deltaaikojensumma);
+        }
+        */
+
         if (spaceNappiaPainettu && deltaaikojensumma > ampumakertojenvalinenviive & OnkoAmmustenMaaraAlleMaksimin() && !OnkoSeinaOikealla()
 
             &&
@@ -2485,6 +2492,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             {
                 ad.AlusammusPlay();
                 //instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
+
+               // Debug.Log("ammus otetaan poolista");
 
                 instanssi=
                 ObjectPoolManager.Instance.GetFromPool(ammusPrefab,v3, Quaternion.identity);
