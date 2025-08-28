@@ -1,8 +1,8 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DissolveMatController : MonoBehaviour
+public class DissolveMatController : BaseController
 {
 
     [Header("Shader Params")]
@@ -49,7 +49,7 @@ public class DissolveMatController : MonoBehaviour
     private ShaderPropertyBlockCache _cache;
 
     private Dictionary<string, int> _propIDs = new();
-    //tehd‰‰n viel‰
+    //tehd√§√§n viel√§
 
     //  public Color outlineColor;
 
@@ -65,7 +65,26 @@ public class DissolveMatController : MonoBehaviour
         //     _materials = _spriteRenderers.material;
 
         CacheShaderProperties(_spriteRenderers.material);
+
+        alus = PalautaAlus();
+        if (maaritaDissolveAmountRelativeToAlus)
+        {
+            maksimiDissolveAmount = dissolveamount;
+          
+                _cache.SetFloat(_propIDs["_DissolveAmount"], DissolveAmountRelativeToAlus());
+            
+        }
+
+
     }
+
+    public float maksimiDissolveAmount;
+    public bool maaritaDissolveAmountRelativeToAlus = false;
+
+    public float distancemin = 0.0f;//dissolveamountuusi=0.0f
+    public float distancemax = 5.0f;//dissolveamountuusi=0.44f
+
+    private GameObject alus;
 
     void CacheShaderProperties(Material mat)
     {
@@ -95,12 +114,29 @@ public class DissolveMatController : MonoBehaviour
     private float exrotationAngle = 0f; // degrees
     */
 
+    public Color outlineColor;
+    public bool asetaoutlinecolor = false;
     private void Update()
     {
         try
         {
+            if (maaritaDissolveAmountRelativeToAlus)
+            {
 
-            _cache.SetFloat(_propIDs["_DissolveAmount"], dissolveamount);
+                _cache.SetFloat(_propIDs["_DissolveAmount"], DissolveAmountRelativeToAlus());
+            }
+            else
+            {
+
+                _cache.SetFloat(_propIDs["_DissolveAmount"], dissolveamount);
+            }
+
+            if (outlineColor!=null  && asetaoutlinecolor)
+            {
+                _cache.SetColor(_propIDs["_OutLineColor"], outlineColor);
+                
+            }
+
             _cache.SetFloat(_propIDs["_DissolveScale"], dissolveScale);
             _cache.SetFloat(_propIDs["_VerticalDissolve"], verficaldissolve);
             _cache.SetFloat(_propIDs["_SpiralStrength"], spiralStrength);
@@ -114,6 +150,21 @@ public class DissolveMatController : MonoBehaviour
         {
             Debug.LogWarning($"PropertyID xxx not found in _floats dictionary. {gameObject.name} ");
         }
+
+    }
+
+    private float DissolveAmountRelativeToAlus()
+    {
+
+        Vector2 distanceVec = transform.position - alus.transform.position;
+        float distance = distanceVec.magnitude;
+
+        // Factor goes 0 at distancemin ‚Üí 1 at distancemax
+        float t = Mathf.Clamp01((distance - distancemin) / (distancemax - distancemin));
+
+        // Lerp from full dissolve to 0
+        float dissolveamountuusi = Mathf.Lerp(maksimiDissolveAmount, 0f, t);
+        return dissolveamountuusi;
 
     }
 

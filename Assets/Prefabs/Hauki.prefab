@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1260627334867755514}
   - component: {fileID: 1608855590228284838}
   - component: {fileID: 8845274332867476471}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hauki
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -172,6 +172,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb7fca9fa39d854f83fc1f4a825e46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   rotatemax: 2
   rotatemin: -2
   rotatetimeseconds: 1

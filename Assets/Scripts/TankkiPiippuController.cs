@@ -172,6 +172,8 @@ public class TankkiPiippuController : ChildColliderReporter
             if (Mathf.Abs(angleError) < aimingTolerance)
             {
                 motorSpeed = 0f;
+
+                motorSpeed = Mathf.Clamp(angleError * motorSpeedGain/10.0f, -maxMotorSpeed, maxMotorSpeed);
             }
             else
             {

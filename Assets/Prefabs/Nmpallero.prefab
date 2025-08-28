@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8198537017134566876}
   - component: {fileID: 3704854411484199738}
   - component: {fileID: 903979807628131477}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Nmpallero
   m_TagString: pallerovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -161,10 +161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5cf4385b99140a4f8736b6b516411d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   bonusprefab: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468,
     type: 3}
   explosionforce: 5

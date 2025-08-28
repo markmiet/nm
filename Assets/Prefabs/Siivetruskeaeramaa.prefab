@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2350730144878406560}
   - component: {fileID: 806714550713547404}
   - component: {fileID: 5614787266556466163}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Savu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4844,7 +4844,7 @@ GameObject:
   - component: {fileID: 3419758873635484216}
   - component: {fileID: 1688580068549664688}
   - component: {fileID: 2085740590482598612}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Siivetruskeaeramaa
   m_TagString: siivetvihollinenexplode
   m_Icon: {fileID: 0}
@@ -4976,9 +4976,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd8da23e6f10740a0dc4383ebd5bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   siivetrotatemax: 180
   siivetrotatemin: -180
   rotatetimeseconds: 2

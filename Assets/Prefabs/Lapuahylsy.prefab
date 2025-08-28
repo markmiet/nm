@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6143747196950606683}
   - component: {fileID: 4858698634526501383}
   - component: {fileID: 8742746245747677241}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Lapuahylsy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,9 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3f84d1472528b4a951c6af3048c788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  prefap: {fileID: 8189675231448716124}
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   elamisenmaksimiaikaraja: 5
   nopeudenalaraja: 0

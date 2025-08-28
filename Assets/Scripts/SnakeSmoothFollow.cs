@@ -50,12 +50,13 @@ public class SnakeSmootFollow : BaseController
 
     public bool enableEdgeCollider = false;
 
+
+    public GameObject paanparticleGameObject;
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
         try
         {
-
             Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
 
             // Trail
@@ -89,6 +90,7 @@ public class SnakeSmootFollow : BaseController
                 }
             }
 
+            NahdaankoAlus();
 
         }
         catch (Exception ex)
@@ -125,6 +127,275 @@ public class SnakeSmootFollow : BaseController
     }
     private GameObject head;
 
+    public bool teeHeadingParticleVainKunMatoNahnytAluksen = true;
+    private bool alusnahty = false;
+
+    private GameObject inst;
+
+    private ParticleSystem ps;
+    private ParticleSystem.EmissionModule emission;
+
+    [Header("Fade Settings")]
+    public float fadeSpeed = 2f;          // How fast emission fades in/out
+    public float maxEmissionRate = 100f;  // Maximum emission rate
+
+    [Header("Vision Cone")]
+    //public Transform target;              // Target to detect
+    public float visionFOV = 30f;         // Half-angle of vision cone
+    public int raysInCone = 5;            // Number of rays for soft cone
+
+    private float currentRate = 0f;       // Current emission rate
+
+
+    private float timecounter = 0;   // Counts consecutive frames in same state
+    public float timeRequired = 0.5f;
+
+    private bool nahdaanStable = false;     // Current stable value
+    private bool lastNahdaan = false;       // Last raw value
+
+    public bool emittoiriippumattanahdaanko = false;
+
+    private bool emittoiriippumattanahdaankoJaOnJotehty = false;
+    public void HeadParticleSystem()
+    {
+        //tutkitaan nähdäänkö, jos nähdään niin particle play
+        //viivettää tähän...
+    
+
+
+        bool nahdaanCurrent = NahdaankoAlus();
+
+        // If raw value changed from last frame, reset counter
+        if (nahdaanCurrent != lastNahdaan)
+        {
+            //nahdaanFrameCounter = 1; // start counting new state
+            timecounter = Time.deltaTime;
+
+        }
+        else
+        {
+            timecounter += Time.deltaTime;
+        }
+
+        lastNahdaan = nahdaanCurrent;
+
+        // Update stable value only if counter reached threshold
+        if (timecounter >= timeRequired)
+        {
+            nahdaanStable = nahdaanCurrent;
+        }
+
+        if (nahdaanStable)
+        {
+            viimeksinahty = Time.time;
+        }
+
+        if (emittoiriippumattanahdaankoJaOnJotehty)
+        {
+            return;
+        }
+
+
+        // Debug.Log("nahdaanStable=" + nahdaanStable);
+
+        // Use nahdaanStable for particle emission
+        //float targetRate = nahdaanStable ? maxEmissionRate : 0f;
+        // Debug.Log("nahdaan=" + nahdaan);
+        // Target emission rate
+        float targetRate = nahdaanStable ? maxEmissionRate : 0f;
+
+
+
+
+        if (!emittoiriippumattanahdaanko)
+        {
+
+            if (inst == null)
+            {
+                inst = Instantiate(paanparticleGameObject, head.transform.position, paanparticleGameObject.transform.rotation, head.transform);
+
+                inst.transform.localPosition = Vector3.zero;
+                inst.transform.localScale = paanparticleGameObject.transform.localScale;
+
+                ps = inst.GetComponent<ParticleSystem>();
+            }
+            // Smooth fade
+            currentRate = Mathf.Lerp(currentRate, targetRate, Time.deltaTime * fadeSpeed);
+
+
+            emission = ps.emission;
+            // Update emission properly
+            var rate = emission.rateOverTime;
+            rate.constant = currentRate;
+            emission.rateOverTime = rate;
+            ParticleSystemRenderer psr = ps.GetComponent<ParticleSystemRenderer>();
+
+            psr.sortingLayerName = "SkeletonLayer";  // match your drawing layer
+            psr.sortingOrder = 5;
+
+            // Start/stop particle system as needed
+            if (!ps.isPlaying && currentRate > 10f)
+                ps.Play();
+            else if (ps.isPlaying && currentRate <= 10f)
+            {
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                // ParticleSystemStopBehavior.StopEmittingAndClear();
+            }
+
+        }
+        else
+        {
+            emittoiriippumattanahdaankoJaOnJotehty = true;
+
+            if (inst == null)
+            {
+                /*
+                inst = Instantiate(paanparticleGameObject, head.transform.position, paanparticleGameObject.transform.rotation, head.transform);
+
+                inst.transform.localPosition = Vector3.zero;
+                inst.transform.localScale = paanparticleGameObject.transform.localScale;
+
+                ps = inst.GetComponent<ParticleSystem>();
+
+                emission = ps.emission;
+                // Update emission properly
+                var rate = emission.rateOverTime;
+                rate.constant = maxEmissionRate;
+                emission.rateOverTime = rate;
+                ParticleSystemRenderer psr = ps.GetComponent<ParticleSystemRenderer>();
+
+                psr.sortingLayerName = "SkeletonLayer";  // match your drawing layer
+                psr.sortingOrder = 5;
+                */
+                foreach(Transform t in bodyParts)
+                {
+                    GameObject g = t.gameObject;
+
+                    if (g.GetComponentInChildren<ParticleSystem>()==null)
+                    {
+                        GameObject instbody = Instantiate(paanparticleGameObject, g.transform.position,
+                            g.transform.rotation, g.transform);
+
+                        instbody.transform.localPosition = Vector3.zero;
+                        instbody.transform.localScale = g.transform.localScale;
+
+                        ParticleSystem psbody = instbody.GetComponent<ParticleSystem>();
+
+                        ParticleSystem.EmissionModule emissionbody = psbody.emission;
+                        // Update emission properly
+                        var ratebody = emissionbody.rateOverTime;
+                        ratebody.constant = maxEmissionRate;
+                        emissionbody.rateOverTime = ratebody;
+                        ParticleSystemRenderer psrbody = psbody.GetComponent<ParticleSystemRenderer>();
+
+                        psrbody.sortingLayerName = "SkeletonLayer";  // match your drawing layer
+                        psrbody.sortingOrder = 5;
+                    }
+                }
+            }
+        }
+
+
+        /*
+        bool nahdaan=NahdaankoAlus();
+
+        ParticleSystem ps =
+        inst.GetComponent<ParticleSystem>();
+        if (nahdaan)
+        {
+            if (!ps.isPlaying)
+            {
+                ps.Play();
+            }
+
+        }
+        else
+        {
+            if (ps.isPlaying)
+            {
+                ps.Stop();
+            }
+        }
+
+        */
+
+
+    }
+    /*
+    private bool NahdaankoAlus()
+    {
+        Vector2 t = transform.position;
+
+        Vector2 aluksensijainti = target.position;
+
+        //@todo raycast from t to aluksensijainti
+        //between raycast should not be any objects that tag contains "vihollinen"
+        //ignore this gameobject also
+
+        return true;
+    }
+    */
+
+
+    private bool NahdaankoAlus()
+    {
+        Vector2 start = head.transform.position;
+        //Vector2 toTarget = (Vector2)target.position - start;
+
+        Vector2 toTarget = (Vector2)target.position - start;
+
+        float distanceToTarget = toTarget.magnitude;
+        Vector2 targetDir = toTarget.normalized;
+
+        float angleStep = visionFOV * 2 / (raysInCone - 1);
+
+        for (int i = 0; i < raysInCone; i++)
+        {
+            float angleOffset = -visionFOV + i * angleStep;
+            Vector2 rayDir = RotateVector(targetDir, angleOffset);
+
+            // Debug visualization in Scene view
+            Debug.DrawRay(start, rayDir * distanceToTarget, Color.red);
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(start, rayDir, distanceToTarget);
+            bool blocked = false;
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider == null) continue;
+
+                Transform hitTransform = hit.collider.transform;
+
+                // Ignore self and children
+                if (hitTransform == transform || hitTransform.IsChildOf(transform))
+                    continue;
+
+                if (hitTransform.gameObject.tag.Contains("vihollinen"))
+                {
+                    blocked = true;
+                    break;
+                }
+            }
+
+            if (!blocked)
+                return true; // At least one ray reached target
+        }
+
+        return false; // All rays blocked
+    }
+
+
+    // Rotate 2D vector by degrees
+    private Vector2 RotateVector(Vector2 v, float degrees)
+    {
+        float rad = degrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(rad);
+        float sin = Mathf.Sin(rad);
+        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos).normalized;
+    }
+
+
+
 
     void InitializeSnake()
     {
@@ -148,6 +419,9 @@ public class SnakeSmootFollow : BaseController
         head = Instantiate(headPartPrerab, transform.position, Quaternion.identity, transform);
         head.transform.SetParent(transform);
         head.transform.localPosition = Vector3.zero;
+
+
+
 
         head.transform.position = transform.position;
         bodyParts.Add(head.transform);
@@ -227,6 +501,8 @@ public class SnakeSmootFollow : BaseController
 
     private float dissolveoriginal;
     private DissolveMatController dissovlpaa = null;
+
+    private bool headTutkinta=true;
     private void Update()
     {
         if (developmentflag)
@@ -239,7 +515,15 @@ public class SnakeSmootFollow : BaseController
                 laskuri = 0.0f;
             }
         }
-        if (saadapaanDissolveamount && hc!=null)
+
+        if (headTutkinta)
+        {
+            HeadParticleSystem();
+           
+        }
+        headTutkinta = !headTutkinta;
+
+        if (saadapaanDissolveamount && hc != null)
         {
 
             //GetComponentInChildren<DissolveMatController>()
@@ -249,8 +533,8 @@ public class SnakeSmootFollow : BaseController
                 {
                     dissovlpaa =
                 head.GetComponentInChildren<DissolveMatController>();
-                    if (dissovlpaa!=null)
-                    dissolveoriginal = dissovlpaa.dissolveamount;
+                    if (dissovlpaa != null)
+                        dissolveoriginal = dissovlpaa.dissolveamount;
 
                 }
                 //pistetaan vain pää hehkumaan, oisko nätimpi jos koko vartalo hehkuis
@@ -262,10 +546,21 @@ public class SnakeSmootFollow : BaseController
                     float minimidissolve = 0.0f;
                     float uusiarvo = (prosentit / 100.0f) * maksimidissolve;
                     dissovlpaa.dissolveamount = uusiarvo;
+
+                    foreach (Transform t in bodyParts)
+                    {
+                        if (t.gameObject.GetComponent<DissolveMatController>())
+                        {
+                            t.gameObject.GetComponent<DissolveMatController>().dissolveamount = uusiarvo;
+                        }
+
+                    }
+
+
                 }
 
             }
-       //     float arvo =hc.PalautaDissolveAmountLaskettunaosumista();
+            //     float arvo =hc.PalautaDissolveAmountLaskettunaosumista();
 
             /*
              *     public float PalautaDissolveAmountLaskettunaosumista()
@@ -290,13 +585,30 @@ public class SnakeSmootFollow : BaseController
         {
             return;
         }
-        MoveHead();
-        MoveBody();
-        UpdateLineRenderer();
-        UpdateEdgeCollider();
+
+        if ( firsttime  || nahdaanStable )
+        {
+            MoveHead();
+            MoveBody();
+            UpdateLineRenderer();
+            UpdateEdgeCollider();
+            firsttime = false;
+        }
+        else if (viimeksinahty + liikkumisaikaViimeisenNahdynJalkeen > Time.time)
+        {
+            MoveHead();
+            MoveBody();
+            UpdateLineRenderer();
+            UpdateEdgeCollider();
+            firsttime = false;
+        }
+
         //LisaaJointit();
     }
-
+    private bool firsttime = true;
+    private float viimeksinahty = 0.0f;
+    public float liikkumisaikaViimeisenNahdynJalkeen = 5.0f;
+    
 
 
 
@@ -492,7 +804,7 @@ public class SnakeSmootFollow : BaseController
         Gizmos.DrawWireCube(Vector3.zero, size);
         Gizmos.matrix = Matrix4x4.identity;
     }
-
+    /*
     Vector2 RotateVector(Vector2 v, float degrees)
     {
         float rad = degrees * Mathf.Deg2Rad;
@@ -500,6 +812,7 @@ public class SnakeSmootFollow : BaseController
         float sin = Mathf.Sin(rad);
         return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos).normalized;
     }
+    */
 
     void IgnoreSelfCollisions(GameObject root)
     {

@@ -1079,7 +1079,10 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         Vector3 alusPosition = PalautaGameObjektinKeskipiste(alus);
 
         // Distance to target
-        Vector2 directionToAlusOikeasti = alusPosition - shooterPosition;
+        Vector2 directionToAlusOikeasti = (alusPosition - shooterPosition).normalized;
+
+        Vector2 directionToAlusOikeasti2 = ( shooterPosition- alusPosition).normalized;
+
 
         Vector2 directionToAlus = (shooterPosition - piipuntoinenpaa).normalized;
 
@@ -2076,6 +2079,8 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
         SpriteRenderer s = GetComponent<SpriteRenderer>();
         if (s == null)
         {
+            BaseDestroy(go);
+
             return;
         }
 
@@ -4668,7 +4673,9 @@ true,
 
 
 
-    public bool isGoingToBeDestroyed = false;
+    private bool isGoingToBeDestroyed = false;
+
+
 
     public void BaseDestroy()
     {
@@ -4683,6 +4690,15 @@ true,
         return isGoingToBeDestroyed;
     }
 
+    public void SetDestroy()
+    {
+        SetGoingToBeDestroyed(true);
+    }
+
+    public void SetGoingToBeDestroyed(bool val)
+    {
+        isGoingToBeDestroyed = val;
+    }
 
     public void BaseDestroy(GameObject go)
     {

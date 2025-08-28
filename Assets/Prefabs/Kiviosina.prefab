@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7350423431185513502}
   - component: {fileID: 4439438126707630016}
   - component: {fileID: 8910806765399722590}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinavasenala
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -129,9 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -219,9 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -233,6 +239,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &4439438126707630016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,9 +253,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -255,6 +266,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -301,7 +313,7 @@ GameObject:
   - component: {fileID: 638058878821586526}
   - component: {fileID: 2479368797978098653}
   - component: {fileID: 5194363049630919126}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: SavuKiville
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5136,7 +5148,7 @@ GameObject:
   - component: {fileID: 6999322648514492399}
   - component: {fileID: 3369801267370126993}
   - component: {fileID: 2381748729078430881}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinaala
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -5249,9 +5261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -5331,9 +5346,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -5345,6 +5363,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &3369801267370126993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5357,9 +5377,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -5367,6 +5390,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -5413,7 +5437,7 @@ GameObject:
   - component: {fileID: 1671446383505895813}
   - component: {fileID: 9215539489302623747}
   - component: {fileID: 7947884827890852723}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kiviosina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5469,9 +5493,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 100000
   hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
@@ -5481,6 +5508,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.1
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
@@ -5512,7 +5540,7 @@ GameObject:
   - component: {fileID: 98338440234946085}
   - component: {fileID: 2432802966506744671}
   - component: {fileID: 529128060891354544}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinayla
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -5625,9 +5653,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -5713,9 +5744,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -5727,6 +5761,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &2432802966506744671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,9 +5775,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -5749,6 +5788,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -5808,7 +5848,7 @@ GameObject:
   - component: {fileID: 3330467946697640357}
   - component: {fileID: 2263558327977387514}
   - component: {fileID: 2118176774585492162}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinakeski
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -5921,9 +5961,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9fb073a5f44c5418e86669d246f54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   breakForce: 80
   breakTorque: 100
   alkuaika: 0.3
@@ -5942,9 +5985,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 1
   velocity: {x: -44, y: 0}
+  kiihtyvyys5: 4
 --- !u!114 &5027413148872384977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5957,9 +6007,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -6156,9 +6209,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -6170,6 +6226,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &2263558327977387514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6182,9 +6240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -6192,6 +6253,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -6243,7 +6305,7 @@ GameObject:
   - component: {fileID: 5862677843240771191}
   - component: {fileID: 4768094699742543300}
   - component: {fileID: 7474415097179948310}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinaoikeaala2
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -6418,9 +6480,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -6437,9 +6502,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -6451,6 +6519,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &4768094699742543300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6463,9 +6533,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -6473,6 +6546,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -6524,7 +6598,7 @@ GameObject:
   - component: {fileID: 933802031293982169}
   - component: {fileID: 641927251375693784}
   - component: {fileID: 6216610010642364888}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinaoikeaala
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -6637,9 +6711,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -6715,9 +6792,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -6729,6 +6809,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &641927251375693784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6741,9 +6823,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -6751,6 +6836,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -6802,7 +6888,7 @@ GameObject:
   - component: {fileID: 6615194648604133072}
   - component: {fileID: 3373883643977657993}
   - component: {fileID: 8891395422442073743}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: tiilikulmikasosinavasenyla
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -6981,9 +7067,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 0
@@ -7000,9 +7089,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -7014,6 +7106,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!114 &3373883643977657993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7026,9 +7120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 8
   hitCount: 0
   explosion: {fileID: 0}
@@ -7036,6 +7133,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 1
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1

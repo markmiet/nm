@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 200222818805882623}
   - component: {fileID: -5359794085408278012}
   - component: {fileID: 8100783798141651438}
+  - component: {fileID: 2176766381039149983}
   m_Layer: 12
   m_Name: Akitaammus
   m_TagString: makitavihollinenammusexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4277517907431031458
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 272ba847f100d4251bb8260575189042, type: 2}
+  - {fileID: 2100000, guid: ea8c3e6e3383aa94e8e116d3d2b9bc7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161,19 +162,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0577e2ca8bd2b1f62896ec13cf2c906a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 1
-  blinkSpeed: 2
+  poolistapalautusmaara: 0
+  blinkSpeed: 1
   intensityMin: 1
-  intensityMax: 1.5
+  intensityMax: 10
   kaannaObjektiLiikkeenSuuntaiseksi: 0
   speedjonkaalletuhotaan: 0.1
   maksimiaikaMinkaVoiOllaHengissa: 60
-  maksimiaikajonkavoiollahengissa: 100
   damagemaarajokaaiheutetaan: 1
-  explosionkesto: 0.2
+  explosionkesto: 0.5
   alivetimeRajahdyksenJalkeen: 0.5
-  explosion: {fileID: 3032404537388008043, guid: 14a6a63e2a4c87894ad6359022f051ff,
+  explosion: {fileID: 4665176215325690238, guid: 15c7ee6d88f944e41b2bfc69028165ba,
     type: 3}
+--- !u!114 &2176766381039149983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665176215325690238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  poolistapalautusmaara: 0
+  maintexuusi: {fileID: 0}
+  dissolveamount: 0.44
+  dissolveScale: 113
+  verficaldissolve: 0
+  spiralStrength: 0
+  rotationAngle: 0
+  maksimiDissolveAmount: 0
+  maaritaDissolveAmountRelativeToAlus: 1
+  distancemin: 0
+  distancemax: 5

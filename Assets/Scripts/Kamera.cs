@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kamera : MonoBehaviour
+public class Kamera : BaseController
 {
     // 
 
@@ -132,14 +132,18 @@ cameraInfo.GetComponent<CameraInfoController>();
                     GameObject[] go =
                     cameraInfo.GetComponent<CameraInfoController>().vihollisetjokageneroidaan;
 
-                    int maara =
-                    cameraInfo.GetComponent<CameraInfoController>().vihollismaaranrajaarvo;
                     float generointivali = cameraInfo.GetComponent<CameraInfoController>().generointivali;
 
 
                     GameObject[] olemassa = cameraInfo.GetComponent<CameraInfoController>().vihollisetJoidenOlemassaOloTutkitaan;
 
-                    GeneroiLisaaVihollisia(go, maara, generointivali, olemassa);
+                    CameraInfoController ca = cameraInfo.GetComponent<CameraInfoController>();
+
+                    if (ca.generoitujenvihollistenmaara<ca.vihollistenmaarajokageneroidaan)
+                    {
+                        GeneroiLisaaVihollisia(go, generointivali, olemassa, ca);
+                    }
+
                 }
             }
 
@@ -203,12 +207,12 @@ cameraInfo.GetComponent<CameraInfoController>();
         return false;
     }
 
-    private float generointilaskuri = 0.0f;
 
-    private void GeneroiLisaaVihollisia(GameObject[] go, int vihollismaaranrajaarvo, float generointivali, GameObject[] vihollisetjoidenOlemassaOloTutkitaan)
+    private void GeneroiLisaaVihollisia(GameObject[] go,  float generointivali,
+        GameObject[] vihollisetjoidenOlemassaOloTutkitaan, CameraInfoController ca)
     {
-        generointilaskuri += Time.deltaTime;
-        if (generointilaskuri >= generointivali)
+        ca.generointilaskuri += Time.deltaTime;
+        if (!ca.onkogeneroitukoskaan || ca.generointilaskuri >= generointivali)
         {
             int maara = 0;
             foreach (GameObject g in vihollisetjoidenOlemassaOloTutkitaan)
@@ -216,17 +220,19 @@ cameraInfo.GetComponent<CameraInfoController>();
                 maara+= GetCountOfTheseObjects(Camera.main, g);
             }
             
-
-           
-            if (maara < vihollismaaranrajaarvo)
+            if (maara ==0)
             {
                 Debug.Log("generoi lisaa vihollisia nykymaara=" + maara);
                 GameObject randomGO = go[Random.Range(0, go.Length)];
                 Debug.Log("generoi lisaa vihollisia generoitu oli=" + randomGO);
                 GeneroiViholinen(randomGO);
 
+                ca.onkogeneroitukoskaan = true;
+                ca.generoitujenvihollistenmaara++;
+                //ca.vihollismaaranrajaarvo = ca.vihollismaaranrajaarvo - 1;
+
             }
-            generointilaskuri = 0;
+            ca.generointilaskuri = 0;
         }
 
 
@@ -234,8 +240,9 @@ cameraInfo.GetComponent<CameraInfoController>();
    
     private void GeneroiViholinen(GameObject go)
     {
-
-        Vector2 boxsize = new Vector2(1.0f, 1.0f);
+        //@togoo geneerinen tarkistelu onko siinä jo
+        //jos on niin eikun vaan basen
+        Vector2 boxsize = new Vector2(3.0f, 3.0f);
         Vector2 pos = transform.position;
 
         float camHeight = Camera.main.orthographicSize * 2f;
@@ -246,7 +253,22 @@ cameraInfo.GetComponent<CameraInfoController>();
 
         Vector2 uus = new Vector2(topRight.x + xsuunnanoffsettikamerasta, transform.position.y);
 
-        GameObject instanssiOption = Instantiate(go, uus, Quaternion.identity);
+        for (int xa=0;xa<20;xa++)
+        {
+            Vector2 uuspaikka = new Vector2(uus.x + xa , uus.y);
+            bool onkojo = onkoTagiaBoxissaAlakaytaTransformia(go.name,
+                boxsize, uuspaikka
+                );
+
+            if (!onkojo)
+            {
+
+                GameObject instanssiOption = Instantiate(go, uuspaikka, Quaternion.identity);
+                break;
+            }
+        }
+
+
     }
 
     /*
@@ -333,10 +355,75 @@ cameraInfo.GetComponent<CameraInfoController>();
         return count;
 
     }
+    public int HowManyOfTheseObjectsAreInCameraNow(Camera c, string tagSubstring)
+    {
+        if (c == null || string.IsNullOrEmpty(tagSubstring))
+            return 0;
 
-    public int GetCountOfTheseObjects(Camera camera, GameObject referenceObject)
+        // Get all active objects in the scene
+        //GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        GameObject[] allObjects = GameObject.FindGameObjectsWithTag(tagSubstring);
+
+
+        if (allObjects == null || allObjects.Length == 0)
+            return 0;
+
+        int count = 0;
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj == null) continue;
+
+
+            BaseController bc = obj.GetComponent<BaseController>();
+            if (bc==null)
+            {
+                continue;
+            }
+            else if (bc.IsGoingToBeDestroyed())
+            {
+                continue;
+            }
+            if (!obj.activeInHierarchy)
+            {
+                continue;
+            }
+
+            // Check if the object's tag contains the substring
+            //if (!string.IsNullOrEmpty(obj.tag) && obj.tag.Contains(tagSubstring))
+            //{
+                // Convert world position to viewport coordinates
+                Vector3 viewportPos = c.WorldToViewportPoint(obj.transform.position);
+
+                // Check if inside camera viewport
+                if (viewportPos.z >= 0 && viewportPos.x >= 0 && viewportPos.x <= 1 &&
+                                       viewportPos.y >= 0 && viewportPos.y <= 1)
+                {
+                    count++;
+                }
+                else if (AnyChildVisibleUseMargin(obj))
+                {
+                    count++;
+                }
+                else if (IsVisibleUseMargin(obj))
+                {
+                    count++;
+                }
+           // }
+        }
+
+        return count;
+    }
+
+
+
+
+public int GetCountOfTheseObjects(Camera camera, GameObject referenceObject)
     {
 
+        return HowManyOfTheseObjectsAreInCameraNow(camera, referenceObject.tag);
+
+        /*
 
         if (referenceObject == null) return 0;
 
@@ -357,6 +444,7 @@ cameraInfo.GetComponent<CameraInfoController>();
         }
 
         return count;
+        */
     }
 
 

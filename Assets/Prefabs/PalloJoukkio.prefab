@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5739596014173394553}
   - component: {fileID: 2077426776822378178}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: PalloJoukkio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e6f70c25173e44b80f666bcb76ba35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   pallo: {fileID: 7639041830807167212, guid: ee7e3d1373326e1449e007d9eb0bbba7, type: 3}
   pallojenmaara: 5
   gizmoColor: {r: 0, g: 1, b: 0, a: 1}

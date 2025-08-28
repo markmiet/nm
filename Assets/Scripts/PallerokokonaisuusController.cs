@@ -190,7 +190,7 @@ public class PallerokokonaisuusController : BaseController
         {
             if (c!=null && c.GetComponent<BaseController>()!=null)
             {
-                bool elossa =! c.GetComponent<BaseController>().isGoingToBeDestroyed;
+                bool elossa =! c.GetComponent<BaseController>().IsGoingToBeDestroyed();
 
                 if (elossa)
                 {
@@ -222,7 +222,7 @@ public class PallerokokonaisuusController : BaseController
                 BaseController bc = c.GetComponent<BaseController>();
                 if (bc!=null)
                 {
-                    if (!bc.isGoingToBeDestroyed)
+                    if (!bc.IsGoingToBeDestroyed())
                     {
                         return c;
                     }
@@ -450,7 +450,7 @@ public class PallerokokonaisuusController : BaseController
                 if (followers[i] != null)
                 {
                     BaseController bc = followers[i].GetComponent<BaseController>();
-                    if (bc!=null && !bc.isGoingToBeDestroyed)
+                    if (bc!=null && !bc.IsGoingToBeDestroyed())
                     {
                         followers[i].transform.position = targetPosition;
                     }

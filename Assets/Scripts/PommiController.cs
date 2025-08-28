@@ -135,7 +135,7 @@ public class PommiController : BaseController, IExplodable
             if (child != null)
             {
                 Vector2 contactPoint = collider.gameObject.transform.position;
-                for (int i=0;i<1;i++)
+                for (int i=0;i<0;i++)
                 {
                     child.RegisterHit(contactPoint,collider.gameObject);
                 }

@@ -274,6 +274,13 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
 
 
 
+    public float PalautaOsumaProsenttiNollaViiva1()
+    {
+        float prosentit = Mathf.Clamp01(hitCount / (float)hitThreshold);
+        return prosentit;
+    }
+
+
 
     public bool kaynnistaParticleEmit = false;
 

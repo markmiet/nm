@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3378734066214748456}
   - component: {fileID: 7547444819990818400}
   - component: {fileID: 4419991351696126374}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: laatikkojuttumaassa
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -130,9 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5580c386a89a24a87a0d0008ab5bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   kohtajostaLaukaistaan: {fileID: 4771216548618411536}
   laukaistavaAsia: {fileID: 4665176215325690238, guid: aef69819eb9cd0d4eaa2b6f0a332fc95,
     type: 3}
@@ -155,9 +158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maintexuusi: {fileID: 0}
   dissolveamount: 0.44
   dissolveScale: 113
   verficaldissolve: 0
+  spiralStrength: 0
+  rotationAngle: 0
 --- !u!114 &3378734066214748456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,9 +176,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 100
   hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
@@ -182,6 +191,7 @@ MonoBehaviour:
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.5
@@ -209,9 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
@@ -223,6 +236,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!61 &4419991351696126374
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -277,7 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3020801604957272318}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: LaatikkojutunLaukaisukohta
   m_TagString: Untagged
   m_Icon: {fileID: 0}

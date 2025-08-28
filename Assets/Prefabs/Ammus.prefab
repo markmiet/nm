@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1019784858694921545
 Transform:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1.5, z: 1}
+  m_LocalScale: {x: 2.2, y: 1.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1019784858694921545}
@@ -254,19 +254,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1654520e128e94690f643640aa5e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  explosion: {fileID: 3032404537388008043, guid: 14a6a63e2a4c87894ad6359022f051ff,
+  poolistapalautusmaara: 0
+  explosion: {fileID: 4665176215325690238, guid: d3d8a3f2689afe24dbb2be6b489a6912,
     type: 3}
   alus: {fileID: 0}
   option: {fileID: 0}
+  ad: {fileID: 0}
   nopeusjonkaalleTuhoutuu: 10
   damagemaarajokaaiheutataan: 1
   erikoistagitjotkaeiaiheutaammusrajahdysta:
   - siivet
   - pallerovihollinenexplodetag
-  rajaytaspriteexplodenjalkeenpistatamatrueksi: 1
+  rajaytaspriteexplodenjalkeenpistatamatrueksi: 0
   rajaytysrows: 3
   rajaytyscols: 3
   rajaytysvoima: 1.5

@@ -99,8 +99,12 @@ public class CameraInfoController : BaseController
     public GameObject[] vihollisetJoidenOlemassaOloTutkitaan;
 
 
-    public int vihollismaaranrajaarvo = 1;
     public float generointivali = 5.0f;
+    public float generointilaskuri = 0.0f;
+    public bool onkogeneroitukoskaan = false;
+
+    public int vihollistenmaarajokageneroidaan = 1;
+    public int generoitujenvihollistenmaara = 0;
 
     public bool naytasavu = false;
     public bool naytataustat = true;

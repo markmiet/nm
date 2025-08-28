@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2812339386002314722}
   - component: {fileID: 6201689638447569240}
   - component: {fileID: 6775225313498586273}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DummyKori
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 904847137763141498}
   - component: {fileID: 8862662185169220126}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Eripallovihollinenammus
   m_TagString: eripallovihollinenbulletexplode
   m_Icon: {fileID: 0}
@@ -311,6 +311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4710e53556f1f4ca2f7c63fd281296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   boxsizeylhaalla: {x: 2, y: 2}
   boxsizekeskella: {x: 2, y: 0.1}
   boxsizelaidatalhaalla: {x: 2, y: 0.1}
@@ -370,7 +376,7 @@ PrefabInstance:
     - target: {fileID: 4477803405969465037, guid: d88079d54783ac747b4c3cfe5d9d80de,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4477803405969465037, guid: d88079d54783ac747b4c3cfe5d9d80de,
         type: 3}

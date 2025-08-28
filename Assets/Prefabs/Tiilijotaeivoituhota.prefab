@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5404692103513461916}
   - component: {fileID: 6013417310056060052}
   - component: {fileID: 2145369534388414121}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tiilijotaeivoituhota
   m_TagString: laatikkovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -171,4 +171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f9e08ff601dd24b9db99f03ee7fad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosionForce: 10

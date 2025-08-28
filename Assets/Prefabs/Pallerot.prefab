@@ -50,6 +50,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f75c53fefa43b48aee9114f77dbe5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
 --- !u!1001 &2680101868557493326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -657,6 +663,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pallero0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7300095175451630254, guid: fb11c3e718fe2916684e6f964dcbfa75,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7468705479882030935, guid: fb11c3e718fe2916684e6f964dcbfa75,
         type: 3}

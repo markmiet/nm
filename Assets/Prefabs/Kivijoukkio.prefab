@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2983780145904248001}
   - component: {fileID: 2614239723265416958}
   - component: {fileID: 240738378059505792}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kivi3pieni (5)
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -185,9 +185,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 10
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4
 --- !u!1 &1643500780374683120
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +208,7 @@ GameObject:
   - component: {fileID: 7896709689596499848}
   - component: {fileID: 2737082583824532799}
   - component: {fileID: 7059181169564434686}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kivi3pieni (1)
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -373,9 +380,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 10
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4
 --- !u!1 &1918633961964887622
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +403,7 @@ GameObject:
   - component: {fileID: 8549067179368972779}
   - component: {fileID: 8379598421577847288}
   - component: {fileID: 6627607015002770874}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kivi3pieni (3)
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -561,9 +575,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 10
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4
 --- !u!1 &2004707395921527613
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +598,7 @@ GameObject:
   - component: {fileID: 6953409576782230194}
   - component: {fileID: 2018398579707707323}
   - component: {fileID: 7893937570749115268}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kivi3pieni (2)
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -749,9 +770,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 10
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4
 --- !u!1 &2642040744966582104
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +793,7 @@ GameObject:
   - component: {fileID: 3689197381083273252}
   - component: {fileID: 3167458934030242813}
   - component: {fileID: 9033526631586376491}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kivi3pieni (4)
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -937,9 +965,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 10
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4
 --- !u!1 &5281984516486370953
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 951834122615300032}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kivijoukkio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -990,7 +1025,7 @@ GameObject:
   - component: {fileID: 8454131131848082003}
   - component: {fileID: 5913038838297504372}
   - component: {fileID: 5092142563753479410}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kivi3pieni
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -1162,6 +1197,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 10
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4

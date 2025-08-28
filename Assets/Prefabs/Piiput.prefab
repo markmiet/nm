@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4072176060699431595}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Piiput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 5637338457773168117}
   - component: {fileID: 6102097978403163038}
   - component: {fileID: 4190680809518029709}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: piippumala
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5785899771176234038}
   - component: {fileID: 1529589902509423510}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Luotilahto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,8 +359,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c754b10c1059241489c6787605b26db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   luoti: {fileID: 1289790796295829970, guid: 89efec56170e78c458f3b9d0869adf60, type: 3}
   ammusVoima: -4.5
   tulinopeus: 4
@@ -374,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7499415765046919935}
   - component: {fileID: 8106405562525738422}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Luotilahto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,8 +412,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c754b10c1059241489c6787605b26db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   luoti: {fileID: 1289790796295829970, guid: 89efec56170e78c458f3b9d0869adf60, type: 3}
   ammusVoima: -4.5
   tulinopeus: 4
@@ -427,7 +435,7 @@ GameObject:
   - component: {fileID: 2178557915459853022}
   - component: {fileID: 1798904252028722486}
   - component: {fileID: 2283370049756597940}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: piippumkeski
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -708,7 +716,7 @@ GameObject:
   - component: {fileID: 4199142800081877503}
   - component: {fileID: 2899359562875177392}
   - component: {fileID: 4418385704179834679}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: piippumyla
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -985,7 +993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2521654565294136090}
   - component: {fileID: 177586867510369490}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Luotilahto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1019,8 +1027,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c754b10c1059241489c6787605b26db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   luoti: {fileID: 1289790796295829970, guid: 89efec56170e78c458f3b9d0869adf60, type: 3}
   ammusVoima: -4.5
   tulinopeus: 4

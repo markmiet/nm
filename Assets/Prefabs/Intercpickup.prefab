@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2897170143785443392}
   - component: {fileID: 3421526030643357722}
   - component: {fileID: 8884757048913705844}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: interceptorxcf3eturengaspienitumma
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -161,13 +161,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 2
   osumanLiekki: {fileID: 0}
   prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &3817194740911636073
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6096930541392099112}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kivaarikiinnityskohta
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -211,7 +221,7 @@ GameObject:
   - component: {fileID: 6317954765773574727}
   - component: {fileID: 6842244566738272224}
   - component: {fileID: 4197815721336792973}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: interceptorxcf3keskirengas
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -371,7 +381,7 @@ GameObject:
   - component: {fileID: 2866148397981609196}
   - component: {fileID: 7518827853044910955}
   - component: {fileID: 4421937177505099980}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: interceptorpienitumma
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -664,8 +674,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec9c1f265da23742acb8207ff567230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   eturengas: {fileID: 2325562312427480546}
   takarengas: {fileID: 8107249813071819376}
   eroalukseenJottaLiikutaan: 1
@@ -685,8 +699,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
@@ -695,6 +713,12 @@ MonoBehaviour:
   osumanLiekki: {fileID: 1972207730512856, guid: 1d0c1d72076efdc4983580e980d093ea,
     type: 3}
   prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 80
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!235 &7964725073235684955
 WheelJoint2D:
   m_ObjectHideFlags: 0
@@ -913,7 +937,7 @@ GameObject:
   - component: {fileID: 6991370809592139904}
   - component: {fileID: 784158782394805487}
   - component: {fileID: 4950932702201824041}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: interceptorxcf3takarenkuli
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1061,13 +1085,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 2
   osumanLiekki: {fileID: 0}
   prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &8849506091538274288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,7 +1118,7 @@ GameObject:
   - component: {fileID: 6522336979499896635}
   - component: {fileID: 3439551053787184972}
   - component: {fileID: 2220104213607030200}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: konekivaarivarsinainentummapieni
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1244,8 +1278,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c50690f134125d478d728a4a10ad956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
@@ -1254,6 +1292,12 @@ MonoBehaviour:
   osumanLiekki: {fileID: 1972207730512856, guid: 1d0c1d72076efdc4983580e980d093ea,
     type: 3}
   prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 80
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
   tankinAmmus: {fileID: 4665176215325690238, guid: 0ead688b7ee732045a283a0a288460ee,
     type: 3}
   ammusmaara: 1
@@ -1271,7 +1315,15 @@ MonoBehaviour:
     type: 3}
   savukesto: 0.2
   pakotaVaakaan: 0
+  hylsy: {fileID: 0}
+  hylsynpaikka: {fileID: 0}
+  hylsyforce: 1
+  hylsyrandomkulmaalku: 200
+  hylsyrandomkulmaloppu: 300
+  teeHylsyja: 0
+  piippuosoittaaVasemmalle: 1
   motorSpeedGain: 5
+  ampumisenjalkeinaikajolloinkulmaaeimuuteta: 1
   ignoraaAmmuttaessaAimingToleranceKokonaan: 0
 --- !u!233 &6522336979499896635
 HingeJoint2D:
@@ -1355,13 +1407,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 4
   uusirajaytysrows: 4
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 0.5
@@ -1371,6 +1431,11 @@ MonoBehaviour:
   teeBoxCollider2d: 0
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
+  saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!1 &8863247219070505845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,7 +1446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3029032798063420851}
   - component: {fileID: 6926657762532194469}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Intercpickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1420,8 +1485,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 100
   hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: be71e788f53224193a965fdf655875ed,
@@ -1429,6 +1498,10 @@ MonoBehaviour:
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
     type: 3}
   osumanSavunKesto: 0.5
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 0.3
@@ -1438,6 +1511,11 @@ MonoBehaviour:
   teeBoxCollider2d: 0
   teerajaytasprite: 0
   teeExplosion: 1
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
+  saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!1 &9151255404398266173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,7 +1525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9127111839125370650}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Ammuslaukaisukohta
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}

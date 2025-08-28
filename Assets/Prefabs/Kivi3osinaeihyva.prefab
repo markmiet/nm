@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1334531093332996433}
   - component: {fileID: 4550163575420102697}
   - component: {fileID: 409583546094515608}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: kivi3ositusvasenala
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -193,9 +193,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 0
   velocity: {x: -20, y: 0}
+  kiihtyvyys5: 4
 --- !u!255 &1848616976282673390
 FixedJoint2D:
   m_ObjectHideFlags: 0
@@ -265,6 +272,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9fb073a5f44c5418e86669d246f54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   breakForce: 15
   breakTorque: 15
   alkuaika: 0.3
@@ -283,11 +296,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 1
+  nopeusjokapitaaYlittaaJottaKaikkituhoutuu: 1
 --- !u!1 &1373935082082951533
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +319,7 @@ GameObject:
   - component: {fileID: 7507952172327800384}
   - component: {fileID: 359683075807111076}
   - component: {fileID: 1761477766735407540}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: kivi3ositusoikeaala
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -475,11 +493,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 1
+  nopeusjokapitaaYlittaaJottaKaikkituhoutuu: 1
 --- !u!1 &2725697082545220163
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +516,7 @@ GameObject:
   - component: {fileID: 1535802687430238340}
   - component: {fileID: 4248337110251904227}
   - component: {fileID: 7727465578176393805}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: kivi3ositusvasenyla
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -666,11 +689,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 1
+  nopeusjokapitaaYlittaaJottaKaikkituhoutuu: 1
 --- !u!1 &7580500320706593032
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +712,7 @@ GameObject:
   - component: {fileID: 5475952384869911237}
   - component: {fileID: 380922106449208079}
   - component: {fileID: 3057235969387324040}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: kivi3ositusoikeayla
   m_TagString: tiilivihollinentag
   m_Icon: {fileID: 0}
@@ -854,11 +882,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   prefabExplosion: {fileID: 0}
   explode: 0
   explodeHeti: 1
+  nopeusjokapitaaYlittaaJottaKaikkituhoutuu: 1
 --- !u!1 &8378839590695160801
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,7 +901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1463528352667115992}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kivi3osinaeihyva
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
+public class MakitaVihollinenAmmusScripti : BaseController, IExplodable, PoolNotAble
 {
     [SerializeField] private float blinkSpeed = 2f;
     [SerializeField] private float intensityMin = 0.5f;
@@ -148,7 +148,7 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
             }
         }
         //blink osuus
-
+        /*jaahas*/
         if (_baseColor!=null)
         {
             float t = Mathf.PingPong(Time.time * blinkSpeed, 1f);
@@ -159,10 +159,11 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
             if (_material!=null)
                 _material.SetColor(BaseColorID, blinkingColor);
         }
+        
 
     }
 
-
+    /*
     void OnBecameInvisible()
     {
         if (true)
@@ -182,7 +183,9 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
             BaseDestroy();
         //Destroy(gameObject);
 
+
     }
+    */
     public float damagemaarajokaaiheutetaan = 1.0f;
 
     public float explosionkesto = 0.2f;
@@ -193,7 +196,11 @@ public class MakitaVihollinenAmmusScripti : BaseController, IExplodable
         {
             return;
         }
-        
+        //GameObject g = new GameObject();
+        //g.transform.SetPositionAndRotation(transform.position, transform.rotation);
+
+
+
         if (col.collider.tag.Contains("vihollinen") && !col.collider.tag.Contains("tiili"))
         {
             Debug.Log("viholliseen osui");
@@ -243,9 +250,8 @@ col.gameObject.GetComponent<IDamagedable>();
             //Destroy(gameObject);
             //hengissaoloaika = 0.0f;
             //ObjectPoolManager.Instance.ReturnToPool(GetPrefap(), gameObject);
-            BaseDestroy();
-
-            //Explode();
+            
+            Explode(col.GetContact(0).point);
 
         }
         else if (col.collider.tag.Contains("tiili"))

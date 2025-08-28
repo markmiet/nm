@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6393480481356807781}
   - component: {fileID: 7745395980437144294}
   - component: {fileID: 8297354423454469812}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Pommi
   m_TagString: pommivihollinenexplode
   m_Icon: {fileID: 0}
@@ -144,8 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00bf3cca2b49281498ee232abf8499d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosionRadius: 8
   explosionForce: 5000
   affectedLayers:

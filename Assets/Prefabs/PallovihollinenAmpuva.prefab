@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7819813984279869618}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Particlefx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 940103168295452951}
   - component: {fileID: 7885877793064613766}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 7483280684619519742}
   - component: {fileID: 8014632376814700969}
   - component: {fileID: 6463240799339665581}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4956,7 +4956,7 @@ GameObject:
   - component: {fileID: 2812339386002314722}
   - component: {fileID: 6201689638447569240}
   - component: {fileID: 6775225313498586273}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: DummyKori
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -5070,7 +5070,7 @@ GameObject:
   - component: {fileID: 6233053159024006424}
   - component: {fileID: 9126234778429827883}
   - component: {fileID: 5580643893481790190}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9903,7 +9903,7 @@ GameObject:
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 3824717095248662080}
   - component: {fileID: 5837536427644151803}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: PallovihollinenAmpuva
   m_TagString: pallovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -10079,9 +10079,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9993b0d086e101b47b6ef33dadc19c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   boxsizeylhaalla: {x: 0.1, y: 0.1}
   boxsizekeskella: {x: 0.5, y: 0.3}
   boxsizelaidatalhaalla: {x: 0.6, y: 10}
@@ -10163,7 +10166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4002654570436517162}
   - component: {fileID: 1053424500083061837}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: FogMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10264,7 +10267,7 @@ PrefabInstance:
     - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -10540,6 +10543,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b7affd8dd62a141a1a22c6c45afc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   savungamadeMaara: 0.1
   widthScaleFactor: 0.45
   heightScaleFactor: 0.7

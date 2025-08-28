@@ -13,8 +13,8 @@ public class OnkoOkToimiaController : BaseController
         {
             IgnoraaChildienCollisiot();
         }
-        Tee(false);
         lastVoiko = Voikotoimia();
+        Tee(lastVoiko);
     }
 
     /*

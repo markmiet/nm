@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2462299861180116305}
   - component: {fileID: 3462322441257536565}
   - component: {fileID: 8437075026246705182}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Pyoroovi
   m_TagString: pyoroovihollinentag
   m_Icon: {fileID: 0}
@@ -193,7 +193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773159f5bc1cb4d438f55f096d71bb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torqueAmount: 1300
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
+  rotationSpeed: 30
 --- !u!50 &8437075026246705182
 Rigidbody2D:
   serializedVersion: 4

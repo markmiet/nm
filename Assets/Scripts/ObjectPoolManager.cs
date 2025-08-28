@@ -23,8 +23,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     public GameObject GetFromPool(GameObject prefab, Vector3 position, Quaternion rotation)
     {
-        PoolNotAble p =
-        GetComponent<PoolNotAble>();
+        PoolNotAble p =prefab.GetComponent<PoolNotAble>();
         if (p != null)
         {
             return Instantiate(prefab, position, Quaternion.identity);
@@ -73,10 +72,11 @@ public class ObjectPoolManager : MonoBehaviour
         BaseController bc = obj.GetComponent<BaseController>();
         if (bc != null)
         {
-            bc.isGoingToBeDestroyed = false;
+            bc.SetGoingToBeDestroyed(false);
             bc.hengissaoloaika = 0.0f;
 
             bc.ResetState();
+
             int maara = bc.poolistapalautusmaara;
             bc.poolistapalautusmaara = ++maara;
         }
@@ -114,7 +114,7 @@ GetComponent<PoolNotAble>();
         BaseController bc = obj.GetComponent<BaseController>();
         if (bc != null)
         {
-            bc.isGoingToBeDestroyed = true;
+            bc.SetGoingToBeDestroyed(true);
             bc.OnDestroyPoolinlaittaessa();
         }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3628910005075719413}
   - component: {fileID: 8174232903948025863}
   - component: {fileID: 1306492948621090976}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kivikulmikas
   m_TagString: tiilivihollinenkiviexplodetag
   m_Icon: {fileID: 0}
@@ -126,9 +126,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   voimavektori: {x: 0, y: 0}
   kiertomaara: 45
   velocity: {x: 0, y: 0}
+  kiihtyvyys5: 4
 --- !u!60 &1306492948621090976
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1815918514601458865}
   - component: {fileID: 2576188099520076024}
   - component: {fileID: 2972877402547505517}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukisilma
   m_TagString: haukisilmavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -161,6 +161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f1447ab42555a4fb9bd0e01e34e8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   paassakiinni: 1
   nopeusjonkaalleTuhoutuu: 1
   minScale: {x: 1, y: 1, z: 1}
@@ -180,7 +186,7 @@ GameObject:
   - component: {fileID: 795967804638468929}
   - component: {fileID: 2512007942827139269}
   - component: {fileID: 7219817451574311916}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukipaa
   m_TagString: haukipaavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -266,6 +272,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ebee4d0aa9b4f49b6ee3ba8a091e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosionForce: 10
   ampumisenvoimakkuus: 4
 --- !u!61 &795967804638468929
@@ -369,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8021262118371469975}
   - component: {fileID: 2683546522849631961}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukietueva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1497066871370604748}
   - component: {fileID: 5098101686959297997}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukipyrsto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6579126633577072125}
   - component: {fileID: 8786239152683062356}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukialaeva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +636,7 @@ GameObject:
   - component: {fileID: 1910731691942955545}
   - component: {fileID: 5180335105050248811}
   - component: {fileID: 7097633372191412774}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukisiivet
   m_TagString: haukisiivetvihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -782,6 +794,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c229eaa4b452fb74197cb890cca68db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
 --- !u!1 &3194530549756047798
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3535672271824312096}
   - component: {fileID: 5340916856480562529}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukiylaeva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -879,7 +897,7 @@ GameObject:
   - component: {fileID: 5747834212485193438}
   - component: {fileID: 8895591303680804712}
   - component: {fileID: 476300214085579814}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukirunko
   m_TagString: haukirunkovihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -973,6 +991,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e556031e710326f46bce3a30d1c48b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   siivetrotatemax: 85
   siivetrotatemin: -85
   paarotatemax: 5
@@ -1088,7 +1112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7219358639718316540}
   - component: {fileID: 6846053362642531589}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: Haukikeskieva
   m_TagString: Untagged
   m_Icon: {fileID: 0}

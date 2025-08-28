@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6141075259398320329}
   - component: {fileID: 4085968208548197125}
   - component: {fileID: 8553092451782213052}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_8
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -136,8 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c245591ae1f0fc24fa59113a684e764f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   forceMin: 189
   forceMax: 200
   maxSpeed: 8
@@ -200,10 +204,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &1836185418200364193
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +234,7 @@ GameObject:
   - component: {fileID: 4491512289534510454}
   - component: {fileID: 8701988224389990974}
   - component: {fileID: 4086737811695007162}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Anchor
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -302,10 +320,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &2501990946487204368
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +351,7 @@ GameObject:
   - component: {fileID: 8268136159193302036}
   - component: {fileID: 1397744673013228633}
   - component: {fileID: 3378065664847086899}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_6
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -440,10 +472,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &3290470489929488024
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +503,7 @@ GameObject:
   - component: {fileID: 915012031795613173}
   - component: {fileID: 1473886020884495551}
   - component: {fileID: 2403491611331287638}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_2
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -578,10 +624,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &3892490301845402088
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +655,7 @@ GameObject:
   - component: {fileID: 28248918122995466}
   - component: {fileID: 7788384621726530056}
   - component: {fileID: 518725209845818996}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_5
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -716,10 +776,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &4330010091484552683
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,7 +806,7 @@ GameObject:
   - component: {fileID: 1795374656513249551}
   - component: {fileID: 6359213549323521679}
   - component: {fileID: 1799904419070571955}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: kalaskeletonalaspainpitka
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -854,11 +928,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 10
+  hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: be71e788f53224193a965fdf655875ed,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 0.5
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
   alivetime: 5
@@ -868,6 +953,11 @@ MonoBehaviour:
   teeBoxCollider2d: 1
   teerajaytasprite: 1
   teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
+  saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
 --- !u!1 &5536023271577739532
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +971,7 @@ GameObject:
   - component: {fileID: 442133035717991141}
   - component: {fileID: 2352487568403463302}
   - component: {fileID: 90388845740052644}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_1
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1002,10 +1092,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &6992889557269345041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,7 +1123,7 @@ GameObject:
   - component: {fileID: 8992995616752095981}
   - component: {fileID: 8812692725090332091}
   - component: {fileID: 2093040240214272273}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_7
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1140,10 +1244,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &7570352238378564679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1275,7 @@ GameObject:
   - component: {fileID: 6272895549035397636}
   - component: {fileID: 8382941486695214092}
   - component: {fileID: 5734112344429662597}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_4
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1278,10 +1396,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!1 &8117563947142092770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,7 +1427,7 @@ GameObject:
   - component: {fileID: 4183170354974189120}
   - component: {fileID: 5639320637270794316}
   - component: {fileID: 7692234418192664830}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bone_3
   m_TagString: haukivihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -1416,7 +1548,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 2
+  osumanLiekki: {fileID: 0}
+  prosenttimaarakokonaisuudestaJokaVaaditaaanLiekkiin: 90
+  rajoitaOikealleMenemista: 0
+  oikeallemenemisenVelocityrajaarvo: 3
+  rajoituskerto: 0.1
+  aiheutavoimaaRigidbodyyn: 0
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0

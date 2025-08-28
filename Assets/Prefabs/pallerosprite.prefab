@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7468705479882030935}
   - component: {fileID: 1290522954254758964}
   - component: {fileID: -2116029858243668936}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: pallerosprite
   m_TagString: testitag
   m_Icon: {fileID: 0}
@@ -99,6 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8401545eb5201ddf8bfa8b96de51192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   vasenkertojamaaramax: 5
   oikeayloskertojenmaaramax: 5
   menossavasemmalle: 1

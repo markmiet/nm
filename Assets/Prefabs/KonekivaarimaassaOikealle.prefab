@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 9147204240162568112}
   - component: {fileID: 1815915716824826368}
   - component: {fileID: 1548667560641970710}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Konenkivaari
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -179,9 +179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c50690f134125d478d728a4a10ad956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
@@ -194,6 +197,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 1
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
   tankinAmmus: {fileID: 4665176215325690238, guid: 42afbbbe4a82b7845946ed2576cb2eb9,
     type: 3}
   ammusmaara: 1
@@ -434,7 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3402031770524441739}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Ammuslaukaisukohta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +470,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3451536067525996386}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Hylsykohta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +507,7 @@ GameObject:
   - component: {fileID: 208379927637986964}
   - component: {fileID: 7068941883837411069}
   - component: {fileID: 9029086921458777406}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Konekivaarirunko
   m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
@@ -660,9 +665,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
@@ -675,6 +683,8 @@ MonoBehaviour:
   oikeallemenemisenVelocityrajaarvo: 3
   rajoituskerto: 0.1
   aiheutavoimaaRigidbodyyn: 1
+  tamanchildcolliderreporterinOsumienMaara: 0
+  saadadissolveamountverrattunaOsumiinKaytaVainTamanOsumia: 0
 --- !u!61 &7068941883837411069
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -774,7 +784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4173404154347076805}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kivaarikiinnityskohta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 687672454698925407}
   - component: {fileID: 4563715162829190765}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: KonekivaarimaassaOikealle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -842,9 +852,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
+  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   hitThreshold: 11
   hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: b2086b12f9fc4074597273d41506dc9a,
@@ -852,6 +865,10 @@ MonoBehaviour:
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,
     type: 3}
   osumanSavunKesto: 0.5
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  tuhoajosollaanKameranVasemmallaPuolella: 1
+  rajaytaspritenScaleFactorProsentti: 100
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.5
   alivetime: 1.5
@@ -861,3 +878,8 @@ MonoBehaviour:
   teeBoxCollider2d: 0
   teerajaytasprite: 1
   teeExplosion: 1
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
+  saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
