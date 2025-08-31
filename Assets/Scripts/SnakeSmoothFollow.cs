@@ -58,7 +58,8 @@ public class SnakeSmootFollow : BaseController
         try
         {
             Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
-
+            if (true)
+                return;
             // Trail
             Gizmos.color = Color.yellow;
             if (positions != null && positions.Count > 1)
@@ -204,7 +205,8 @@ public class SnakeSmootFollow : BaseController
         // Target emission rate
         float targetRate = nahdaanStable ? maxEmissionRate : 0f;
 
-
+       // if (true)
+       //     return;
 
 
         if (!emittoiriippumattanahdaanko)
@@ -516,7 +518,7 @@ public class SnakeSmootFollow : BaseController
             }
         }
 
-        if (headTutkinta)
+        if (headTutkinta && OnkoOkToimiaUusi(gameObject))
         {
             HeadParticleSystem();
            

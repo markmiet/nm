@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4277517907431031458
 Transform:
   m_ObjectHideFlags: 0
@@ -129,17 +129,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0577e2ca8bd2b1f62896ec13cf2c906a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 1
+  poolistapalautusmaara: 0
   blinkSpeed: 2
   intensityMin: 0.5
   intensityMax: 1.5
   kaannaObjektiLiikkeenSuuntaiseksi: 0
   speedjonkaalletuhotaan: 0.1
   maksimiaikaMinkaVoiOllaHengissa: 10
-  maksimiaikajonkavoiollahengissa: 100
   damagemaarajokaaiheutetaan: 1
   explosionkesto: 0.2
   alivetimeRajahdyksenJalkeen: 0.5
@@ -216,9 +216,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  poolistapalautusmaara: 0
+  maintexuusi: {fileID: 0}
   dissolveamount: 0.8
   dissolveScale: 1
   verficaldissolve: 0
+  spiralStrength: 0
+  rotationAngle: 0
+  maksimiDissolveAmount: 0
+  maaritaDissolveAmountRelativeToAlus: 0
+  distancemin: 0
+  distancemax: 5
+  outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  asetaoutlinecolor: 0
 --- !u!114 &6926932030351493162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,10 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98f5b3b979c15841902b9b1884223e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
+  poolistapalautusmaara: 0
   offsetkerto: 2
   muutax: 1
   muutay: 0

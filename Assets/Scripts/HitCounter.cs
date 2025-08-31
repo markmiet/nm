@@ -121,8 +121,12 @@ public class HitCounter : BaseController
     }
 
     public bool tuhoajosollaanKameranVasemmallaPuolella = true;
+
+ 
     public void Update()
     {
+ 
+
 
         if (tuhoajosollaanKameranVasemmallaPuolella)
         {
@@ -133,7 +137,8 @@ public class HitCounter : BaseController
             }
             TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
-
+            OnkoOkToimiaUusi(gameObject);
+            
         }
 
     }
@@ -170,7 +175,7 @@ public class HitCounter : BaseController
                     //c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4, 4, 1.0f, alivetime);
 
                     
-
+                    
                     c.RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti);
 

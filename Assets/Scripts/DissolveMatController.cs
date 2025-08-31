@@ -75,8 +75,13 @@ public class DissolveMatController : BaseController
             
         }
 
+        dissisyklilaskuri = sykli;
 
     }
+
+
+    public float sykli = 0.5f;
+    private float dissisyklilaskuri = 0.0f;
 
     public float maksimiDissolveAmount;
     public bool maaritaDissolveAmountRelativeToAlus = false;
@@ -120,30 +125,38 @@ public class DissolveMatController : BaseController
     {
         try
         {
-            if (maaritaDissolveAmountRelativeToAlus)
+            dissisyklilaskuri += Time.deltaTime;
+
+            if (dissisyklilaskuri>=sykli)
             {
+                dissisyklilaskuri = 0.0f;
+                if (maaritaDissolveAmountRelativeToAlus)
+                {
 
-                _cache.SetFloat(_propIDs["_DissolveAmount"], DissolveAmountRelativeToAlus());
+                    _cache.SetFloat(_propIDs["_DissolveAmount"], DissolveAmountRelativeToAlus());
+                }
+                else
+                {
+
+                    _cache.SetFloat(_propIDs["_DissolveAmount"], dissolveamount);
+                }
+
+                if (outlineColor != null && asetaoutlinecolor)
+                {
+                    _cache.SetColor(_propIDs["_OutLineColor"], outlineColor);
+
+                }
+
+                _cache.SetFloat(_propIDs["_DissolveScale"], dissolveScale);
+                _cache.SetFloat(_propIDs["_VerticalDissolve"], verficaldissolve);
+                _cache.SetFloat(_propIDs["_SpiralStrength"], spiralStrength);
+                _cache.SetFloat(_propIDs["_RotationAmount"], rotationAngle);
+
+                if (maintexuusi != null)
+                    _cache.SetTexture(_propIDs["_MainTex"], maintexuusi);
             }
-            else
-            {
 
-                _cache.SetFloat(_propIDs["_DissolveAmount"], dissolveamount);
-            }
 
-            if (outlineColor!=null  && asetaoutlinecolor)
-            {
-                _cache.SetColor(_propIDs["_OutLineColor"], outlineColor);
-                
-            }
-
-            _cache.SetFloat(_propIDs["_DissolveScale"], dissolveScale);
-            _cache.SetFloat(_propIDs["_VerticalDissolve"], verficaldissolve);
-            _cache.SetFloat(_propIDs["_SpiralStrength"], spiralStrength);
-            _cache.SetFloat(_propIDs["_RotationAmount"], rotationAngle);
-
-            if (maintexuusi != null)
-                _cache.SetTexture(_propIDs["_MainTex"], maintexuusi);
         }
 
         catch (KeyNotFoundException)

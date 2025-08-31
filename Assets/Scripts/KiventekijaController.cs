@@ -196,34 +196,37 @@ instanssi.GetComponentsInChildren<KiviController>();
         Gizmos.color = gizmoColor;
         Gizmos.DrawSphere(transform.position, gizmoRadius);
 
+        Handles.Label(transform.position + Vector3.up * 0.2f, $"kivi {gameObject.name}", labelStyle);
+
+
         //uusi = new Vector2(transform.position.x, transform.position.y);
         //tulos = !onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation("vihollinen", boxsizealhaalla, uusi, layerMask);
+        /*
+                Vector2 vv = transform.position;
+                vv.x += xsuunnanlisaysTamaSiksiEttaLuodaanKiviHiukanKameranOikeallePuolen;
 
-        Vector2 vv = transform.position;
-        vv.x += xsuunnanlisaysTamaSiksiEttaLuodaanKiviHiukanKameranOikeallePuolen;
-
-       bool tuloslocal = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", boxsizealhaalla,vv);
-
-
-        Handles.Label(transform.position + Vector3.up * 0.2f, $"kivi {gameObject.name} tulos={tuloslocal}", labelStyle);
+               bool tuloslocal = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", boxsizealhaalla,vv);
 
 
-        Vector3 center = vv;
-        Vector3 half = (Vector3)boxsizealhaalla * 0.5f;
+                Handles.Label(transform.position + Vector3.up * 0.2f, $"kivi {gameObject.name} tulos={tuloslocal}", labelStyle);
 
-        gizmoColor = tuloslocal ? Color.white : Color.blue;
-        Gizmos.color = gizmoColor;
-        Vector3 topLeft = center + new Vector3(-half.x, half.y, 0f);
-        Vector3 topRight = center + new Vector3(half.x, half.y, 0f);
-        Vector3 bottomLeft = center + new Vector3(-half.x, -half.y, 0f);
-        Vector3 bottomRight = center + new Vector3(half.x, -half.y, 0f);
 
-        Gizmos.DrawLine(topLeft, topRight);
-        Gizmos.DrawLine(topRight, bottomRight);
-        Gizmos.DrawLine(bottomRight, bottomLeft);
+                Vector3 center = vv;
+                Vector3 half = (Vector3)boxsizealhaalla * 0.5f;
 
-        Gizmos.DrawLine(bottomLeft, topLeft);
+                gizmoColor = tuloslocal ? Color.white : Color.blue;
+                Gizmos.color = gizmoColor;
+                Vector3 topLeft = center + new Vector3(-half.x, half.y, 0f);
+                Vector3 topRight = center + new Vector3(half.x, half.y, 0f);
+                Vector3 bottomLeft = center + new Vector3(-half.x, -half.y, 0f);
+                Vector3 bottomRight = center + new Vector3(half.x, -half.y, 0f);
 
+                Gizmos.DrawLine(topLeft, topRight);
+                Gizmos.DrawLine(topRight, bottomRight);
+                Gizmos.DrawLine(bottomRight, bottomLeft);
+
+                Gizmos.DrawLine(bottomLeft, topLeft);
+        */
 #endif
     }
 

@@ -3678,7 +3678,7 @@ true,
 
         Vector3 viewportPos = cam.WorldToViewportPoint(go.transform.position);
 
-        float margin = 0.2f; // 10% buffer
+        float margin = 0.5f; // 10% buffer
         bool isVisible = viewportPos.z > 0 &&
                          viewportPos.x >= -margin && viewportPos.x <= 1 + margin &&
                          viewportPos.y >= -margin && viewportPos.y <= 1 + margin;
@@ -3686,6 +3686,43 @@ true,
         return isVisible;
 
     }
+
+    public bool IsRendererVisibleWithMargin2D(GameObject go, float margin = 0.5f)
+    {
+        Camera cam = PalautaMainCam();
+        if (cam == null || go == null) return false;
+
+        Renderer renderer = go.GetComponent<Renderer>();
+        if (renderer == null) return false;
+
+        Bounds bounds = renderer.bounds;
+
+        // Get the 4 corners in world space (Z stays the same as bounds.center.z)
+        Vector3[] corners =
+        {
+        new Vector3(bounds.min.x, bounds.min.y, bounds.center.z),
+        new Vector3(bounds.min.x, bounds.max.y, bounds.center.z),
+        new Vector3(bounds.max.x, bounds.min.y, bounds.center.z),
+        new Vector3(bounds.max.x, bounds.max.y, bounds.center.z)
+    };
+
+        foreach (var corner in corners)
+        {
+            Vector3 viewportPos = cam.WorldToViewportPoint(corner);
+
+            // If any corner is behind the camera, it's not visible
+            if (viewportPos.z < 0)
+                return false;
+
+            // If any corner goes outside viewport+margin, the whole object is not fully visible
+            if (viewportPos.x < -margin || viewportPos.x > 1 + margin ||
+                viewportPos.y < -margin || viewportPos.y > 1 + margin)
+                return false;
+        }
+
+        return true; // all corners are inside
+    }
+
 
 
     public bool AnyChildVisibleUseMargin(GameObject go)
@@ -3762,6 +3799,9 @@ true,
         {
             nakyvilla = false;
             SpriteRenderer[] ss= go.GetComponentsInChildren<SpriteRenderer>();
+
+
+            
             foreach(SpriteRenderer m in ss)
             {
                 bool tmp = IsVisibleFrom(m, mainCam);
@@ -3770,11 +3810,52 @@ true,
                     nakyvilla = tmp;
                     break;
                 }
+                else
+                {
+                    tmp = IsVisibleUseMargin(m.gameObject);
+                    if (tmp)
+                    {
+                        nakyvilla = tmp;
+                        break;
+                    }
+                    else
+                    {
+                        tmp = IsRendererVisibleWithMargin2D(m.gameObject);
+                        if (tmp)
+                        {
+                            nakyvilla = tmp;
+                            break;
+                        }
+                    }
+                }
+            
             }
+
+            
             if (!nakyvilla)
             {
                 nakyvilla = IsVisibleUseMargin(go);
+
+                if (!nakyvilla)
+                {
+                    nakyvilla=IsRendererVisibleWithMargin2D(go);
+                }
+
+
+
+
+
+                if (nakyvilla)
+                {
+                   // Debug.Log("marginaalilla");
+                }
+                else
+                {
+                 //   Debug.Log("mEiilla");
+                }
             }
+
+
             
         }
         else
@@ -4177,7 +4258,7 @@ true,
         float cameraLeftX = cam.transform.position.x - cam.orthographicSize * cam.aspect;
 
         // Get the object's visual bounds
-        Renderer renderer = go.GetComponentInChildren<Renderer>();
+        SpriteRenderer renderer = go.GetComponentInChildren<SpriteRenderer>();
         if (renderer == null)
             return false; // No visual bounds
 
@@ -4812,4 +4893,14 @@ true,
         return mainCam;
     }
 
+    public bool registeroiOnEnablessa = false;
+
+    void OnEnable()
+    {
+        if (registeroiOnEnablessa)
+        {
+            FindObjectOfType<CameraObjectManager>().Register(gameObject);
+        }
+      
+    }
 }

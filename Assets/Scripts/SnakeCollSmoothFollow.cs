@@ -140,25 +140,7 @@ public class SnakeCollSmoothFollow : BaseController
         }
     }
 
-    private void OnDrawGizmosdssssssssss()
-    {
-        // Draw a wire sphere at this GameObject's position
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 1.0f);
 
-
-
-#if UNITY_EDITOR
-
-        GUIStyle labelStyle = new GUIStyle();
-        labelStyle.fontSize = 8;
-        labelStyle.normal.textColor = Color.red;
-        Handles.Label(transform.position + Vector3.up * 0.2f, $"snake {gameObject.name}", labelStyle);
-#endif
-
-        // If a target is assigned, draw a line to it
-
-    }
 
 
 
@@ -231,11 +213,14 @@ public class SnakeCollSmoothFollow : BaseController
         {
             return;
         }
-
+        //entä jos laskee vain etäisyyttä alukseen jos tarpeeksi lähellä niin saa toimia...
+        //tai siis laskee etäisyyden kameraan...
+        /*@TODOOO miten tämä madolle nyt pysähtyy liian aikaisin*/
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
+        
 
 
         MoveHead();
@@ -291,26 +276,7 @@ public class SnakeCollSmoothFollow : BaseController
     private Vector3 lastHeadPos;
     private Vector3 lastTailPos;
 
-    void MoveHeadOld()
-    {
-        if (target == null) return;
 
-        Vector2 dir = (target.position - bodyParts[0].position).normalized;
-        Vector3 targetPos = bodyParts[0].position + (Vector3)(dir * headSpeed * Time.fixedDeltaTime);
-
-        Vector3 tempVel = velocities[0];
-        bodyParts[0].position = Vector3.SmoothDamp(bodyParts[0].position, targetPos, ref tempVel, movementSmoothTime);
-        velocities[0] = tempVel;
-
-        float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        float tempRot = rotationVelocities[0];
-        currentAngles[0] = Mathf.SmoothDampAngle(currentAngles[0], targetAngle, ref tempRot, rotationSmoothTime);
-        rotationVelocities[0] = tempRot;
-        bodyParts[0].rotation = Quaternion.Euler(0, 0, currentAngles[0] + angleadd);
-
-        if (positions.Count == 0 || Vector3.Distance(bodyParts[0].position, positions[positions.Count - 1]) >= minDistance / 2f)
-            positions.Add(bodyParts[0].position);
-    }
 
     void MoveHead()
     {
@@ -539,6 +505,7 @@ public class SnakeCollSmoothFollow : BaseController
 
     void DrawBoxCastGizmo(Vector2 origin, Vector2 dir, float distance)
     {
+
         Color col = IsDirectionClear(origin, dir, distance) ? Color.green : Color.red;
         Gizmos.color = col;
 
@@ -558,6 +525,8 @@ public class SnakeCollSmoothFollow : BaseController
         Handles.Label(transform.position + Vector3.up * 0.5f, gameObject.name);
 #endif
 
+        if (true)
+            return;
 
         // Trail
         Gizmos.color = Color.yellow;

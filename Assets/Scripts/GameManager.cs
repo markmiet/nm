@@ -174,10 +174,29 @@ public class GameManager : BaseController
 
     private float siirtymisenaloituskohta;
 
+    private bool aikanormaali = false;
+
+    private int framelaskuri = 0;
     public void Update()
     {
+        //Time.timeScale = 0.5f;
+       // Debug.Log("time.deltatime=" + Time.deltaTime);
+        if (!siirtymassascenenalkuun && !siirtymassastartmenuun)
+        {
+
+            if (framelaskuri>60)
+            {
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                Time.timeScale = 0.1f;
+            }
+            framelaskuri++;
+        }
         if (siirtymassascenenalkuun)
         {
+
             if (Time.realtimeSinceStartup-siirtymisenaloituskohta<siirtymaviive)
             {
                 Time.timeScale = 0.1f;
@@ -185,9 +204,13 @@ public class GameManager : BaseController
             else
             {
                 Time.timeScale = 1.0f;
+
+                framelaskuri = 0;
+
                 siirtymassascenenalkuun = false;
                 //scoreTextMeshProUGUI.SetText("" + score);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                //StartTimeScaleDelay();
                 // scoreTextMeshProUGUI = scoreGameObject.GetComponent<TextMeshProUGUI>();
                 // scoreTextMeshProUGUI.SetText("" + score);
                 // palautaScoreGameObject().GetComponent<TextMeshProUGUI>().SetText("" + score);
@@ -206,6 +229,8 @@ public class GameManager : BaseController
                 siirtymassastartmenuun = false;
                 SceneManager.LoadScene("StartMenu");
             }
+            framelaskuri = 0;
+
         }
 
     }
@@ -292,6 +317,9 @@ public class GameManager : BaseController
             }
             */
             currentHighScore = PlayerPrefs.GetInt("HighScore", 0); // Default is 0 if not set
+
+            //StartTimeScaleDelay();
+
             AsetaScoreTeksti();
             //tässä tutkitaan onko checkpointti
             /*if (checkpointAsetettu)
@@ -318,7 +346,10 @@ public class GameManager : BaseController
                  //Camera.main.GetComponent<Kamera>().AsetaAlusKeskelleKameraa();
 
              }
-            
+
+            //StartTimeScaleDelay();
+
+
         }
         if (scene.name.Equals("StartMenu"))
         {
@@ -341,6 +372,43 @@ public class GameManager : BaseController
     }
     private int currentHighScore = 0;
 
+
+
+    public void StartTimeScaleDelay()
+    {
+        StartCoroutine(SetTimeScaleWithDelay(0.1f, 5f, 1f));
+    }
+
+    private System.Collections.IEnumerator SetTimeScaleWithDelay(float initial, float delay, float final)
+    {
+        Time.timeScale = initial;
+        yield return new WaitForSecondsRealtime(delay); // unaffected by timeScale
+        Time.timeScale = final;
+    }
+
+    public void StartTimeScaleLerp()
+    {
+        StartCoroutine(LerpTimeScale(0.1f, 1.0f, 10f));
+    }
+
+    private System.Collections.IEnumerator LerpTimeScale(float start, float end, float duration)
+    {
+        float elapsed = 0f;
+        Time.timeScale = start;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // use unscaledDeltaTime since timeScale is changing
+            float arvo= Mathf.Lerp(start, end, elapsed / duration);
+            Debug.Log("arvo=" + arvo);
+            Time.timeScale = arvo;
+
+
+            yield return null;
+        }
+
+        Time.timeScale = end; // ensure exact final value
+    }
 
     private void SetHighScore()
     {
@@ -390,5 +458,9 @@ public class GameManager : BaseController
 
     }
     */
+
+
+    //
+
 
 }
