@@ -23,6 +23,8 @@ public class HylsyController : BaseController
             return;
         }
 
-        TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GetPrefap(),gameObject, elamisenmaksimiaikaraja, nopeudenalaraja);
+//        TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(GetPrefap(),gameObject, elamisenmaksimiaikaraja, nopeudenalaraja);
+        TuhoaKunElamisenAikaRajaTayttyyTaiHidastuuLiikaa(null, gameObject, elamisenmaksimiaikaraja, nopeudenalaraja);
+
     }
 }

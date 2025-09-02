@@ -13,14 +13,17 @@ using System.Threading.Tasks;
 
 public class AlusController : BaseController, IDamagedable, IExplodable
 {
+
+    public bool enabloiboxcollider = true;//EI TOIMI JOS EDITORISSA VAIHTAA ARVOA
+
     //ensinnäkin gameobjecti jolla voi säätää kameran nopeutta
 
     //toisekseen joku gameobjekti jolla voi tehdä näitä savepointteja
 
 
     // public int elamienmaara = 0;
-   // public int score = 0;//tälle se 
-   // public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
+    // public int score = 0;//tälle se 
+    // public float difficalty = 1.0f;//peli kiertää uusiksi sitten kun pääsee läpi, mutta difficalt
 
 
     public bool uusiohjauskaytossa = true;
@@ -177,8 +180,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public GameObject elamat;
 
 
-    public bool enabloiboxcollider = true;//EI TOIMI JOS EDITORISSA VAIHTAA ARVOA
-
+    
     /*
      * LOOSER HUUTO ok
      * kellon kuva ruudulle, jonka voi poimia aika hidaastuu esim. puoleen 10 sekunniksi
@@ -1593,6 +1595,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void PauseGameAction()
     {
+        GameManager.Instance.isPaused = true;
         Time.timeScale = 0f; // Stop game time
         isPaused = true;
         // Optional: Show pause menu UI
@@ -1606,6 +1609,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     void ResumeGame()
     {
+        GameManager.Instance.isPaused = false;
         Time.timeScale = 1f; // Resume game time
         isPaused = false;
         // Optional: Hide pause menu UI

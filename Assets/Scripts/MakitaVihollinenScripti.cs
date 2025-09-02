@@ -718,7 +718,7 @@ piipunboxit.gameObject.transform.position.x;
                 //instanssi = Instantiate(ammusPrefab, ammusvektori, Quaternion.identity);
 
                 instanssi = ObjectPoolManager.Instance.GetFromPool(ammusPrefab, ammusvektori, Quaternion.identity);
-                instanssi.GetComponent<BaseController>().SetPreFap(ammusPrefab);
+              //  instanssi.GetComponent<BaseController>().SetPreFap(ammusPrefab);
 
 
                 MakitaVihollinenAmmusScripti m = instanssi.GetComponent<MakitaVihollinenAmmusScripti>();

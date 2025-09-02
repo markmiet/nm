@@ -1466,7 +1466,7 @@ rb.position.x, rb.position.y, 0);
                     GameObject instanssi = ObjectPoolManager.Instance.GetFromPool(ammus, ampumispaikka, Quaternion.identity);
 
 
-                    instanssi.GetComponent<BaseController>().SetPreFap(ammus);
+                  //  instanssi.GetComponent<BaseController>().SetPreFap(ammus);
 
 
 

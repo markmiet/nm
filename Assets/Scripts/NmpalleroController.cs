@@ -24,6 +24,7 @@ public class NmpalleroController : BaseController, IExplodable
     // Update is called once per frame
     void Update()
     {
+        
         //TuhoaMuttaAlaTuhoaJosOllaanEditorissa(gameObject);
         if (IsGoingToBeDestroyed())
         {
@@ -31,7 +32,7 @@ public class NmpalleroController : BaseController, IExplodable
         }
 
         TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
-
+        
 
         MoveLeader();
     }

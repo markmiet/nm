@@ -103,7 +103,7 @@ public class HitCounter : BaseController
                 float kesto = Mathf.Min(alivetime, 0.5f);
                 Destroy(instanssi2, kesto);
                 // }
-                Debug.Log("rajaytys");
+             //   Debug.Log("rajaytys");
 
             }
 

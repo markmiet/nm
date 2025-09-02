@@ -8,6 +8,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 {
     // Start is called before the first frame update
 
+    /*
     private GameObject prefap;
     public GameObject GetPrefap()
     {
@@ -18,6 +19,8 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     {
         prefap = g;
     }
+    */
+    
 
     void Start()
     {
@@ -3493,11 +3496,12 @@ true,
         syklilaskuri += Time.deltaTime;
         if (syklilaskuri >= tarkistussykli)
         {
+            /*
             if (prefap == null)
             {
                 prefap = GetPrefap();
             }
-
+            */
             syklilaskuri = 0.0f;
             hengissaoloaika += tarkistussykli;
 
@@ -4506,10 +4510,12 @@ true,
         */
         if (syklilaskuri >= tarkistussykli)
         {
+            /*
             if (prefap == null)
             {
                 prefap = GetPrefap();
             }
+            */
 
             /*
             syklilaskuri = 0.0f;

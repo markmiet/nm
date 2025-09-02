@@ -259,7 +259,7 @@ public class TankkiPiippuController : ChildColliderReporter
             GameObject instanssi = ObjectPoolManager.Instance.GetFromPool(tankinAmmus, piipunpaaJohonGameObjectInstantioidaan.transform.position, Quaternion.identity);
 
 
-            instanssi.GetComponent<BaseController>().SetPreFap(tankinAmmus);
+         //   instanssi.GetComponent<BaseController>().SetPreFap(tankinAmmus);
 
 
 
@@ -293,7 +293,7 @@ public class TankkiPiippuController : ChildColliderReporter
                 GameObject instanssihylsy = ObjectPoolManager.Instance.GetFromPool(hylsy, hylsynpaikka.transform.position, Quaternion.identity);
 
 
-                instanssihylsy.GetComponent<BaseController>().SetPreFap(hylsy);
+              //  instanssihylsy.GetComponent<BaseController>().SetPreFap(hylsy);
                 /*
                 if (instanssihylsy.GetComponent<HylsyController>().GetPrefap()==null)
                     instanssihylsy.GetComponent<HylsyController>().prefap = hylsy;

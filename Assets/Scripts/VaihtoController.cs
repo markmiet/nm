@@ -72,11 +72,27 @@ public class VaihtoController : BaseController
     private Texture2D maintekstuuri;
 
 
-   // private float laskuri = 0;
+    // private float laskuri = 0;
     // Start is called before the first frame update
+
+    private float las = 0.0f;
+    private float sykl = 0.2f;
+    public void Update()
+    {
+        las += Time.deltaTime;
+        if (las>=sykl)
+        {
+            TeeMainTekstuuriVaihtoReal();
+            las = 0.0f;
+        }
+
+    }
+
+
+
     void Start()
     {
-
+        las = sykl;
       //  Time.fixedDeltaTime = 0.001f;
         _spriteRenderers = GetComponent<SpriteRenderer>();
         _materials = new Material(_spriteRenderers.material);
@@ -605,12 +621,19 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         return points;
     }
 
-
-    
-
-
+    private bool polyisdirty = true;
     private void TeeMainTekstuuriVaihto()
     {
+        polyisdirty = true;
+    }
+
+    
+    private void TeeMainTekstuuriVaihtoReal()
+    {
+        if (!polyisdirty)
+        {
+            return;
+        }
         _materials.SetTexture(_NoiseTex, noisetex);
         _materials.SetVector(_TilingOffset, tilingoffset);
         if (maintekstuuri != null)
@@ -635,6 +658,7 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
             }
 
         }
+        polyisdirty = false;
     }
     /*
 
@@ -809,82 +833,6 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
 
 
-    bool DrawBulletHole3Eitoimi(int centerX, int centerY, GameObject go, float bulletHoleWorldRadius = 5.0f)
-    {
-        //bulletHoleWorldRadius laske spriten worlg doosta
-        SpriteRenderer spriteRenderer = go.GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null) return false;
-
-        Texture2D maintekstuuri = spriteRenderer.sprite.texture;
-        if (maintekstuuri == null) return false;
-
-        int width = maintekstuuri.width;
-        int height = maintekstuuri.height;
-
-        // Get pixels from texture once
-        Color32[] pixels = maintekstuuri.GetPixels32();
-
-        // Calculate hole radius in pixels based on sprite pixelsPerUnit and desired world radius
-        float pixelsPerUnit = spriteRenderer.sprite.pixelsPerUnit;
-        int holeRadius = Mathf.RoundToInt(bulletHoleWorldRadius * pixelsPerUnit);
-
-        holeRadius = Mathf.Clamp(holeRadius, 1, 50); // Clamp to reasonable range
-
-        bool changed = false;
-
-        // Loop over circle area around center pixel
-        for (int y = -holeRadius; y <= holeRadius; y++)
-        {
-            for (int x = -holeRadius; x <= holeRadius; x++)
-            {
-                if (x * x + y * y <= holeRadius * holeRadius)
-                {
-                    int texX = centerX + x;
-                    int texY = centerY + y;
-
-                    if (texX >= 0 && texX < width && texY >= 0 && texY < height)
-                    {
-                        int index = texY * width + texX;
-                        Color32 c = pixels[index];
-
-                        // Clear only non-transparent pixels
-                        if (c.a != 0)
-                        {
-                            pixels[index] = new Color32(0, 0, 0, 0);
-                            changed = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (changed)
-        {
-            // Apply changed pixels to texture
-            maintekstuuri.SetPixels32(pixels);
-            maintekstuuri.Apply();
-
-            // Your custom method to update sprite visuals/physics
-            TeeMainTekstuuriVaihto();
-
-            // Spawn smoke effect at bullet hole center in world space (once)
-            if (savu != null && Time.time - lastSmokeTime >= smokeCooldown)
-            {
-                Vector2 bulletWorldPos = GetWorldPositionFromPixelIndex(centerY * width + centerX, width, spriteRenderer);
-                GameObject smokeInstance = Instantiate(savu, bulletWorldPos, Quaternion.identity);
-                Destroy(smokeInstance, savunkesto);
-                lastSmokeTime = Time.time;
-            }
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-
 
     bool DrawBulletHole3(int centerX, int centerY, GameObject go)
     {
@@ -975,9 +923,9 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
         bool changed = false;
         //tällä, mutta hidas?
-//        Vector2 vv = GetWorldPositionFromPixelIndex(index, width, GetComponent<SpriteRenderer>());
+        //        Vector2 vv = GetWorldPositionFromPixelIndex(index, width, GetComponent<SpriteRenderer>());
 
-
+       // int changecount = 0;
         for (int y = -holeRadius; y <= holeRadius; y++)
         {
             for (int x = -holeRadius; x <= holeRadius; x++)
@@ -1013,6 +961,13 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
 
                             changed = true;
+                            /*
+                            changecount++;
+                            if (changecount>=1000)
+                            {
+                                break;
+                            }
+                            */
                         }
                     }
                 }

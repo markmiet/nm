@@ -36,7 +36,7 @@ public class LaatikkoJutunController : BaseController
                 //GameObject instanssi=Instantiate(laukaistavaAsia, kohtajostaLaukaistaan.transform.position, Quaternion.identity);
                 GameObject instanssi= ObjectPoolManager.Instance.GetFromPool(laukaistavaAsia,
                     kohtajostaLaukaistaan.transform.position, Quaternion.identity);
-                instanssi.GetComponent<BaseController>().SetPreFap(laukaistavaAsia);
+               // instanssi.GetComponent<BaseController>().SetPreFap(laukaistavaAsia);
 
 
 

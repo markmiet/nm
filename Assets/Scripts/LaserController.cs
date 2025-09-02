@@ -183,7 +183,7 @@ public class LaserController : BaseController
 
         else if (col.collider.tag.Contains("vihollinen") && col.collider.tag.Contains("explode"))
         {
-            Debug.Log("viholliseen tormatty lasercontroller " + olenklooni);
+           // Debug.Log("viholliseen tormatty lasercontroller " + olenklooni);
 
             bool teeklooni = true;
             //tormattyviholliseen = true;

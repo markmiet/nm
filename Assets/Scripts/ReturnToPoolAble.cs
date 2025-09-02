@@ -4,8 +4,10 @@ using UnityEngine;
 
 public interface ReturnToPoolAble 
 {
+    /*
     GameObject GetPrefap();
 
 
     void SetPreFap(GameObject g); 
+    */
 }

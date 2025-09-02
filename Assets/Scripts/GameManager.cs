@@ -177,11 +177,14 @@ public class GameManager : BaseController
     private bool aikanormaali = false;
 
     private int framelaskuri = 0;
+
+    public bool isPaused = false;
+
     public void Update()
     {
         //Time.timeScale = 0.5f;
        // Debug.Log("time.deltatime=" + Time.deltaTime);
-        if (!siirtymassascenenalkuun && !siirtymassastartmenuun)
+        if (!siirtymassascenenalkuun && !siirtymassastartmenuun && !isPaused)
         {
 
             if (framelaskuri>60)
@@ -191,6 +194,10 @@ public class GameManager : BaseController
             else
             {
                 Time.timeScale = 0.1f;
+
+                //GameObject alus = PalautaAlus();
+                //alus.GetComponent<AlusController>().SetElamienMaara(lives);
+               // alus.GetComponent<AlusController>().SetruudunvasenylakulmatekstiTextMeshProUGUI("");
             }
             framelaskuri++;
         }
