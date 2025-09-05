@@ -1,6 +1,8 @@
+using DigitalRuby.AdvancedPolygonCollider;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 
@@ -76,22 +78,30 @@ public class VaihtoController : BaseController
     // Start is called before the first frame update
 
     private float las = 0.0f;
-    private float sykl = 0.2f;
+    private float sykl = 1.0f;
     public void Update()
     {
         las += Time.deltaTime;
         if (las>=sykl)
         {
-            TeeMainTekstuuriVaihtoReal();
+            //   TeeMainTekstuuriVaihtoReal();
+            // a.StartRebuild(gameObject);
+            bool splittitehtiin = SplitDisconnectedRegions();
+
             las = 0.0f;
         }
 
     }
 
 
+    NativeArray<Color32> pixelData;
 
     void Start()
     {
+
+   //     rr = GetComponent<RuntimePixelPerfectCollider>();
+
+        //  a = gameObject.AddComponent<AdvancedPolygonColliderManager>();
         las = sykl;
       //  Time.fixedDeltaTime = 0.001f;
         _spriteRenderers = GetComponent<SpriteRenderer>();
@@ -101,105 +111,31 @@ public class VaihtoController : BaseController
         Texture2D original = _spriteRenderers.sprite.texture;
 
         maintekstuuri = new Texture2D(original.width, original.height, original.format, false);
+
+        //pixelData = new NativeArray<Color32>(original.width* original.height, Allocator.Persistent);
+        // pixelData = original.GetPixelData();
+        // Get pixel data as a NativeArray<Color32>
+
+
         maintekstuuri.SetPixels(original.GetPixels());
         maintekstuuri.Apply();
-        TeeMainTekstuuriVaihto();
+
+        pixelData = maintekstuuri.GetPixelData<Color32>(0); // 0 = mip level
+
+        TeeMainTekstuuriVaihtoReal();
         collisiolaskuri = minimiaikaMikaPitaaOllaCollisioidenValissa;
-        //  _spriteRenderers.material = _materials;
-
-        // gameObject.AddComponent<PolygonCollider2D>();
-        /*
-         * 
-        _materials.SetTexture(_NoiseTex, noisetex);
-        _materials.SetVector(_TilingOffset, tilingoffset);
-        if (maintekstuuri != null)
-        {
-            _materials.SetTexture(_MainTex, maintekstuuri);
-
-            // Create a new sprite from the texture using original sprite settings
-            Sprite baseSprite = _spriteRenderers.sprite;
-            Sprite newSprite = Sprite.Create(
-                maintekstuuri,
-                new Rect(0, 0, maintekstuuri.width, maintekstuuri.height),
-                baseSprite != null ? baseSprite.pivot / baseSprite.rect.size : new Vector2(0.5f, 0.5f),
-                baseSprite != null ? baseSprite.pixelsPerUnit : 100f
-            );
-
-            // Apply new sprite to the renderer
-            _spriteRenderers.sprite = newSprite;
-        }
+        
+      //  GetComponent<RuntimePixelPerfectCollider>();
 
 
-
-        // Remove and recreate collider on next frame
-        StartCoroutine(RebuildColliderNextFrame());
-        */
     }
 
-    float CalculatePolygonArea(PolygonCollider2D collider, GameObject para)
-    {
-        float scaleX = para.transform.lossyScale.x;
-        float scaleY = para.transform.lossyScale.y;
-
-        float area = 0f;
-
-        for (int path = 0; path < collider.pathCount; path++)
-        {
-            Vector2[] points = collider.GetPath(path);
-            int count = points.Length;
-
-            for (int i = 0; i < count; i++)
-            {
-                Vector2 a = points[i];
-                Vector2 b = points[(i + 1) % count];
-                area += (a.x * b.y) - (b.x * a.y);
-            }
-        }
-
-        //return Mathf.Abs(area * 0.5f);
-
-        //*Mathf.Abs(scaleX * scaleY);
-
-        float arvo = area * Mathf.Abs(scaleX * scaleY);
-        return arvo;
-    }
+    RuntimePixelPerfectCollider rr;
+    //  AdvancedPolygonColliderManager a;
 
 
 
-    /*
-    public static int CountNonAlphaPixels(Sprite sprite)
-    {
-        if (sprite == null || sprite.texture == null)
-            return 0;
 
-        Texture2D texture = sprite.texture;
-        Color32[] pixels = texture.GetPixels32();
-
-        Rect rect = sprite.textureRect;
-        int textureWidth = texture.width;
-
-        int count = 0;
-
-        int xMin = (int)rect.x;
-        int yMin = (int)rect.y;
-        int width = (int)rect.width;
-        int height = (int)rect.height;
-
-        for (int y = yMin; y < yMin + height; y++)
-        {
-            for (int x = xMin; x < xMin + width; x++)
-            {
-                int index = y * textureWidth + x;
-                Color32 pixel = pixels[index];
-
-                if (pixel.a > 0) // count only visible (non-transparent) pixels
-                    count++;
-            }
-        }
-
-        return count;
-    }
-    */
 
 
     public int CountNonAlphaPixels(Sprite sprite)
@@ -311,61 +247,48 @@ public class VaihtoController : BaseController
         return Mathf.RoundToInt(sprite.rect.height);
     }
 
-    /*
-    // Update is called once per frame
-    void Update()
-    {
-        
-        laskuri += Time.deltaTime;
 
-        if (laskuri >= muunnossykli)
-        {
-            int maara = CountNonAlphaPixels(GetComponent<SpriteRenderer>().sprite);
-            Debug.Log("maaraupd=" + maara);
-
-            if (gameObject.GetComponent<PolygonCollider2D>() != null)
-            {
-
-                //GeneratePreciseCollider();
-                // GenerateCollider();
-
-            }
-            //RebuildCollider();
-
-            //  laskuri = 0;
-            //   TeeMainTekstuuriVaihto();
-        }
-    }
-    */
-
-    private IEnumerator RebuildColliderNextFrame()
-    {
-        yield return null; // Wait one frame to ensure Sprite is updated
-        RebuildCollider();
-
-
-    }
+    private bool splittitutki = true;
 
 
     private void RebuildCollider()
     {
+        
+        float alku = Time.realtimeSinceStartup;
 
-
+        
         PolygonCollider2D[] oldCol = GetComponents<PolygonCollider2D>();
         foreach (PolygonCollider2D pp in oldCol)
         {
             Destroy(pp);
         }
         PolygonCollider2D collider = gameObject.AddComponent<PolygonCollider2D>();
+
+                TarkistaKoko();
+        splittitutki = true;
+     //   bool splittitehtiin = SplitDisconnectedRegions();
+
+
+        // a.StartRebuild(gameObject);
+
+        //pa.RebuildCollider();
+
+        float loppu = Time.realtimeSinceStartup;
+
+      //  Debug.Log("collider " + (loppu - alku));
+
         // GenerateBoxCollidersFast();
 
+       //  RecalculatePolygon();
+
+        //RecalculatePolygonCo();
+
+        // StartCoroutine(RecalculatePolygonCo());
+        //        TarkistaKoko();
+
+        //bool splittitehtiin = SplitDisconnectedRegions();
 
 
-
-
-        TarkistaKoko();
-
-        bool splittitehtiin = SplitDisconnectedRegions();
         //if (!splittitehtiin)
         //  GenerateCollider();
 
@@ -373,49 +296,8 @@ public class VaihtoController : BaseController
         //  GeneratePreciseCollider();
         // 
     }
-    /*
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        Debug.Log(col);
-        if (col.tag.Contains("ammus"))
-        {
-            /*
-            List<Vector2> lista = GetWorldPointList(hitPoint, col.gameObject, bulletholelistankoko, col.relativeVelocity, bulletholestep);
 
-            foreach (Vector2 v in lista)
-            {
-                Vector2 localPoint = transform.InverseTransformPoint(v);
-
-                // Convert local point to texture space
-                Sprite sprite = _spriteRenderers.sprite;
-                Rect rect = sprite.rect;
-                //Vector2 pivot = sprite.pivot;
-
-                // int texX = Mathf.RoundToInt((localPoint.x * sprite.pixelsPerUnit) + pivot.x);
-                // int texY = Mathf.RoundToInt((localPoint.y * sprite.pixelsPerUnit) + pivot.y);
-
-                Vector2 pivot = sprite.pivot / sprite.pixelsPerUnit;
-                Vector2 texCoord = (localPoint + pivot) * sprite.pixelsPerUnit;
-
-                // Draw bullet hole at texX, texY
-                // DrawBulletHole(texX, texY, col.gameObject.GetComponent<SpriteRenderer>().sprite.texture);
-                int texX = Mathf.RoundToInt(texCoord.x);
-                int texY = Mathf.RoundToInt(texCoord.y);
-
-
-                bool change = DrawBulletHole3(texX, texY, col.gameObject);
-                if (change)
-                {
-                    break;
-                }
-
-            }
-
-            
-        }
-            */
-
-
+    
     public string[] tagijohonreagoidaan = new string[] { "ammus" };
 
 
@@ -520,31 +402,14 @@ public class VaihtoController : BaseController
 
 
             lastBulletHoleTime = currentTime;
-
-            //col.collider.enabled = false;
-            //laskuri += Time.deltaTime;
-
-            //  if (laskuri >= muunnossykli)
-            //  {
-            //      laskuri = 0;
-
-            // Get world hit point
             Vector2 hitPoint = col.GetContact(0).point;
+            BulletHole(col.relativeVelocity, hitPoint, col.gameObject);
 
-            //hitPoint = GetNearestWorldPoint(hitPoint, col.gameObject);
-            /*
-            hitPoint = GetNearestWorldPoint(hitPoint, col.gameObject, col.rigidbody.velocity
-
-Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
-                */
-
-            BulletHole(col.relativeVelocity, hitPoint,col.gameObject);
-            //DrawBulletHole3(hitPoint, col.gameObject);
-
-
-            //}
         }
     }
+
+
+
 
     public void BulletHole(Vector2 relvel, Vector2 hitPoint,GameObject go)
     {
@@ -622,18 +487,23 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
     }
 
     private bool polyisdirty = true;
-    private void TeeMainTekstuuriVaihto()
-    {
-        polyisdirty = true;
-    }
+   // private void TeeMainTekstuuriVaihto()
+  //  {
+    //    polyisdirty = true;
+   // }
 
-    
+  //  Color32[] pixels;
+
     private void TeeMainTekstuuriVaihtoReal()
     {
+        /*
+        polyisdirty = true;
         if (!polyisdirty)
         {
             return;
         }
+        */
+       // maintekstuuri.Apply();
         _materials.SetTexture(_NoiseTex, noisetex);
         _materials.SetVector(_TilingOffset, tilingoffset);
         if (maintekstuuri != null)
@@ -652,153 +522,35 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
             if (bulletholemode)
             {
-                RebuildCollider();//MJM TODOO OTA POIS KOMMENTEISTA
+                float aika = Time.realtimeSinceStartup;
+
+                    RebuildCollider();//MJM TODOO OTA POIS KOMMENTEISTA
+
+                //  rr.UpdateColliderMIksi();
+                // GenerateBoxCollidersFast();
+                //StartCoroutine(RebuildColliderCoroutine());
+
+                float loppu = Time.realtimeSinceStartup;
+
+                float erotus = loppu - aika;
+            //    Debug.Log("erotus=" + erotus);
+
 
 
             }
 
         }
-        polyisdirty = false;
+       // polyisdirty = false;
     }
-    /*
+ 
 
-    public int gridResolutionX = 10; // how many cells horizontally
-    public int gridResolutionY = 10; // how many cells vertically
-    public byte alphaThresholdBox = 10; // treat pixels with alpha <= this as invisible
-
-
-
-    public void GenerateBoxCollidersFast()
-    {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr == null || sr.sprite == null)
-        {
-            Debug.LogWarning("No SpriteRenderer or Sprite found.");
-            return;
-        }
-
-        // Clean up old colliders
-        foreach (var box in GetComponentsInChildren<BoxCollider2D>())
-        {
-            Destroy(box.gameObject);
-        }
-
-        Texture2D tex = sr.sprite.texture;
-        Rect rect = sr.sprite.textureRect;
-        Vector2 pivot = sr.sprite.pivot;
-        float ppu = sr.sprite.pixelsPerUnit;
-        Color32[] pixels = tex.GetPixels32();
-        int texWidth = tex.width;
-
-        // Cache values
-        float unitWidth = rect.width / ppu;
-        float unitHeight = rect.height / ppu;
-        float cellW = unitWidth / gridResolutionX;
-        float cellH = unitHeight / gridResolutionY;
-
-        int pixelW = Mathf.RoundToInt(rect.width);
-        int pixelH = Mathf.RoundToInt(rect.height);
-
-        // Use a single parent to hold all box colliders
-        GameObject container = new GameObject("BoxColliderContainer");
-        container.transform.SetParent(transform, false);
-
-        for (int gx = 0; gx < gridResolutionX; gx++)
-        {
-            for (int gy = 0; gy < gridResolutionY; gy++)
-            {
-                int pxMin = Mathf.FloorToInt(rect.x + gx * pixelW / gridResolutionX);
-                int pyMin = Mathf.FloorToInt(rect.y + gy * pixelH / gridResolutionY);
-                int pxMax = Mathf.FloorToInt(rect.x + (gx + 1) * pixelW / gridResolutionX);
-                int pyMax = Mathf.FloorToInt(rect.y + (gy + 1) * pixelH / gridResolutionY);
-
-                bool found = false;
-                int stride = texWidth;
-
-                for (int y = pyMin; y < pyMax && !found; y++)
-                {
-                    int rowOffset = y * stride;
-                    for (int x = pxMin; x < pxMax; x++)
-                    {
-                        int index = rowOffset + x;
-                        if (index >= 0 && index < pixels.Length && pixels[index].a > alphaThresholdBox)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (found)
-                {
-                    GameObject cellBox = new GameObject("AutoBox");
-                    cellBox.transform.SetParent(container.transform, false);
-                    cellBox.transform.localPosition = new Vector3(
-                        gx * cellW - pivot.x / ppu + cellW / 2,
-                        gy * cellH - pivot.y / ppu + cellH / 2,
-                        0f
-                    );
-                    var box = cellBox.AddComponent<BoxCollider2D>();
-                    box.size = new Vector2(cellW, cellH);
-                }
-            }
-        }
-    }
-
-    */
+    //private bool collre = false;
+    
 
 
 
 
-
-    //  public int holeRadius = 8;
-
-
-
-    float GetSpriteScreenWidth(GameObject go, Camera camera)
-    {
-        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
-        if (sr == null || sr.sprite == null || camera == null)
-            return 0f;
-
-        // Get sprite bounds in world space
-        Bounds bounds = sr.bounds;
-
-        Vector3 worldLeft = new Vector3(bounds.min.x, bounds.center.y, 0);
-        Vector3 worldRight = new Vector3(bounds.max.x, bounds.center.y, 0);
-
-        // Convert world points to screen space
-        Vector3 screenLeft = camera.WorldToScreenPoint(worldLeft);
-        Vector3 screenRight = camera.WorldToScreenPoint(worldRight);
-
-        float screenWidth = Mathf.Abs(screenRight.x - screenLeft.x);
-        return screenWidth;
-    }
-
-
-    public static Vector2 GetWorldPositionFromPixelIndexVanha(int index, int textureWidth, SpriteRenderer spriteRenderer)
-    {
-        // Get texX and texY from 1D index
-        int texX = index % textureWidth;
-        int texY = index / textureWidth;
-
-        Sprite sprite = spriteRenderer.sprite;
-        Transform transform = spriteRenderer.transform;
-
-        float pixelsPerUnit = sprite.pixelsPerUnit;
-        Rect rect = sprite.rect;
-        Vector2 pivot = sprite.pivot;
-
-        // Convert texture space (pixels) to local space (units)
-        float localX = (texX - rect.x) / pixelsPerUnit - pivot.x / pixelsPerUnit;
-        float localY = (texY - rect.y) / pixelsPerUnit - pivot.y / pixelsPerUnit;
-
-        Vector2 localPosition = new Vector2(localX, localY);
-
-        // Convert local to world space
-        return transform.TransformPoint(localPosition);
-    }
-
+    
     public static Vector2 GetWorldPositionFromPixelIndex(int index, int textureWidth, SpriteRenderer spriteRenderer)
     {
         int texX = index % textureWidth;
@@ -832,7 +584,8 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
     //public float travelDistance = 140f;
 
 
-
+    private bool pixeltaulukkoalustettu = false;
+    Color32[] pixels;
 
     bool DrawBulletHole3(int centerX, int centerY, GameObject go)
     {
@@ -917,7 +670,22 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
     holeRadius = Mathf.Clamp(holeRadius, 1, 16); // optional safety clamp
     */
 
-    Color32[] pixels = maintekstuuri.GetPixels32();
+    //Color32[] pixels = maintekstuuri.GetPixels32();
+      //  int width = maintekstuuri.width;
+        //int height = maintekstuuri.height;
+
+
+        if (!pixeltaulukkoalustettu)
+        {
+            pixels = maintekstuuri.GetPixels32();
+            pixeltaulukkoalustettu = true;
+
+
+        }
+        else
+        {
+
+        }
         int width = maintekstuuri.width;
         int height = maintekstuuri.height;
 
@@ -925,7 +693,10 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         //tällä, mutta hidas?
         //        Vector2 vv = GetWorldPositionFromPixelIndex(index, width, GetComponent<SpriteRenderer>());
 
-       // int changecount = 0;
+        // int changecount = 0;
+
+        int indeksipienin = -1;
+        int indeksisuurin = -1;
         for (int y = -holeRadius; y <= holeRadius; y++)
         {
             for (int x = -holeRadius; x <= holeRadius; x++)
@@ -945,9 +716,28 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
                         // Only clear non-transparent pixels
                         if (c.a != 0 || c.r != 0 || c.g != 0 || c.b != 0)
                         {
-                            pixels[index] = new Color32(0, 0, 0, 0); // transparent
+                            //pixels[index] = new Color32(0, 0, 0, 0); // transparent
 
+                            pixelData[index] = new Color32(0, 0, 0, 0); // transparent
+                            /*
+                            if (indeksipienin<0)
+                            {
+                                indeksipienin = index;
+                            }
+                            if (indeksipienin>index)
+                            {
+                                indeksipienin = index;
+                            }
 
+                            if (indeksisuurin < 0)
+                            {
+                                indeksisuurin = index;
+                            }
+                            if (indeksisuurin < index)
+                            {
+                                indeksisuurin = index;
+                            }
+                            */
 
                             if (savu != null && Time.time - lastSmokeTime >= smokeCooldown)
                             {
@@ -976,11 +766,42 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
         if (changed)
         {
-            maintekstuuri.SetPixels32(pixels);
+            //maintekstuuri.SetPixels(xMin, yMin, width, height, modifiedPixels);
+            //maintekstuuri.Apply();
+
+
+            //maintekstuuri.SetPixels32(pixels);
+
+          
+            maintekstuuri.SetPixelData(pixelData, 0);
+
+
+           // float alku = Time.realtimeSinceStartup;
             maintekstuuri.Apply();
+            // float loppu = Time.realtimeSinceStartup;
+
+            TeeMainTekstuuriVaihtoReal();
+
+            // Debug.Log("set maintekstuuri apply kesto=" + (loppu - alku));
+            /*
+            NativeArray<Color32> holePixels = new NativeArray<Color32>(indeksisuurin- indeksipienin+1, Allocator.Temp);
+            int j = 0;
+            for (int i= indeksipienin; i<= indeksisuurin;i++)
+            {
+                holePixels[j++]=pixels[i];
+            }
+
+
+
+            maintekstuuri.SetPixelData(holePixels, 0, indeksipienin);
+            */
+
+            // maintekstuuri.SetPixelData(pixelData, 0, 10);
+
+            //  maintekstuuri.Apply();
 
             // If visual or physics change is needed:
-            TeeMainTekstuuriVaihto(); // your own method
+         //   TeeMainTekstuuriVaihtoReal(); // your own method
                                       // RebuildCollider(); // optionally refresh collider
             return true;
         }
@@ -1046,10 +867,18 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
     public bool SplitDisconnectedRegions()
     {
+        float alku = Time.realtimeSinceStartup;
+
         if (!jakaudutarvittaessa)
         {
             return false;
         }
+        if (!splittitutki)
+        {
+            return false;
+        }
+
+        splittitutki = false;
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Sprite originalSprite = sr.sprite;
@@ -1066,7 +895,7 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         float ppu = originalSprite.pixelsPerUnit;
         Vector2 pivotPx = originalSprite.pivot;
 
-//        Color[] pixels = originalTex.GetPixels();//mjm nopeutuuko?
+        //        Color[] pixels = originalTex.GetPixels();//mjm nopeutuuko?
 
         Color32[] pixels = originalTex.GetPixels32();
 
@@ -1082,7 +911,10 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
             }
         }
 
+
         List<List<Vector2Int>> regions = FindConnectedRegions(alphaMask, width, height);
+
+
         regions.Sort((a, b) => b.Count.CompareTo(a.Count));
 
         if (regions.Count <= 1)
@@ -1118,6 +950,9 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
             Array.Fill(regionPixels, new Color(0, 0, 0, 0));
             int nonTransparentPixelCount = 0;
             // Copy pixels into new texture and clear them from the original
+
+            float aa = Time.realtimeSinceStartup;
+
             foreach (var p in region)
             {
                 int localX = p.x - bounds.x;
@@ -1132,6 +967,11 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
                 if (c.a > 0f) // Count only non-transparent pixels
                     nonTransparentPixelCount++;
             }
+
+         //   float bb = Time.realtimeSinceStartup;
+       //     Debug.Log("looppi kesto=" + (bb - aa));
+
+
             if (nonTransparentPixelCount < pikseliminimimaara)
             {
                 Debug.Log("nonTransparentPixelCount=" + nonTransparentPixelCount);
@@ -1170,51 +1010,13 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
             jokutehtiin = true;
 
             SpriteRenderer newSR = newPart.GetComponent<SpriteRenderer>();
-            /*
-            // Create sprite
-            Sprite regionSprite = Sprite.Create(
-                regionTex,
-                new Rect(0, 0, bounds.width, bounds.height),
-                originalSprite.pivot / originalSprite.rect.size,
-                ppu
-            );
-            */
-            /*
-            Sprite regionSprite = Sprite.Create(
-             regionTex,
-             new Rect(0, 0, bounds.width, bounds.height),
-             originalSprite.pivot,
-             ppu
-         );
-            */
-
-            /*
-            Vector2 normalizedPivot = new Vector2(
-        pivotPx.x / originalSprite.rect.width,
-        pivotPx.y / originalSprite.rect.height
-    );
-*/
-            //Sprite regionSprite = Sprite.Create(regionTex, new Rect(0, 0, bounds.width, bounds.height), normalizedPivot, ppu);
 
 
 
 
             // Clone material if needed
 
-            /*
-            if (first)
-            {
 
-            }
-           // else
-           // {
-               
-                // Position correction
-                Vector2 regionCenterPx = bounds.position + new Vector2(bounds.width, bounds.height) * 0.5f;
-                Vector2 offset = (regionCenterPx - pivotPx) / ppu;
-                newPart.transform.position = transform.position + (Vector3)offset;
-            //}
-            */
 
 
 
@@ -1232,20 +1034,10 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
             var vaihto = newPart.GetComponent<VaihtoController>();
             if (vaihto != null)
             {
-
+             //   float a = Time.realtimeSinceStartup;
                 vaihto.RebuildCollider();
-
-                /*
-                PolygonCollider2D p = newPart.GetComponent<PolygonCollider2D>();
-                float alue = CalculatePolygonArea(p, newPart);
-                Debug.Log("alue=" + alue);
-                if (alue < polygoniminiarvo)
-                {
-                    //      Destroy(newPart);
-                    //         continue;
-                    // return;
-                }
-                */
+               // float b = Time.realtimeSinceStartup;
+               // Debug.Log("vaihto.RebuildCollider() kesto=" + (b - a));
 
 
                 // StartCoroutine(vaihto.RebuildColliderNextFrame());
@@ -1268,7 +1060,10 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
             BaseDestroy();
 
         }
-           
+       // float loppu = Time.realtimeSinceStartup;
+
+       // Debug.Log("splitin kesto=" + (loppu - alku));
+
         return true;
     }
 
@@ -1344,11 +1139,6 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
         clone.transform.rotation = original.transform.rotation;
         clone.transform.localScale = original.transform.localScale;
 
-        // Optional: Clear or replace specific components (e.g., remove original collider)
-        /*
-         * PolygonCollider2D oldCol = clone.GetComponent<PolygonCollider2D>();
-        if (oldCol) DestroyImmediate(oldCol);
-        */
 
 
 
@@ -1361,6 +1151,8 @@ Vector2 bulletVelocity, float maxAngleDegrees = 60f, int maxRadius = 32)
 
         return clone;
     }
-    
+
+
+
 
 }

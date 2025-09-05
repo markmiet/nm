@@ -35,11 +35,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using Unity.Collections;
 using UnityEngine;
+
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Collections;
 
 namespace DigitalRuby.AdvancedPolygonCollider
 {
-    public sealed class TextureConverter
+    public sealed class TextureConverter 
     {
         private const int closePixelsLength = 8;
         private static int[,] closePixels = new int[closePixelsLength, 2] { { -1, -1 }, { 0, -1 }, { 1, -1 }, { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1, 0 } };
@@ -49,6 +54,56 @@ namespace DigitalRuby.AdvancedPolygonCollider
         private int solidsLength;
         private int width;
         private int height;
+
+        //NativeArray<Color32> pixelData;
+        public void DetectVerticesOma(NativeArray<Color32> colors, int width, int alphaTolerance, List<Vertices> ret)
+        {
+            this.width = width;
+            this.height = colors.Length / width;
+            int n, s;
+
+            solids = new byte[colors.Length];
+            int laskuri = 0;
+            // calculate solids once, this makes tolerance lookups much faster
+            float time = Time.realtimeSinceStartup;
+            for (int i = 0; i < solids.Length; i++)
+            {
+                // Diff will be negative for visitable value, resulting in a sign multiply and value of 0.
+                // Sign multiply will be -1 for positive visitable values, resulting in non-zero value.
+                n = alphaTolerance - (int)(colors[i].a * 255.0f);
+                s = ((int)((n & 0x80000000) >> 31)) - 1; // sign multiplier is -1 for positive numbers and 0 for negative numbers
+                n = n * s * s; // multiply n by sign squared to get 0 for negative numbers (solid) and > zero for positive numbers (pass through)
+                solids[i] = (byte)n; // assign value back
+                
+              
+            }
+            float kesto = Time.realtimeSinceStartup - time;
+            UnityEngine.Debug.Log("solids.Length looppi=" + (Time.realtimeSinceStartup - time));
+            solidsLength = colors.Length;
+
+           // List<Vertices> detectedVerticesList = DetectVertices();
+           // List<Vertices> result = new List<Vertices>();
+
+            List<Vertices> detectedVerticesList = new List<Vertices>();
+
+            
+           DetectVertices2(detectedVerticesList);
+
+
+            for (int i = 0; i < detectedVerticesList.Count; i++)
+            {
+                ret.Add(detectedVerticesList[i]);
+
+               // result.Add(detectedVerticesList[i]);
+            }
+            
+
+            //return result;
+          //  yield return null;
+        }
+
+
+
 
         public List<Vertices> DetectVertices(UnityEngine.Color[] colors, int width, int alphaTolerance)
         {
@@ -71,7 +126,10 @@ namespace DigitalRuby.AdvancedPolygonCollider
 
             solidsLength = colors.Length;
 
-            List<Vertices> detectedVerticesList = DetectVertices();
+           // List<Vertices> detectedVerticesList = DetectVertices();
+
+            List<Vertices> detectedVerticesList = new List<Vertices>();
+
             List<Vertices> result = new List<Vertices>();
 
             for (int i = 0; i < detectedVerticesList.Count; i++)
@@ -81,6 +139,106 @@ namespace DigitalRuby.AdvancedPolygonCollider
 
             return result;
         }
+
+
+        public IEnumerator DetectVertices2(List<Vertices> rett)
+        {
+            List<Vertices> detectedPolygons = new List<Vertices>();
+            Vector2? holeEntrance = null;
+            Vector2? polygonEntrance = null;
+            List<Vector2> blackList = new List<Vector2>();
+
+            bool searchOn;
+            int laskuri = 0;
+            do
+            {
+                laskuri++;
+
+                if (laskuri>=1000)
+                {
+                    laskuri = 0;
+                  //  yield return null;
+                }
+               
+                Vertices polygon;
+                if (detectedPolygons.Count == 0)
+                {
+                    // First pass / single polygon
+                    polygon = new Vertices(CreateSimplePolygon(Vector2.zero, Vector2.zero));
+                    if (polygon.Count > 2)
+                    {
+                        polygonEntrance = GetTopMostVertex(polygon);
+                    }
+                }
+                else if (polygonEntrance.HasValue)
+                {
+                    // Multi pass / multiple polygons
+                    polygon = new Vertices(CreateSimplePolygon(polygonEntrance.Value, new Vector2(polygonEntrance.Value.x - 1f, polygonEntrance.Value.y)));
+                }
+                else
+                {
+                    break;
+                }
+                searchOn = false;
+
+                if (polygon.Count > 2)
+                {
+                    do
+                    {
+                        holeEntrance = SearchHoleEntrance(polygon, holeEntrance);
+
+                        if (holeEntrance.HasValue)
+                        {
+                            if (!blackList.Contains(holeEntrance.Value))
+                            {
+                                blackList.Add(holeEntrance.Value);
+                                Vertices holePolygon = CreateSimplePolygon(holeEntrance.Value, new Vector2(holeEntrance.Value.x + 1, holeEntrance.Value.y));
+                                if (holePolygon != null && holePolygon.Count > 2)
+                                {
+                                    // Add first hole polygon vertex to close the hole polygon.
+                                    holePolygon.Add(holePolygon[0]);
+                                    int vertex1Index, vertex2Index;
+                                    if (SplitPolygonEdge(polygon, holeEntrance.Value, out vertex1Index, out vertex2Index))
+                                    {
+                                        polygon.InsertRange(vertex2Index, holePolygon);
+                                    }
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    while (true);
+
+                    detectedPolygons.Add(polygon);
+                }
+
+                if (polygonEntrance.HasValue && SearchNextHullEntrance(detectedPolygons, polygonEntrance.Value, out polygonEntrance))
+                {
+                    searchOn = true;
+                }
+            }
+            while (searchOn);
+
+            if (detectedPolygons == null || (detectedPolygons != null && detectedPolygons.Count == 0))
+            {
+                throw new Exception("Couldn't detect any vertices.");
+            }
+
+            rett.AddRange(detectedPolygons);
+            yield return null;
+            //return detectedPolygons;
+
+        }
+
+
 
         public List<Vertices> DetectVertices()
         {
@@ -166,6 +324,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
 
             return detectedPolygons;
         }
+
 
         private void ApplyTriangulationCompatibleWinding(ref List<Vertices> detectedPolygons)
         {

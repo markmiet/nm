@@ -218,8 +218,8 @@ namespace DigitalRuby.AdvancedPolygonCollider
         [SerializeField]
         private List<CacheEntry> editorCache = new List<CacheEntry>();
 
-        // private readonly AdvancedPolygonColliderAutoGeometry geometryDetector = new AdvancedPolygonColliderAutoGeometry();
-        private readonly TextureConverter geometryDetector = new TextureConverter();
+         public readonly TextureConverter geometryDetector = new TextureConverter();
+        //public TextureConverter geometryDetector;// = new TextureConverter();
 
 #if UNITY_EDITOR
 
@@ -257,7 +257,9 @@ namespace DigitalRuby.AdvancedPolygonCollider
 
             polygonCollider = GetComponent<PolygonCollider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-        }
+
+          //  geometryDetector = gameObject.AddComponent<TextureConverter>();
+    }
 
         private void UpdateDirtyState()
         {
