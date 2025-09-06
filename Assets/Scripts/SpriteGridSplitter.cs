@@ -4,17 +4,26 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class SpriteGridSplitter : MonoBehaviour
 {
+    /*
     [Tooltip("Destroy the original object after creating the pieces.")]
     public bool destroyOriginal = true;
 
     [Tooltip("Parent all pieces under the original object for easy management.")]
     public bool parentPieces = true;
+    */
 
     [Tooltip("How many rows to split into.")]
     public int rows = 5;
 
     [Tooltip("How many columns to split into.")]
     public int cols = 5;
+
+
+    public RigidbodyType2D bodytype = RigidbodyType2D.Static;
+    public float gravityscale = 0.0f;
+
+    public int hitcount = 5;
+
 
     [ContextMenu("Split Now")]
     public void SplitIntoGrid()
@@ -72,8 +81,17 @@ public class SpriteGridSplitter : MonoBehaviour
                     Mathf.Clamp01(pivotInSubPx.y / h)
                 );
 
+                int maaraaa= CountNonAlphaPixelcount(tex, xCursor, yCursor, w, h);
+               // Debug.Log("maaraaa=" + maaraaa);
+                if (maaraaa< alpharaja)
+                {
+                    xCursor += w;
+                    continue;
+                }
+
+
                 // Create sub-sprite referencing the SAME texture
-                var subSprite = Sprite.Create(
+                Sprite subSprite = Sprite.Create(
                     tex,
                     subRect,
                     pivotInSubNormalized,
@@ -81,11 +99,43 @@ public class SpriteGridSplitter : MonoBehaviour
                     0,
                     SpriteMeshType.FullRect
                 );
+                /*
+                int maara =
+                CountNonAlphaPixels2(subSprite);
+                Debug.Log("maara=" + maara);
+
+               
+                if (maara < 50)
+                {
+                    Destroy(subSprite);
+                    xCursor += w;
+
+                    continue;
+
+                }
+                */
+                
+                
+
                 subSprite.name = $"{originalSprite.name}_r{r}_c{c}";
 
                 // Create new GameObject
                 GameObject piece = new GameObject($"{gameObject.name}_piece_{pieceIndex++}");
-                var psr = piece.AddComponent<SpriteRenderer>();
+
+                /*
+                GameObject piece = Instantiate(gameObject);
+                piece.name= $"{gameObject.name}_piece_{pieceIndex++}";
+                DestroyImmediate(piece.GetComponent<SpriteRenderer>());
+
+                DestroyImmediate(piece.GetComponent<SpriteGridSplitter>());
+                */
+                HitCounter hc =
+                piece.AddComponent<HitCounter>();
+                hc.hitThreshold = hitcount;
+                hc.teerajaytasprite = false;
+                hc.teerajaytaspriteuusiversio = false;
+
+                SpriteRenderer psr = piece.AddComponent<SpriteRenderer>();
                 psr.sprite = subSprite;
                 psr.sharedMaterial = baseMaterial;
                 psr.sortingLayerID = sortingLayerID;
@@ -94,7 +144,7 @@ public class SpriteGridSplitter : MonoBehaviour
                 psr.flipX = flipX;
                 psr.flipY = flipY;
 
-                if (parentPieces)
+               // if (parentPieces)
                     piece.transform.SetParent(transform.parent, true);
 
                 // --- Correct positioning ---
@@ -108,12 +158,20 @@ public class SpriteGridSplitter : MonoBehaviour
                 piece.transform.position = transform.position + transform.rotation * scaledOffset;
                 piece.transform.rotation = transform.rotation;
                 piece.transform.localScale = transform.localScale;
-                Rigidbody2D r=
+                Rigidbody2D rr=
                 piece.AddComponent<Rigidbody2D>();
-                r.bodyType = RigidbodyType2D.Static;
-                piece.AddComponent<PolygonCollider2D>();
+                rr.bodyType = bodytype;
+                //gravityscale = -1 * gravityscale;
+                rr.gravityScale = gravityscale;
+                //piece.AddComponent<PolygonCollider2D>();
+                piece.AddComponent<BoxCollider2D>();
+
+                piece.tag = gameObject.tag;
+                piece.layer = gameObject.layer;
 
                 xCursor += w;
+
+
             }
             yCursor += h;
         }
@@ -144,9 +202,52 @@ public class SpriteGridSplitter : MonoBehaviour
 
         return result;
     }
+    public int alpharaja = 200;
 
     private void Start()
     {
         SplitIntoGrid();
     }
+
+
+
+
+    public int CountNonAlphaPixelcount(Texture2D tex, int x, int y, int width, int height, byte alphaThreshold = 0)
+    {
+        if (tex == null)
+        {
+            Debug.LogError("CountNonAlphaPixelcount: texture is null");
+            return 0;
+        }
+
+        if (!tex.isReadable)
+        {
+            Debug.LogError($"CountNonAlphaPixelcount: texture '{tex.name}' is not readable. Enable Read/Write in import settings.");
+            return 0;
+        }
+
+        // Clamp rectangle to texture bounds
+        x = Mathf.Clamp(x, 0, tex.width);
+        y = Mathf.Clamp(y, 0, tex.height);
+        width = Mathf.Clamp(width, 0, tex.width - x);
+        height = Mathf.Clamp(height, 0, tex.height - y);
+
+        Color32[] pixels = tex.GetPixels32();
+        int count = 0;
+
+        for (int yy = y; yy < y + height; yy++)
+        {
+            int rowStart = yy * tex.width + x;
+            for (int xx = 0; xx < width; xx++)
+            {
+                Color32 px = pixels[rowStart + xx];
+                if (px.a > alphaThreshold) // counts pixels above threshold
+                    count++;
+            }
+        }
+
+        return count;
+    }
+
+
 }

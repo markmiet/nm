@@ -3319,6 +3319,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
         if (go!=null)
         {
+            /*
             GameObject klooni = Instantiate(go);
             Collider2D[] ccc = klooni.GetComponents<Collider2D>();
             foreach (Collider2D c in ccc)
@@ -3326,9 +3327,9 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 c.enabled = false;
             }
             klooni.transform.localScale = klooni.transform.localScale * 3f;
+            */
 
-
-            SetruudunvasenylakulmatekstiTextMeshProUGUI(info + " " + go.name);
+            //SetruudunvasenylakulmatekstiTextMeshProUGUI(info + " " + go.name);
 
             Debug.Log(info + " collisiontagi joka tuhoaa=" + go.tag+ "nimi on="+go.name);
         }

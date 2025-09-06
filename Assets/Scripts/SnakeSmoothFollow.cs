@@ -124,6 +124,7 @@ public class SnakeSmootFollow : BaseController
 
         }
         hc = GetComponent<HitCounter>();
+        headlaskuri = headsykli;
 
     }
     private GameObject head;
@@ -205,9 +206,7 @@ public class SnakeSmootFollow : BaseController
         // Target emission rate
         float targetRate = nahdaanStable ? maxEmissionRate : 0f;
 
-       // if (true)
-       //     return;
-
+        
 
         if (!emittoiriippumattanahdaanko)
         {
@@ -505,6 +504,9 @@ public class SnakeSmootFollow : BaseController
     private DissolveMatController dissovlpaa = null;
 
     private bool headTutkinta=true;
+    private float headlaskuri = 0.0f;
+    public float headsykli = 0.1f;
+
     private void Update()
     {
         if (developmentflag)
@@ -517,13 +519,23 @@ public class SnakeSmootFollow : BaseController
                 laskuri = 0.0f;
             }
         }
-
+        /*
         if (headTutkinta && OnkoOkToimiaUusi(gameObject))
         {
             HeadParticleSystem();
            
         }
         headTutkinta = !headTutkinta;
+        */
+        headlaskuri += Time.deltaTime;
+
+        if (headlaskuri>= headsykli && OnkoOkToimiaUusi(gameObject))
+        {
+            HeadParticleSystem();
+            headlaskuri = 0;
+
+        }
+
 
         if (saadapaanDissolveamount && hc != null)
         {
@@ -721,6 +733,7 @@ public class SnakeSmootFollow : BaseController
         positions.Insert(0, spawnPos);
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("bonustag"))
@@ -729,6 +742,7 @@ public class SnakeSmootFollow : BaseController
             Destroy(collision.gameObject);
         }
     }
+    */
 
     // ===============================
     // Esteiden kierto
