@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8910806765399722590}
   m_Layer: 17
   m_Name: tiilikulmikasosinavasenala
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -259,12 +259,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -5150,7 +5150,7 @@ GameObject:
   - component: {fileID: 2381748729078430881}
   m_Layer: 17
   m_Name: tiilikulmikasosinaala
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5383,12 +5383,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -5568,7 +5568,7 @@ GameObject:
   - component: {fileID: 529128060891354544}
   m_Layer: 17
   m_Name: tiilikulmikasosinayla
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5807,12 +5807,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -5876,7 +5876,7 @@ GameObject:
   - component: {fileID: 2118176774585492162}
   m_Layer: 17
   m_Name: tiilikulmikasosinakeski
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6018,7 +6018,7 @@ MonoBehaviour:
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
   voimavektori: {x: 0, y: 0}
-  kiertomaara: 1
+  kiertomaara: 0
   velocity: {x: -44, y: 0}
   kiihtyvyys5: 4
 --- !u!114 &5027413148872384977
@@ -6144,7 +6144,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.602005, y: 0.26100004}
+  m_ConnectedAnchor: {x: -0.60198975, y: 0.26099992}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6764962299784263069
@@ -6163,7 +6163,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.2519989, y: 0.35500002}
+  m_ConnectedAnchor: {x: 0.25201416, y: 0.35500002}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &5319302625981387797
@@ -6182,7 +6182,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.62099457, y: -0.13199997}
+  m_ConnectedAnchor: {x: 0.6209717, y: -0.13199997}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &3739189312699407847
@@ -6201,7 +6201,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.19099426, y: -0.5009999}
+  m_ConnectedAnchor: {x: 0.190979, y: -0.50100005}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6370649533784083762
@@ -6220,7 +6220,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.2400055, y: 0.512}
+  m_ConnectedAnchor: {x: -0.23999023, y: 0.51199996}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &3330467946697640357
@@ -6272,12 +6272,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -6333,7 +6333,7 @@ GameObject:
   - component: {fileID: 7474415097179948310}
   m_Layer: 17
   m_Name: tiilikulmikasosinaoikeaala2
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6565,12 +6565,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -6626,7 +6626,7 @@ GameObject:
   - component: {fileID: 6216610010642364888}
   m_Layer: 17
   m_Name: tiilikulmikasosinaoikeaala
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6855,12 +6855,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -6916,7 +6916,7 @@ GameObject:
   - component: {fileID: 8891395422442073743}
   m_Layer: 17
   m_Name: tiilikulmikasosinavasenyla
-  m_TagString: tiilivihollinenkiviexplodetag
+  m_TagString: makitavihollinenexplodetag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7152,12 +7152,12 @@ MonoBehaviour:
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
-  hitThreshold: 8
+  hitThreshold: 50
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 1
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
   rajaytaspritenScaleFactorProsentti: 100
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
