@@ -510,7 +510,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 
     public void TeeBonusReal(GameObject bonus, Vector2 boxsize, int bonuksienmaara, bool ignoraaAlkulaskuri)
     {
-        if (!ignoraaAlkulaskuri && luotujenbonuksienmaara >= bonuksienmaara)
+        if (bonus==null || (!ignoraaAlkulaskuri && luotujenbonuksienmaara >= bonuksienmaara))
         {
             return;
         }
@@ -1352,6 +1352,8 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 
         float scale = scalefactor / 100f;
         //SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
+
+        //tähän se joku limiteriiii, basedestroy pitää toimia
         for (int y = 0; y < rows; y++)
         {
             for (int x = 0; x < columns; x++)
@@ -2872,21 +2874,6 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
     }
     */
 
-    public bool IsFullyVisible2D()
-    {
-        Vector3 pos = mainCam.WorldToViewportPoint(transform.position);
-        Renderer rend = GetComponent<Renderer>();
-        if (rend == null) return false;
-
-        float halfWidth = rend.bounds.size.x / 2;
-        float halfHeight = rend.bounds.size.y / 2;
-
-        Vector3 leftBottom = mainCam.WorldToViewportPoint(transform.position - new Vector3(halfWidth, halfHeight, 0));
-        Vector3 rightTop = mainCam.WorldToViewportPoint(transform.position + new Vector3(halfWidth, halfHeight, 0));
-
-        return leftBottom.x >= 0 && leftBottom.y >= 0 &&
-               rightTop.x <= 1 && rightTop.y <= 1;
-    }
 
     public bool IsMoreThanHalfOnLeft()
     {
@@ -3475,10 +3462,13 @@ true,
                 BaseDestroy(go);
                 return true;
             }
-            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
-            if (r != null)
+            if (rigidbodycache == null)
             {
-                float speed = r.velocity.magnitude;
+                rigidbodycache = go.GetComponent<Rigidbody2D>();
+            }
+            if (rigidbodycache != null)
+            {
+                float speed = rigidbodycache.velocity.magnitude;
                 if (speed <= liikkeenmininopeus)
                 {
                     BaseDestroy(go);
@@ -3524,12 +3514,12 @@ true,
                 return true;
 
             }
-
-
-            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
-            if (r != null)
+            if (rigidbodycache==null) {
+                rigidbodycache = go.GetComponent<Rigidbody2D>();
+            }
+            if (rigidbodycache != null)
             {
-                float speed = r.velocity.magnitude;
+                float speed = rigidbodycache.velocity.magnitude;
                 if (speed <= nopeudenalaraja)
                 {
                     
@@ -3603,7 +3593,7 @@ true,
 
         bool tuhoajosliiankauanhengissa = true;
         float hengissaolonraja = 600f;//tarkista
-        float tarkistussykli = 0.01f;
+        float tarkistussykli = 1.5f;
         bool tuhoajosoikeallakameraanVerrattuna = false;
 
         TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
@@ -3691,6 +3681,55 @@ true,
 
     }
 
+
+    public bool IsRendererVisibleWithMargin2DEIIIITOIMI(GameObject go,  float margin = 0.5f)
+    {
+        Camera cam = PalautaMainCam();
+        if (cam == null || go == null) return false;
+
+        // Kameran ortografiset rajat
+        float halfHeight = cam.orthographicSize;
+        float halfWidth = halfHeight * cam.aspect;
+        Vector3 camPos = cam.transform.position;
+
+        // Spriten keskipiste ja skaalat (oletetaan pivot keskellä)
+        Transform t = go.transform;
+        Vector3 pos = t.position;
+        Vector3 scale = t.localScale;
+
+        // Spriten “size” X/Y (voit säätää spriteRenderer.size tai sprite.bounds.size jos haluat tarkemman)
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+        if (sr == null) return false;
+        Vector2 spriteSize = sr.sprite.bounds.size;
+
+        // Lasketaan neljä kulmapistettä
+        Vector2 extents = new Vector2(spriteSize.x * 0.5f * scale.x, spriteSize.y * 0.5f * scale.y);
+
+        Vector2[] corners =
+        {
+        new Vector2(pos.x - extents.x, pos.y - extents.y), // bottom-left
+        new Vector2(pos.x - extents.x, pos.y + extents.y), // top-left
+        new Vector2(pos.x + extents.x, pos.y - extents.y), // bottom-right
+        new Vector2(pos.x + extents.x, pos.y + extents.y)  // top-right
+    };
+
+        // Tarkista, että kaikki kulmat ovat kameran sisällä marginaalilla
+        foreach (var corner in corners)
+        {
+            if (corner.x < camPos.x - halfWidth - margin ||
+                corner.x > camPos.x + halfWidth + margin ||
+                corner.y < camPos.y - halfHeight - margin ||
+                corner.y > camPos.y + halfHeight + margin)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
     public bool IsRendererVisibleWithMargin2D(GameObject go, float margin = 0.5f)
     {
         Camera cam = PalautaMainCam();
@@ -3767,12 +3806,13 @@ true,
         }
         */
 
-
+        /*
         if (go == null)
         {
             Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
             return false;
         }
+        */
 
 
         onkoOkToimiaTarkistuksensyklilaskuri += Time.deltaTime;
@@ -3871,18 +3911,27 @@ true,
 
         if (!nakyvilla)
         {
-            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
-            if (r != null)
+            if (rigidbodycache==null)
             {
-                r.simulated = false;
+                rigidbodycache = go.GetComponent<Rigidbody2D>();
+            }
+            //Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (rigidbodycache != null)
+            {
+                rigidbodycache.simulated = false;
             }
         }
         else
         {
-            Rigidbody2D r = go.GetComponent<Rigidbody2D>();
-            if (r != null)
+            if (rigidbodycache == null)
             {
-                r.simulated = true;
+                rigidbodycache = go.GetComponent<Rigidbody2D>();
+            }
+
+            //Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+            if (rigidbodycache != null)
+            {
+                rigidbodycache.simulated = true;
             }
         }
         viimeinentarkistustulos = nakyvilla;
@@ -3890,134 +3939,22 @@ true,
     }
 
 
-    public bool OnkoOkToimiaUusiKasitteleMyosChildienRigidBodytVanha(GameObject go)
+    private bool IsVisibleFromHItaampi(SpriteRenderer renderer, Camera camera)
     {
-
-
-
-        if (go == null)
-        {
-            Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
+        if (renderer == null || camera == null)
             return false;
-        }
 
-
-        onkoOkToimiaTarkistuksensyklilaskuri += Time.deltaTime;
-        if (onkoOkToimiaTarkistuksensyklilaskuri >= onkoOkToimiaTarkistussykli)
-        {
-            onkoOkToimiaTarkistuksensyklilaskuri = 0.0f;
-        }
-        else
-        {
-            return viimeinentarkistustulos;
-        }
-
-
-        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
-        bool nakyvilla = false;
-        if (s != null)
-        {
-            nakyvilla = IsPartiallyVisibleFrom(s, mainCam);
-        }
-        else
-        {
-            nakyvilla = !IsOffScreen();
-        }
-
-        if (!nakyvilla)
-        {
-            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
-            foreach (Rigidbody2D r in rigidbodies)
-            {
-                if (r != null)
-                {
-                    r.simulated = false;
-                }
-            }
-
-        }
-        else
-        {
-            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
-            foreach (Rigidbody2D r in rigidbodies)
-            {
-                if (r != null)
-                {
-                    r.simulated = true;
-                }
-            }
-        }
-        viimeinentarkistustulos = nakyvilla;
-        return nakyvilla;
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
+        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
     }
 
 
-    public bool OnkoOkToimiaUusiKasitteleMyosChildienRigidBodyt(GameObject go)
+    private bool IsVisibleFromVanhatoimiva(SpriteRenderer renderer, Camera camera)
     {
+      //  if (!renderer || !camera)
+        //    return false;
 
-
-
-        if (go == null)
-        {
-            Debug.Log("OnkoOnOkToimiaUusi kutsuttu nullilla");
-            return false;
-        }
-
-
-        onkoOkToimiaTarkistuksensyklilaskuri += Time.deltaTime;
-        if (onkoOkToimiaTarkistuksensyklilaskuri >= onkoOkToimiaTarkistussykli)
-        {
-            onkoOkToimiaTarkistuksensyklilaskuri = 0.0f;
-        }
-        else
-        {
-            return viimeinentarkistustulos;
-        }
-
-
-        SpriteRenderer s = go.GetComponent<SpriteRenderer>();
-        bool nakyvilla = false;
-        if (s != null)
-        {
-            nakyvilla = IsPartiallyVisibleFrom(s, mainCam);
-        }
-        else
-        {
-            nakyvilla = !IsOffScreen();
-        }
-
-        if (!nakyvilla)
-        {
-            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
-            foreach (Rigidbody2D r in rigidbodies)
-            {
-                if (r != null)
-                {
-                    r.simulated = false;
-                }
-            }
-
-        }
-        else
-        {
-            Rigidbody2D[] rigidbodies = go.GetComponentsInChildren<Rigidbody2D>();
-            foreach (Rigidbody2D r in rigidbodies)
-            {
-                if (r != null)
-                {
-                    r.simulated = true;
-                }
-            }
-        }
-        viimeinentarkistustulos = nakyvilla;
-        return nakyvilla;
-    }
-
-
-
-    private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
-    {
-        if (!renderer || !camera)
+        if (renderer==null || camera==null)
             return false;
 
         // Get the world bounds of the sprite
@@ -4045,26 +3982,89 @@ true,
         ));
     }
 
-    private bool IsPartiallyVisibleFrom3d(SpriteRenderer renderer, Camera camera)
+    private static Rect cameraRect;
+    private static Vector3 lastCamPos;
+    private static float lastCamSize;
+    private static float lastCamAspect;
+
+    private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
     {
-        if (!renderer || !camera)
+        if (renderer == null || camera == null)
             return false;
 
-        Bounds spriteBounds = renderer.bounds;
+        // Päivitä cameraRect vain jos kamera muuttui
+        if (camera.transform.position != lastCamPos ||
+            camera.orthographicSize != lastCamSize ||
+            camera.aspect != lastCamAspect)
+        {
+            lastCamPos = camera.transform.position;
+            lastCamSize = camera.orthographicSize;
+            lastCamAspect = camera.aspect;
 
-        spriteBounds.extents *= 2.0f;
+            float camHeight = lastCamSize * 2f;
+            float camWidth = camHeight * lastCamAspect;
 
-        float camHeight = camera.orthographicSize * 2;
-        float camWidth = camHeight * camera.aspect;
-        Vector3 camPosition = camera.transform.position;
+            cameraRect.xMin = lastCamPos.x - camWidth * 0.5f;
+            cameraRect.xMax = lastCamPos.x + camWidth * 0.5f;
+            cameraRect.yMin = lastCamPos.y - camHeight * 0.5f;
+            cameraRect.yMax = lastCamPos.y + camHeight * 0.5f;
+        }
 
-        Bounds cameraBounds = new Bounds(
-            camPosition,
-            new Vector3(camWidth, camHeight, float.MaxValue) // Infinite Z range for 2D
-        );
+        // Haetaan spriten rajat suoraan ilman Rectiä
+        Vector3 min = renderer.bounds.min;
+        Vector3 max = renderer.bounds.max;
 
-        return cameraBounds.Intersects(spriteBounds);
+        // Suora AABB-leikkaustesti (false jos yksikään akseli ei leikkaa)
+        return !(max.x < cameraRect.xMin ||
+                 min.x > cameraRect.xMax ||
+                 max.y < cameraRect.yMin ||
+                 min.y > cameraRect.yMax);
     }
+
+
+
+    /*
+    private static Rect cameraRect; // uudelleenkäyttö
+    private static Vector3 lastCamPos;
+    private static float lastCamSize;
+    private static float lastCamAspect;
+
+    private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
+    {
+        if (renderer == null || camera == null)
+            return false;
+
+        // Päivitä kameraRect vain jos kamera on muuttunut
+        if (camera.transform.position != lastCamPos ||
+            camera.orthographicSize != lastCamSize ||
+            camera.aspect != lastCamAspect)
+        {
+            lastCamPos = camera.transform.position;
+            lastCamSize = camera.orthographicSize;
+            lastCamAspect = camera.aspect;
+
+            float camHeight = lastCamSize * 2f;
+            float camWidth = camHeight * lastCamAspect;
+
+            cameraRect = new Rect(
+                lastCamPos.x - camWidth * 0.5f,
+                lastCamPos.y - camHeight * 0.5f,
+                camWidth,
+                camHeight
+            );
+        }
+
+        // Haetaan sprite bounds
+        Bounds b = renderer.bounds;
+
+        // Käytetään suoraa AABB-testiä ilman Rect-allokaatioita
+        return !(b.max.x < cameraRect.xMin ||
+                 b.min.x > cameraRect.xMax ||
+                 b.max.y < cameraRect.yMin ||
+                 b.min.y > cameraRect.yMax);
+    }
+    */
+
 
     private bool IsPartiallyVisibleFrom(SpriteRenderer renderer, Camera camera)
     {
@@ -4274,40 +4274,6 @@ true,
 
 
 
-    public bool OnkoKameranVasemmallaPuolellaVanha(GameObject go, float offset)
-    {
-        Vector3 kameraminimi = GetCameraMinWorldPosition();
-        //Dictionary<string, Vector3> positions = GetAllWorldPositions(transform);
-
-        Dictionary<Transform, Vector3> positions = GetAllWorldPositions(go.transform);
-
-        //eli kaikki pitää olla vasemmalla jolloin true, muuten false
-        foreach (var entry in positions)
-        {
-
-            //Debug.Log($"{entry.Key}: {entry.Value}");
-            if (entry.Value.x < kameraminimi.x)
-            {
-                float ero = Mathf.Abs(kameraminimi.x - entry.Value.x);
-                if (ero >= offset)
-                {
-                    //return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        return true;
-
-    }
 
     public bool OnkoKameranOikeallaPuolella(GameObject go, float offset)
     {
@@ -4328,42 +4294,6 @@ true,
     }
 
 
-
-    public bool OnkoKameranOikeallaPuolellaVanha(GameObject go, float offset)
-    {
-        Vector3 kameraminimi = GetCameraMaxWorldPosition();
-
-        //Dictionary<string, Vector3> positions = GetAllWorldPositions(go.transform);
-
-        Dictionary<Transform, Vector3> positions = GetAllWorldPositions(go.transform);
-
-
-
-        //eli kaikki pitää olla vasemmalla jolloin true, muuten false
-        foreach (var entry in positions)
-        {
-            //Debug.Log($"{entry.Key}: {entry.Value}");
-            if (entry.Value.x > kameraminimi.x)
-            {
-                float ero = Mathf.Abs(kameraminimi.x - entry.Value.x);
-                if (ero >= offset)
-                {
-                    // return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return true;
-
-    }
 
 
     private bool OnkoKameranAlaPuolella(GameObject go, float offset)
@@ -4472,7 +4402,7 @@ true,
         return true;
 
     }
-
+    private Rigidbody2D rigidbodycache = null;
     private float syklilaskuri = 0.0f;
     // private float tarkistussykli = 5.0f;
     public float hengissaoloaika = 0.0f;//tämä siis mittaa sitä hengissäoloaikaa
@@ -4491,10 +4421,7 @@ true,
         )
     {
 
-        if (go == null)
-        {
-            Debug.Log("no nulli");
-        }
+
         hengissaoloaika += Time.deltaTime;
         syklilaskuri += Time.deltaTime;
         /*
@@ -4510,6 +4437,9 @@ true,
         */
         if (syklilaskuri >= tarkistussykli)
         {
+
+            syklilaskuri = 0.0f;//MJM 15.9.2025
+
             /*
             if (prefap == null)
             {
@@ -4531,10 +4461,15 @@ true,
 
             if (tuhoajosliianhidas)
             {
-                Rigidbody2D r = go.GetComponent<Rigidbody2D>();
-                if (r != null)
+                if (rigidbodycache==null)
                 {
-                    float speed = r.velocity.magnitude;
+                    rigidbodycache= go.GetComponent<Rigidbody2D>(); 
+                }
+
+                //Rigidbody2D r = go.GetComponent<Rigidbody2D>();
+                if (rigidbodycache != null)
+                {
+                    float speed = rigidbodycache.velocity.magnitude;
                     if (speed <= nopeusJonkaAlletuhotaan)
                     {
                       
@@ -4905,7 +4840,7 @@ true,
     {
         if (registeroiOnEnablessa)
         {
-            FindObjectOfType<CameraObjectManager>().Register(gameObject);
+            //FindObjectOfType<CameraObjectManager>().Register(gameObject);
         }
       
     }

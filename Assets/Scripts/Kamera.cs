@@ -67,6 +67,8 @@ cameraInfo.GetComponent<CameraInfoController>();
     public int paljonkopitaavielaodottaa = -1;
     void Update()
     {
+        if (true)
+            return;
         //   gameObject.transform.position.Set(alus.transform.position.x, alus.transform.position.y, gameObject.transform.position.z);
         if (cameraInfo != null)
         {

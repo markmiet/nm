@@ -52,6 +52,9 @@ public class HitCounter : BaseController
     public bool RegisterHit()
     {
 
+
+
+
         if (IsGoingToBeDestroyed())
         {
             return true;
@@ -122,7 +125,7 @@ public class HitCounter : BaseController
 
     public bool tuhoajosollaanKameranVasemmallaPuolella = true;
 
- 
+    public bool teekamerashake = false;
     public void Update()
     {
  
@@ -130,11 +133,6 @@ public class HitCounter : BaseController
 
         if (tuhoajosollaanKameranVasemmallaPuolella)
         {
-
-            if (gameObject == null)
-            {
-                Debug.Log("no nulli");
-            }
             TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
             OnkoOkToimiaUusi(gameObject);
@@ -146,12 +144,49 @@ public class HitCounter : BaseController
 
     public float rajaytaspritenScaleFactorProsentti = 100.0f;
 
+
+    public int childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen = 15;
+
+    private bool onkoChildreneitaNiinPaljonEttaRajaytaVainJokaToinen()
+    {
+        int maara =0;
+        Transform[] t =
+GetComponentsInChildren<Transform>();
+        if (t != null)
+        {
+            foreach (Transform tt in t)
+            {
+                //GameObject instanssi2 = Instantiate(explosion, tt.transform.position, Quaternion.identity);
+                ChildColliderReporter c =
+                tt.gameObject.GetComponent<ChildColliderReporter>();
+                if (c != null && teerajaytasprite)
+                {
+                    maara++;
+                }
+                if (c != null && teerajaytaspriteuusiversio)
+                {
+                    maara++;
+                }
+            }
+        }
+        return maara > childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen;
+    }
+
+
     public void RajaytaChildrenit()
     {
+        if (teekamerashake)
+        {
+            //     StartCoroutine(CameraShake.Instance.Shake(1f, 0.5f));
+            CameraShake.Instance.ShakeYourAssBaby();
 
+
+        }
         bool tuhoaminenkaynnissa = false;
         //if (explosion!=null)
         // {
+        bool jokatoinen = onkoChildreneitaNiinPaljonEttaRajaytaVainJokaToinen();
+        bool raj = true;
         Transform[] t =
         GetComponentsInChildren<Transform>();
         if (t != null)
@@ -165,8 +200,20 @@ public class HitCounter : BaseController
                 {
                     c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
 
-                   // c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4,4, 1.0f, alivetime);
+                    // c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4,4, 1.0f, alivetime);
 
+                    if (jokatoinen)
+                    {
+                        if (raj)
+                            c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
+
+                        raj = !raj;
+
+                    }
+                    else
+                    {
+                        c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
+                    }
                 }
                 if (c != null && teerajaytaspriteuusiversio)
                 {
@@ -174,10 +221,22 @@ public class HitCounter : BaseController
 
                     //c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4, 4, 1.0f, alivetime);
 
-                    
-                    
-                    c.RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
-    rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti);
+                    if (jokatoinen)
+                    {
+                        if (raj)
+                            c.RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
+            rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan, 36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti);
+
+                        raj = !raj;
+                    }
+                    else
+                    {
+                        c.RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
+rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan, 36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti);
+
+                    }
+
+
 
                 }
 
@@ -228,6 +287,7 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
             //Destroy(gameObject);
 
         }
+
 
         //RajaytaUudellaTavalla();
 

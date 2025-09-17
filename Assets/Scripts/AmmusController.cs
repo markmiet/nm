@@ -147,14 +147,7 @@ public class AmmusController : BaseController, IExplodable
 
 
 
-    private float annaRandomiKulmaAmmukselleTormayksenJalkeen()
-    {
-        float f = Random.Range(0f, 360f);
-        //Debug.Log ("f=" + f);
-        return f;
 
-
-    }
     private bool tormattyviholliseen = false;
 
 
@@ -352,16 +345,7 @@ public class AmmusController : BaseController, IExplodable
 
 
 
-    void OnBecameInvisible()
-    {
-        //Debug.Log ("OnBecameInvisible");
-        // Destroy the enemy
-        //tuhoa = true;
-        //Explode();
-        //Destroy(gameObject);
-      //  BaseDestroy();
 
-    }
 
     public void Explode()
     {
@@ -446,10 +430,6 @@ public class AmmusController : BaseController, IExplodable
 	*/
 
 
-    public void Destroy()
-    {
-        Debug.Log("no niin");
-    }
 
     public override void OnDestroyPoolinlaittaessa()
     {

@@ -1401,7 +1401,11 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             BonusButtonPressed();
         }
 
-        m_Rigidbody2D.velocity = new Vector2(0, 0);
+        //m_Rigidbody2D.velocity = new Vector2(0, 0);
+        m_Rigidbody2D.velocity = Vector2.zero;
+
+
+
 
 
         if (Input.touchCount > 0)
@@ -2313,9 +2317,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             return;
         }
 
+        //mainCamera
+        //mainCamera
 
+       // screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;

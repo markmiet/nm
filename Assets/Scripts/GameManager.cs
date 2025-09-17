@@ -364,6 +364,12 @@ public class GameManager : BaseController
             mainMenu.GetComponent<MainMenu>().SetTeksti("");
             //GameObject go = GameObject.Find("CheckPointStart");
             //checkPointGetComponent<CheckPointController>().asetettu = false;
+
+             if (checkPoint!=null)
+            {
+                checkPoint.GetComponent<CheckPointController>().asetettu = false;
+            }
+            
         }
             
     }
