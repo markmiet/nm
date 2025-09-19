@@ -55,7 +55,7 @@ MonoBehaviour:
   registeroiOnEnablessa: 0
   bodyPartPrefab: {fileID: 6676257131771723051, guid: 8c4b3b323ee52cd4cb4c66e68933442e,
     type: 3}
-  headPartPrerab: {fileID: 6676257131771723051, guid: 8c4b3b323ee52cd4cb4c66e68933442e,
+  headPartPrerab: {fileID: 6676257131771723051, guid: 96a6acf5e7d7cfa4f84e83f6446b93da,
     type: 3}
   initialBodyParts: 10
   minDistance: 0.2
@@ -64,7 +64,7 @@ MonoBehaviour:
   movementSmoothTime: 0.1
   rotationSmoothTime: 0.1
   tailFollowFactor: 1
-  maxSnakeLength: 2
+  maxSnakeLength: 20
   maxInitialParts: 32
   raycastDistance: 2
   raycastBoxSize: {x: 0.3, y: 0.3}
@@ -254,28 +254,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
   hengissaoloaika: 0
-  uusirajaytyscolumns: 8
-  uusirajaytysrows: 8
+  uusirajaytyscolumns: 4
+  uusirajaytysrows: 4
   poolistapalautusmaara: 0
   registeroiOnEnablessa: 0
   hitThreshold: 100
   hitCount: 0
-  explosion: {fileID: 0}
-  osumanSavu: {fileID: 0}
-  osumanSavunKesto: 0.5
+  explosion: {fileID: 7737871024420907965, guid: b2086b12f9fc4074597273d41506dc9a,
+    type: 3}
+  osumanSavu: {fileID: 8089225716722336627, guid: 4b10b27d44d3a8f448d31eb86fcf3285,
+    type: 3}
+  osumanSavunKesto: 100
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 1
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
-  rajahdysvoima: 0.1
+  rajahdysvoima: 3
   alivetime: 5
   sirpalemass: 1
   gravityscale: 0.5
   adddestroycontroller: 1
   teeBoxCollider2d: 1
   teerajaytasprite: 0
-  teeExplosion: 0
+  teeExplosion: 1
   rajaytaSpritenExplosion: {fileID: 0}
   rajaytaspritenviive: 0.5
   saadaDissolveamount: 0

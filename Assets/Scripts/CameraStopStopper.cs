@@ -16,23 +16,5 @@ public class CameraStopStopper : MonoBehaviour
 
     }
 
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag.Contains("alus"))
-        {
-            Kamera k =
-            Camera.main.GetComponent<Kamera>();
-            if (k!=null)
-            {
-                if (k.cameraInfo!=null)
-                {
-                    k.cameraInfo.GetComponent<CameraInfoController>().stop = false;
-                    k.paljonkopitaavielaodottaa = -1;
-
-
-                }
-            }
-        }
-    }
 }
 

@@ -431,6 +431,9 @@ public class PalliController : BaseController, IDamagedable
             bool palloovioikealla = OnkoPyorivaPalloOviOikealla();
             bool palloovivasemmalla = OnkoPyorivaPalloOviVasemmalla();
 
+            bool vasemmassareunassa = OnkoKameranVasemmassaReunassa(gameObject, 25f);
+
+
             if (palloovioikealla || palloovivasemmalla)
             {
                 hyppyjenValinenViive = 100f;
@@ -445,7 +448,8 @@ public class PalliController : BaseController, IDamagedable
             {
                 hyppymenossaTyyppi2 = false;
                 hyppymenossaTyyppi1 = false;
-                if (boostParticles.isPlaying)
+                if (boostParticles!=null && 
+                    boostParticles.isPlaying)
                 {
                     boostParticles.Stop();
                 }
@@ -456,6 +460,7 @@ public class PalliController : BaseController, IDamagedable
 
                     LoikkaaHatahyyppy();
                    // rb.velocity = new Vector2(0.0f, rb.velocity.y);
+                   if (boostParticles!=null)
                     boostParticles.Play();
                     hatahyppykesken = true;
                     hatahypynsuoritusajankohta = Time.time;
@@ -563,7 +568,8 @@ public class PalliController : BaseController, IDamagedable
                         hyppymenossaTyyppi2 = false;
                         LoikkaaYlos(true);
                         rb.velocity = new Vector2(0.0f, rb.velocity.y);
-                        boostParticles.Play();
+                        if (boostParticles != null)
+                            boostParticles.Play();
 
                     }
                 }
@@ -578,7 +584,8 @@ public class PalliController : BaseController, IDamagedable
                         hyppymenossaTyyppi2 = false;
                         LoikkaaYlos(false);
                         rb.velocity = new Vector2(0.0f, rb.velocity.y);
-                        boostParticles.Play();
+                        if (boostParticles != null)
+                            boostParticles.Play();
 
 
 
@@ -673,6 +680,17 @@ public class PalliController : BaseController, IDamagedable
                 }
             }
 
+            if (vasemmassareunassa && onkoTiiliPallonAlla)
+            {
+                JointMotor2D motor = wheelJoint.motor;
+
+                motor.motorSpeed = motorspeedvaikuttaaliikkumisnopeuteen * 2f;
+
+
+                wheelJoint.motor = motor;
+
+            }
+
         }
     }
 
@@ -716,7 +734,8 @@ public class PalliController : BaseController, IDamagedable
 
         hypynkestotyyppi1 = 0.0f;
             viimeisenhypynaloitusajankohta = Time.time;
-            boostParticles.Play();
+            if (boostParticles != null)
+                boostParticles.Play();
         }
     }
 
@@ -755,7 +774,8 @@ public class PalliController : BaseController, IDamagedable
                     hyppymenossaTyyppi1 = true;
                     hypynkestotyyppi1 = 0.0f;
                     viimeisenhypynaloitusajankohta = Time.time;
-                    boostParticles.Play();
+                    if (boostParticles != null)
+                        boostParticles.Play();
                   // Ammu();
 
                     break;
@@ -829,8 +849,8 @@ public class PalliController : BaseController, IDamagedable
                     hypynkestotyyppi2 = 0.0f;
 
                     viimeisenhypynaloitusajankohta = Time.time;
-
-                    boostParticles.Play();
+                    if (boostParticles != null)
+                        boostParticles.Play();
 
                    // Ammu();
                     break;
@@ -1201,7 +1221,8 @@ public class PalliController : BaseController, IDamagedable
 
             //Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f);
 
-            Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
+//            Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f, layerMask);
+            Collider2D[] cs = Physics2D.OverlapBoxAll((Vector2)transform.position + boxlocation, boxsize, 0f);
 
 
             if (cs != null && cs.Length > 0)

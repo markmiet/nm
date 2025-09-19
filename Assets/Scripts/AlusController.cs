@@ -72,7 +72,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private int aluksenluomienElossaOlevienAmmustenMaara;
 
     private int aluksenluomienElossaOlevienAlasAmmustenMaara;
-        private int aluksenluomienElossaOlevienYlosAmmustenMaara;
+    private int aluksenluomienElossaOlevienYlosAmmustenMaara;
 
 
     /*
@@ -156,7 +156,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private bool restartscene = false;
 
 
-   // private GameObject instanssiBulletAlas;
+    // private GameObject instanssiBulletAlas;
     //private GameObject instanssiBulletYlos;
 
 
@@ -180,7 +180,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     public GameObject elamat;
 
 
-    
+
     /*
      * LOOSER HUUTO ok
      * kellon kuva ruudulle, jonka voi poimia aika hidaastuu esim. puoleen 10 sekunniksi
@@ -266,7 +266,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     private BoxCollider2D boxCollider2D;
     private bool android;
 
- //   private LineRenderer lineRenderer;
+    //   private LineRenderer lineRenderer;
     void Start()
     {
         android = Application.platform == RuntimePlatform.Android;
@@ -340,7 +340,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         if (!damagemodekaytossa)
         {
-         //   gameObject.transform.parent.gameObject.SetActive(false);
+            //   gameObject.transform.parent.gameObject.SetActive(false);
         }
 
 
@@ -377,25 +377,25 @@ public class AlusController : BaseController, IDamagedable, IExplodable
                 mainCamera);
 
 
-   //         UusiohjauskaytossaAsetaSormi();
+            //         UusiohjauskaytossaAsetaSormi();
         }
         else
         {
 
         }
-     //   lineRenderer = GetComponent<LineRenderer>();
+        //   lineRenderer = GetComponent<LineRenderer>();
 
         SetElamienMaara(GameManager.Instance.lives);
 
         SetEnabloiboxcollider(enabloiboxcollider);
 
 
-        for (int i=0;i<nykyinenoptioidenmaara;i++)
+        for (int i = 0; i < nykyinenoptioidenmaara; i++)
         {
             TeeOptioni();
         }
         ForceField(forcefieldkaytossa);
-        
+
 
     }
 
@@ -412,7 +412,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
             ForceFieldController ff = GetComponent<ForceFieldController>();
             if (ff == null)
             {
-                GameObject obj=Instantiate(forceFieldEtuOsa, forceFieldEtuosanPaikka.transform.position, Quaternion.identity);
+                GameObject obj = Instantiate(forceFieldEtuOsa, forceFieldEtuosanPaikka.transform.position, Quaternion.identity);
 
                 obj.transform.SetParent(gameObject.transform, true);
             }
@@ -427,7 +427,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
         }
     }
 
-    
+
 
 
 
@@ -702,7 +702,7 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         //eli joku 10 sekunnin kuolemattomuuspätkä tällä...
         //mutta ei ole hyvä kun pitäis saada liukumaan nätisti tiiliseinää pitkin...
-        if ( !enabloiboxcollider)
+        if (!enabloiboxcollider)
         {
             Vector2 uusimahdollinenpositio = new Vector3(newPosition.x, alussijaintiy);
 
@@ -730,28 +730,28 @@ public class AlusController : BaseController, IDamagedable, IExplodable
 
         return false;
 
-        
 
-        
+
+
         //Vector2 boxsize = new Vector2(1f, 1f);
 
 
-       //      bool onkoTagiaBoxissa(string name, Vector2 boxsize, Vector2 boxlocation, l);
-       
-
-            // Apply the updated position to gameObject2
-            //gameObject2.transform.position = newPosition;
+        //      bool onkoTagiaBoxissa(string name, Vector2 boxsize, Vector2 boxlocation, l);
 
 
-            /*
-            Vector3 sormiworldi = sormitoisessakamerassa.transform.position;
-            Vector2 screenPosition = Camera.main.WorldToScreenPoint(sormiworldi);
-            Vector3 worlidi = Camera.main.ScreenToWorldPoint(screenPosition);
+        // Apply the updated position to gameObject2
+        //gameObject2.transform.position = newPosition;
 
-            transform.position = new Vector3(worlidi.x, alussijaintiy, 0);
-            */
 
-            float alueeny = PalautaPelialueenAlarajaY();
+        /*
+        Vector3 sormiworldi = sormitoisessakamerassa.transform.position;
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(sormiworldi);
+        Vector3 worlidi = Camera.main.ScreenToWorldPoint(screenPosition);
+
+        transform.position = new Vector3(worlidi.x, alussijaintiy, 0);
+        */
+
+        float alueeny = PalautaPelialueenAlarajaY();
 
 
         //  Vector3 minkamera = GetCameraMinWorldPosition();
@@ -1748,10 +1748,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //yritysWorldpoint = new Vector2(yritysWorldpoint.x, yritysWorldpoint.y);
 
             Vector3 worldPosition = sormenkamera.GetComponent<Camera>().ScreenToWorldPoint(screenpositionSormen);
-            Vector3 sormikohta=
+            Vector3 sormikohta =
             sormitoisessakamerassa.transform.position;
             TryMove(worldPosition);
-            bool liikkuiko=UusiohjauskaytossaAsetaAlussijainti();
+            bool liikkuiko = UusiohjauskaytossaAsetaAlussijainti();
             if (!liikkuiko)
             {
                 sormitoisessakamerassa.transform.position = sormikohta;
@@ -2153,20 +2153,20 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             sormitoisessakamerassa.transform.position = kohta;
             */
-            
+
 
             Vector2 currentPosition = sormitoisessakamerassa.transform.position;
 
             float newX = Mathf.MoveTowards(
                 currentPosition.x,
                 targetPosition.x,
-                movespeedjotakaytetaan/ nopeusjakox * Time.deltaTime
+                movespeedjotakaytetaan / nopeusjakox * Time.deltaTime
             );
 
             float newY = Mathf.MoveTowards(
                 currentPosition.y,
                 targetPosition.y,
-                (movespeedjotakaytetaan/ nopeusjakoy) * Time.deltaTime
+                (movespeedjotakaytetaan / nopeusjakoy) * Time.deltaTime
             );
 
             Vector2 kohta = new Vector2(newX, newY);
@@ -2178,13 +2178,13 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             else
             {
 
-                
+
                 /*ei toimi*/
                 float moveSpeed = 0.01f; // units per iteration (not per second)
                 //Vector2 kohtajohonliikutaan = kohta;
                 Vector2 edellinenkunnollinenkohta = Vector2.zero;
                 bool kunnonkohtaloytyi = false;
-                
+
                 while (Vector2.Distance(currentPosition, kohta) > 0.01f)
                 {
                     currentPosition = Vector2.MoveTowards(currentPosition, kohta, moveSpeed);
@@ -2203,12 +2203,12 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                     //Vector3 newPosition = transform.position;
                     //newPosition.x = worldPosInCamera2.x;
 
-                    float uusialuksenx= worldPosInCamera2.x;
+                    float uusialuksenx = worldPosInCamera2.x;
 
-                    bool onko = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", this.boxCollider2D.size*1.2f, new Vector2(uusialuksenx, alussijaintiy));
+                    bool onko = onkoTagiaBoxissaAlakaytaTransformia("vihollinen", this.boxCollider2D.size * 1.2f, new Vector2(uusialuksenx, alussijaintiy));
                     if (onko)
                     {
-                     //   Debug.Log("onko=" + onko);
+                        //   Debug.Log("onko=" + onko);
                         break;
                     }
                     edellinenkunnollinenkohta = new Vector2(currentPosition.x, currentPosition.y);
@@ -2320,7 +2320,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //mainCamera
         //mainCamera
 
-       // screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        // screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
 
@@ -2492,8 +2492,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             if (laserkaytossa)
             {
                 ad.AluslaserPlay();
-//                instanssi = Instantiate(
-  //                  laserPrefab, v3, Quaternion.identity);
+                //                instanssi = Instantiate(
+                //                  laserPrefab, v3, Quaternion.identity);
 
                 instanssi =
                 ObjectPoolManager.Instance.GetFromPool(laserPrefab, v3, Quaternion.identity);
@@ -2514,10 +2514,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 ad.AlusammusPlay();
                 //instanssi = Instantiate(ammusPrefab, v3, Quaternion.identity);
 
-               // Debug.Log("ammus otetaan poolista");
+                // Debug.Log("ammus otetaan poolista");
 
-                instanssi=
-                ObjectPoolManager.Instance.GetFromPool(ammusPrefab,v3, Quaternion.identity);
+                instanssi =
+                ObjectPoolManager.Instance.GetFromPool(ammusPrefab, v3, Quaternion.identity);
 
 
                 AmmusController aa = instanssi.GetComponent<AmmusController>();
@@ -2528,7 +2528,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
                 instanssi.GetComponent<Rigidbody2D>().velocity = new Vector2(ammuksenalkuvelocity, 0);
 
-                
+
             }
             InstantioiBulletAlasTarvittaessa();
 
@@ -2538,7 +2538,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             aluksenluomienElossaOlevienAmmustenMaara++;
 
 
-           
+
 
             ammusinstantioitiin = true;
             deltaaikojensumma = 0;
@@ -2572,15 +2572,15 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //     instanssiBulletAlas.GetComponent<BaseController>().IsGoingToBeDestroyed()) )
         // {
 
-        if (missileDownCollected >= 1 &&   OnkoAlasAmmustenMaaraAlleMaksimin())
+        if (missileDownCollected >= 1 && OnkoAlasAmmustenMaaraAlleMaksimin())
         {
 
-        aluksenluomienElossaOlevienAlasAmmustenMaara++;
-   // private int aluksenluomienElossaOlevienYlosAmmustenMaara;
+            aluksenluomienElossaOlevienAlasAmmustenMaara++;
+            // private int aluksenluomienElossaOlevienYlosAmmustenMaara;
 
-    Vector3 v3alas =
-new Vector3(bulletinalkuxoffsetti +
-m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
+            Vector3 v3alas =
+        new Vector3(bulletinalkuxoffsetti +
+        m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.position.y + 0.0f, 0);
 
             GameObject instanssiBulletAlas = ObjectPoolManager.Instance.GetFromPool(bulletPrefab, v3alas, Quaternion.identity);
 
@@ -2598,11 +2598,11 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             //IAlas alas = instanssiBulletAlas.GetComponent<IAlas>();
             //if (alas != null)
-           // {
-                //instanssiBulletAlas.SendMessage("Alas", true);
-              //  alas.Alas(true);
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, -bulletinalkuvelocityy);
-                instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = bulletingravityscale;
+            // {
+            //instanssiBulletAlas.SendMessage("Alas", true);
+            //  alas.Alas(true);
+            instanssiBulletAlas.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, -bulletinalkuvelocityy);
+            instanssiBulletAlas.GetComponent<Rigidbody2D>().gravityScale = bulletingravityscale;
             //}
 
             //}
@@ -2635,12 +2635,12 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             //instanssiBulletYlos.SendMessage("Alas", false);
 
-           // IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
-           // if (alas != null)
-           // {
-                //instanssiBulletAlas.SendMessage("Alas", true);
-             //   alas.Alas(false);
-           // }
+            // IAlas alas = instanssiBulletYlos.GetComponent<IAlas>();
+            // if (alas != null)
+            // {
+            //instanssiBulletAlas.SendMessage("Alas", true);
+            //   alas.Alas(false);
+            // }
 
             instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
 
@@ -2660,7 +2660,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     public void LisaaaluksenluomienElossaOlevienAmmustenMaaraa()
     {
         aluksenluomienElossaOlevienAmmustenMaara = aluksenluomienElossaOlevienAmmustenMaara + 1;
-       
+
     }
 
     public void VahennaaluksenluomienElossaOlevienAlasAmmustenMaaraa()
@@ -2701,7 +2701,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             if (laserkaytossa)
             {
-                obj.ammuNormilaukaus(laserPrefab ,new Vector2(ammuksenalkuvelocity, 0));
+                obj.ammuNormilaukaus(laserPrefab, new Vector2(ammuksenalkuvelocity, 0));
             }
             else
             {
@@ -2710,9 +2710,9 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
 
             if (missileDownCollected >= 1)
             {
-               // instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
+                // instanssiBulletYlos.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, bulletinalkuvelocityy);
 
-               // instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -bulletingravityscale;
+                // instanssiBulletYlos.GetComponent<Rigidbody2D>().gravityScale = -bulletingravityscale;
 
                 obj.ammuAlaslaukaus(bulletPrefab, new Vector2(0.0f, -bulletinalkuvelocityy), bulletingravityscale);
             }
@@ -2757,7 +2757,7 @@ m_Rigidbody2D.position.x + (m_SpriteRenderer.bounds.size.x / 2), m_Rigidbody2D.p
     {
         //jos se on liikaa niin eikun gameoveria
         if (damagemodekaytossa)
-        damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
+            damagemittariController.SetDamage(damagenmaara, maksimimaaradamageajokakestetaan);
 
 
         //  damagemittarilinerenderer.GetComponent<DamageMittariLineRendererController>().SetDamage(damagenmaara, maksimimaaradamageajokakestetaan, sormikamera);
@@ -2853,7 +2853,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             //Image image = GetComponent<Image>();
             if (spriteRenderer != null)
             {
-              //  spriteRenderer.enabled = false; // Hides the sprite
+                //  spriteRenderer.enabled = false; // Hides the sprite
             }
             //gameoverinajankohta = Time.realtimeSinceStartup;
 
@@ -2886,7 +2886,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         elamat.GetComponent<ElamatController>().SetElamienMaara(elamienmaara);
     }
 
-    public bool AiheutaDamagea(float damagemaara,Vector2 contactpoint)
+    public bool AiheutaDamagea(float damagemaara, Vector2 contactpoint)
     {
         damagenmaara += damagemaara;
         // ExplodeTarvittaesssa();
@@ -2917,7 +2917,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //color.g = g;
         //color.b = b;
         //antaa savuta, mutta ei kasvateta damagea :)
-      //  damagenmaara += damagemaarakasvastatuskunsavutaan;
+        //  damagenmaara += damagemaarakasvastatuskunsavutaan;
         color.g = PalautaGvari();
 
         m_SpriteRenderer.color = color;
@@ -3000,7 +3000,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // PaivitaDamagePalkkia();
 
         //}
-     
+
         if (enabloiboxcollider && col.enabled && BaseController.TuhoaakoAluksen(col.collider.tag))
         {
 
@@ -3029,7 +3029,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         // }
         //   }
         //eli tämä tarvitaan sitä kalaskeletonia varten
-        if (enabloiboxcollider &&  other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
+        if (enabloiboxcollider && other.tag.Contains("vihollinen") /*  && !OnkoForceFieldPaalla()*/ )
         {
 
             GameObject go = other;
@@ -3060,7 +3060,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
 
 
-        public void BonusCollected()
+    public void BonusCollected()
     {
 
 
@@ -3191,7 +3191,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     {
 
         ForceField(true);
-     //   GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
+        //   GetComponentInChildren<ForceFieldController>().SetOnkotoiminnassa(true);
 
     }
 
@@ -3237,7 +3237,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
                 {
                     btc.usedcount = 0;
                 }
-               
+
             }
         }
 
@@ -3270,7 +3270,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
 
 
-    
+
 
     void OnParticleTrigger()
     {
@@ -3299,7 +3299,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-       // Debug.Log("OnTriggerEnter2D " + col);
+        // Debug.Log("OnTriggerEnter2D " + col);
 
         if (enabloiboxcollider && col.enabled && BaseController.TuhoaakoAluksen(col.tag))
         {
@@ -3321,10 +3321,10 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
     }
 
 
-    public void NaytaIsollaSeJohonTormattiin(GameObject go,string info)
+    public void NaytaIsollaSeJohonTormattiin(GameObject go, string info)
     {
 
-        if (go!=null)
+        if (go != null)
         {
             /*
             GameObject klooni = Instantiate(go);
@@ -3338,7 +3338,7 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
 
             //SetruudunvasenylakulmatekstiTextMeshProUGUI(info + " " + go.name);
 
-            Debug.Log(info + " collisiontagi joka tuhoaa=" + go.tag+ "nimi on="+go.name);
+            Debug.Log(info + " collisiontagi joka tuhoaa=" + go.tag + "nimi on=" + go.name);
         }
         else
         {

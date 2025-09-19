@@ -17,23 +17,70 @@ public class CameraInfoController : BaseController
         spriteRenderer = GetComponent<SpriteRenderer>();
         //spriteRenderer.enabled = false;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        
         Color c = sr.color;
         c.a = 0f; // alpha = 0 (fully transparent)
         sr.color = Color.clear;
-
+        
 
         ad = PalautaAudioplayerController();
+
+       // scrollspeedx = scrollspeedx * 10;
     }
+
+
+
+
+    private bool stoppistartattu = false;
+    private float stoppilaskuri = 0.0f;
+    private void HoidaStoppi()
+    {
+
+        if (stop)
+        {
+            stoppilaskuri += Time.deltaTime;
+           
+        }
+    }
+
+    public float PalautaOdotusAika()
+    {
+        if (stop)
+        {
+            return stoptime - stoppilaskuri;
+        }
+        return -1;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
         //bool onko = IsObjectInOrthographicView(transform, main);
 
+        bool vasen= OnkoKameranVasemmallaPuolella(transform, main);
+        if (vasen)
+        {
+            if (main.GetComponent<Kamera>()!=null &&
+                main.GetComponent<Kamera>().cameraInfo!=null &&
+                main.GetComponent<Kamera>().cameraInfo==gameObject
+                )
+            {
+
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+        }
+
         bool onko = IsObjectInCameraView(transform.position);
 
         if (onko)
         {
+            HoidaStoppi();
+
             GameObject olemassa =
             kamera.cameraInfo;
             if (olemassa != null)
@@ -143,6 +190,17 @@ public class CameraInfoController : BaseController
             return true;
         }
         return false;
+    }
+
+
+    public bool OnkoKameranVasemmallaPuolella(Transform t, Camera cam)
+    {
+        // Muutetaan maailman sijainti kameran viewport-koordinaatteihin
+        // (0,0) = vasen-alakulma, (1,1) = oikea-yläkulma
+        Vector3 viewportPos = cam.WorldToViewportPoint(t.position);
+
+        // Jos x < 0, niin objekti on vasemmalla kameran näkymästä
+        return viewportPos.x < 0f;
     }
 
     public AudioSource taustamusa;

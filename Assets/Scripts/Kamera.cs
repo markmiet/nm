@@ -62,13 +62,14 @@ cameraInfo.GetComponent<CameraInfoController>();
     }
 
     // Update is called once per frame
-    float stopinaloitusaika = 0.0f;
+   // float stopinaloitusaika = 0.0f;
 
-    public int paljonkopitaavielaodottaa = -1;
+  //  public int paljonkopitaavielaodottaa = -1;
+
+   // public float stoppilaskuri = 0.0f;
     void Update()
     {
-        if (true)
-            return;
+ 
         //   gameObject.transform.position.Set(alus.transform.position.x, alus.transform.position.y, gameObject.transform.position.z);
         if (cameraInfo != null)
         {
@@ -105,9 +106,11 @@ cameraInfo.GetComponent<CameraInfoController>();
             float xscr = cameraInfo.GetComponent<CameraInfoController>().scrollspeedx;
             bool stop = cameraInfo.GetComponent<CameraInfoController>().stop;
             float stoptime = cameraInfo.GetComponent<CameraInfoController>().stoptime;
-
-            if (stop)
+            float aika = cameraInfo.GetComponent<CameraInfoController>().PalautaOdotusAika();
+            if (stop && aika>0)
             {
+                xscr = 0.0f;
+                /*
                 if (stopinaloitusaika == 0.0f)
                 {
                     stopinaloitusaika = Time.time;
@@ -118,6 +121,7 @@ cameraInfo.GetComponent<CameraInfoController>();
                 {
                     stop = false;
                     paljonkopitaavielaodottaa = -1;
+                    stopinaloitusaika = 0.0f;
                 }
                 else
                 {
@@ -125,10 +129,12 @@ cameraInfo.GetComponent<CameraInfoController>();
                     paljonkopitaavielaodottaa = (int)odotusaika;
                     xscr = 0.0f;
                 }
+                */
 
             }
             else
             {
+
                 if (cameraInfo.GetComponent<CameraInfoController>().generoilisaavihollisia)
                 {
                     GameObject[] go =
@@ -175,6 +181,7 @@ cameraInfo.GetComponent<CameraInfoController>();
 
     public string PalautaOdotusAikaKunnesLiikkuu()
     {
+        float paljonko = -1;
         string lisateksti = "";
         if (cameraInfo!=null)
         {
@@ -182,12 +189,13 @@ cameraInfo.GetComponent<CameraInfoController>();
             {
                 lisateksti = cameraInfo.GetComponent<CameraInfoController>().lisateksti;
             }
+            paljonko = cameraInfo.GetComponent<CameraInfoController>().PalautaOdotusAika();
         }
+        
 
-
-        if (paljonkopitaavielaodottaa >= 0)
+        if (paljonko >= 0)
         {
-            return lisateksti + paljonkopitaavielaodottaa;
+            return lisateksti + paljonko.ToString("F0");
         }
         {
             return "";
