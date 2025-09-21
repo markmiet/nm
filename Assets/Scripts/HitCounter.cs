@@ -48,7 +48,8 @@ public class HitCounter : BaseController
 
     }
 
-
+    public GameObject hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan;
+    public float kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan;
     public bool RegisterHit()
     {
 
@@ -72,6 +73,37 @@ public class HitCounter : BaseController
             if (gameObject != null)
                 GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
+            if (hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan!=null)
+            {
+                GameObject inskeski = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan, transform.position, Quaternion.identity);
+                Destroy(inskeski, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+                ColliderExtremes c =
+                GetComponent<ColliderExtremes>();
+                if (c!=null)
+                {
+                    ColliderCorners corners = c.GetCorners();
+
+                    GameObject ins = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                        corners.lowerLeft, Quaternion.identity);
+                    Destroy(ins, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+
+                    GameObject ins2 = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                        corners.lowerRight, Quaternion.identity);
+                    Destroy(ins2, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+
+
+                    GameObject ins3 = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                        corners.upperLeft, Quaternion.identity);
+                    Destroy(ins3, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+
+                    GameObject ins4 = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                        corners.upperRight, Quaternion.identity);
+                    Destroy(ins4, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+
+
+                }
+
+            }
            // BaseDestroy();
             return true;
         }
