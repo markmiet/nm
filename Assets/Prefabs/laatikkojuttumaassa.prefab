@@ -134,8 +134,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   kohtajostaLaukaistaan: {fileID: 4771216548618411536}
   laukaistavaAsia: {fileID: 4665176215325690238, guid: aef69819eb9cd0d4eaa2b6f0a332fc95,
     type: 3}
@@ -158,12 +158,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   maintexuusi: {fileID: 0}
   dissolveamount: 0.44
   dissolveScale: 113
   verficaldissolve: 0
   spiralStrength: 0
   rotationAngle: 0
+  sykli: 0.5
+  maksimiDissolveAmount: 0
+  maaritaDissolveAmountRelativeToAlus: 0
+  distancemin: 0
+  distancemax: 5
+  outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  asetaoutlinecolor: 0
 --- !u!114 &3378734066214748456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,8 +193,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   hitThreshold: 100
   hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
@@ -190,8 +203,14 @@ MonoBehaviour:
     type: 3}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
+  teebonus: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 0
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.5
@@ -223,8 +242,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 4e48021c25b89e84395dde7c55a36a6d,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 255f29e44b9702348a69f88454ed337f,

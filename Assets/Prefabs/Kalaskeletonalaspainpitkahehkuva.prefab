@@ -365,8 +365,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -398,7 +398,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.8554611
+  m_Distance: 0.85546875
   m_MaxDistanceOnly: 1
 --- !u!61 &7561387785243834693
 BoxCollider2D:
@@ -620,8 +620,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -830,8 +830,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -1039,8 +1039,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -1214,8 +1214,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -1424,8 +1424,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -1619,7 +1619,7 @@ DistanceJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.089166336
+  m_Distance: 0.0891815
   m_MaxDistanceOnly: 1
 --- !u!61 &3208292863953170291
 BoxCollider2D:
@@ -1810,8 +1810,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   forceMin: 40
   forceMax: 60
   maxSpeed: 10
@@ -6850,8 +6850,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   particleSystem: {fileID: 1093901169365490832}
   speed: 4
 --- !u!114 &7306407767548301717
@@ -6870,8 +6870,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
@@ -7046,16 +7046,22 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   hitThreshold: 1000
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
+  teebonus: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 0
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
@@ -7087,8 +7093,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   estaChilderienTormayksetToisiinsa: 1
   voikotoimia: 0
   viive: 0.5
@@ -7108,12 +7114,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   maintexuusi: {fileID: 0}
   dissolveamount: 0.44
   dissolveScale: 113
   verficaldissolve: 0.3
   spiralStrength: 0
   rotationAngle: 0
+  sykli: 0.5
+  maksimiDissolveAmount: 0
+  maaritaDissolveAmountRelativeToAlus: 0
+  distancemin: 0
+  distancemax: 5
+  outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  asetaoutlinecolor: 0
 --- !u!114 &8272495863849255242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7130,8 +7149,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   bone8: {fileID: 6480704542879379006}
   distancemin: 2
   distancemax: 10

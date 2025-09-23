@@ -156,16 +156,22 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 4
   uusirajaytysrows: 4
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   hitThreshold: 10
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
+  teebonus: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 0
   rajaytaspritenScaleFactorProsentti: 33
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.5
@@ -193,12 +199,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   maintexuusi: {fileID: 2800000, guid: 07e00670c19bd8245b83f96fdda0f498, type: 3}
   dissolveamount: 0
   dissolveScale: 113
   verficaldissolve: 0
   spiralStrength: 0
   rotationAngle: 90
+  sykli: 0.5
+  maksimiDissolveAmount: 0
+  maaritaDissolveAmountRelativeToAlus: 0
+  distancemin: 0
+  distancemax: 5
+  outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  asetaoutlinecolor: 0
 --- !u!114 &6319743533361846988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,8 +234,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   bone8: {fileID: 3692085457398784295}
   distancemin: 0
   distancemax: 5
@@ -313,8 +332,8 @@ MonoBehaviour:
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   bodyPartPrefab: {fileID: 6676257131771723051, guid: 0de36990f8ee12044a9a17118b8508a8,
     type: 3}
   initialBodyParts: 5

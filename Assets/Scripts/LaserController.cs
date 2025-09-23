@@ -255,7 +255,7 @@ public class LaserController : BaseController
                         SkeletonController sc = col.gameObject.GetComponent<SkeletonController>();
                         if (sc != null)
                         {
-                            GetComponent<Collider2D>().enabled = false;
+                           // GetComponent<Collider2D>().enabled = false;
 
 
                             //Vector2 contactPoint = col.GetContact(0).point;

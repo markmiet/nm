@@ -52,6 +52,7 @@ MonoBehaviour:
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   bodyPartPrefab: {fileID: 6676257131771723051, guid: f5e572ebfd16cc645803340108240146,
     type: 3}
   headPartPrerab: {fileID: 6676257131771723051, guid: 941abf955c4e8194ab338ef0402fc53c,
@@ -83,6 +84,7 @@ MonoBehaviour:
   jointtilaskuri: 0
   sykli: 10
   saadapaanDissolveamount: 1
+  headsykli: 0.1
   liikkumisaikaViimeisenNahdynJalkeen: 10
 --- !u!120 &3607930701780933365
 LineRenderer:
@@ -255,14 +257,21 @@ MonoBehaviour:
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   hitThreshold: 100
   hitCount: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
+  teebonus: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 0
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1

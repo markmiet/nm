@@ -244,7 +244,7 @@ public class AmmusController : BaseController, IExplodable
                                 GameManager.Instance.kasvataHighScorea(col.gameObject);
                             }
                             //tuhottujenVihollistenmaara++;
-                            col.otherCollider.enabled = false;
+                           // col.otherCollider.enabled = false;
 
                         }
                         else

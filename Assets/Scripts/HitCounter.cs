@@ -17,6 +17,11 @@ public class HitCounter : BaseController
 
     private DissolveMatController p;
     private float dissolveoriginal;
+
+    public GameObject bonus;
+    public bool teebonus = false;
+   // public bool teebonuschildrenille = false;
+    
     public void Start()
     {
         p = GetComponent<DissolveMatController>();
@@ -73,6 +78,13 @@ public class HitCounter : BaseController
             if (gameObject != null)
                 GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
+            if (teebonus && bonus!=null && lastkontantipointti!=Vector2.zero)
+            {
+                GameObject insbonus = Instantiate(bonus, lastkontantipointti, Quaternion.identity);
+              
+
+            }
+
             if (hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan!=null)
             {
                 GameObject inskeski = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan, transform.position, Quaternion.identity);
@@ -115,6 +127,8 @@ public class HitCounter : BaseController
 
 
 
+    private Vector2 lastkontantipointti = Vector2.zero;
+
 
     public bool RegisterHit(Vector2 contactPoint)
     {
@@ -123,6 +137,7 @@ public class HitCounter : BaseController
         {
             return true;
         }
+        lastkontantipointti = contactPoint;
         bool ret = RegisterHit();
         if (teeExplosion && explosion != null)
         {
@@ -133,7 +148,7 @@ public class HitCounter : BaseController
                 // if (Time.time- lasttimeexplosion > mindelayexplosions)
                 // {
                 GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
-
+                
                 // lasttimeexplosion = Time.time;
                 float kesto = Mathf.Min(alivetime, 0.5f);
                 Destroy(instanssi2, kesto);
@@ -221,10 +236,21 @@ GetComponentsInChildren<Transform>();
         bool raj = true;
         Transform[] t =
         GetComponentsInChildren<Transform>();
+        //bool childbonustehty = false;
         if (t != null)
         {
             foreach (Transform tt in t)
             {
+         /*
+                if (teebonuschildrenille && bonus!=null && !childbonustehty)
+                {
+                    GameObject insbonus = Instantiate(bonus, tt.position, Quaternion.identity);
+                    childbonustehty = true;
+
+                }
+                */
+
+
                 //GameObject instanssi2 = Instantiate(explosion, tt.transform.position, Quaternion.identity);
                 ChildColliderReporter c =
                 tt.gameObject.GetComponent<ChildColliderReporter>();
