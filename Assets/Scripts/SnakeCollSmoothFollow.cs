@@ -27,7 +27,7 @@ public class SnakeCollSmoothFollow : BaseController
     public float raycastDistance = 1f;
     public Vector2 raycastBoxSize = new Vector2(0.3f, 0.3f); // paksuus
 
-    [Range(10f, 200f)]
+    [Range(10f, 300f)]
     public float scalePolygonColliderInPercents = 100f;
     [Range(1, 10)]
     public int colliderPointsPerSegment = 3; // More = more accurate
