@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\BaseController.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\SimpleCharacterMotor.cs" />
     <Compile Include="Assets\Scripts\SpriteEdgeBlender.cs" />
+    <Compile Include="Assets\Scripts\Collider\PolygonColliderRotationUpdater.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\CircleMesh.cs" />
     <Compile Include="Assets\Scripts\CameraInfoController.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Assets\Scripts\PallovihollinensavuController.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
     <Compile Include="Assets\Scripts\LaserController.cs" />
+    <Compile Include="Assets\Scripts\CubismLineController.cs" />
     <Compile Include="Assets\AdvancedPolygonCollider\Script\AdvancedPolygonCollider.cs" />
     <Compile Include="Assets\Scripts\ChildColliderReporter.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
@@ -200,6 +202,7 @@
     <Compile Include="Assets\Scripts\AlaosaScripti.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\HylsyController.cs" />
+    <Compile Include="Assets\Scripts\Collider\RotationCollider.cs" />
     <Compile Include="Assets\Scripts\PiippuluotiController.cs" />
     <Compile Include="Assets\Scripts\AlphaArvonVaihtelijaController.cs" />
     <Compile Include="Assets\Billboard.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="Assets\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs" />
     <Compile Include="Assets\Scripts\HaukipaaController.cs" />
     <Compile Include="Assets\Scripts\NmpalleroController.cs" />
+    <Compile Include="Assets\Scripts\Collider\PolygonColliderRotationSaver.cs" />
     <Compile Include="Assets\Scripts\NappienPaikkojenSijoittelijaController.cs" />
     <Compile Include="Assets\Scripts\OutGlowShaderOmController.cs" />
     <Compile Include="Assets\Scripts\DestroyWhenChildrenGone.cs" />
@@ -257,6 +261,7 @@
     <None Include="Assets\JMO Assets\WarFX\_Effects\MuzzleFlashes\!MuzzleFlash Differences.txt" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Alpha-Specular TintColor.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\Scripts\Collider\NewSurfaceShader.shader" />
     <None Include="Assets\Shaders\CubismURP.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\UnityTechnologies\ParticlePack\EffectExamples\Misc Effects\Prefabs\Readme_Dissolve_Respawn_.txt" />
@@ -266,6 +271,7 @@
     <None Include="Assets\JMO Assets\WarFX\_Effects (Mobile)\MuzzleFlashes\!MuzzleFlash Differences.txt" />
     <None Include="Assets\AdvancedPolygonCollider\Readme.txt" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Particle Add A8.shader" />
+    <None Include="Assets\CubismLine.shader" />
     <None Include="Assets\UnityTechnologies\ParticlePack\EffectExamples\Magic Effects\Shaders\Ice.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Smoke Scroll.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Particle Multiply A8.shader" />

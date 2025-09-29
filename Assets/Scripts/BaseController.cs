@@ -3410,7 +3410,7 @@ y * sliceHeight / originalSprite.pixelsPerUnit, 0);
 
         TuhoaReal(go, true, nopeusjonkaalletuhotaan, true, 5.0f, true, 5.0f, true, 5.0f,
 true,
-600,
+6000,
 1, false, null
 );
 
@@ -3422,7 +3422,7 @@ true,
 
         TuhoaReal(go, true, nopeusjonkaalletuhotaan, true, 5.0f, true, 5.0f, true, 5.0f,
 true,
-600,
+6000,
 0.4f, false, prefap
 );
 
@@ -3545,7 +3545,7 @@ true,
 
         TuhoaReal(go, true, nopeusjonkaalle, true, 5.0f, true, 5.0f, true, 5.0f,
 true,
-600,
+6000,
 0.1f, true, null
 );
 
@@ -3596,7 +3596,7 @@ true,
         float offsettijokasallitaanYlapuolellaKavaisyyn = 5.0f;
 
         bool tuhoajosliiankauanhengissa = true;
-        float hengissaolonraja = 600f;//tarkista
+        float hengissaolonraja = 6000f;//tarkista
         float tarkistussykli = 1.5f;
         bool tuhoajosoikeallakameraanVerrattuna = false;
 
@@ -3635,7 +3635,7 @@ true,
         bool tuhoaJosKameranYlapuolella = true;
         float offsettijokasallitaanYlapuolellaKavaisyyn = 1.0f;
         bool tuhoajosliiankauanhengissa = true;
-        float hengissaolonraja = 600f;//tarkista
+        float hengissaolonraja = 6000f;//tarkista
         float tarkistussykli = 0.1f;
         bool tuhoajosoikeallakameraanVerrattuna = false;
 

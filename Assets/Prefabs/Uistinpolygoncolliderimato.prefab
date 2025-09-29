@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2651661850081872195}
   - component: {fileID: 2694172003617793569}
   - component: {fileID: 8628719901571309421}
+  - component: {fileID: 5258315674133461392}
   m_Layer: 17
   m_Name: Uistinpolygoncolliderimato
   m_TagString: makitavihollinenexplodetag
@@ -167,7 +168,6 @@ MonoBehaviour:
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
   teebonus: 0
-  teebonuschildrenille: 1
   hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
   kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
@@ -353,3 +353,26 @@ MonoBehaviour:
   maxInitialParts: 50
   angleadd: 90
   colliderUpdateThreshold: 0.05
+--- !u!114 &5258315674133461392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111151895430809212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a457db10ca487145ade547101cfc5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maintexuusi: {fileID: 0}
+  tilecount: 64
+  useTintColor: 0
+  tintcolor: {r: 0, g: 0, b: 0, a: 0}
+  jitter: 1
+  tilesizevar: 1
+  useColornoise: 0
+  colornoise: {r: 0, g: 0, b: 0, a: 0}
+  rotation: 0
+  working: 0
+  workingTrueMaterial: {fileID: 2100000, guid: 988e9a62bfd7f7840ae83c4f7632e019, type: 2}

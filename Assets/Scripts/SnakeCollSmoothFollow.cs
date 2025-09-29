@@ -359,6 +359,8 @@ public class SnakeCollSmoothFollow : BaseController
 
     void UpdatePolygonCollider()
     {
+
+
         if ( bodyParts.Count < 2) return;
 
         List<Vector2> upper = new List<Vector2>();

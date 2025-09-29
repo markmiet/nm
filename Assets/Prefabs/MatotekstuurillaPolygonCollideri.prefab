@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 541505467341380579}
   - component: {fileID: 4513373944715183403}
   - component: {fileID: 2372790685304127607}
+  - component: {fileID: 7831360644094872300}
   m_Layer: 17
   m_Name: MatotekstuurillaPolygonCollideri
   m_TagString: makitavihollinenexplodetag
@@ -351,3 +352,26 @@ MonoBehaviour:
   maxInitialParts: 50
   angleadd: 90
   colliderUpdateThreshold: 0.05
+--- !u!114 &7831360644094872300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692085457398784295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a457db10ca487145ade547101cfc5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maintexuusi: {fileID: 0}
+  tilecount: 64
+  useTintColor: 0
+  tintcolor: {r: 0, g: 0, b: 0, a: 0}
+  jitter: 1
+  tilesizevar: 1
+  useColornoise: 0
+  colornoise: {r: 0, g: 0, b: 0, a: 0}
+  rotation: 0
+  working: 0
+  workingTrueMaterial: {fileID: 2100000, guid: 988e9a62bfd7f7840ae83c4f7632e019, type: 2}

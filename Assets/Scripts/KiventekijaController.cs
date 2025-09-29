@@ -97,7 +97,7 @@ public class KiventekijaController : BaseController
             if (voikoInstantioida(seuraavaX, yy))
             {
                // Debug.Log("voidaan " + seuraavaX + " " + yarvo);
-                Vector3 v3 = new Vector3(seuraavaX, yy, 0);
+                Vector3 v3 = new Vector3(seuraavaX, yy, transform.position.z);
                 GameObject instanssi = Instantiate(PalautaGameObjectRandomina(), v3, Quaternion.identity);
                 instanssi.name = instanssi.name +"_"+ pallojennykymaara;
 

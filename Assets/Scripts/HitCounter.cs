@@ -20,8 +20,8 @@ public class HitCounter : BaseController
 
     public GameObject bonus;
     public bool teebonus = false;
-   // public bool teebonuschildrenille = false;
-    
+    // public bool teebonuschildrenille = false;
+
     public void Start()
     {
         p = GetComponent<DissolveMatController>();
@@ -78,20 +78,36 @@ public class HitCounter : BaseController
             if (gameObject != null)
                 GameManager.Instance.kasvataHighScorea(gameObject);
             RajaytaChildrenit();
-            if (teebonus && bonus!=null && lastkontantipointti!=Vector2.zero)
+            if (teebonus && bonus != null && lastkontantipointti != Vector2.zero)
             {
-                GameObject insbonus = Instantiate(bonus, lastkontantipointti, Quaternion.identity);
-              
+
+                //@todoo bonuksen instantiointi...
+                Vector2 lisatty = new Vector2(lastkontantipointti.x + 3f, lastkontantipointti.y);
+                GameObject insbonus = Instantiate(bonus, lisatty, Quaternion.identity);
+
 
             }
 
-            if (hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan!=null)
+            if (hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan != null)
             {
-                GameObject inskeski = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan, transform.position, Quaternion.identity);
+                GameObject inskeski;
+                if (lastkontantipointti != Vector2.zero)
+                {
+                    inskeski = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                      lastkontantipointti, Quaternion.identity);
+                }
+                else
+                {
+                    inskeski = Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                        transform.position, Quaternion.identity);
+                }
+
+
+
                 Destroy(inskeski, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
                 ColliderExtremes c =
                 GetComponent<ColliderExtremes>();
-                if (c!=null)
+                if (c != null)
                 {
                     ColliderCorners corners = c.GetCorners();
 
@@ -116,7 +132,7 @@ public class HitCounter : BaseController
                 }
 
             }
-           // BaseDestroy();
+            // BaseDestroy();
             return true;
         }
         SaadaDissolveAmountVerrattunaOsumiin();
@@ -148,12 +164,12 @@ public class HitCounter : BaseController
                 // if (Time.time- lasttimeexplosion > mindelayexplosions)
                 // {
                 GameObject instanssi2 = Instantiate(explosion, contactPoint, Quaternion.identity);
-                
+
                 // lasttimeexplosion = Time.time;
                 float kesto = Mathf.Min(alivetime, 0.5f);
                 Destroy(instanssi2, kesto);
                 // }
-             //   Debug.Log("rajaytys");
+                //   Debug.Log("rajaytys");
 
             }
 
@@ -175,7 +191,7 @@ public class HitCounter : BaseController
     public bool teekamerashake = false;
     public void Update()
     {
- 
+
 
 
         if (tuhoajosollaanKameranVasemmallaPuolella)
@@ -183,7 +199,7 @@ public class HitCounter : BaseController
             TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
             OnkoOkToimiaUusi(gameObject);
-            
+
         }
 
     }
@@ -196,7 +212,7 @@ public class HitCounter : BaseController
 
     private bool onkoChildreneitaNiinPaljonEttaRajaytaVainJokaToinen()
     {
-        int maara =0;
+        int maara = 0;
         Transform[] t =
 GetComponentsInChildren<Transform>();
         if (t != null)
@@ -241,14 +257,14 @@ GetComponentsInChildren<Transform>();
         {
             foreach (Transform tt in t)
             {
-         /*
-                if (teebonuschildrenille && bonus!=null && !childbonustehty)
-                {
-                    GameObject insbonus = Instantiate(bonus, tt.position, Quaternion.identity);
-                    childbonustehty = true;
+                /*
+                       if (teebonuschildrenille && bonus!=null && !childbonustehty)
+                       {
+                           GameObject insbonus = Instantiate(bonus, tt.position, Quaternion.identity);
+                           childbonustehty = true;
 
-                }
-                */
+                       }
+                       */
 
 
                 //GameObject instanssi2 = Instantiate(explosion, tt.transform.position, Quaternion.identity);
@@ -275,7 +291,7 @@ GetComponentsInChildren<Transform>();
                 }
                 if (c != null && teerajaytaspriteuusiversio)
                 {
-                   // c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
+                    // c.RajaytaSprite(tt.gameObject, 4, 4, 1.0f, alivetime);
 
                     //c.RajaytaSpriteUusiMonimutkaisin(tt.gameObject, 4, 4, 1.0f, alivetime);
 
@@ -337,11 +353,11 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
         {
             tuhoaminenkaynnissa = true;
             //Debug.Log("RajaytaSpriteUusiMonimutkaisin " + Time.realtimeSinceStartup);
-                 RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
-                     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,
-                     36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti
+            RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
+                rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,
+                36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti
 
-                     );
+                );
             //Destroy(gameObject);
 
         }
@@ -352,7 +368,8 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
         // }
         if (!tuhoaminenkaynnissa)
         {
-            BaseDestroy();
+            //           BaseDestroy();
+            Tuhoa();
         }
     }
 
@@ -434,5 +451,105 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
             }
         }
     }
+
+
+    private void Tuhoa()
+    {
+        CubismLineController cb = GetComponent<CubismLineController>();
+        if (cb != null)
+        {
+            Collider2D[] c = GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D cc in c)
+            {
+                cc.enabled = false;
+            }
+
+            SnakeCollSmoothFollow follow = GetComponent<SnakeCollSmoothFollow>();
+            if (follow != null)
+            {
+                follow.enabled = false;
+            }
+
+            StartCoroutine(ReduceTilecount(2.0f));//t‰‰ parametreihin
+
+            //BaseDestroy(gameObject, 5.0f);
+
+        }
+        else
+        {
+            BaseDestroy();
+
+        }
+    }
+
+    IEnumerator ReduceTilecount(float duration)
+    {
+        bool blink = true;
+        CubismLineController cb = GetComponent<CubismLineController>();
+        LineRenderer lr = GetComponent<LineRenderer>();
+
+        if (cb != null)
+        {
+            cb.working = true;
+            cb.AsetaMateriaali();
+            float elapsed = 0f;
+            float startValue = cb.tilecount;
+            float targetValue = 5f;
+
+            // compute per-second speed so that in "duration" seconds we hit the target
+            float vauhti = (startValue - targetValue) / duration;
+
+            // --- Mode 1: Run for fixed duration ---
+            while (elapsed < duration)
+            {
+                cb.tilecount -= vauhti * Time.deltaTime;
+                cb.tilesizevar += 1f;
+
+                if (lr != null)
+                    lr.enabled = blink;
+
+                blink = !blink;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+        }
+
+        BaseDestroy();
+    }
+
+
+    /*
+
+    IEnumerator ReduceTilecountdssd()
+    {
+        bool blink = true;
+        CubismLineController cb = GetComponent<CubismLineController>();
+        // Keep decreasing until we reach 10
+        if (cb!=null)
+        {
+            cb.working = true;
+
+            float laskuri = 0.0f;// = Time.deltaTime;
+            while (laskuri<5.0f)
+            {
+                cb.tilecount -= rate;
+                cb.tilesizevar += 1f;
+                LineRenderer lr =
+                GetComponent<LineRenderer>();
+                if (lr != null)
+                {
+                    lr.enabled = blink;
+                }
+                blink = !blink;
+                laskuri += Time.deltaTime;
+                yield return null; // wait one frame
+            }
+
+        }
+
+        BaseDestroy();
+    }
+    */
 
 }
