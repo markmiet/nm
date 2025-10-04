@@ -41,6 +41,11 @@ public class ShaderPropertyBlockCache
 
     public void SetTexture(int propertyID, Texture value)
     {
+        if (value==null)
+        {
+            Debug.Log("null texture value propertyID="+ propertyID);
+        }
+
         if (!_textures.TryGetValue(propertyID, out var current) || current != value)
         {
             _block.SetTexture(propertyID, value);

@@ -14,6 +14,8 @@ public class CheckPointController : BaseController
     private bool isFlashing = false;
     private SpriteRenderer rend;
     public AudioSource checkpointPlay;
+
+
     void Start()
     {
         x = transform.position.x;
@@ -24,12 +26,32 @@ public class CheckPointController : BaseController
     // Update is called once per frame
     void Update()
     {
+        /*
+        bool more = IsMoreThanHalfOnLeft();
+        bool visi = IsGameObjectVisible();
+        Debug.Log(gameObject.name + " more=" + more + " visi=" + visi+" asetettu="+asetettu);
+        */
         if (!asetettu && IsMoreThanHalfOnLeft() && IsGameObjectVisible())
         {
             GameManager.Instance.checkPoint.GetComponent<CheckPointController>().x = transform.position.x;
 
-            //eli tähän soundi ja sitten flashi
-            asetettu = true;
+            /*
+            if (message!=null)
+            {
+                //GameManager.Instance.LisaaTeksti(message,messagetime);
+
+                string[] rows = message.Split('\n');
+                float delay = 0.0f;
+                foreach (var row in rows)
+                {
+                    GameManager.Instance.LisaaTekstiViiveella(row, delay, messagedestroytime);
+                    delay += delaybetweenlines;
+                }
+               
+            }
+        */
+           //eli tähän soundi ja sitten flashi
+           asetettu = true;
             if (makeflash)
             {
                 isFlashing = true;

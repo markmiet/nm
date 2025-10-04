@@ -122,6 +122,12 @@ public class GameManager : BaseController
             scoreTextMeshProUGUI.SetText(score.ToString());
         }
         SetHighScore();
+        /*
+        GameObject go = GameObject.Find("Copilotteksti");
+        SmoothTextScroller ss =
+        go.GetComponent<SmoothTextScroller>();
+        ss.AddLine(""+ score);
+        */
     }
 
 
@@ -180,10 +186,62 @@ public class GameManager : BaseController
 
     public bool isPaused = false;
 
+    //public float syklijo = 1.0f;
+    //private float s = 0.0f;
+
+
+    private GameObject copilotti = null;
+    private SmoothTextScroller ss = null;
+
+    public void LisaaTeksti(string text,float lifetime)
+    {
+        if (copilotti==null)
+        {
+            copilotti = GameObject.Find("Copilotteksti");
+        }
+        if (ss==null)
+        {
+            ss=copilotti.GetComponent<SmoothTextScroller>();
+        }
+        ss.AddLine(text,lifetime);
+
+    }
+
+    public void LisaaTekstiViiveella(string text,float delay,float lifetime)
+    {
+        //todoo how to delay
+        //and then call LisaaTeksti(string text,float lifetime)
+        StartCoroutine(LisaaTekstiDelayCoroutine(text, delay, lifetime));
+    }
+
+    private IEnumerator LisaaTekstiDelayCoroutine(string text, float delay, float lifetime)
+    {
+        yield return new WaitForSeconds(delay);
+        LisaaTeksti(text, lifetime);
+    }
+
     public void Update()
     {
         //Time.timeScale = 0.5f;
-       // Debug.Log("time.deltatime=" + Time.deltaTime);
+        // Debug.Log("time.deltatime=" + Time.deltaTime);
+        /*
+        s += Time.deltaTime;
+
+        if (s>=syklijo)
+        {
+            GameObject go = GameObject.Find("Copilotteksti");
+            SmoothTextScroller ss =
+            go.GetComponent<SmoothTextScroller>();
+           // ss.AddLine("" );
+            s = 0.0f;
+        }
+        */
+
+
+
+
+
+
         if (!siirtymassascenenalkuun && !siirtymassastartmenuun && !isPaused)
         {
 
@@ -247,6 +305,7 @@ public class GameManager : BaseController
         lives++;
         GameObject alus = PalautaAlus();
         alus.GetComponent<AlusController>().SetElamienMaara(lives);
+        LisaaTeksti("New life",2.0f);
     }
 
     public void PlayerDied()
@@ -353,7 +412,7 @@ public class GameManager : BaseController
                  //Camera.main.GetComponent<Kamera>().AsetaAlusKeskelleKameraa();
 
              }
-
+           // LisaaTeksti("Try again...", 1.0f);
             //StartTimeScaleDelay();
 
 
