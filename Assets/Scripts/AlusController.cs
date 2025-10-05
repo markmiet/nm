@@ -133,6 +133,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //private bool spaceNappiYlhaalla = false;
 
 
+    public GameObject extraGun;
+
 
     private bool ammusInstantioitiinviimekerralla = false;
 
@@ -519,6 +521,8 @@ public class AlusController : BaseController, IDamagedable, IExplodable
     //private SormiKameraController sormiKameraController;
 
     private GameObject damagetausta;
+
+    public GameObject keskari;
 
 
     public void SetOsuudet(float p_prosenttiosuusalasuoja, float p_prosenttiosuusmikaonvarattuohjaukseenkorkeudessa,
