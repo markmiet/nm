@@ -1,5 +1,6 @@
+using System.Collections;
 using UnityEngine;
-
+using System.Linq;
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class SuperLaseController : BaseController
@@ -217,10 +218,11 @@ public class SuperLaseController : BaseController
 
     public void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.tag.Contains("vihollinen") /*|| col.collider.tag.Contains("alus")*/)
+        Vector2 contactPoint = col.GetContact(0).point;
+
+        if (col.collider.tag.Contains("haukivihollinen") /*|| col.collider.tag.Contains("alus")*/)
         {
             //Vector2 contactPoint = col.GetContact(0).point;
-            Vector2 contactPoint = col.GetContact(0).point;
             if (pysaytaKunOsutaanjohonkin)
                 endPoint.position = (Vector3)currentPos;
             if (Time.time - lastSpawnTime >= spawnCooldown)
@@ -242,8 +244,27 @@ public class SuperLaseController : BaseController
                 Destroy(endObj);
             }
         }
-    }
+        /*
+        else if (col.collider.tag.Contains("vihollinen") )
+        {
+            hitcountti++;
+            if (hitcountti>=hitcountraja)
+            {
 
+                if (osumaExplosion != null)
+                {
+                    GameObject ins = Instantiate(osumaExplosion, contactPoint, Quaternion.identity);
+                    Destroy(ins, osumaExplosionkesto);
+                }
+                BaseDestroy();
+                Destroy(startObj);
+                Destroy(endObj);
+            }
+        }
+        */
+    }
+    private int hitcountti = 0;
+    private int hitcountraja = 10;
 
     public float aiheutavoimaaRigidbodyyn = 5.0f;
     private void AiheutaVoimaa(GameObject go)
@@ -272,5 +293,44 @@ public class SuperLaseController : BaseController
            rb.AddForce(suunta * aiheutavoimaaRigidbodyyn, ForceMode2D.Impulse);
             */
         }
+        //RandomForcesController[] hc = go.GetComponentsInChildren<RandomForcesController>();
+
+
+        RandomForcesController[] hc = (go.transform.parent != null)
+            ? go.transform.parent.GetComponentsInChildren<RandomForcesController>(true)
+                                  .Distinct()
+                                  .ToArray()
+            : go.GetComponentsInChildren<RandomForcesController>(true)
+                 .Distinct()
+                 .ToArray();
+
+        if (hc==null || hc.Length==0)
+        {
+            Debug.Log("nimi="+gameObject.name);
+
+        }
+
+       foreach(RandomForcesController h in hc)
+        {
+            //h.maxSpeed = h.maxSpeed / 10.0f;
+            h.PistaMaxSpeednsinKymmenesosaanSiitamitaneOliSenJalkeenKasvataTakaisinViidessaSekunnissa();
+        }
+        
+
+        //lamauta 5 sekunniksi, mutta miten...
+        /*
+        RandomForcesController: BaseController
+
+    public float forceMin = 1f; // Minimum force
+    public float forceMax = 2f; // Maximum force
+    private Transform target; // Target GameObject
+
+    public float maxSpeed = 5f; // Maximum speed the object can reach
+
+}
+*/
     }
+
+
+    
 }
