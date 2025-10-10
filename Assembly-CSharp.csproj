@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\SnakeBodyPartSetup.cs" />
     <Compile Include="Assets\Scripts\AdvancedParticleLogger.cs" />
+    <Compile Include="Assets\Scripts\Collider\ZRotationLimiter.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\DestroyWhenChildrenGoneIgnore.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Assets\Scripts\OnkoOkToimiaController.cs" />
     <Compile Include="Assets\Scripts\KonttiController.cs" />
     <Compile Include="Assets\Addons\CameraPathCreator\Scripts\CPC_CameraPath.cs" />
+    <Compile Include="Assets\Scripts\Collider\IgnoreCollisionGroups.cs" />
     <Compile Include="Assets\Scripts\SilmaJalatController.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\AdjustTimeScale.cs" />
     <Compile Include="Assets\Scripts\RuntimePhysicsShapeTracer.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Assets\Scripts\RotateY.cs" />
     <Compile Include="Assets\Scripts\OutlineSmokeEmitter.cs" />
     <Compile Include="Assets\Scripts\PalloJoukkioController.cs" />
+    <Compile Include="Assets\Scripts\Collider\ApplyForces2D.cs" />
     <Compile Include="Assets\Scripts\Kamera.cs" />
     <Compile Include="Assets\Scripts\DamageMittariLineRendererController.cs" />
     <Compile Include="Assets\Scripts\ScrolliScripti.cs" />
@@ -306,6 +309,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Houidisoft technology\Plasma Shader\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Art\meshrenderers\StencilSpriteMask.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
