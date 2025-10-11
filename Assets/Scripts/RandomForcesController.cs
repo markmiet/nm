@@ -47,6 +47,16 @@ public class RandomForcesController : BaseController
     {
         // Calculate the direction and random force
         Vector2 directionToTarget = (target.position - transform.position).normalized;
+
+        if (aiheutavoimaaVainjosAlusvasemmalla)
+        {
+            if (  directionToTarget.x > 0)
+            {
+                //return;
+                directionToTarget = new Vector2(-1, 0);
+            }
+        }
+
         float randomForce = Random.Range(forceMin, forceMax);
 
         // Apply force to the main object
@@ -56,6 +66,8 @@ public class RandomForcesController : BaseController
         // After applying the force, clamp the speed of this object
         ClampSpeed();
     }
+
+    public bool aiheutavoimaaVainjosAlusvasemmalla = false;
 
     void ClampSpeed()
     {

@@ -2930,7 +2930,45 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
         //sitten jos tehdään damagepalkilla niin sitten vasta vaikuttaa damage määrään
 
     }
+    public GameObject ammuntapiste;
     private bool OnkoSeinaOikealla()
+    {
+
+        Collider2D[] cs =
+        Physics2D.OverlapBoxAll(ammuntapiste.transform.position,
+        new Vector2(0.5f, 0.1f), 0
+            );
+
+        if (cs != null && cs.Length > 0)
+        {
+            foreach (Collider2D c in cs)
+            {
+                if (c.gameObject == this.gameObject)
+                {
+
+                }
+                else if (c.gameObject.tag.Contains("tiili"))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (ammuntapiste != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(ammuntapiste.transform.position, new Vector3(0.5f, 0.1f, 0));
+        }
+    }
+
+
+
+    private bool OnkoSeinaOikeallaVanha()
     {
 
         Vector3 v = transform.position;
