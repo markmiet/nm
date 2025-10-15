@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 2721419356010881944}
   - component: {fileID: 8955346616197696264}
   - component: {fileID: 5500295539353483735}
-  - component: {fileID: 8364243239223093992}
   - component: {fileID: 1932308837219457574}
   - component: {fileID: 6806955284645260412}
+  - component: {fileID: 3461915841570758202}
   m_Layer: 17
   m_Name: Skelevalkeaampuvapaikallaan
   m_TagString: makitavihollinenexplodetag
@@ -65,7 +65,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b680c0a35448e2d45ad47f8e7bf2aa1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,53 +244,6 @@ MonoBehaviour:
   - {fileID: 5737352649215805044}
   - {fileID: 2839076163383927996}
   - {fileID: 5213395566424460892}
---- !u!114 &8364243239223093992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181737773127069154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fragmentPixelSize: 16
-  hengissaoloaika: 0
-  uusirajaytyscolumns: 8
-  uusirajaytysrows: 8
-  poolistapalautusmaara: 0
-  registeroiOnEnablessa: 0
-  hitThreshold: 10
-  hitCount: 0
-  explosion: {fileID: 0}
-  osumanSavu: {fileID: 0}
-  osumanSavunKesto: 0.5
-  rekisteroihittivainjosobjektillaEiOleJointtia: 0
-  bonus: {fileID: 0}
-  teebonus: 0
-  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
-  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
-  tuhoajosollaanKameranVasemmallaPuolella: 1
-  teekamerashake: 0
-  rajaytaspritenScaleFactorProsentti: 100
-  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
-  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
-  rajahdysrowcol: 16
-  rajahdysvoima: 1
-  alivetime: 5
-  sirpalemass: 1
-  gravityscale: 0.5
-  adddestroycontroller: 1
-  teeBoxCollider2d: 1
-  teerajaytasprite: 0
-  teeExplosion: 0
-  rajaytaSpritenExplosion: {fileID: 0}
-  rajaytaspritenviive: 0.5
-  saadaDissolveamount: 0
-  teerajaytaspriteuusiversio: 1
-  kaynnistaParticleEmit: 0
 --- !u!114 &1932308837219457574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +285,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 4
   maxAngularSpeed: 10
+--- !u!114 &3461915841570758202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181737773127069154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76041689fbaf1ce4590f897d50d539bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fragmentPixelSize: 16
+  hengissaoloaika: 0
+  uusirajaytyscolumns: 8
+  uusirajaytysrows: 8
+  poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
+  hitThreshold: 250
+  hitCount: 0
+  explosion: {fileID: 0}
+  osumanSavu: {fileID: 0}
+  osumanSavunKesto: 0.5
+  rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
+  tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 0
+  rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
+  gameJostaRajaytyksenPistelasketaan: {fileID: 0}
+  rajahdysrowcol: 16
+  rajahdysvoima: 0.1
+  alivetime: 5
+  sirpalemass: 1
+  gravityscale: 0.5
+  adddestroycontroller: 1
+  teeBoxCollider2d: 1
+  teerajaytasprite: 1
+  teeExplosion: 0
+  rajaytaSpritenExplosion: {fileID: 0}
+  rajaytaspritenviive: 0.5
+  saadaDissolveamount: 0
+  teerajaytaspriteuusiversio: 0
+  kaynnistaParticleEmit: 0
+  spriteSkin: {fileID: 0}
+  meshMaterial: {fileID: 2100000, guid: b680c0a35448e2d45ad47f8e7bf2aa1b, type: 2}
+  rows: 10
+  cols: 10
+  explodeForce: 1
+  maxAngularVelocity: 360
+  recordDuration: 4
+  implodeWait: 0
+  implodeSpeed: 30
+  fadeOutDuration: 4
+  hitsBeforeDestruction: 50
+  materiaali: {fileID: 0}
 --- !u!1 &250176507526262667
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,7 +661,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.78803116, y: 0.000005960463}
+  m_ConnectedAnchor: {x: 0.78803116, y: 0.000005930661}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -749,7 +761,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.78803116, y: 0.000005960463}
+  m_ConnectedAnchor: {x: 0.78803116, y: 0.000005930661}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1185,7 +1197,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.7899435, y: 0.3800175}
+  m_ConnectedAnchor: {x: 1.7899436, y: 0.38001785}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &8543987734463094830
@@ -1472,7 +1484,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.9400346, y: 0.0000030994408}
+  m_ConnectedAnchor: {x: 0.94003475, y: 0.0000032186501}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -1662,7 +1674,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -3.1901004, y: 0.5000345}
+  m_ConnectedAnchor: {x: -3.1901007, y: 0.5000344}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &86758146660900382
@@ -1759,7 +1771,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.92989427, y: 0.00002789497}
+  m_ConnectedAnchor: {x: 0.92989415, y: 0.000027880069}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -2109,7 +2121,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.73875856, y: 0.049273133}
+  m_ConnectedAnchor: {x: -0.7387585, y: 0.049273163}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -2221,7 +2233,7 @@ Transform:
   m_GameObject: {fileID: 5213395566424460892}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.83436203, w: 0.5512168}
-  m_LocalPosition: {x: 0.9986379, y: 0.000000055726787, z: 0}
+  m_LocalPosition: {x: 1.1873678, y: -0.078519285, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2270,7 +2282,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.9986357, y: -0.0000050067897}
+  m_ConnectedAnchor: {x: 1.1873593, y: -0.078539185}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -2443,7 +2455,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.6851105, y: 0.08386423}
+  m_ConnectedAnchor: {x: -0.68511045, y: 0.08386426}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -2463,7 +2475,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.13621464, y: 0.3021836}
+  m_ConnectedAnchor: {x: 0.13621476, y: 0.3021836}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -2626,7 +2638,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.5693789, y: -0.40766788}
+  m_ConnectedAnchor: {x: -0.56937903, y: -0.40766793}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -2646,7 +2658,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08575664, y: -0.20026205}
+  m_ConnectedAnchor: {x: 0.08575658, y: -0.20026205}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -3016,7 +3028,7 @@ MonoBehaviour:
   ammussavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
     type: 3}
   ammussavukesto: 0.7
-  shootingcycle: 0.7
+  shootingcycle: 1.5
   ammuvainjosalusvasemmmalla: 1
   ammus: {fileID: 4665176215325690238, guid: 507ea8ebc0e82bd489bcc3dc1af72594, type: 3}
   ampumisenvoimakkuus: 5
@@ -3033,6 +3045,7 @@ MonoBehaviour:
   hylsyforce: 1
   hylsyrandomkulmaalku: 200
   hylsyrandomkulmaloppu: 300
+  ignorekulmalimit: 0
 --- !u!61 &9104457682490438369
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3751,7 +3764,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.7812391, y: 0.000008821485}
+  m_ConnectedAnchor: {x: 0.781239, y: 0.000008702275}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -3806,7 +3819,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.7812391, y: 0.000008821485}
+  m_ConnectedAnchor: {x: 0.781239, y: 0.000008702275}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -3939,7 +3952,7 @@ DistanceJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.5933403, y: -0.000019848347}
+  m_ConnectedAnchor: {x: 0.5933404, y: -0.00001963973}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_MaxDistanceOnly: 0
@@ -3994,7 +4007,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.5933403, y: -0.000019848347}
+  m_ConnectedAnchor: {x: 0.5933404, y: -0.00001963973}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -4437,7 +4450,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.7999915, y: -0.33998674}
+  m_ConnectedAnchor: {x: 0.79999137, y: -0.3399868}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!233 &5235864043878807547
@@ -4456,7 +4469,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.7999915, y: -0.33998674}
+  m_ConnectedAnchor: {x: 0.79999137, y: -0.3399868}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -4515,13 +4528,13 @@ MonoBehaviour:
   ammussavu: {fileID: 8089225716722336627, guid: 1b5d92f17b8679045847878af6d411ec,
     type: 3}
   ammussavukesto: 0.7
-  shootingcycle: 0.5
+  shootingcycle: 1.5
   ammuvainjosalusvasemmmalla: 1
   ammus: {fileID: 4665176215325690238, guid: 507ea8ebc0e82bd489bcc3dc1af72594, type: 3}
   ampumisenvoimakkuus: 5
   shooterposition: {fileID: 3817861647014083909}
   piipuntoinenpaa: {fileID: 2605864400499621296}
-  kulmalimit: 2
+  kulmalimit: 10
   rekyyliVoima: 30
   torqueStrength: 10.5
   damping: 0.5
@@ -4532,6 +4545,7 @@ MonoBehaviour:
   hylsyforce: 0.7
   hylsyrandomkulmaalku: -20
   hylsyrandomkulmaloppu: 0
+  ignorekulmalimit: 0
 --- !u!61 &1428434159253560187
 BoxCollider2D:
   m_ObjectHideFlags: 0

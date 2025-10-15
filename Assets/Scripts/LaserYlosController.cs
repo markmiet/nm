@@ -40,7 +40,7 @@ public class LaserYlosController : BaseController
             return;
         }
 
-        TuhoaAmmukset( gameObject);
+        //TuhoaAmmukset( gameObject);
 
         Vector2 offset = rend.material.GetTextureOffset("_MainTex");
         if (muutax)

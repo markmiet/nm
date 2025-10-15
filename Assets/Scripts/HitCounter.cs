@@ -55,7 +55,7 @@ public class HitCounter : BaseController
 
     public GameObject hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan;
     public float kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan;
-    public bool RegisterHit()
+    public virtual bool RegisterHit()
     {
 
 

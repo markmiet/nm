@@ -42,6 +42,9 @@ public class HaulikkoPiippuController : BaseController
     public float hylsyforce = 1.0f;
     public float hylsyrandomkulmaalku = 200;
     public float hylsyrandomkulmaloppu = 300;
+
+
+    public bool ignorekulmalimit = false;
     void Update()
     {
         //if (OnkoOkToimiaUusi(gameObject))
@@ -79,7 +82,7 @@ public class HaulikkoPiippuController : BaseController
 
                     float kulma = Vector2.Angle(vektori, alusvektori);
 
-                    if (kulma <= kulmalimit)
+                    if (ignorekulmalimit || kulma <= kulmalimit)
                     {
 
                         Vector2 v2 =

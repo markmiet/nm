@@ -161,4 +161,34 @@ GetComponents<Collider2D>();
         }
         */
     }
+
+    private float oboostedSpeed = 5;
+    private float oforce= 0.5f;
+    private float omaxAngularSpeed = 2.5f;
+
+    private float omaxSpeed = 0.5f;
+    public void PuolitaArvot()
+    {
+
+        oboostedSpeed = boostedSpeed;
+        oforce = force;
+        omaxAngularSpeed = maxAngularSpeed;
+
+        omaxSpeed = maxSpeed;
+
+        boostedSpeed = boostedSpeed / 10.0f;
+        force = force / 10.0f;
+        maxAngularSpeed = maxAngularSpeed / 10.0f;
+        maxSpeed = maxSpeed / 10.0f;
+
+    }
+    public void PalautaArvot()
+    {
+        boostedSpeed = oboostedSpeed;
+        force = oforce;
+        maxAngularSpeed = omaxAngularSpeed;
+        maxSpeed = omaxSpeed;
+
+    }
+
 }

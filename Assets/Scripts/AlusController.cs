@@ -2496,8 +2496,8 @@ m_Rigidbody2D.position.x, m_Rigidbody2D.position.y, 0);
             if (laserkaytossa)
             {
                 ad.AluslaserPlay();
-                //                instanssi = Instantiate(
-                //                  laserPrefab, v3, Quaternion.identity);
+                 //               instanssi = Instantiate(
+                   //               laserPrefab, v3, Quaternion.identity);
 
                 instanssi =
                 ObjectPoolManager.Instance.GetFromPool(laserPrefab, v3, Quaternion.identity);
