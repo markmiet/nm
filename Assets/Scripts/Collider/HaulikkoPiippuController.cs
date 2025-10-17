@@ -51,7 +51,7 @@ public class HaulikkoPiippuController : BaseController
         //{
         l += Time.deltaTime;
         float value = Random.Range(-0.1f, 0.3f);
-        if (l >= shootingcycle+value)
+        if (l >= shootingcycle + value)
         {
             if (ammus != null)
             {
@@ -94,7 +94,7 @@ public class HaulikkoPiippuController : BaseController
                         ins.GetComponent<Rigidbody2D>().velocity = v2;
                         l = 0.0f;
 
-                        if (rekyyliVoima > 0.0f)
+                        if (rekyyliVoima > 0.0f && GetComponent<Rigidbody2D>()!=null)
                         {
                             Vector2 alku = piipuntoinenpaa.transform.position;
                             Vector2 loppu = shooterposition.transform.position;
@@ -104,15 +104,15 @@ public class HaulikkoPiippuController : BaseController
                             GetComponent<Rigidbody2D>().AddForce(suunta * rekyyliVoima, ForceMode2D.Impulse);
 
                             ApplyForces2D ap = GetComponent<ApplyForces2D>();
-                            if (ap!=null)
+                            if (ap != null)
                             {
                                 ap.AsetaBoostedSpeedKayttoon();
                             }
                         }
 
-                        if (ammussavu!=null && ammussavukesto>0.0f)
+                        if (ammussavu != null && ammussavukesto > 0.0f)
                         {
-                            GameObject savu=
+                            GameObject savu =
                                 Instantiate(ammussavu, shooterposition.transform.position, Quaternion.identity);
                             Destroy(savu, ammussavukesto);
                         }
@@ -163,12 +163,14 @@ public class HaulikkoPiippuController : BaseController
                         float angleDiff = Mathf.DeltaAngle(currentAngle, targetAngle);
 
                         // Apply torque based on the difference
-                       // float torqueStrength = 5.5f;     // how fast to rotate
-                       // float damping = 0.5f;            // how much to smooth rotation
+                        // float torqueStrength = 5.5f;     // how fast to rotate
+                        // float damping = 0.5f;            // how much to smooth rotation
+                        if (GetComponent<Rigidbody2D>() != null)
+                        {
+                            float torque = angleDiff * torqueStrength - GetComponent<Rigidbody2D>().angularVelocity * damping;
 
-                        float torque = angleDiff * torqueStrength - GetComponent<Rigidbody2D>().angularVelocity * damping;
-                        GetComponent<Rigidbody2D>().AddTorque(torque);
-
+                            GetComponent<Rigidbody2D>().AddTorque(torque);
+                        }
                     }
 
                 }
@@ -181,7 +183,7 @@ public class HaulikkoPiippuController : BaseController
 
     private void TeeHylsy()
     {
-        if (hylsynpaikka!=null && hylsy!=null && hylsyeloaika>0.0f )
+        if (hylsynpaikka != null && hylsy != null && hylsyeloaika > 0.0f)
         {
             GameObject instanssihylsy = Instantiate(hylsy, hylsynpaikka.transform.position, Quaternion.identity);
             Destroy(instanssihylsy, hylsyeloaika);
