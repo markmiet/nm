@@ -71,7 +71,6 @@
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_RandomDir.cs" />
     <Compile Include="Assets\Scripts\Collider\SpriteMeshExploderGroupedFade.cs" />
     <Compile Include="Assets\Scripts\CopilotTextControl.cs" />
-    <Compile Include="Assets\Hero Knight - Pixel Art\Demo\DestroyEvent_HeroKnight.cs" />
     <Compile Include="Assets\AdvancedPolygonCollider\Script\AdvancedPolygonColliderUtilities.cs" />
     <Compile Include="Assets\Scripts\OliotekijaController.cs" />
     <Compile Include="Assets\Scripts\ObjectPoolManager.cs" />
@@ -110,6 +109,7 @@
     <Compile Include="Assets\Scripts\CameraObjectManager.cs" />
     <Compile Include="Assets\Scripts\HaukisiivetController.cs" />
     <Compile Include="Assets\Scripts\AlusLightController.cs" />
+    <Compile Include="Assets\Scripts\DualLegForce2D.cs" />
     <Compile Include="Assets\Scripts\BaseController.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\SimpleCharacterMotor.cs" />
     <Compile Include="Assets\Scripts\Collider\NewGunController.cs" />
@@ -129,8 +129,7 @@
     <Compile Include="Assets\Scripts\InterceptorController.cs" />
     <Compile Include="Assets\Scripts\PoolAble.cs" />
     <Compile Include="Assets\Scripts\TiilijotaeivoituhotaController.cs" />
-    <Compile Include="Assets\Hero Knight - Pixel Art\ColorSwap\ColorSwap_HeroKnight.cs" />
-    <Compile Include="Assets\Hero Knight - Pixel Art\Demo\HeroKnight.cs" />
+    <Compile Include="Assets\Scripts\Collider\SkelePienempiController.cs" />
     <Compile Include="Assets\Scripts\Collider\IKHandAndGunAim2D.cs" />
     <Compile Include="Assets\Scripts\PauseButtonControlleri.cs" />
     <Compile Include="Assets\Scripts\HaukiSilmaController.cs" />
@@ -190,7 +189,6 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\Scripts\SpriteGridSplitter.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Scripts\CFX_LightIntensityFade.cs" />
-    <Compile Include="Assets\Hero Knight - Pixel Art\Demo\Sensor_HeroKnight.cs" />
     <Compile Include="Assets\Scripts\TextuuriController.cs" />
     <Compile Include="Assets\Scripts\KiviIExplodaple.cs" />
     <Compile Include="Assets\Scripts\UltimatePerformanceManager.cs" />
@@ -243,6 +241,7 @@
     <Compile Include="Assets\Scripts\Collider\IgnoreChildCollisions2D.cs" />
     <Compile Include="Assets\Scripts\DestroyController.cs" />
     <Compile Include="Assets\Scripts\RingBoxColliderGenerator.cs" />
+    <Compile Include="Assets\Scripts\Collider\HaulikkoIlmanRigidBodya.cs" />
     <Compile Include="Assets\Scripts\PyorooviController.cs" />
     <Compile Include="Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_Wall.cs" />
     <Compile Include="Assets\Scripts\Collider\RigidbodyVelocityLimiter.cs" />
@@ -318,14 +317,12 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\Houidisoft technology\Plasma Shader\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Art\meshrenderers\StencilSpriteMask.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend NoSoftParticles.shader" />
     <None Include="Assets\UnityTechnologies\ParticlePack\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\Hero Knight - Pixel Art\ColorSwap\Sprites-ColorSwap.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
