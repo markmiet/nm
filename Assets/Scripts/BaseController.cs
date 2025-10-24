@@ -734,7 +734,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     public bool OnkoVihollisenJaAluksenValillaTiilia(Vector3 shooterPositionpara)
     {
         Vector3 shooterPosition;
-        if (shooterPositionpara != Vector3.zero)
+        if (shooterPositionpara == Vector3.zero)
         {
             shooterPosition = transform.position;
         }
@@ -752,13 +752,14 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         float distance = Vector3.Distance(shooterPosition, alusPosition);
         Vector3 direction = (alusPosition - shooterPosition).normalized;
 
-        RaycastHit2D[] hitsit = Physics2D.RaycastAll(transform.position, direction, distance);
+        RaycastHit2D[] hitsit = Physics2D.RaycastAll(shooterPosition, direction, distance);
         if (hitsit != null & hitsit.Length > 0)
         {
             foreach (RaycastHit2D hit in hitsit)
             {
                 if (hit.collider != null)
                 {
+                    Debug.Log("hitin " + hit.collider.tag);
                     if (hit.collider.tag.Contains("tiili") || hit.collider.tag.Contains("laatikkovihollinen"))
                     {
                         Debug.Log("osutaan tiileen");
