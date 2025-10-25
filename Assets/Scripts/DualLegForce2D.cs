@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.U2D.IK;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Animator))]
 public class DualLegForce2D : MonoBehaviour
 {
     [Header("References")]
@@ -73,24 +73,52 @@ public class DualLegForce2D : MonoBehaviour
     public bool disableLegLimbSolvers = true;
     public bool disablejalkateraLegLimbSolvers = true;
     private Vector2 originalScale;
+    private DirectionSpriteSwitcher directionSpriteSwitcher;
 
+    private Animation animation;
     public void Start()
     {
         originalScale = transform.localScale;
+        directionSpriteSwitcher = GetComponentInParent<DirectionSpriteSwitcher>();
+
         
-      //  Oikealle(nykysuuntaoikea);
+        //  Oikealle(nykysuuntaoikea);
     }
 
     private void Reset()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        
     }
+
+    public float velocityalaraja = 1.0f;
 
     private void FixedUpdate()
     {
 
+       // AnimatorTransitionInfo transitionInfo = animator.GetAnimatorTransitionInfo(0);
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorTransitionInfo animatorTransitionInfo=animator.GetAnimatorTransitionInfo(0);
+        Debug.Log("stateInfo.name=" + stateInfo.ToString()+" transuinfo="+ animatorTransitionInfo.ToString());
+        if (stateInfo.IsName("skelepienempioikea2keski") || stateInfo.IsName("vasen2keski") )
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            return;
+
+        }
+
+            /*
+            if (directionSpriteSwitcher.currentState == DirectionSpriteSwitcher.State.IdleCenter)
+            {
+                rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+                return;
+            }
+            */
+
         float direction = transform.localScale.x >= 0 ? 1f : -1f;
+        /*sddsds*/
         if (footForce == 0.0f)
         {
             rb.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -100,26 +128,29 @@ public class DualLegForce2D : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints2D.None;
         }
+
         /*
         if (rb.velocity.x < 0)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
         */
+      //  Debug.Log("velocityx=" + rb.velocity.x);
         if (direction>=0)
         {
             if (rb.velocity.x < 0)
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.velocity = new Vector2(velocityalaraja, rb.velocity.y);
             }
         }
         else
         {
             if (rb.velocity.x > 0)
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.velocity = new Vector2(-velocityalaraja, rb.velocity.y);
             }
         }
+        
 
 
         float leftPush = animator.GetFloat("LeftFootPush");
@@ -178,175 +209,176 @@ public class DualLegForce2D : MonoBehaviour
         HandleSlopeSlide(rightGrounded, rightSlopeAngle, rightSlopeDir);
 
         // === Apply drag ===
-        rb.velocity = new Vector2(rb.velocity.x * (1f - Time.fixedDeltaTime * drag), rb.velocity.y);
-
-        // ===  locking ===
-        //enableFootLock=false toimii paremmin
-        if (enableFootLock)
-        {
-            //HandleFootLocking(leftFootPoint, ref leftLocked, ref leftLockPosition, leftGrounded, leftPush);
-            //HandleFootLocking(rightFootPoint, ref rightLocked, ref rightLockPosition, rightGrounded, rightPush);
-
-            // HandleFootLocking(vj1, ref leftLocked, ref leftLockPosition, leftGrounded, leftPush);
-            //  HandleFootLocking(vjalkatera, ref leftLocked, ref leftLockPosition2, leftGrounded, leftPush);
-
-            //            public LimbSolver2D vj1LimbSolver2D;
-            //  public LimbSolver2D vjalkateraLimbSolver2D;
-
-            //HandleFootLocking(ojalkatera, ref leftLocked, ref rightLockPosition2, rightGrounded, rightPush);
-
-
-            //HandleFootLocking(rightFootPoint, ref rightLocked, ref rightLockPosition, rightGrounded, rightPush);
-
-            if (leftGrounded)
-            {
-                vj1LimbSolver2D.weight = footlockweight;
-                vjalkateraLimbSolver2D.weight = footlockweight;
-                if (disableLegLimbSolvers)
-                {
-                    vj1LimbSolver2D.enabled = false;
-                }
-
-
-                // public bool disableLegLimbSolvers = true;
-                // public bool disablejalkateraLegLimbSolvers = true;
-
-                if (disablejalkateraLegLimbSolvers)
-                {
-                    vjalkateraLimbSolver2D.enabled = false;
-                }
-
-
-            }
-            else
-            {
-                vj1LimbSolver2D.weight = 1.0f;
-                vjalkateraLimbSolver2D.weight = 1.0f;
-                vj1LimbSolver2D.enabled = true;
-                vjalkateraLimbSolver2D.enabled = true;
-
-                //@todoo parametrisoi noiden disablointi/enablointi muuttujalla
-
-            }
-            if (rightGrounded)
-            {
-                oj1LimbSolver2D.weight = footlockweight;
-                ojalkateraLimbSolver2D.weight = footlockweight;
-                if (disableLegLimbSolvers)
-                {
-                    oj1LimbSolver2D.enabled = false;
-                }
-                if (disablejalkateraLegLimbSolvers)
-                {
-                    ojalkateraLimbSolver2D.enabled = false;
-                }
-            }
-            else
-            {
-
-                oj1LimbSolver2D.weight = 1.0f;
-                ojalkateraLimbSolver2D.weight = 1.0f;
-                oj1LimbSolver2D.enabled = true;
-
-                ojalkateraLimbSolver2D.enabled = true;
-
-            }
-
-        }
-
-        // === Animation speed sync ===
-        if (syncAnimationSpeed)
-        {
-            float horizontalSpeed = Mathf.Abs(rb.velocity.x);
-            animator.speed = Mathf.Clamp(horizontalSpeed * animationSpeedMultiplier, 0.1f, 3f);
-        }
-
-
-
-        // === Animator state info ===
-        //    animator.SetBool("LeftGrounded", leftGrounded);
-        //      animator.SetBool("RightGrounded", rightGrounded);
-    }
-
-    private void ApplyFootForce(bool grounded, float push, Vector2 slopeDir, float slopeAngle, Transform foot, float facing, Color debugColor)
-    {
-        if (!grounded || push <= pushThreshold)
-            return;
-
-        // Only walk if slope is within walkable range
-        if (slopeAngle <= maxSlopeAngle)
-        {
-            Vector2 force = slopeDir * push * footForce * facing;
-            rb.AddForce(force, forcemode);
-            Debug.DrawRay(foot.position, force.normalized * 0.3f, debugColor);
-        }
-    }
-
-    private void HandleSlopeSlide(bool grounded, float slopeAngle, Vector2 slopeDir)
-    {
-        if (!grounded || slopeAngle <= maxSlopeAngle)
-            return;
-
-        // Slide down slope
-        Vector2 slideDirection = -slopeDir;
-        rb.AddForce(slideDirection * slideForce, ForceMode2D.Force);
-    }
-
-
-
-    // === DEBUG GIZMOS ===
-    private void OnDrawGizmosSelected()
-    {
-        DrawFootRayGizmo(leftFootPoint, leftGrounded, leftSlopeAngle);
-        DrawFootRayGizmo(rightFootPoint, rightGrounded, rightSlopeAngle);
-    }
-
-    private void DrawFootRayGizmo(Transform foot, bool grounded, float slopeAngle)
-    {
-        if (!foot) return;
-
-        // Raycast line
-        Gizmos.color = grounded ? Color.white : new Color(1f, 1f, 1f, 0.3f);
-        Gizmos.DrawLine(foot.position, foot.position + Vector3.down * groundCheckDistance);
-
-        // Visual slope angle indicator (arc + text)
-#if UNITY_EDITOR
-        if (grounded)
-        {
-            // Base color changes if too steep
-            Color slopeColor = slopeAngle > maxSlopeAngle ? Color.red : Color.green;
-            UnityEditor.Handles.color = slopeColor;
-
-            // Draw small arc showing slope angle
-            Vector3 footPos = foot.position;
-            UnityEditor.Handles.DrawSolidArc(
-                footPos + Vector3.up * 0.05f,
-                Vector3.forward,
-                Vector3.up,
-                -slopeAngle,
-                0.2f
-            );
-
-            // Draw angle text
-            UnityEditor.Handles.Label(footPos + Vector3.up * 0.15f, $"{slopeAngle:0.0}°");
-        }
-#endif
-    }
-
-    public bool nykysuuntaoikea = true;
-    private void Oikealle(bool oikea)
-    {
-        /*
-        if (!nykysuuntaoikea && oikea)
-        {
-
-            transform.localScale = new Vector2(Mathf.Abs(originalScale.x), originalScale.y);
-        }
-        else if (nykysuuntaoikea && !oikea)
-        {
-            transform.localScale = new Vector2(-Mathf.Abs(originalScale.x), originalScale.y);
-        }
+        /*sddsds
+       rb.velocity = new Vector2(rb.velocity.x * (1f - Time.fixedDeltaTime * drag), rb.velocity.y);
         */
+       // ===  locking ===
+       //enableFootLock=false toimii paremmin
+       if (enableFootLock)
+       {
+           //HandleFootLocking(leftFootPoint, ref leftLocked, ref leftLockPosition, leftGrounded, leftPush);
+           //HandleFootLocking(rightFootPoint, ref rightLocked, ref rightLockPosition, rightGrounded, rightPush);
+
+           // HandleFootLocking(vj1, ref leftLocked, ref leftLockPosition, leftGrounded, leftPush);
+           //  HandleFootLocking(vjalkatera, ref leftLocked, ref leftLockPosition2, leftGrounded, leftPush);
+
+           //            public LimbSolver2D vj1LimbSolver2D;
+           //  public LimbSolver2D vjalkateraLimbSolver2D;
+
+           //HandleFootLocking(ojalkatera, ref leftLocked, ref rightLockPosition2, rightGrounded, rightPush);
+
+
+           //HandleFootLocking(rightFootPoint, ref rightLocked, ref rightLockPosition, rightGrounded, rightPush);
+
+           if (leftGrounded)
+           {
+               vj1LimbSolver2D.weight = footlockweight;
+               vjalkateraLimbSolver2D.weight = footlockweight;
+               if (disableLegLimbSolvers)
+               {
+                   vj1LimbSolver2D.enabled = false;
+               }
+
+
+               // public bool disableLegLimbSolvers = true;
+               // public bool disablejalkateraLegLimbSolvers = true;
+
+               if (disablejalkateraLegLimbSolvers)
+               {
+                   vjalkateraLimbSolver2D.enabled = false;
+               }
+
+
+           }
+           else
+           {
+               vj1LimbSolver2D.weight = 1.0f;
+               vjalkateraLimbSolver2D.weight = 1.0f;
+               vj1LimbSolver2D.enabled = true;
+               vjalkateraLimbSolver2D.enabled = true;
+
+               //@todoo parametrisoi noiden disablointi/enablointi muuttujalla
+
+           }
+           if (rightGrounded)
+           {
+               oj1LimbSolver2D.weight = footlockweight;
+               ojalkateraLimbSolver2D.weight = footlockweight;
+               if (disableLegLimbSolvers)
+               {
+                   oj1LimbSolver2D.enabled = false;
+               }
+               if (disablejalkateraLegLimbSolvers)
+               {
+                   ojalkateraLimbSolver2D.enabled = false;
+               }
+           }
+           else
+           {
+
+               oj1LimbSolver2D.weight = 1.0f;
+               ojalkateraLimbSolver2D.weight = 1.0f;
+               oj1LimbSolver2D.enabled = true;
+
+               ojalkateraLimbSolver2D.enabled = true;
+
+           }
+
+       }
+
+       // === Animation speed sync ===
+       if (syncAnimationSpeed)
+       {
+           float horizontalSpeed = Mathf.Abs(rb.velocity.x);
+           animator.speed = Mathf.Clamp(horizontalSpeed * animationSpeedMultiplier, 0.1f, 3f);
+       }
+
+
+
+       // === Animator state info ===
+       //    animator.SetBool("LeftGrounded", leftGrounded);
+       //      animator.SetBool("RightGrounded", rightGrounded);
+   }
+
+   private void ApplyFootForce(bool grounded, float push, Vector2 slopeDir, float slopeAngle, Transform foot, float facing, Color debugColor)
+   {
+       if (!grounded || push <= pushThreshold)
+           return;
+
+       // Only walk if slope is within walkable range
+       if (slopeAngle <= maxSlopeAngle)
+       {
+           Vector2 force = slopeDir * push * footForce * facing;
+           rb.AddForce(force, forcemode);
+           Debug.DrawRay(foot.position, force.normalized * 0.3f, debugColor);
+       }
+   }
+
+   private void HandleSlopeSlide(bool grounded, float slopeAngle, Vector2 slopeDir)
+   {
+       if (!grounded || slopeAngle <= maxSlopeAngle)
+           return;
+
+       // Slide down slope
+       Vector2 slideDirection = -slopeDir;
+       rb.AddForce(slideDirection * slideForce, ForceMode2D.Force);
+   }
+
+
+
+   // === DEBUG GIZMOS ===
+   private void OnDrawGizmosSelected()
+   {
+       DrawFootRayGizmo(leftFootPoint, leftGrounded, leftSlopeAngle);
+       DrawFootRayGizmo(rightFootPoint, rightGrounded, rightSlopeAngle);
+   }
+
+   private void DrawFootRayGizmo(Transform foot, bool grounded, float slopeAngle)
+   {
+       if (!foot) return;
+
+       // Raycast line
+       Gizmos.color = grounded ? Color.white : new Color(1f, 1f, 1f, 0.3f);
+       Gizmos.DrawLine(foot.position, foot.position + Vector3.down * groundCheckDistance);
+
+       // Visual slope angle indicator (arc + text)
+#if UNITY_EDITOR
+       if (grounded)
+       {
+           // Base color changes if too steep
+           Color slopeColor = slopeAngle > maxSlopeAngle ? Color.red : Color.green;
+           UnityEditor.Handles.color = slopeColor;
+
+           // Draw small arc showing slope angle
+           Vector3 footPos = foot.position;
+           UnityEditor.Handles.DrawSolidArc(
+               footPos + Vector3.up * 0.05f,
+               Vector3.forward,
+               Vector3.up,
+               -slopeAngle,
+               0.2f
+           );
+
+           // Draw angle text
+           UnityEditor.Handles.Label(footPos + Vector3.up * 0.15f, $"{slopeAngle:0.0}°");
+       }
+#endif
+   }
+
+   public bool nykysuuntaoikea = true;
+   private void Oikealle(bool oikea)
+   {
+       /*
+       if (!nykysuuntaoikea && oikea)
+       {
+
+           transform.localScale = new Vector2(Mathf.Abs(originalScale.x), originalScale.y);
+       }
+       else if (nykysuuntaoikea && !oikea)
+       {
+           transform.localScale = new Vector2(-Mathf.Abs(originalScale.x), originalScale.y);
+       }
+       */
 
         if (oikea)
         {

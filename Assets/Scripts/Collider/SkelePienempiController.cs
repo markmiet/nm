@@ -65,6 +65,8 @@ public class SkelePienempiController : BaseController
 
     private bool oikealleyloshyppyvoimaannettu = false;
 
+    private StateChanger stateChanger;
+    private DirectionSpriteSwitcher directionSpriteSwitcher;
     void Start()
     {
         animator =
@@ -75,9 +77,48 @@ public class SkelePienempiController : BaseController
 
         handIKFollower =
         GetComponentInChildren<HandIKFollower>();
+
+
+        stateChanger = GetComponentInParent<StateChanger>();
+
+        directionSpriteSwitcher = GetComponentInParent<DirectionSpriteSwitcher>();
+    }
+    public float changedelay = 1.0f;
+    private float changedelaylaskuri = 0.0f;
+
+    private void Update()
+    {
+        changedelaylaskuri += Time.deltaTime;
+
+
+        bool seinaoikealla = onkoSeinaoikealla();
+        if (seinaoikealla)
+        {
+            /*
+            if (directionSpriteSwitcher.currentState== DirectionSpriteSwitcher.State.WalkRight)
+            {
+
+                stateChanger.ChangeState(DirectionSpriteSwitcher.State.WalkLeft);
+
+            }
+            else if (directionSpriteSwitcher.currentState == DirectionSpriteSwitcher.State.WalkLeft)
+            {
+
+                stateChanger.ChangeState(DirectionSpriteSwitcher.State.WalkRight);
+
+            }
+            */
+            if (changedelaylaskuri> changedelay)
+            {
+                stateChanger.ChangeState(DirectionSpriteSwitcher.State.IdleCenter);
+                changedelaylaskuri = 0.0f;
+            }
+           
+        }
     }
 
-    void Update()
+
+    void Update2222()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (true)

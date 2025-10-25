@@ -1271,7 +1271,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         }
 
     }
-
+    public float sirpaleenmassanlimitti = 10f;
 
     public void RajaytaSpriteUusiMonimutkaisin(
     GameObject parenttigameobjekti,
@@ -1347,6 +1347,10 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         if (r!=null)
         {
             massa = r.mass;
+            if (massa> sirpaleenmassanlimitti)
+            {
+                massa = sirpaleenmassanlimitti;
+            }
             massaoli = true;
         }
 

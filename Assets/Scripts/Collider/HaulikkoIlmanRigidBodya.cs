@@ -18,6 +18,8 @@ public class HaulikkoIlmanRigidBodya : BaseController
 
 
     public SkeletonAiming2DIK skeletonAiming2DIK;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +35,11 @@ public class HaulikkoIlmanRigidBodya : BaseController
         }
         return skeletonAiming2DIK != null && skeletonAiming2DIK.canSeePlayer;
     }
-  
+
 
     // Update is called once per frame
+
+    
     void Update()
     {
         if (alus!=null && ammus!=null)
@@ -50,6 +54,8 @@ public class HaulikkoIlmanRigidBodya : BaseController
                 }
                 if (vapaata)
                 {
+
+
                     Vector2 v2 =
         palautaAmmukselleVelocityVectorKaytaPiippua(alus, ampumisenvoimakkuus, shooterposition.transform.position, piipuntoinenpaa.transform.position);
 

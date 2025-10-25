@@ -48,11 +48,23 @@ public class GunAimer2D : MonoBehaviour
     public bool showDebug = true;
 
     private float currentAngle;
+    public DirectionSpriteSwitcher directionSpriteSwitcher;
+
+    public void Start()
+    {
+        
+    }
 
     private void LateUpdate()
     {
         if (!hand || !gun || !handPoint || !takatahtain || !piippu)
             return;
+
+
+        if (directionSpriteSwitcher.currentState == DirectionSpriteSwitcher.State.IdleCenter)
+        {
+            return;
+        }
 
         bool isAiming = skeletonAiming2DIK && skeletonAiming2DIK.canSeePlayer;
         float aimBlend = 1f;

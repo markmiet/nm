@@ -125,14 +125,18 @@ public class DirectionSpriteSwitcher : MonoBehaviour
                 walkLeft.SetActive(true);
                 walkLeft.transform.position = position;
                 dualLegForce2Dvasen.footForce = dualLegForce2DvasenFootForceOriginal;
+                dualLegForce2Dvasen.syncAnimationSpeed = true;
                 leftAnim.speed = walkanimspeed;
                 // leftAnim?.SetBool("isWalking", true);
                 break;
 
             case State.IdleCenter:
                 idleCenter.transform.position = position;
-                dualLegForce2Doikea.footForce = 0.0f;
-                dualLegForce2Dvasen.footForce = 0.0f;
+                //idleCenter.SetActive(true);
+               // dualLegForce2Dvasen.syncAnimationSpeed = false;
+               //  dualLegForce2Doikea.syncAnimationSpeed = false;
+               //  dualLegForce2Doikea.footForce = 0.0f;
+               //  dualLegForce2Dvasen.footForce = 0.0f;
                 if (previousState== State.WalkRight)
                 {
                     walkRight.SetActive(true);
@@ -168,6 +172,7 @@ public class DirectionSpriteSwitcher : MonoBehaviour
                 walkRight.SetActive(true);
                 walkRight.transform.position = position;
                 dualLegForce2Doikea.footForce = dualLegForce2DoikeaFootForceOriginal;
+                dualLegForce2Doikea.syncAnimationSpeed = true;
                 rightAnim.speed = walkanimspeed;
                 //rightAnim?.SetBool("isWalking", true);
                 break;
@@ -178,9 +183,9 @@ public class DirectionSpriteSwitcher : MonoBehaviour
 
     public void ChangeState(State state)
     {
-        Debug.Log("Animation event received — switching to WalkLeft");
-       // SetState(state,false);
-        StartCoroutine(DeferredChangeState(state));
+        Debug.Log("Animation event received — switching to "+ state);
+        SetState(state,false);
+        //StartCoroutine(DeferredChangeState(state));
     }
 
     private IEnumerator DeferredChangeState(State newState)

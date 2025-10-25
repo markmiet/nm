@@ -21,10 +21,11 @@ public class SkeletonAiming2DIK : BaseController
     public Transform backofhead;
     public Transform eye;
     public float fieldofvisioninDegrees = 90;
-
+    private DirectionSpriteSwitcher directionSpriteSwitcher;
     public void Start()
     {
         player = PalautaAlus().transform;
+        directionSpriteSwitcher = GetComponentInParent<DirectionSpriteSwitcher>();
     }
 
 
@@ -65,6 +66,13 @@ public class SkeletonAiming2DIK : BaseController
     void Update()
     {
         if (player == null || aimSolver == null || walkSolver == null) return;
+
+
+        if (directionSpriteSwitcher.currentState == DirectionSpriteSwitcher.State.IdleCenter)
+        {
+            return;
+        }
+
         canSeePlayer = CanEnemySeePlayer();
         // Smoothly blend weight based on visibility
         float targetWeight = canSeePlayer ? 1f : 0f;
