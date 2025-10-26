@@ -21,5 +21,8 @@ public class StateChanger : MonoBehaviour
     {
         directionSpriteSwitcher.ChangeState(state);
     }
-
+    public void LukitseXy()
+    {
+        directionSpriteSwitcher.LukitseXy();
+    }
 }

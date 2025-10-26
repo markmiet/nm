@@ -86,6 +86,47 @@ public class SkelePienempiController : BaseController
     public float changedelay = 1.0f;
     private float changedelaylaskuri = 0.0f;
 
+    public enum SeinaOikeallaAction
+    {
+        KaannaSuuntaa,
+        PysypaikallaanMeneAmpumaAsentoon,
+        HyppaaYli
+    }
+
+    public SeinaOikeallaAction currentSeinaOikeallaAction;
+
+    private bool VoikoHypataYli()
+    {
+        return false;
+    }
+
+    private SeinaOikeallaAction PalautaSeinaOikeallaAction()
+    {
+        float parentSign = Mathf.Sign(transform.lossyScale.x);
+        bool facingright = true;
+        if (parentSign < 0)
+        {
+            facingright = false;
+        }
+
+        if (facingright && currentSeinaOikeallaAction != null && currentSeinaOikeallaAction== SeinaOikeallaAction.PysypaikallaanMeneAmpumaAsentoon)
+        {
+            return SeinaOikeallaAction.PysypaikallaanMeneAmpumaAsentoon;
+        }
+        if (currentSeinaOikeallaAction != null && currentSeinaOikeallaAction == SeinaOikeallaAction.KaannaSuuntaa)
+        {
+            return SeinaOikeallaAction.KaannaSuuntaa;
+        }
+        bool voikohypatayli = VoikoHypataYli();
+        if (voikohypatayli && facingright)
+        {
+            return SeinaOikeallaAction.HyppaaYli;
+        }
+        return SeinaOikeallaAction.KaannaSuuntaa;
+    }
+
+
+
     private void Update()
     {
         changedelaylaskuri += Time.deltaTime;
@@ -110,10 +151,26 @@ public class SkelePienempiController : BaseController
             */
             if (changedelaylaskuri> changedelay)
             {
-                stateChanger.ChangeState(DirectionSpriteSwitcher.State.IdleCenter);
-                changedelaylaskuri = 0.0f;
+                SeinaOikeallaAction s = PalautaSeinaOikeallaAction();
+                if (s==SeinaOikeallaAction.KaannaSuuntaa)
+                {
+                    stateChanger.ChangeState(DirectionSpriteSwitcher.State.IdleCenter);
+                    changedelaylaskuri = 0.0f;
+                }
+                else if (s == SeinaOikeallaAction.HyppaaYli)
+                {
+                        //todoo
+                        //stateChanger.ChangeState(DirectionSpriteSwitcher.State.IdleCenter);
+                        changedelaylaskuri = 0.0f;
+                }
+                else if (s == SeinaOikeallaAction.PysypaikallaanMeneAmpumaAsentoon)
+                {
+                    //todoo
+                    stateChanger.ChangeState(DirectionSpriteSwitcher.State.ShootingPosition);
+                    changedelaylaskuri = 0.0f;
+                }
             }
-           
+
         }
     }
 
@@ -373,4 +430,7 @@ public class SkelePienempiController : BaseController
             Gizmos.DrawWireCube(oikeajalkakohta.transform.position, oikeajalkakohtasize);
         }
     }
+
+
+
 }

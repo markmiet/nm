@@ -22,6 +22,13 @@ public class SkeletonAiming2DIK : BaseController
     public Transform eye;
     public float fieldofvisioninDegrees = 90;
     private DirectionSpriteSwitcher directionSpriteSwitcher;
+
+    public float maxDist = 0.5f;//tämä vaikuttaa vain sen targetin kulkemisnopeuteen
+
+
+    public float maxDistanceOfAimTargetFromTransformPosition = 1.0f;
+    
+
     public void Start()
     {
         player = PalautaAlus().transform;
@@ -96,7 +103,26 @@ public class SkeletonAiming2DIK : BaseController
             Vector3 aimPos;
 
             if (canSeePlayer)
+            {
                 aimPos = player.position;
+
+                
+                Vector3 dirrri = aimPos - transform.parent.transform.position;
+                float dist = dirrri.magnitude;
+
+                // Clamp how far the target can move
+                if (dist > maxDistanceOfAimTargetFromTransformPosition)
+                {
+                    dirrri = dirrri.normalized * maxDistanceOfAimTargetFromTransformPosition;
+
+                    // Final, clamped target position
+                    aimPos = transform.parent.transform.position + dirrri;
+                }
+
+              
+
+            }
+               
             else
             {
                 //
@@ -105,10 +131,11 @@ public class SkeletonAiming2DIK : BaseController
 
 
             }
+            //@todo go from transform position towards aimPos max of   public float maxDistanceOfAimTargetFromTransformPosition = 1.0f;
 
 
             // Clamp how far the target can move
-            float maxDist = 0.5f;
+
             Vector3 dir = aimPos - transform.position;
             if (dir.magnitude > maxDist)
                 aimPos = transform.position + dir.normalized * maxDist;
@@ -116,6 +143,30 @@ public class SkeletonAiming2DIK : BaseController
             aimTarget.position = Vector3.Lerp(aimTarget.position, aimPos, Time.deltaTime * 5f);
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (aimTarget == null) return;
+
+        // Choose color based on detection (optional)
+        Gizmos.color = canSeePlayer ? Color.red : Color.yellow;
+
+        // Draw a small square (2D box) at the aim target position
+        float boxSize = 0.1f;
+        Vector3 pos = aimTarget.position;
+
+        // Draw a wire square in 2D (on XY plane)
+        Gizmos.DrawLine(pos + new Vector3(-boxSize, -boxSize, 0), pos + new Vector3(boxSize, -boxSize, 0));
+        Gizmos.DrawLine(pos + new Vector3(boxSize, -boxSize, 0), pos + new Vector3(boxSize, boxSize, 0));
+        Gizmos.DrawLine(pos + new Vector3(boxSize, boxSize, 0), pos + new Vector3(-boxSize, boxSize, 0));
+        Gizmos.DrawLine(pos + new Vector3(-boxSize, boxSize, 0), pos + new Vector3(-boxSize, -boxSize, 0));
+
+        // Optional: draw line from this object to the aim target
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, aimTarget.position);
+    }
+#endif
 
 
 }

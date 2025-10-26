@@ -13,7 +13,7 @@ public class DualLegForce2D : MonoBehaviour
     public Transform leftFootPoint;
     public Transform rightFootPoint;
     public float groundCheckDistance = 0.1f;
-    public LayerMask groundMask;
+  //  public LayerMask groundMask;
 
     [Header("Force Settings")]
     [Tooltip("Base force applied per foot push.")]
@@ -101,13 +101,28 @@ public class DualLegForce2D : MonoBehaviour
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorTransitionInfo animatorTransitionInfo=animator.GetAnimatorTransitionInfo(0);
-        Debug.Log("stateInfo.name=" + stateInfo.ToString()+" transuinfo="+ animatorTransitionInfo.ToString());
-        if (stateInfo.IsName("skelepienempioikea2keski") || stateInfo.IsName("vasen2keski") )
+       // Debug.Log("stateInfo.name=" + stateInfo.ToString()+" transuinfo="+ animatorTransitionInfo.ToString());
+        if (stateInfo.IsName("skelepienempioikea2keski") || stateInfo.IsName("vasen2keski") || stateInfo.IsName("ampumaasentoontoon") )
         {
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            //rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            if (rb.bodyType!=RigidbodyType2D.Static)
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            
             return;
 
         }
+        /*
+        if (stateInfo.IsName("ampumaasentoontoon") )
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            return;
+
+        }
+        */
+      
+
 
             /*
             if (directionSpriteSwitcher.currentState == DirectionSpriteSwitcher.State.IdleCenter)
@@ -157,8 +172,8 @@ public class DualLegForce2D : MonoBehaviour
         float rightPush = animator.GetFloat("RightFootPush");
 
         // === Ground check + slope detection ===
-        RaycastHit2D leftHit = Physics2D.Raycast(leftFootPoint.position, Vector2.down, groundCheckDistance, groundMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(rightFootPoint.position, Vector2.down, groundCheckDistance, groundMask);
+        RaycastHit2D leftHit = Physics2D.Raycast(leftFootPoint.position, Vector2.down, groundCheckDistance);
+        RaycastHit2D rightHit = Physics2D.Raycast(rightFootPoint.position, Vector2.down, groundCheckDistance);
 
         leftGrounded = leftHit.collider != null;
         rightGrounded = rightHit.collider != null;

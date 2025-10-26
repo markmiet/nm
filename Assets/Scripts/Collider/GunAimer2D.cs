@@ -5,7 +5,7 @@
 /// Keeps the grip point locked to the hand, smoothly rotates toward the target,
 /// and flips the sprite when aiming left.
 /// </summary>
-public class GunAimer2D : MonoBehaviour
+public class GunAimer2D : BaseController
 {
     [Header("Gun Setup")]
     [Tooltip("The character's hand bone or transform controlled by IK or animation.")]
@@ -52,7 +52,7 @@ public class GunAimer2D : MonoBehaviour
 
     public void Start()
     {
-        
+        target = PalautaAlus().transform;
     }
 
     private void LateUpdate()

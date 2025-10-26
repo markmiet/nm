@@ -7,7 +7,8 @@ public class DirectionSpriteSwitcher : MonoBehaviour
     {
         WalkLeft,
         IdleCenter,
-        WalkRight
+        WalkRight,
+        ShootingPosition
     }
 
     [Header("stateJokahalutaanAsettaa (for debugging)")]
@@ -38,6 +39,14 @@ public class DirectionSpriteSwitcher : MonoBehaviour
     public float walkanimspeed = 0.75f;
     public float idelanimspeed = 2.0f;
 
+
+    [Header("velocityyLimit jonka j‰lkeen walkrigt static")]
+    public float velocityyLimit = 0.01f;
+
+    [Header("alas p‰in t‰m‰n verran kun walkrigt tehd‰‰n static ")]
+    public Vector3 staticsiirronmaara = new Vector3(0, 0.05f, 0);
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,8 +54,17 @@ public class DirectionSpriteSwitcher : MonoBehaviour
         leftAnim = walkLeft.GetComponent<Animator>();
         centerAnim = idleCenter.GetComponent<Animator>();
         rightAnim = walkRight.GetComponent<Animator>();
-        rightAnim.SetBool("keski", false);
-        leftAnim.SetBool("vasen2keski", false);
+     
+
+        if (walkLeft.activeSelf)
+        {
+            leftAnim.SetBool("vasen2keski", false);
+        }
+        if (walkRight.activeSelf)
+        {
+            rightAnim.SetBool("oikeampumaasentoon", false);
+            rightAnim.SetBool("keski", false);
+        }
         dualLegForce2DoikeaFootForceOriginal = dualLegForce2Doikea.footForce;
         dualLegForce2DvasenFootForceOriginal = dualLegForce2Dvasen.footForce;
     //    SetState(stateJokahalutaanAsettaa, true );
@@ -121,6 +139,17 @@ public class DirectionSpriteSwitcher : MonoBehaviour
         // activate one based on state
         switch (currentState)
         {
+            case State.ShootingPosition:
+                walkRight.SetActive(true);
+            
+                rightAnim.SetBool("keski", false);
+                //leftAnim.SetBool("vasen2keski", false);
+
+                rightAnim.SetBool("oikeampumaasentoon", true);
+                rightAnim.speed = idelanimspeed;
+                leftAnim.speed = idelanimspeed;
+
+                break;
             case State.WalkLeft:
                 walkLeft.SetActive(true);
                 walkLeft.transform.position = position;
@@ -141,7 +170,7 @@ public class DirectionSpriteSwitcher : MonoBehaviour
                 {
                     walkRight.SetActive(true);
                     rightAnim.SetBool("keski", true);
-                    leftAnim.SetBool("vasen2keski", false);
+                    //leftAnim.SetBool("vasen2keski", false);
                     rightAnim.speed = idelanimspeed;
                     leftAnim.speed = idelanimspeed;
 
@@ -149,7 +178,7 @@ public class DirectionSpriteSwitcher : MonoBehaviour
                 else if (previousState == State.WalkLeft)
                 {
                     walkLeft.SetActive(true);
-                    rightAnim.SetBool("keski", false);
+                    //rightAnim.SetBool("keski", false);
                     leftAnim.SetBool("vasen2keski", true);
                     leftAnim.speed = idelanimspeed;
                     rightAnim.speed = idelanimspeed;
@@ -194,4 +223,41 @@ public class DirectionSpriteSwitcher : MonoBehaviour
         SetState(newState, false);
     }
 
+
+
+
+    public void LukitseXy()
+    {
+        StartCoroutine(DeferredLukitseXy());
+    }
+
+
+    private IEnumerator DeferredLukitseXy()
+    {
+        Rigidbody2D rb = walkRight.GetComponent<Rigidbody2D>();
+        bool isvelo = IsVelocityAlmostZeroNoDroppingSoRigidBodyCanBeStatic(rb);
+
+        while (!isvelo)
+        {
+            yield return null;
+            isvelo = IsVelocityAlmostZeroNoDroppingSoRigidBodyCanBeStatic(rb);
+        }
+
+        //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        walkRight.transform.position -= staticsiirronmaara;
+
+        rb.bodyType = RigidbodyType2D.Static;
+
+    }
+
+   
+    private bool IsVelocityAlmostZeroNoDroppingSoRigidBodyCanBeStatic(Rigidbody2D rb)
+    {
+
+        if (Mathf.Abs (rb.velocity.y)< velocityyLimit)
+        {
+            return true;
+        }
+        return false;
+    }
 }
