@@ -49,10 +49,12 @@ public class LaserBeamLineRenderer : BaseController
     private Vector3 currentPos;
     void Update()
     {
+        /*
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
+        */
 
 
         /*

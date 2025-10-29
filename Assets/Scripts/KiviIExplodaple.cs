@@ -72,7 +72,7 @@ public class KiviIExplodaple : BaseController, IExplodable
         //tuhoa = true;
         //Explode();
         // Destroy(gameObject);
-        BaseDestroy();
+//        BaseDestroy();dssssssssssssssssssssssssss taa oli
     }
 
     public float nopeusjokapitaaYlittaaJottaKaikkituhoutuu = 1.0f;

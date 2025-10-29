@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 
 [RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(PolygonCollider2D))]
+//[RequireComponent(typeof(PolygonCollider2D))]
 
 //[ExecuteAlways] // so it works in editor
 public class SnakeCollSmoothFollow : BaseController
@@ -73,6 +73,10 @@ public class SnakeCollSmoothFollow : BaseController
 
 
         polyCollider = GetComponent<PolygonCollider2D>();
+        if (polyCollider==null)
+        {
+            polyCollider = gameObject.AddComponent<PolygonCollider2D>();
+        }
 
 
         GameObject targetObj = PalautaAlus();
@@ -216,11 +220,14 @@ public class SnakeCollSmoothFollow : BaseController
         //entä jos laskee vain etäisyyttä alukseen jos tarpeeksi lähellä niin saa toimia...
         //tai siis laskee etäisyyden kameraan...
         /*@TODOOO miten tämä madolle nyt pysähtyy liian aikaisin*/
+
+
+        /*oli näin
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
-        
+        */
 
 
         MoveHead();

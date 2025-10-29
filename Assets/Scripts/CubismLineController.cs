@@ -121,11 +121,13 @@ public class CubismLineController : MonoBehaviour
         {
             _cache.SetTexture(_propIDs["_MainTex"], maintexuusi);
         }
+        /*
         else
         {
 
             _cache.SetTexture(_propIDs["_MainTex"], maintexuusi);
         }
+        */
 
 
         // material.SetFloat("_TileCount", tilecount);

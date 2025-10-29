@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -617,6 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -827,6 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -1036,6 +1039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -1211,6 +1215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -1421,6 +1426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -1807,6 +1813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -1817,6 +1824,7 @@ MonoBehaviour:
   maxSpeed: 10
   rangetimemin: 0.1
   rangetimemax: 0.2
+  aiheutavoimaaVainjosAlusvasemmalla: 0
 --- !u!61 &739983474068804912
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6847,6 +6855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6867,6 +6876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6919,7 +6929,6 @@ GameObject:
   - component: {fileID: 4514931212545512597}
   - component: {fileID: 774122104271994897}
   - component: {fileID: 1498056798682871275}
-  - component: {fileID: 8272495863849255242}
   m_Layer: 17
   m_Name: Kalaskeletonalaspainpitkahehkuva
   m_TagString: haukivihollinenexplodetag
@@ -7043,6 +7052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -7056,10 +7066,13 @@ MonoBehaviour:
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
   bonus: {fileID: 8566852136103610640, guid: bfa1c7e9fb3e23ffaa1bc937c3a69468, type: 3}
   teebonus: 1
+  enableMultiPlier: 1
+  disableMultiPlier: 1.4
   hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
   kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
   teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
   childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -7090,6 +7103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -7115,6 +7129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -7122,7 +7137,7 @@ MonoBehaviour:
   registeroiOnEnablessa: 0
   maintexuusi: {fileID: 0}
   dissolveamount: 0.44
-  dissolveScale: 113
+  dissolveScale: 1000
   verficaldissolve: 0.3
   spiralStrength: 0
   rotationAngle: 0
@@ -7133,24 +7148,3 @@ MonoBehaviour:
   distancemax: 5
   outlineColor: {r: 0, g: 0, b: 0, a: 0}
   asetaoutlinecolor: 0
---- !u!114 &8272495863849255242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328802966418509897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c5b9a086769f84fadc873e51e3a96a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fragmentPixelSize: 16
-  hengissaoloaika: 0
-  uusirajaytyscolumns: 10
-  uusirajaytysrows: 10
-  poolistapalautusmaara: 0
-  registeroiOnEnablessa: 0
-  bone8: {fileID: 6480704542879379006}
-  distancemin: 2
-  distancemax: 10

@@ -13,8 +13,10 @@ public class OnkoOkToimiaController : BaseController
         {
             IgnoraaChildienCollisiot();
         }
+        
         lastVoiko = Voikotoimia();
         Tee(lastVoiko);
+        
     }
 
     /*
@@ -103,7 +105,7 @@ public class OnkoOkToimiaController : BaseController
             }
 
             // tämä tarkistus voi edelleen olla joka framella
-            TuhoaJosOllaanSiirrettyReilustiKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+      //      TuhoaJosOllaanSiirrettyReilustiKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
         }
 
     }

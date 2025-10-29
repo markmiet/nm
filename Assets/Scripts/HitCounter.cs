@@ -22,6 +22,11 @@ public class HitCounter : BaseController
     public bool teebonus = false;
     // public bool teebonuschildrenille = false;
 
+    public float enableMultiPlieri = 1.2f;
+    public float disableMultiPlieri = 1.3f;
+    public bool useOnlySpriteRenderers = false;
+    public bool addAutoDisableByCamera = true;
+    public RegisterHitCallable registerHitCallable;//t‰‰ ei n‰y editorissa
     public void Start()
     {
         p = GetComponent<DissolveMatController>();
@@ -30,6 +35,14 @@ public class HitCounter : BaseController
             dissolveoriginal = p.dissolveamount;
         }
         SaadaDissolveAmountVerrattunaOsumiin();
+        if (addAutoDisableByCamera)
+        {
+            AutoDisableByCamera a = gameObject.AddComponent<AutoDisableByCamera>();
+            a.enableMultiplier = enableMultiPlieri;
+            a.disableMultiplier = disableMultiPlieri;
+            a.useOnlySpriteRenderers = useOnlySpriteRenderers;
+        }
+
     }
 
 
@@ -77,6 +90,13 @@ public class HitCounter : BaseController
         {
             if (gameObject != null)
                 GameManager.Instance.kasvataHighScorea(gameObject);
+            if (registerHitCallable != null)
+            {
+                registerHitCallable.AfterRegisterHit(gameObject);
+
+                return true;
+            }
+
             RajaytaChildrenit();
             if (teebonus && bonus != null && lastkontantipointti != Vector2.zero)
             {
@@ -189,18 +209,24 @@ public class HitCounter : BaseController
     public bool tuhoajosollaanKameranVasemmallaPuolella = true;
 
     public bool teekamerashake = false;
+    public string tunniste = "";
     public void Update()
     {
+        /*
+       if (tunniste.Equals("stoppi"))
+       {
+           Debug.Log("stoppi " + gameObject.name);
+       }
 
 
+       if (tuhoajosollaanKameranVasemmallaPuolella)
+       {
+           TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
-        if (tuhoajosollaanKameranVasemmallaPuolella)
-        {
-            TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+           OnkoOkToimiaUusi(gameObject);
 
-            OnkoOkToimiaUusi(gameObject);
-
-        }
+       }
+       */
 
     }
 
@@ -370,6 +396,19 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
         {
             //           BaseDestroy();
             Tuhoa();
+        }
+    }
+
+    public void RajaytaSpriteNoDestroy()
+    {
+        if (teerajaytaspriteuusiversio)
+        {
+            RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
+                false,
+    rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,
+    36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti
+
+    );
         }
     }
 

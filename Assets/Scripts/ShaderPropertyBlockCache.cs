@@ -43,7 +43,7 @@ public class ShaderPropertyBlockCache
     {
         if (value==null)
         {
-            Debug.Log("null texture value propertyID="+ propertyID);
+             Debug.Log("null texture value propertyID="+ propertyID);
         }
 
         if (!_textures.TryGetValue(propertyID, out var current) || current != value)

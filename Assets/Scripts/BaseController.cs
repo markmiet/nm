@@ -6,6 +6,32 @@ using UnityEngine;
 
 public class BaseController : MonoBehaviour, ReturnToPoolAble
 {
+
+    public bool debugDestroyInfo = false;
+
+
+    private static int maxExplosionsPertime = 20;
+    private static Queue<float> explosionTimestamps = new Queue<float>();
+
+    // Cache for storing scaled textures
+    public static Dictionary<string, Texture2D> cachedTextures = new Dictionary<string, Texture2D>();
+
+    private static Rect cameraRect;
+    private static Vector3 lastCamPos;
+    private static float lastCamSize;
+    private static float lastCamAspect;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetStatics()
+    {
+        explosionTimestamps.Clear();
+        cachedTextures.Clear();
+
+        cameraRect = default;
+        lastCamPos = default;
+        lastCamSize = 0f;
+        lastCamAspect = 0f;
+    }
     // Start is called before the first frame update
 
     /*
@@ -20,7 +46,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         prefap = g;
     }
     */
-    
+
 
     void Start()
     {
@@ -565,7 +591,57 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     }
 
 
+    public void TeeBonusUusiKaytaTata(Vector2 sijaintiMinneTehdaan,GameObject bonusPrefappi,int maara=1)
+    {
+        if (maara<1)
+        {
+            return;
+        }
+        BoxCollider2D c =bonusPrefappi.GetComponent<BoxCollider2D>();
+        Vector2 size = new Vector2(0.4f, 0.4f);
+        if (c!=null)
+        {
+            size = c.size;
+        }
 
+
+        int luodut = 0;
+        bool tehtyjokaikki = false;
+        float xsuunnassatutkintaleveys = 1.0f;
+        float ysuunnassatutkintaleveys = 1.0f;
+        for (float y = 0; y < ysuunnassatutkintaleveys; y += 0.1f) { 
+            if (tehtyjokaikki)
+            {
+                break;
+            }
+            
+            for (float x = 0; x < xsuunnassatutkintaleveys; x += 0.1f) {
+            
+                Vector2 sijainti = new Vector2(sijaintiMinneTehdaan.x + x, sijaintiMinneTehdaan.y + y);
+                //boxsize
+
+                string[] tags = new string[1];
+                tags[0] = bonusPrefappi.tag;
+                //bool onko = onkoTagiaBoxissa(tags, size, sijainti, LayerMask.GetMask("BonusLayer"));
+
+                bool onko = onkoTagiaBoxissaAlakaytaTransformia(bonusPrefappi.tag, size, sijainti);
+
+
+                if (!onko)
+                {
+                    Instantiate(bonusPrefappi, sijainti, Quaternion.identity);
+                    luodut++;
+                }
+                if (luodut==maara)
+                {
+                    
+                    tehtyjokaikki = true;
+                    break;
+                }
+            }
+        }
+
+    }
 
 
 
@@ -1274,19 +1350,51 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     public float sirpaleenmassanlimitti = 10f;
 
     public void RajaytaSpriteUusiMonimutkaisin(
+GameObject parenttigameobjekti,
+int rows,
+int columns,
+float explosionForce,
+float aliveTime,
+GameObject fadeexplosion = null,
+float fadeDuration = 0.5f,
+GameObject gameObjectjostalasketaanPosition = null,
+int maksimimaara = 36,
+bool teerigidbody = true,
+float gravityscale = 0.5f,
+float scalefactor = 100.0f // percentage of original size
+)
+    {
+        RajaytaSpriteUusiMonimutkaisin(parenttigameobjekti,
+ rows,
+ columns,
+ explosionForce,
+ aliveTime,true,
+ fadeexplosion,
+ fadeDuration,
+ gameObjectjostalasketaanPosition,
+ maksimimaara,
+ teerigidbody,
+ gravityscale,
+ scalefactor);
+
+    }
+
+        public void RajaytaSpriteUusiMonimutkaisin(
     GameObject parenttigameobjekti,
     int rows,
     int columns,
     float explosionForce,
     float aliveTime,
-    GameObject fadeexplosion = null,
+     bool destroy,
+    GameObject fadeexplosion = null
+      ,
     float fadeDuration = 0.5f,
     GameObject gameObjectjostalasketaanPosition = null,
     int maksimimaara = 36,
     bool teerigidbody = true,
     float gravityscale = 0.5f,
     float scalefactor = 100.0f // percentage of original size
-)
+          )
     {
         if (IsGoingToBeDestroyed())
             return;
@@ -1514,6 +1622,7 @@ thisSliceHeight / originalSprite.pixelsPerUnit
         }
 
        // Debug.Log($"Created {slicemaara} slices ({rows}x{columns}, scale {scalefactor}%) from {go.name}");
+       if (destroy)
         BaseDestroy();
     }
 
@@ -1985,37 +2094,9 @@ thisSliceHeight / originalSprite.pixelsPerUnit
     {
         return (value + 3) & ~3; // Rounds up to the nearest multiple of 4
     }
-    public static Texture2D ScaleTextureaaa(Texture2D source, int newWidth, int newHeight)
-    {
-        // Create a new empty texture with the desired dimensions
-        Texture2D scaledTexture = new Texture2D(newWidth, newHeight, source.format, false);
-
-        // Scale each pixel of the new texture based on the original texture
-        for (int y = 0; y < newHeight; y++)
-        {
-            for (int x = 0; x < newWidth; x++)
-            {
-                // Map the new texture's pixel to the original texture
-                float u = (float)x / (newWidth - 1); // U-coordinate (0 to 1)
-                float v = (float)y / (newHeight - 1); // V-coordinate (0 to 1)
-
-                // Get the pixel color from the source texture
-                Color pixelColor = source.GetPixelBilinear(u, v);
-
-                // Set the pixel in the new texture
-                scaledTexture.SetPixel(x, y, pixelColor);
-            }
-        }
-
-        // Apply changes to the new texture
-        scaledTexture.Apply();
-
-        return scaledTexture;
-    }
 
 
-    // Cache for storing scaled textures
-    public static Dictionary<string, Texture2D> cachedTextures = new Dictionary<string, Texture2D>();
+
 
     public static Texture2D ScaleTexture(Texture2D source, int newWidth, int newHeight)
     {
@@ -2074,8 +2155,7 @@ float sirpalemass, bool teeBoxcollider2d, float ysaato, bool skaalaatekstuuria, 
         RajaytaSprite(go, rows, columns, explosionForce, alivetime, sirpalemass, teeBoxcollider2d, ysaato, skaalaatekstuuria, gravityscale, xsaato, addDestroyController, explosion, false, null, null);
     }
 
-    private static int maxExplosionsPertime = 20;
-    private static Queue<float> explosionTimestamps = new Queue<float>();
+
 
     private float second = 0.5f;
 
@@ -3602,7 +3682,7 @@ true,
 
         bool tuhoajosliiankauanhengissa = true;
         float hengissaolonraja = 6000f;//tarkista
-        float tarkistussykli = 1.5f;
+        float tarkistussykli =0f;//MJMVAIHDATAKAS 1.5F
         bool tuhoajosoikeallakameraanVerrattuna = false;
 
         TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
@@ -3801,7 +3881,10 @@ true,
     //sitten
     public bool OnkoOkToimiaUusi(GameObject go)
     {
-
+        if (go.name.Equals("UistinKatotekstuurillaPolygonCollideri"))
+        {
+            Debug.Log("UistinKatotekstuurillaPolygonCollideri");
+        }
         if (GameManager.Instance.isGoingToBeDestroyed)
         {
             return false;
@@ -3991,10 +4074,7 @@ true,
         ));
     }
 
-    private static Rect cameraRect;
-    private static Vector3 lastCamPos;
-    private static float lastCamSize;
-    private static float lastCamAspect;
+
 
     private bool IsVisibleFrom(SpriteRenderer renderer, Camera camera)
     {
@@ -4733,6 +4813,8 @@ true,
 
     public void BaseDestroy(GameObject go)
     {
+        
+
         BaseController bc = go.GetComponent<BaseController>();
         if (bc != null)
         {
@@ -4748,6 +4830,10 @@ true,
         }
         else
         {
+            if (debugDestroyInfo)
+            {
+                Debug.Log("BC destroy go.name=" + go.name+" script="+ GetType().Name);
+            }
             Destroy(go);
         }
        
@@ -4770,6 +4856,10 @@ true,
         }
         else
         {
+            if (debugDestroyInfo)
+            {
+                Debug.Log("BC destroy go.name=" + go.name + " script=" + GetType().Name+" delay="+time);
+            }
             Destroy(go, time);
         }
     }

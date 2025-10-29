@@ -65,7 +65,7 @@ public class KiventekijaController : BaseController
                         return;
                 }
             }
-            Destroy(gameObject);
+      //      Destroy(gameObject);
         }
     }
 

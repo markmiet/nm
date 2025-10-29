@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3752196744777020901}
   - component: {fileID: 8333515468545063509}
   - component: {fileID: 6319743533361846988}
-  - component: {fileID: 541505467341380579}
   - component: {fileID: 4513373944715183403}
   - component: {fileID: 2372790685304127607}
   - component: {fileID: 7831360644094872300}
@@ -154,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 4
   uusirajaytysrows: 4
@@ -171,6 +171,7 @@ MonoBehaviour:
   kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
   teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 33
   childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
@@ -201,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -232,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -240,56 +243,6 @@ MonoBehaviour:
   bone8: {fileID: 3692085457398784295}
   distancemin: 0
   distancemax: 5
---- !u!60 &541505467341380579
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3692085457398784295}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 504.96283, y: 0.07930946}
-      - {x: 503.53625, y: -0.95716506}
-      - {x: 504.08115, y: -2.634216}
-      - {x: 505.8445, y: -2.6342158}
-      - {x: 506.3894, y: -0.9571649}
-  m_UseDelaunayMesh: 0
 --- !u!50 &4513373944715183403
 Rigidbody2D:
   serializedVersion: 4
@@ -330,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8

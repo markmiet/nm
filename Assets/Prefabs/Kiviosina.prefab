@@ -129,7 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -222,7 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -253,7 +257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -265,8 +271,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -5261,7 +5278,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -5346,7 +5365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -5377,7 +5398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -5389,8 +5412,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -5438,6 +5472,7 @@ GameObject:
   - component: {fileID: 9215539489302623747}
   - component: {fileID: 7947884827890852723}
   - component: {fileID: 2529047075935656357}
+  - component: {fileID: 7870381483012706074}
   m_Layer: 17
   m_Name: Kiviosina
   m_TagString: Untagged
@@ -5494,7 +5529,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 1
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -5508,8 +5545,19 @@ MonoBehaviour:
     type: 3}
   osumanSavunKesto: 0.1
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
@@ -5537,7 +5585,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57524dae2ec2d9342907fecd35c14d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -5550,6 +5600,18 @@ MonoBehaviour:
   freezeYposition: 0
   checkInterval: 0.1
   tutkiVainChildreneista: 0
+--- !u!114 &7870381483012706074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5849496958974730654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96c7443c5431c042b8589165c96bb32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5946862513396872771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5679,7 +5741,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -5770,7 +5834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -5801,7 +5867,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -5813,8 +5881,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -5987,7 +6066,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9fb073a5f44c5418e86669d246f54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6011,7 +6092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e65da7139f3d8e4d8b5950e0a355cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -6033,7 +6116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 1
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6144,7 +6229,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.60198975, y: 0.26099992}
+  m_ConnectedAnchor: {x: -0.602005, y: 0.26100004}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6764962299784263069
@@ -6163,7 +6248,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.25201416, y: 0.35500002}
+  m_ConnectedAnchor: {x: 0.2519989, y: 0.35500002}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &5319302625981387797
@@ -6182,7 +6267,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.6209717, y: -0.13199997}
+  m_ConnectedAnchor: {x: 0.62099457, y: -0.13199997}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &3739189312699407847
@@ -6201,7 +6286,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.190979, y: -0.50100005}
+  m_ConnectedAnchor: {x: 0.19099426, y: -0.5009999}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &6370649533784083762
@@ -6220,7 +6305,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.23999023, y: 0.51199996}
+  m_ConnectedAnchor: {x: -0.2400055, y: 0.512}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &3330467946697640357
@@ -6235,7 +6320,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6266,7 +6353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 1
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -6278,8 +6367,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -6506,7 +6606,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6528,7 +6630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6559,7 +6663,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -6571,8 +6677,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -6737,7 +6854,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6818,7 +6937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -6849,7 +6970,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -6861,8 +6984,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1
@@ -7093,7 +7227,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012e45a52a12e94db0a275b235306a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -7115,7 +7251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
@@ -7146,7 +7284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae34942aef3d7d4986ee92c5c3d8b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
@@ -7158,8 +7298,19 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 2
+  disableMultiPlieri: 2.5
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 0
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 8
   rajahdysvoima: 0.1

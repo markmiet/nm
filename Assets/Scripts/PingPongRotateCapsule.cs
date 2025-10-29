@@ -27,14 +27,22 @@ public class PingPongRotateCapsule : BaseController
 
     void Update()
     {
+        /*
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
         }
+        */
+        
         float rotX = Mathf.Sin(Time.time * speedX) * maxRotationX;
         float rotY = Mathf.Sin(Time.time * speedY) * maxRotationY;
         float rotZ = Mathf.Sin(Time.time * speedZ) * maxRotationZ;
 
         transform.localRotation = Quaternion.Euler(rotX, rotY, rotZ);
+        if (r != null && asetaVelocity)
+        {
+            r.velocity = velocity;
+        }
+        
     }
 }

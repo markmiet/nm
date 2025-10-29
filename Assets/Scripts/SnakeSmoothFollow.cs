@@ -162,7 +162,7 @@ public class SnakeSmootFollow : BaseController
     {
         //tutkitaan nähdäänkö, jos nähdään niin particle play
         //viivettää tähän...
-    
+
 
 
         bool nahdaanCurrent = NahdaankoAlus();
@@ -206,7 +206,7 @@ public class SnakeSmootFollow : BaseController
         // Target emission rate
         float targetRate = nahdaanStable ? maxEmissionRate : 0f;
 
-        
+
 
         if (!emittoiriippumattanahdaanko)
         {
@@ -268,11 +268,11 @@ public class SnakeSmootFollow : BaseController
                 psr.sortingLayerName = "SkeletonLayer";  // match your drawing layer
                 psr.sortingOrder = 5;
                 */
-                foreach(Transform t in bodyParts)
+                foreach (Transform t in bodyParts)
                 {
                     GameObject g = t.gameObject;
 
-                    if (g.GetComponentInChildren<ParticleSystem>()==null)
+                    if (g.GetComponentInChildren<ParticleSystem>() == null)
                     {
                         GameObject instbody = Instantiate(paanparticleGameObject, g.transform.position,
                             g.transform.rotation, g.transform);
@@ -415,9 +415,10 @@ public class SnakeSmootFollow : BaseController
         rotationVelocities.Clear();
         currentAngles.Clear();
 
-
+        List<GameObject> lista = new List<GameObject>();
 
         head = Instantiate(headPartPrerab, transform.position, Quaternion.identity, transform);
+        lista.Add(head);
         head.transform.SetParent(transform);
         head.transform.localPosition = Vector3.zero;
 
@@ -452,13 +453,16 @@ public class SnakeSmootFollow : BaseController
         {
             GameObject part = Instantiate(bodyPartPrefab, positions[i + 1], Quaternion.identity, transform);
             //GameObject part = Instantiate(bodyPartPrefab, positions[i], Quaternion.identity, transform);
-
+            lista.Add(part);
             bodyParts.Add(part.transform);
             velocities.Add(Vector3.zero);
             rotationVelocities.Add(0f);
             currentAngles.Add(0f);
         }
+        //IgnoreCollisions(lista);
         IgnoreSelfCollisions(gameObject);
+
+
 
     }
     private bool jointitlisatty = true;
@@ -503,7 +507,7 @@ public class SnakeSmootFollow : BaseController
     private float dissolveoriginal;
     private DissolveMatController dissovlpaa = null;
 
-    private bool headTutkinta=true;
+    private bool headTutkinta = true;
     private float headlaskuri = 0.0f;
     public float headsykli = 0.1f;
 
@@ -529,12 +533,13 @@ public class SnakeSmootFollow : BaseController
         */
         headlaskuri += Time.deltaTime;
 
-        if (headlaskuri>= headsykli && OnkoOkToimiaUusi(gameObject))
+        if (headlaskuri >= headsykli /* && OnkoOkToimiaUusi(gameObject)*/)
         {
             HeadParticleSystem();
             headlaskuri = 0;
 
         }
+
 
 
         if (saadapaanDissolveamount && hc != null)
@@ -600,7 +605,7 @@ public class SnakeSmootFollow : BaseController
             return;
         }
 
-        if ( firsttime  || nahdaanStable )
+        if (firsttime || nahdaanStable)
         {
             MoveHead();
             MoveBody();
@@ -622,7 +627,7 @@ public class SnakeSmootFollow : BaseController
     private bool firsttime = true;
     private float viimeksinahty = 0.0f;
     public float liikkumisaikaViimeisenNahdynJalkeen = 5.0f;
-    
+
 
 
 
@@ -832,9 +837,19 @@ public class SnakeSmootFollow : BaseController
 
     void IgnoreSelfCollisions(GameObject root)
     {
-        Collider2D[] colliders = root.GetComponentsInChildren<Collider2D>();
+        //Collider2D[] colliders = root.GetComponentsInChildren<Collider2D>();
+        /*
         for (int i = 0; i < colliders.Length; i++)
             for (int j = i + 1; j < colliders.Length; j++)
                 Physics2D.IgnoreCollision(colliders[i], colliders[j], true);
+        */
+        IgnoreChildCollisions(root.transform);
+
+
+    }
+
+    private void OnEnable()
+    {
+        IgnoreSelfCollisions(gameObject);
     }
 }
