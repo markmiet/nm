@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class CameraInfoController : BaseController
 {
 
@@ -208,7 +210,24 @@ public class CameraInfoController : BaseController
     public AudioSource aaniefekti;
 
 
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
 
+        GUIStyle labelStyle = new GUIStyle();
+        labelStyle.fontSize = 10;
+        labelStyle.normal.textColor = Color.red;
+
+
+
+        Handles.Label(transform.position + Vector3.up * 0.2f, $"{gameObject.name}", labelStyle);
+
+
+        //uusi = new Vector2(transform.position.x, transform.position.y);
+        //tulos = !onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation("vihollinen", boxsizealhaalla, uusi, layerMask);
+
+#endif
+    }
 
 
 }

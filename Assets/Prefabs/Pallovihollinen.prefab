@@ -142,11 +142,11 @@ Transform:
   m_GameObject: {fileID: 1536140881072054400}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.5999985, z: 0}
-  m_LocalScale: {x: 0.06, y: 0.10000007, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2812339386002314722}
+  m_Father: {fileID: 8626132257536797591}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &8014632376814700969
 ParticleSystem:
@@ -221,7 +221,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -726,7 +726,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 11
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4975,9 +4975,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7483280684619519742}
-  - {fileID: 653656707641999392}
+  m_Children: []
   m_Father: {fileID: 8626132257536797591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6201689638447569240
@@ -9923,8 +9921,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2812339386002314722}
+  - {fileID: 7483280684619519742}
+  - {fileID: 653656707641999392}
   - {fileID: 940103168295452951}
+  - {fileID: 2812339386002314722}
   - {fileID: 7819813984279869618}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9940,7 +9940,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 1
   m_LinearDrag: 0.5
   m_AngularDrag: 0.8
   m_GravityScale: 1
@@ -10031,15 +10031,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 99445f8052117484fa1bc31078513faa, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.65, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!235 &3824717095248662080
@@ -10079,12 +10079,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9993b0d086e101b47b6ef33dadc19c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   boxsizeylhaalla: {x: 0.1, y: 0.1}
   boxsizekeskella: {x: 0.5, y: 0.3}
   boxsizelaidatalhaalla: {x: 0.6, y: 10}
@@ -10114,6 +10116,8 @@ MonoBehaviour:
   osumanSavu: {fileID: 8089225716722336627, guid: e455ec5b5b84e6b41adc61eb40a32962,
     type: 3}
   osumanSavunKesto: 1000
+  startinSavumaara: 2
+  startinsavunmuutos: -0.2
   alkuperainentulipartikkeliGravitymodifier: 0
   vahimmaismaarafadelle: 0.2
   boostParticles: {fileID: 8014632376814700969}
@@ -10121,7 +10125,7 @@ MonoBehaviour:
   tuliPartikkelit: {fileID: 379417082609184509}
   hyppyjenValinenViive: 0.5
   erominimissaanJottaLiikutaan: 0
-  motorspeedvaikuttaaliikkumisnopeuteen: 600
+  motorspeedvaikuttaaliikkumisnopeuteen: 1000
   leftsidetutkinnanmaara: 0.4
   torqueForce: 10
   jumpForceEiKaytossa: 5
@@ -10142,9 +10146,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   tuhoaJosOnBecameInvisible: 0
-  explosion: {fileID: 5346847863136101047, guid: b11afc87d6da1431b8fae745e048fc59,
+  explosion: {fileID: 7737871024420907965, guid: 46474bf02d9941c45a859b1d35ef23e0,
     type: 3}
   gravitymodifiermuutoskunammusosuu: 0.01
+  rigidbodvoima: 2
   sateilyparticlesAloitusScale: 2
   sateilyparticlesLopetusScale: 5
   lightIntensityAloitus: 0.7
@@ -10247,7 +10252,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2812339386002314722}
+    m_TransformParent: {fileID: 8626132257536797591}
     m_Modifications:
     - target: {fileID: 3823809911303957598, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -10268,6 +10273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477803405969465037, guid: 0c8878f615f981c4ebabcd116300fec0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8591673085743044474, guid: 0c8878f615f981c4ebabcd116300fec0,
         type: 3}
@@ -10543,12 +10553,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b7affd8dd62a141a1a22c6c45afc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   savungamadeMaara: 0.1
   widthScaleFactor: 0.45
   heightScaleFactor: 0.7

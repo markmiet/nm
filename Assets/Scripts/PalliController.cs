@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal; // For Light2D
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class PalliController : BaseController, IDamagedable
 {
 
@@ -129,11 +133,31 @@ public class PalliController : BaseController, IDamagedable
         AsetaValoIntensity();
 
 
+        if (osumanSavu != null)
+        {
+
+
+            //GameObject instanssi2 = Instantiate(osumanSavu, contactPoint, Quaternion.identity);
+
+            // GameObject instanssi2 = Instantiate(osumanSavu, position, rotation, gameObject.transform);
+            // Destroy(instanssi2, osumanSavunKesto);
+            for (int i=0;i<startinSavumaara;i++)
+            {
+                GameObject instance = Instantiate(osumanSavu, gameObject.transform.position, Quaternion.identity);
+                instance.transform.localScale+=i*new Vector3(startinsavunmuutos, startinsavunmuutos, 0f);
+                instance.transform.SetParent(gameObject.transform, worldPositionStays: true);
+            }
+
+          //  Destroy(instance, osumanSavunKesto);
+        }
+      //  GetComponent<SpriteRenderer>().enabled = false;
 
     }
     private Light2D[] childLight;
 
-    
+    public int startinSavumaara = 10;
+    public float startinsavunmuutos = -0.1f;
+
 
 
     public float alkuperainentulipartikkeliGravitymodifier = 0.0f;
@@ -181,7 +205,7 @@ public class PalliController : BaseController, IDamagedable
 
         //TuhoaJosVaarassaPaikassa(gameObject,false);
 
-        TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
+     //   TuhoaJosOllaanSiirrettyJonkunVerranKameranVasemmallePuolenSalliPieniAlitusJaYlitys(gameObject);
 
 
 
@@ -274,10 +298,12 @@ public class PalliController : BaseController, IDamagedable
     //int laskuri = 0;
     float deltojensumma = 0.0f;
 
+    /*
     private bool OnkoOkToimia()
     {
         return m_SpriteRenderer.isVisible;
     }
+    */
     private bool hatahyppykesken = false;
     private float hatahypynsuoritusajankohta = 0.0f;
 
@@ -340,11 +366,12 @@ public class PalliController : BaseController, IDamagedable
 
         if (alusGameObject != null)
         {
-
+            /*
             if (!OnkoOkToimiaUusi(gameObject))
             {
                 return;
             }
+            */
 
             float delta = Time.deltaTime;
             deltojensumma += delta;
@@ -917,6 +944,23 @@ public class PalliController : BaseController, IDamagedable
     void OnDrawGizmos()
     {
 
+
+#if UNITY_EDITOR
+
+        GUIStyle labelStyle = new GUIStyle();
+        labelStyle.fontSize = 10;
+        labelStyle.normal.textColor = Color.red;
+
+
+
+        Handles.Label(transform.position + Vector3.up * 0.2f, $"{gameObject.name}", labelStyle);
+
+
+        //uusi = new Vector2(transform.position.x, transform.position.y);
+        //tulos = !onkoTagiaBoxissaTransformPositionArvoonLisataanBoxLocation("vihollinen", boxsizealhaalla, uusi, layerMask);
+
+#endif
+
         // Set the color of the Gizmos
         Gizmos.color = Color.green;
 
@@ -1318,9 +1362,26 @@ public class PalliController : BaseController, IDamagedable
 
     }
 
+    public float rigidbodvoima = 1.0f;
+
+
+
     public bool AiheutaDamagea(float damagemaara,Vector2 contactpoint)
     {
+
+        Rigidbody2D rv = GetComponent<Rigidbody2D>();
+        if (rv != null)
+        {
+            
+                Vector2 suunta = -rv.velocity.normalized;
+
+                rb.AddForce(suunta * rigidbodvoima, ForceMode2D.Impulse);
+            
+        }
+
         return TeeDamaget(damagemaara, contactpoint);
+
+        
     }
 
    // public void Explode()
@@ -1426,7 +1487,7 @@ public class PalliController : BaseController, IDamagedable
 
         //  GameObject explosionIns = Instantiate(explosion, transform.position, Quaternion.identity);
         //RajaytaSprite(gameObject, 5, 5, 4.0f, 1.5f);
-        RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
+       // RajaytaSprite(gameObject, rajaytysrows, rajaytyscols, rajaytysvoima, rajaytyskestoaika);
 
         // Destroy(explosionIns,1.0f);
         BaseDestroy();
@@ -1440,10 +1501,14 @@ rb.position.x, rb.position.y, 0);
         //  Instantiate(bonus, v3, Quaternion.identity)
         int bonusmaara = 1;
         
-            TeeBonus(bonus,  boxsize, bonusmaara);
+         //   TeeBonus(bonus,  boxsize, bonusmaara);
+         if (explosion!=null)
+        {
+            GameObject ins = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(ins, 0.5f);
+        }
 
-        
-
+        TeeBonusUusiKaytaTata(transform.position, bonus);
 
     }
 

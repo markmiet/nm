@@ -255,6 +255,13 @@ public class AmmusController : BaseController, IExplodable
                             {
                                // Vector2 contactPoint = col.GetContact(0).point;
                                 bool rajahtiko = damageMahdollinen.AiheutaDamagea(damagemaarajokaaiheutataan, contactPoint);
+                                /*
+                                if (col.gameObject.GetComponent<PalliController>()!=null)
+                                {
+                                    col.gameObject.GetComponent<PalliController>().Rigidbodyvoima(gameObject);
+                                }
+                                */
+
                                 if (rajahtiko)
                                 {
                                     GameManager.Instance.kasvataHighScorea(col.gameObject);
