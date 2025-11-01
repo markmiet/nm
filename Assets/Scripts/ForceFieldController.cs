@@ -313,7 +313,7 @@ public class ForceFieldController : BaseController
 
                 for (int i = 0; i < maara; i++)
                 {
-                    hitcounter.RegisterHit(estimatedContactPoint);
+                    hitcounter.RegisterHit(estimatedContactPoint,gameObject);
                     hittienmaara++;
                 }
                 //Destroy(col.gameObject);

@@ -17,29 +17,47 @@ public class HaulikkoIlmanRigidBodya : BaseController
     private float ampumislaskuri = 0.0f;
 
 
+
     public SkeletonAiming2DIK skeletonAiming2DIK;
-    
+    public PotLintuRatKasiTahtain potLintuRatKasiTahtain;
 
     // Start is called before the first frame update
     void Start()
     {
         alus = PalautaAlus();
     }
+    /*
+    public bool OllaankoKamerassa()
+    {
+        if (objektijonkapitaaOllaKamerassa==null || !pitaakollaKamerassaJottaAmpuu)
+        {
+            return true;
+        }
+        OnkoKameranOikeallaPuolella()
+    }
+    */
 
 
     private bool NakeekoSilmat()
     {
         if (skeletonAiming2DIK==null)
         {
-            return false;
+            if (potLintuRatKasiTahtain!=null)
+            {
+                return potLintuRatKasiTahtain.CanEnemySeePlayer();
+            }
+            return true;
         }
         return skeletonAiming2DIK != null && skeletonAiming2DIK.canSeePlayer;
     }
 
 
+    
+
+
     // Update is called once per frame
 
-    
+
     void Update()
     {
         if (alus!=null && ammus!=null)

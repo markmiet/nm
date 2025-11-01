@@ -100,10 +100,15 @@ public class ChildColliderReporter : BaseController
             go.GetComponent<Rigidbody2D>();
             if (r!=null)
             {
-
-                Vector2 suunta = r.velocity.normalized;
-
-                rb.AddForce(suunta * aiheutavoimaaRigidbodyyn, ForceMode2D.Impulse);
+                ImpactTransfer2D ii = go.GetComponent<ImpactTransfer2D>();
+                if (ii!=null)
+                {
+                    //@todoo ei toimi oikein
+                    //koska se suunta just k‰‰ntyy v‰‰rinp‰in...
+                    //pit‰is tehd‰ impact 
+                    Vector2 suunta = ii.lastVelocity.normalized;
+                    rb.AddForce(suunta * aiheutavoimaaRigidbodyyn, ForceMode2D.Impulse);
+                }
             }
             /*
             Vector2 alku = piipunToinenPaa.transform.position;

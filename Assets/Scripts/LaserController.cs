@@ -221,7 +221,7 @@ public class LaserController : BaseController
                 if (hitcounter != null)
                 {
                     //LisaaTuhottujenMaaraa(col.gameObject);
-                    bool tuhoutuiko = hitcounter.RegisterHit(contactPoint);
+                    bool tuhoutuiko = hitcounter.RegisterHit(contactPoint,gameObject);
                     if (tuhoutuiko)
                     {
                         IgnoraaCollisiotVihollistenValilla(gameObject, col.gameObject);

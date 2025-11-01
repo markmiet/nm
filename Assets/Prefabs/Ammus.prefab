@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 9057892473094562802}
   - component: {fileID: 9057892473094562813}
   - component: {fileID: 3223845841129474059}
+  - component: {fileID: 6722789839166269957}
   m_Layer: 9
   m_Name: Ammus
   m_TagString: ammustag
@@ -254,11 +255,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1654520e128e94690f643640aa5e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 4665176215325690238, guid: d3d8a3f2689afe24dbb2be6b489a6912,
     type: 3}
   alus: {fileID: 0}
@@ -274,3 +278,18 @@ MonoBehaviour:
   rajaytyscols: 3
   rajaytysvoima: 1.5
   rajaytyskestoaika: 0.2
+--- !u!114 &6722789839166269957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057892473094562812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb4557d56e56a394badeb4a20fabd898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceMultiplier: 0.5
+  maxImpulse: 0.1
+  debugDraw: 1

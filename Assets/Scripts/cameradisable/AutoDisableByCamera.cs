@@ -18,7 +18,7 @@ public class AutoDisableByCamera : MonoBehaviour
     // Cache renderers to avoid GC allocations every frame
     private List<Renderer> cachedRenderers = new List<Renderer>();
     public bool useOnlySpriteRenderers = false;
-
+    public bool debugBreakPoint = false;
 
     private void Start()
     {
@@ -53,6 +53,10 @@ public class AutoDisableByCamera : MonoBehaviour
     {
         if (Time.time < nextCheckTime) return;
         nextCheckTime = Time.time + checkInterval;
+        if (debugBreakPoint)
+        {
+            Debug.Log(gameObject.name);
+        }
 
         if (mainCam == null) mainCam = Camera.main;
         if (mainCam == null) return;
@@ -101,6 +105,29 @@ public class AutoDisableByCamera : MonoBehaviour
             isActive = true;
         }
     }
+
+    public bool OnkoKamerassa(Camera cam)
+    {
+        if (cam == null) return false;
+
+        float enableDist = GetCameraViewRadius(cam) * enableMultiplier;
+        Vector3 checkPos3d = GetRendererCenter();
+        Vector3 checkposilman = CalculateCenterOfSpriteChildren();
+
+        Vector2 checkPos = new Vector2(checkPos3d.x, checkPos3d.y);
+
+        float dist = Vector2.Distance(checkPos, cam.transform.position);
+
+        if (dist < enableDist)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+
+    
+
 
     // --- Helper: Finds the average or bounding box center of all renderers ---
     private Vector3 GetRendererCenterfddf()

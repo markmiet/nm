@@ -211,7 +211,7 @@ public class AmmusController : BaseController, IExplodable
                 {
 
                    // Vector2 contactPoint = col.GetContact(0).point;
-                    hitcounter.RegisterHit(contactPoint);
+                    hitcounter.RegisterHit(contactPoint,gameObject);
                 }
                 else
                 {

@@ -27,6 +27,9 @@ public class HitCounter : BaseController
     public bool useOnlySpriteRenderers = false;
     public bool addAutoDisableByCamera = true;
     public RegisterHitCallable registerHitCallable;//t‰‰ ei n‰y editorissa
+
+    public bool aiheutaVoimaaRigidbodyyn = false;
+    public float rigidbodyvoimamaara = 0;
     public void Start()
     {
         p = GetComponent<DissolveMatController>();
@@ -166,7 +169,7 @@ public class HitCounter : BaseController
     private Vector2 lastkontantipointti = Vector2.zero;
 
 
-    public bool RegisterHit(Vector2 contactPoint)
+    public bool RegisterHit(Vector2 contactPoint,GameObject ammus)
     {
 
         if (IsGoingToBeDestroyed())
@@ -175,6 +178,35 @@ public class HitCounter : BaseController
         }
         lastkontantipointti = contactPoint;
         bool ret = RegisterHit();
+
+        if (!ret && aiheutaVoimaaRigidbodyyn && rigidbodyvoimamaara>0)
+        {
+            Rigidbody2D rb =        GetComponent<Rigidbody2D>();
+            if (rb!=null)
+            {
+                Rigidbody2D ammusrb = ammus.GetComponent<Rigidbody2D>();
+                if (ammusrb!=null)
+                {
+                    //Vector2 suunta = -ammusrb.velocity.normalized;
+                    /*
+                    Vector2 suunta = new Vector2(1, 0);
+
+
+                    rb.AddForce(suunta * rigidbodyvoimamaara, ForceMode2D.Impulse);
+                    */
+
+                    ImpactTransfer2D ii = ammus.GetComponent<ImpactTransfer2D>();
+                    if (ii != null)
+                    {
+                        //@todoo ei toimi oikein
+                        //koska se suunta just k‰‰ntyy v‰‰rinp‰in...
+                        //pit‰is tehd‰ impact 
+                        Vector2 suunta = ii.lastVelocity.normalized;
+                        rb.AddForce(suunta * rigidbodyvoimamaara, ForceMode2D.Impulse);
+                    }
+                }
+            }
+        }
         if (teeExplosion && explosion != null)
         {
             KaynnistaParticleEmitti();
