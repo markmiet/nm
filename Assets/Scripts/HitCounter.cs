@@ -198,9 +198,7 @@ public class HitCounter : BaseController
                     ImpactTransfer2D ii = ammus.GetComponent<ImpactTransfer2D>();
                     if (ii != null)
                     {
-                        //@todoo ei toimi oikein
-                        //koska se suunta just k‰‰ntyy v‰‰rinp‰in...
-                        //pit‰is tehd‰ impact 
+                         
                         Vector2 suunta = ii.lastVelocity.normalized;
                         rb.AddForce(suunta * rigidbodyvoimamaara, ForceMode2D.Impulse);
                     }
