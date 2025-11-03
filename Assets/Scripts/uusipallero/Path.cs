@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 [ExecuteAlways]
@@ -27,6 +27,24 @@ public class Path : MonoBehaviour
         float f = t - i;
         return Vector2.Lerp(points[i].position, points[i + 1].position, f);
     }
+
+    public bool FlipY(float t)
+    {
+        if (points.Count < 2)
+            return false;
+
+        // Selvitetään missä segmentissä ollaan
+        int i = Mathf.FloorToInt(t);
+        if (i >= points.Count - 1)
+            i = points.Count - 2; // viimeinen väli
+
+        // Vektori seuraavasta pisteestä edelliseen
+        Vector3 dir = points[i + 1].position - points[i].position;
+
+        // Jos liike suuntautuu vasemmalle (x negatiivinen) → flipX = true
+        return !(dir.x < 0f);
+    }
+
 
     public float Length => Mathf.Max(points.Count - 1, 0);
 

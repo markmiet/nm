@@ -50,8 +50,10 @@ public class PathEditor : Editor
 
     private void AddPoint(Vector3 position)
     {
+        position = new Vector3(position.x, position.y, 0);
         GameObject newPoint = new GameObject("Point " + path.points.Count);
         newPoint.transform.position = position;
+
         newPoint.transform.SetParent(path.transform);
         Undo.RegisterCreatedObjectUndo(newPoint, "Add Path Point");
         path.points.Add(newPoint.transform);
