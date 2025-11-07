@@ -19,9 +19,11 @@ public class GunAimPotLintuRatsas : BaseController
     public PotLintuRatKasiTahtain potLintuRatKasiTahtain;
     public bool pitaakoNahdajottavoiTahdata = true;
 
+    private Vector3 origscale;
     public void Start()
     {
         target = PalautaAlus().transform;
+        origscale = transform.localScale;
     }
 
     public bool VoikoTahdata()
@@ -46,6 +48,9 @@ public class GunAimPotLintuRatsas : BaseController
         Vector3 offset = transform.position - aseenkahva.position;
         transform.position = kadenPaikka.position + offset;
 
+//        transform.position = kadenPaikka.position;// + offset;
+
+
         // 2️⃣ Käännä ase kohti kohdetta
         if (target != null)
         {
@@ -54,14 +59,22 @@ public class GunAimPotLintuRatsas : BaseController
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180f;
 
             transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            PotterLintuController pc=
+            GetComponentInParent<PotterLintuController>();
+            bool flipY = pc.gameObject.transform.localScale.x < 0;
 
             // Jos haluat että ase peilaa itsensä kun menee vasemmalle
-            if (flipY)
-            {
-                Vector3 scale = transform.localScale;
-                scale.y = (dir.x < 0) ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
-                transform.localScale = scale;
-            }
+            //if (flipY)
+            //{
+                Vector3 scaleparent = pc.gameObject.transform.localScale;
+            Vector3 scale = origscale;
+
+               // scale.y = (dir.x > 0) ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
+
+                  scale.y = flipY ? -Mathf.Abs(origscale.y) : Mathf.Abs(origscale.y);
+            
+              //  transform.localScale = scale;
+            //}
         }
     }
 

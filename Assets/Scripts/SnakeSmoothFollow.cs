@@ -52,6 +52,7 @@ public class SnakeSmootFollow : BaseController
 
 
     public GameObject paanparticleGameObject;
+    public bool vaihdaOrderInLayeria = false;
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
@@ -416,6 +417,11 @@ public class SnakeSmootFollow : BaseController
         currentAngles.Clear();
 
         List<GameObject> lista = new List<GameObject>();
+        int maxPartsByLength = Mathf.FloorToInt(maxSnakeLength / minDistance);
+
+
+        initialBodyParts = Mathf.Min(maxPartsByLength, maxInitialParts);
+        int orderinlayer = initialBodyParts;
 
         head = Instantiate(headPartPrerab, transform.position, Quaternion.identity, transform);
         lista.Add(head);
@@ -423,6 +429,15 @@ public class SnakeSmootFollow : BaseController
         head.transform.localPosition = Vector3.zero;
 
 
+        if (vaihdaOrderInLayeria)
+        {
+            SpriteRenderer sr =
+            head.GetComponent<SpriteRenderer>();
+            if (sr!=null)
+            {
+                sr.sortingOrder = orderinlayer--;
+            }
+        }
 
 
         head.transform.position = transform.position;
@@ -431,10 +446,8 @@ public class SnakeSmootFollow : BaseController
         rotationVelocities.Add(0f);
         currentAngles.Add(0f);
 
-        int maxPartsByLength = Mathf.FloorToInt(maxSnakeLength / minDistance);
+    
 
-
-        initialBodyParts = Mathf.Min(maxPartsByLength, maxInitialParts);
 
         Vector3 initialDir = Vector3.left;
         positions.Clear();
@@ -452,6 +465,16 @@ public class SnakeSmootFollow : BaseController
         for (int i = 0; i < initialBodyParts; i++)
         {
             GameObject part = Instantiate(bodyPartPrefab, positions[i + 1], Quaternion.identity, transform);
+
+            if (vaihdaOrderInLayeria)
+            {
+                SpriteRenderer sr =
+                bodyPartPrefab.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sortingOrder = orderinlayer--;
+                }
+            }
             //GameObject part = Instantiate(bodyPartPrefab, positions[i], Quaternion.identity, transform);
             lista.Add(part);
             bodyParts.Add(part.transform);

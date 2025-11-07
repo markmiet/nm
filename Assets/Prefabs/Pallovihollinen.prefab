@@ -9901,6 +9901,7 @@ GameObject:
   - component: {fileID: 4927679625259037937}
   - component: {fileID: 3824717095248662080}
   - component: {fileID: 5837536427644151803}
+  - component: {fileID: 4375282986431085033}
   m_Layer: 17
   m_Name: Pallovihollinen
   m_TagString: pallovihollinenexplodetag
@@ -10161,6 +10162,23 @@ MonoBehaviour:
   ampumisenvoimakkuus: 3
   pieninmahdollinenAikaValiAmpumisissa: 2
   ammu: 0
+--- !u!114 &4375282986431085033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7639041830807167212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb0ddb0744ae5e42969b7f4926ffebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableMultiplier: 1.3
+  enableMultiplier: 1.05
+  checkInterval: 0.5
+  useOnlySpriteRenderers: 0
+  debugBreakPoint: 0
 --- !u!1 &8192421903652114494
 GameObject:
   m_ObjectHideFlags: 0

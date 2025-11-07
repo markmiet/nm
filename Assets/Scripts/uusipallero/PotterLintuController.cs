@@ -56,18 +56,23 @@ public class PotterLintuController : MonoBehaviour
 
     public float maxSpeedX = 2f;
     public float maxSpeedY = 2f;
-    
+
     public float maxAngularSpeed = 200f;
 
     [Header("kulkupolku Settings")]
     public Path kulkupolku;
-    public bool kuljetaanpolkua=false;
+    public bool kuljetaanpolkua = false;
     public float pathSpeed = 1.0f;      // Kuinka nopeasti etenee reittiä pitkin
     public float followStrength = 0.5f; // Kuinka voimakkaasti hakeutuu reitille
     //public float flapAmplitude = 0.5f;  // Kuinka paljon aaltoilee y-suunnassa
     //public float flapFrequency = 2f;    // Kuinka usein "siipi iskee"
     private float pathProgress = 0f;
     private float baseY;
+
+    public GameObject haulikko;
+    private Vector2 haulikkooriginalliscale;
+
+    private Vector2 gameobjecktinoriginalliscale;
     void Start()
     {
         baseY = transform.position.y;
@@ -79,7 +84,9 @@ public class PotterLintuController : MonoBehaviour
             sijaintijostatutkitaan = transform;
 
         verticalCheckDistance = CalculateCombinedColliderHalfHeight();
+        haulikkooriginalliscale = haulikko.transform.localScale;
 
+        gameobjecktinoriginalliscale= transform.localScale; ;
         /*
         currentImpulse = liftForce;
         targetHeight = transform.position.y;
@@ -104,7 +111,7 @@ public class PotterLintuController : MonoBehaviour
 
     public void OnFlapVanha()
     {
-        if (rb.velocity.y<0)
+        if (rb.velocity.y < 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
         }
@@ -117,7 +124,7 @@ public class PotterLintuController : MonoBehaviour
             rb.velocity = new Vector2(0.1f, rb.velocity.y);
 
 
-   
+
         isReturningRotation = true;
     }
 
@@ -136,15 +143,15 @@ public class PotterLintuController : MonoBehaviour
         // Symmetrinen X-nopeuden rajoitus molempiin suuntiin
         //  float clampedX = Mathf.Clamp(rb.velocity.x, -xvelocitymaxlimit, xvelocitymaxlimit);
         //  rb.velocity = new Vector2(clampedX, rb.velocity.y);
-       // isReturningRotation = true;
+        // isReturningRotation = true;
         // Käynnistetään monipulssinen siivenisku
         StartCoroutine(FlapRoutine());
-       // isReturningRotation = true;
+        // isReturningRotation = true;
     }
     public float alasvoima = 2.0f;
     public void VoimaAlaspain()
     {
-     //   rb.AddForce(Vector2.down * alasvoima, ForceMode2D.Impulse);
+        //   rb.AddForce(Vector2.down * alasvoima, ForceMode2D.Impulse);
     }
 
     private IEnumerator FlapRoutine()
@@ -161,14 +168,14 @@ public class PotterLintuController : MonoBehaviour
         for (int i = 0; i < pulses; i++)
         {
             // Ensimmäinen pulssi: nopea, terävä impulssi
-            ForceMode2D mode = (i == 0) ? ForceMode2D.Force  : ForceMode2D.Impulse;
-           // ForceMode2D mode = ForceMode2D.Impulse;
+            ForceMode2D mode = (i == 0) ? ForceMode2D.Force : ForceMode2D.Impulse;
+            // ForceMode2D mode = ForceMode2D.Impulse;
             // Lisätään nostovoima ja eteneminen
-           // if (!isDodging)
-                rb.AddForce(Vector2.up * forcePerPulse, mode);
+            // if (!isDodging)
+            rb.AddForce(Vector2.up * forcePerPulse, mode);
             if (isDodging)
             {
-                rb.AddForce(Vector2.right * forwardPerPulse/2.0f, mode);
+                rb.AddForce(Vector2.right * forwardPerPulse / 2.0f, mode);
 
             }
             else
@@ -214,25 +221,25 @@ public class PotterLintuController : MonoBehaviour
 
 
         rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -maxAngularSpeed, maxAngularSpeed);
-        if (kulkupolku!=null && kuljetaanpolkua)
+        if (kulkupolku != null && kuljetaanpolkua)
         {
-                 Kuljepolkua();
+            Kuljepolkua();
             return;
         }
 
         // Rajoitetaan rigidbody nopeus
         KuljeIlmanPolkua();
         KeepInCameraView();
-        
-     //   rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -maxAngularSpeed, maxAngularSpeed);
-      
+
+        //   rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -maxAngularSpeed, maxAngularSpeed);
 
 
 
-       // v.x = Mathf.Clamp(v.x, -maxSpeedX, maxSpeedX);
+
+        // v.x = Mathf.Clamp(v.x, -maxSpeedX, maxSpeedX);
         v.y = Mathf.Clamp(v.y, -maxSpeedY, maxSpeedY);
 
-
+        /*
 
         Vector2 pathPos = kulkupolku.GetPosition(pathProgress);
         Vector2 futurePos = kulkupolku.GetPosition(pathProgress + 0.1f);
@@ -243,43 +250,37 @@ public class PotterLintuController : MonoBehaviour
             float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180f;
             float smoothAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, Time.fixedDeltaTime * 5f);
             transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
+
+           // ratsastaja.transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
+
             // --- FlipY jos lentää vasemmalle ---
             // Tämä pitää linnun "pää ylhäällä", vaikka se kääntyisi ympäri
             SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
-            bool flipx = kulkupolku.FlipY(pathProgress);
+            bool flipY = kulkupolku.FlipY(pathProgress);
+            //GetComponent<SpriteRenderer>().flipY = flipY;
             foreach (SpriteRenderer spriteRenderer in sr)
             {
-                if (spriteRenderer != null)
-                {
-                    bool flipY = targetAngle > 90f || targetAngle < -90f;
-                    spriteRenderer.flipY = flipx;
-                }
+                //     if (spriteRenderer != null)
+                //     {
+                //         GunAimPotLintuRatsas gp = spriteRenderer.gameObject.GetComponent<GunAimPotLintuRatsas>();
+                //if (gp==null)
+                //{
+
+                //         bool flipY = targetAngle > 90f || targetAngle < -90f;
+                spriteRenderer.flipY = flipY;
+                //}
+
+                //    }
             }
         }
+        */
 
         //   rb.velocity = v;
 
 
     }
 
-    private void Kuljepolkua2()
-    {
-        // Liiku reittiä pitkin X-akselilla
-        pathProgress += pathSpeed * Time.fixedDeltaTime;
-        Vector2 pathPos = kulkupolku.GetPosition(pathProgress);
 
-
-
-        // "Tavoitekorkeus" on reitin korkeus + aaltoilu
-        float targetY = pathPos.y;// + Mathf.Sin(Time.time * flapFrequency) * flapAmplitude;
-
-        // Fysiikkavoima joka hakee kohti reittiä
-        float diff = targetY - transform.position.y;
-        rb.AddForce(Vector2.up * diff * followStrength, ForceMode2D.Force);
-
-        // X-asema seuraa reittiä suoraan (voi myös interpoloida)
-        transform.position = new Vector2(pathPos.x, transform.position.y);
-    }
     int laskuri = 0;
     private void Kuljepolkua()
     {
@@ -289,7 +290,7 @@ public class PotterLintuController : MonoBehaviour
 
 
         laskuri++;
-        if (laskuri<4)
+        if (laskuri < 2)
         {
             return;
         }
@@ -298,18 +299,19 @@ public class PotterLintuController : MonoBehaviour
 
         Vector2 pathPos = kulkupolku.GetPosition(pathProgress);
 
-       // bool flipx = kulkupolku.FlipY(pathProgress);
-       // GetComponent<SpriteRenderer>().flipY = flipx;
-        if (pathPos==Vector2.zero)
+        // bool flipx = kulkupolku.FlipY(pathProgress);
+        // GetComponent<SpriteRenderer>().flipY = flipx;
+        if (pathPos == Vector2.zero)
         {
             //PalautaTakaisinKulkupolkuun();
             //StartCoroutine(PalautaTakaisinKulkupolkuun());
+        //    pathSpeed = -pathSpeed;
             PalatauTakaisinKulkupolkuunIlmanViivetta();
 
             return;
         }
 
-        
+
 
 
         // "Tavoitekorkeus" on reitin korkeus
@@ -318,8 +320,8 @@ public class PotterLintuController : MonoBehaviour
         // Fysiikkavoima joka hakee kohti reittiä
         float diff = targetY - transform.position.y;
 
-        Vector2 normal = (  pathPos- (Vector2)transform.position).normalized;
-        rb.AddForce(normal*followStrength, ForceMode2D.Force);
+        Vector2 normal = (pathPos - (Vector2)transform.position).normalized;
+        rb.AddForce(normal * followStrength, ForceMode2D.Force);
 
 
 
@@ -352,38 +354,75 @@ public class PotterLintuController : MonoBehaviour
         rb.MovePosition(smoothedPos);
         */
 
-
+        
         // 🔥 ROTATION – käännetään linnun nenä lentosuuntaan
         Vector2 futurePos = kulkupolku.GetPosition(pathProgress + 0.1f);
         Vector2 dir = (futurePos - pathPos).normalized;
 
         if (dir.sqrMagnitude > 0.0001f)
         {
-            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180f;
-            float smoothAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, Time.fixedDeltaTime * 5f);
-            transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
+
             // --- FlipY jos lentää vasemmalle ---
             // Tämä pitää linnun "pää ylhäällä", vaikka se kääntyisi ympäri
             SpriteRenderer[] sr = GetComponentsInChildren<SpriteRenderer>();
-             bool flipx = kulkupolku.FlipY(pathProgress);
+            bool flipx = kulkupolku.FlipY(pathProgress);
+            float targetAngle;
+            if (flipx)
+            {
+               
+                gameObject.transform.localScale =new Vector2(-gameobjecktinoriginalliscale.x, gameobjecktinoriginalliscale.y);
+                targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg ;
+            }
+            else
+            {
+                gameObject.transform.localScale = new Vector2(gameobjecktinoriginalliscale.x,
+                    gameobjecktinoriginalliscale.y);
+                targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180f;
+            }
+
+            
+            float smoothAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, Time.fixedDeltaTime * 5f);
+            transform.rotation = Quaternion.Euler(0, 0, smoothAngle);
+
+            haulikko.transform.localScale = flipx ? 
+                new Vector2(-Mathf.Abs(haulikkooriginalliscale.x) , -Mathf.Abs(haulikkooriginalliscale.y))
+                : haulikkooriginalliscale;
+            //ratsastaja.transform.localScale=new Vector2(-originalliscale)
+                /*
             foreach (SpriteRenderer spriteRenderer in sr)
             {
                 if (spriteRenderer != null)
                 {
                     bool flipY = targetAngle > 90f || targetAngle < -90f;
-                    spriteRenderer.flipY = flipx;
+                    //          spriteRenderer.flipY = flipx;
+                    GunAimPotLintuRatsas gp=
+                    spriteRenderer.gameObject.GetComponent<GunAimPotLintuRatsas>();
+                    if (gp!=null)
+                    {
+                        if (flipx)
+                        {
+                            spriteRenderer.transform.localScale = new Vector2(-1, -1);
+                        }
+                        else
+                        {
+                            spriteRenderer.transform.localScale = new Vector2(1, 1);
+                        }
+                    }
+                    
                 }
             }
+            */
         }
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ( collision.collider.tag.Contains("ammustag"))
+        if (collision.collider.tag.Contains("ammustag"))
         {
-            rb.AddForce(Vector2.down * 1f, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.down * 0.1f, ForceMode2D.Impulse);
         }
-            // Jos törmätään "tiileen", poistutaan reitiltä ja siirrytään väistötilaan
-        if (kuljetaanpolkua && collision.collider.tag.Contains("tiili") )
+        // Jos törmätään "tiileen", poistutaan reitiltä ja siirrytään väistötilaan
+        if (kuljetaanpolkua && collision.collider.tag.Contains("tiili"))
         {
             Debug.Log($"{name} törmäsi tiileen – poistutaan reitiltä ja aloitetaan väistö.");
             kuljetaanpolkua = false;
@@ -393,7 +432,7 @@ public class PotterLintuController : MonoBehaviour
             //rb.velocity = Vector2.zero; // pysäytetään hetkeksi
             StartCoroutine(PalautaTakaisinKulkupolkuun());
             // Halutessasi voit lisätä pienen pompun / reaktion törmäykseen:
-            rb.AddForce(Vector2.down * 1f, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.down * 0.1f, ForceMode2D.Impulse);
         }
     }
 
@@ -401,7 +440,7 @@ public class PotterLintuController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         float sallittuero = 1.0f;
-        for (int i=0;i<kulkupolku.Length;i++)
+        for (int i = 0; i < kulkupolku.Length; i++)
         {
             Transform possi = kulkupolku.points[i];
             Vector2 v = possi.position;
@@ -479,7 +518,7 @@ public class PotterLintuController : MonoBehaviour
 
         KeepInCameraView();
 
-      //  Update2();
+        //  Update2();
     }
     /*
 

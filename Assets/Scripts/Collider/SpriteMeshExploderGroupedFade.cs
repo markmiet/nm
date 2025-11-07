@@ -35,6 +35,7 @@ public class SpriteMeshExploderReverse : HitCounter
     public int hitsBeforeDestruction = 1;
     private int hitCountTotal = 0;
     private int hitCountti = 0;
+    public bool disableCollisions = false;
 
     private void Start()
     {
@@ -47,11 +48,32 @@ public class SpriteMeshExploderReverse : HitCounter
 
         materiaali = sr.material;
         //sr.material = materiaali;
+        if (disableCollisions)
+        {
+            DisableInternalCollisions(gameObject);
+        }
+    }
+
+    public static void DisableInternalCollisions(GameObject root)
+    {
+        // Get all colliders under this object
+        Collider2D[] colliders = root.GetComponentsInChildren<Collider2D>();
+
+        // Loop through all combinations and disable collision between them
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            for (int j = i + 1; j < colliders.Length; j++)
+            {
+                Physics2D.IgnoreCollision(colliders[i], colliders[j], true);
+            }
+        }
     }
 
     public Material materiaali;
 
     private HaulikkoPiippuController[] haulikot;
+
+    public float piecerigidbodygravityscale = 1;
 
     public override bool RegisterHit()
     {
@@ -66,7 +88,43 @@ public class SpriteMeshExploderReverse : HitCounter
 
         if (hitCountTotal >= hitThreshold)
         {
-            BaseDestroy();
+            if (hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan!=null)
+            {
+                
+                //GameObject raj=Instantiate(hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan,
+                  //  transform.position,Quaternion.identity);
+                //Destroy(raj, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+                explodeForce = explodeForce / 10;
+                maxAngularVelocity = maxAngularVelocity /10;
+                piecerigidbodygravityscale = 0f;
+                //sr.enabled = false;
+                Collider2D[] cc =
+                GetComponentsInChildren<Collider2D>();
+                foreach(Collider2D c in cc)
+                {
+                    c.enabled = false;
+                }
+
+                SpriteRenderer[] ccs =
+                GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer c in ccs)
+                {
+                    c.enabled = false;
+                }
+                HaulikkoPiippuController[] ccsk =
+               GetComponentsInChildren<HaulikkoPiippuController>();
+                foreach (HaulikkoPiippuController c in ccsk)
+                {
+                    c.enabled = false;
+                }
+
+
+                StartCoroutine(ExplodeRoutine());
+               
+                StartCoroutine(TuhoaViiveella());
+               
+            }
+            //BaseDestroy();
             return true;
         }
         else if (hitCountti >= hitsBeforeDestruction)
@@ -79,6 +137,30 @@ public class SpriteMeshExploderReverse : HitCounter
 
         return false;
     }
+
+    public IEnumerator TuhoaViiveella()
+    {
+        yield return 0.1f;
+        int maara = 0;
+        foreach (GameObject p in pieces)
+        {
+  if (explosion!=null)
+                {
+                    GameObject raj = Instantiate(explosion,
+                            p.transform.position, Quaternion.identity);
+                    Destroy(raj, kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan);
+                }
+
+
+            Destroy(p);
+            maara++;
+            yield return null;
+        }
+
+        BaseDestroy();
+
+    }
+
 
     private void DisableMainRenderers()
     {
@@ -350,7 +432,7 @@ public class SpriteMeshExploderReverse : HitCounter
         }
 
         Rigidbody2D rb = piece.AddComponent<Rigidbody2D>();
-        rb.gravityScale = 1f;
+        rb.gravityScale = piecerigidbodygravityscale;
         Vector2 dir = (Random.insideUnitCircle + Vector2.up * 0.3f).normalized;
         rb.AddForce(dir * explodeForce, ForceMode2D.Impulse);
         rb.angularVelocity = Random.Range(-maxAngularVelocity, maxAngularVelocity);

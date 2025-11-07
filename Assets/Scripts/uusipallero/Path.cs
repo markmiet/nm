@@ -8,6 +8,33 @@ public class Path : MonoBehaviour
 
     private Vector3 startPos;
 
+    public Vector2 GetPositionsaaa(float t)
+    {
+        if (points.Count < 2)
+            return transform.position;
+
+        int i = Mathf.FloorToInt(t);
+        if (i > points.Count - 2)
+            i = points.Count - 2;
+
+        // Tarvitaan neljä pistettä splineen
+        Vector2 p0 = points[Mathf.Clamp(i - 1, 0, points.Count - 1)].position;
+        Vector2 p1 = points[i].position;
+        Vector2 p2 = points[i + 1].position;
+        Vector2 p3 = points[Mathf.Clamp(i + 2, 0, points.Count - 1)].position;
+
+        float f = t - i;
+
+        // Catmull-Rom kaava
+        return 0.5f * (
+            (2f * p1) +
+            (-p0 + p2) * f +
+            (2f * p0 - 5f * p1 + 4f * p2 - p3) * f * f +
+            (-p0 + 3f * p1 - 3f * p2 + p3) * f * f * f
+        );
+    }
+
+
 
 
     public Vector2 GetPosition(float t)
@@ -23,6 +50,10 @@ public class Path : MonoBehaviour
 
         }
             
+        if (i<0)
+        {
+            i = 0;
+        }
 
         float f = t - i;
         return Vector2.Lerp(points[i].position, points[i + 1].position, f);
@@ -37,7 +68,10 @@ public class Path : MonoBehaviour
         int i = Mathf.FloorToInt(t);
         if (i >= points.Count - 1)
             i = points.Count - 2; // viimeinen väli
-
+        if (i < 0)
+        {
+            i = 0;
+        }
         // Vektori seuraavasta pisteestä edelliseen
         Vector3 dir = points[i + 1].position - points[i].position;
 
