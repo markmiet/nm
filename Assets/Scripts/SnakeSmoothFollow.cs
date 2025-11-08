@@ -446,10 +446,9 @@ public class SnakeSmootFollow : BaseController
         rotationVelocities.Add(0f);
         currentAngles.Add(0f);
 
-    
 
 
-        Vector3 initialDir = Vector3.left;
+            Vector3 initialDir = Vector3.left;
         positions.Clear();
         for (int i = 0; i <= initialBodyParts; i++)
         {

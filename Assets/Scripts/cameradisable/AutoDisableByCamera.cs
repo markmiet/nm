@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class AutoDisableByCamera : MonoBehaviour
+public class AutoDisableByCamera : BaseController
 {
     [Header("Settings")]
     [Tooltip("Multiplier for how far beyond the camera view to disable (1.0 = exactly at edge, 1.2 = 20% beyond).")]
@@ -11,7 +11,7 @@ public class AutoDisableByCamera : MonoBehaviour
    // public bool useFrustumCheck = true;
     public float checkInterval = 0.5f;
 
-    private Camera mainCam;
+    private Camera mainCamitassa;
     private bool isActive = true;
     private float nextCheckTime = 0f;
 
@@ -22,7 +22,7 @@ public class AutoDisableByCamera : MonoBehaviour
 
     private void Start()
     {
-        mainCam = Camera.main;
+        mainCamitassa = PalautaMainCam();
         CacheRenderers();
     }
 
@@ -58,8 +58,8 @@ public class AutoDisableByCamera : MonoBehaviour
             Debug.Log(gameObject.name);
         }
 
-        if (mainCam == null) mainCam = Camera.main;
-        if (mainCam == null) return;
+        if (mainCamitassa == null) mainCamitassa = Camera.main;
+        if (mainCamitassa == null) return;
 
         // --- Calculate dynamic distances ---
         float disableDist = GetCameraViewRadius() * disableMultiplier;
@@ -71,7 +71,7 @@ public class AutoDisableByCamera : MonoBehaviour
         //float dist = Vector2.Distance(checkPos, mainCam.transform.position);
 
         Vector2 checkPos = new Vector2(checkPos3D.x, checkPos3D.y);
-        Vector2 camPos = new Vector2(mainCam.transform.position.x, mainCam.transform.position.y);
+        Vector2 camPos = new Vector2(mainCamitassa.transform.position.x, mainCamitassa.transform.position.y);
 
         // Measure pure 2D distance
         float dist = Vector2.Distance(checkPos, camPos);
@@ -93,7 +93,7 @@ public class AutoDisableByCamera : MonoBehaviour
 
         float enableDist = GetCameraViewRadius(cam) * enableMultiplier;
         Vector3 checkPos3d = GetRendererCenter();
-        Vector3 checkposilman = CalculateCenterOfSpriteChildren();
+       // Vector3 checkposilman = CalculateCenterOfSpriteChildren();
 
         Vector2 checkPos = new Vector2(checkPos3d.x, checkPos3d.y);
 
@@ -104,6 +104,23 @@ public class AutoDisableByCamera : MonoBehaviour
             gameObject.SetActive(true);
             isActive = true;
         }
+    }
+
+    public bool Enabloitaisiinko(float enableMultiplieroma)
+    {
+
+        float enableDist = GetCameraViewRadius(mainCamitassa) * enableMultiplieroma;
+        Vector3 checkPos3d = GetRendererCenter();
+
+        Vector2 checkPos = new Vector2(checkPos3d.x, checkPos3d.y);
+
+        float dist = Vector2.Distance(checkPos, mainCamitassa.transform.position);
+
+        if (dist < enableDist)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool OnkoKamerassa(Camera cam)
@@ -398,7 +415,7 @@ public class AutoDisableByCamera : MonoBehaviour
     // --- Helper: dynamic camera view radius (based on size + aspect ratio) ---
     private float GetCameraViewRadius(Camera cam = null)
     {
-        if (cam == null) cam = mainCam;
+        if (cam == null) cam = mainCamitassa;
         if (cam == null) return 10f;
 
         if (cam.orthographic)
@@ -416,14 +433,14 @@ public class AutoDisableByCamera : MonoBehaviour
 
     private bool IsInCameraView(Vector3 worldPos)
     {
-        Vector3 viewPos = mainCam.WorldToViewportPoint(worldPos);
+        Vector3 viewPos = mainCamitassa.WorldToViewportPoint(worldPos);
         return (viewPos.x > -0.1f && viewPos.x < 1.1f && viewPos.y > -0.1f && viewPos.y < 1.1f && viewPos.z > 0);
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        if (mainCam == null) mainCam = Camera.main;
+        if (mainCamitassa == null) mainCamitassa = Camera.main;
 
         Vector3 center = Application.isPlaying ? GetRendererCenter() : transform.position;
 
