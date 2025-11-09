@@ -19,10 +19,14 @@ public class CameraInfoController : BaseController
         spriteRenderer = GetComponent<SpriteRenderer>();
         //spriteRenderer.enabled = false;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr!=null)
+        {
+            Color c = sr.color;
+            c.a = 0f; // alpha = 0 (fully transparent)
+            sr.color = Color.clear;
+        }
         
-        Color c = sr.color;
-        c.a = 0f; // alpha = 0 (fully transparent)
-        sr.color = Color.clear;
+
         
 
         ad = PalautaAudioplayerController();

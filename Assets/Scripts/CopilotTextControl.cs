@@ -7,7 +7,11 @@ public class CopilotTextControl : BaseController
     // Start is called before the first frame update
     void Start()
     {
-        
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        Color c = sr.color;
+        c.a = 0f; // alpha = 0 (fully transparent)
+        sr.color = Color.clear;
     }
     /**
      * Weapons online: “Weapon systems online. All armaments operational.”

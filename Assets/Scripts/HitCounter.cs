@@ -169,7 +169,7 @@ public class HitCounter : BaseController
     private Vector2 lastkontantipointti = Vector2.zero;
 
 
-    public bool RegisterHit(Vector2 contactPoint,GameObject ammus)
+    public bool RegisterHit(Vector2 contactPoint, GameObject ammus)
     {
 
         if (IsGoingToBeDestroyed())
@@ -179,13 +179,13 @@ public class HitCounter : BaseController
         lastkontantipointti = contactPoint;
         bool ret = RegisterHit();
 
-        if (!ret && aiheutaVoimaaRigidbodyyn && rigidbodyvoimamaara>0)
+        if (!ret && aiheutaVoimaaRigidbodyyn && rigidbodyvoimamaara > 0)
         {
-            Rigidbody2D rb =        GetComponent<Rigidbody2D>();
-            if (rb!=null)
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
             {
                 Rigidbody2D ammusrb = ammus.GetComponent<Rigidbody2D>();
-                if (ammusrb!=null)
+                if (ammusrb != null)
                 {
                     //Vector2 suunta = -ammusrb.velocity.normalized;
                     /*
@@ -198,7 +198,7 @@ public class HitCounter : BaseController
                     ImpactTransfer2D ii = ammus.GetComponent<ImpactTransfer2D>();
                     if (ii != null)
                     {
-                         
+
                         Vector2 suunta = ii.lastVelocity.normalized;
                         rb.AddForce(suunta * rigidbodyvoimamaara, ForceMode2D.Impulse);
                     }
@@ -436,7 +436,7 @@ sirpalemass, teeBoxCollider2d, 0, false, gravityscale,
             RajaytaSpriteUusiMonimutkaisin(gameObject, uusirajaytyscolumns, uusirajaytysrows, rajahdysvoima, alivetime,
                 false,
     rajaytaSpritenExplosion, rajaytaspritenviive, gameJostaRajaytyksenPistelasketaan,
-    36, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti
+    12, teeBoxCollider2d, gravityscale, rajaytaspritenScaleFactorProsentti
 
     );
         }

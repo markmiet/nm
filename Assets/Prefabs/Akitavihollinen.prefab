@@ -239,12 +239,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd88e4cc67df55048812ca017206d452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   hitThreshold: 1
   hitCount: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
@@ -252,8 +254,21 @@ MonoBehaviour:
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 0.5
   rekisteroihittivainjosobjektillaEiOleJointtia: 0
+  bonus: {fileID: 0}
+  teebonus: 0
+  enableMultiPlieri: 1.2
+  disableMultiPlieri: 1.3
+  useOnlySpriteRenderers: 0
+  addAutoDisableByCamera: 1
+  aiheutaVoimaaRigidbodyyn: 0
+  rigidbodyvoimamaara: 0
+  hitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: {fileID: 0}
+  kestoaikahitcounterinRajaytaObjektiJokaInstantioidaanKunThreadSoldYlitetaan: 0
   tuhoajosollaanKameranVasemmallaPuolella: 1
+  teekamerashake: 0
+  tunniste: 
   rajaytaspritenScaleFactorProsentti: 100
+  childrenienmaaranrajoArvoJottaRajaytetaanVainJokaToinen: 15
   gameJostaRajaytyksenPistelasketaan: {fileID: 0}
   rajahdysrowcol: 16
   rajahdysvoima: 0.1
@@ -261,13 +276,13 @@ MonoBehaviour:
   sirpalemass: 1
   gravityscale: 0.5
   adddestroycontroller: 0
-  teeBoxCollider2d: 0
+  teeBoxCollider2d: 1
   teerajaytasprite: 0
-  teeExplosion: 1
+  teeExplosion: 0
   rajaytaSpritenExplosion: {fileID: 0}
   rajaytaspritenviive: 0.5
   saadaDissolveamount: 0
-  teerajaytaspriteuusiversio: 0
+  teerajaytaspriteuusiversio: 1
   kaynnistaParticleEmit: 0
 --- !u!114 &7195587290663649437
 MonoBehaviour:
@@ -281,12 +296,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: b2086b12f9fc4074597273d41506dc9a,
     type: 3}
   osumanSavu: {fileID: 0}
@@ -647,12 +664,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c50690f134125d478d728a4a10ad956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 10
   uusirajaytysrows: 10
-  isGoingToBeDestroyed: 0
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 7737871024420907965, guid: 9bb23b78f0a3a2d40ae99315d5438930,
     type: 3}
   osumanSavu: {fileID: 0}

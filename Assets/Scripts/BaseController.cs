@@ -536,7 +536,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
 
     public void TeeBonusReal(GameObject bonus, Vector2 boxsize, int bonuksienmaara, bool ignoraaAlkulaskuri)
     {
-        if (bonus==null || (!ignoraaAlkulaskuri && luotujenbonuksienmaara >= bonuksienmaara))
+        if (bonus == null || (!ignoraaAlkulaskuri && luotujenbonuksienmaara >= bonuksienmaara))
         {
             return;
         }
@@ -591,15 +591,15 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     }
 
 
-    public void TeeBonusUusiKaytaTata(Vector2 sijaintiMinneTehdaan,GameObject bonusPrefappi,int maara=1)
+    public void TeeBonusUusiKaytaTata(Vector2 sijaintiMinneTehdaan, GameObject bonusPrefappi, int maara = 1)
     {
-        if (maara<1)
+        if (maara < 1)
         {
             return;
         }
-        BoxCollider2D c =bonusPrefappi.GetComponent<BoxCollider2D>();
+        BoxCollider2D c = bonusPrefappi.GetComponent<BoxCollider2D>();
         Vector2 size = new Vector2(0.4f, 0.4f);
-        if (c!=null)
+        if (c != null)
         {
             size = c.size;
         }
@@ -609,14 +609,16 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         bool tehtyjokaikki = false;
         float xsuunnassatutkintaleveys = 1.0f;
         float ysuunnassatutkintaleveys = 1.0f;
-        for (float y = 0; y < ysuunnassatutkintaleveys; y += 0.1f) { 
+        for (float y = 0; y < ysuunnassatutkintaleveys; y += 0.1f)
+        {
             if (tehtyjokaikki)
             {
                 break;
             }
-            
-            for (float x = 0; x < xsuunnassatutkintaleveys; x += 0.1f) {
-            
+
+            for (float x = 0; x < xsuunnassatutkintaleveys; x += 0.1f)
+            {
+
                 Vector2 sijainti = new Vector2(sijaintiMinneTehdaan.x + x, sijaintiMinneTehdaan.y + y);
                 //boxsize
 
@@ -632,9 +634,9 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
                     Instantiate(bonusPrefappi, sijainti, Quaternion.identity);
                     luodut++;
                 }
-                if (luodut==maara)
+                if (luodut == maara)
                 {
-                    
+
                     tehtyjokaikki = true;
                     break;
                 }
@@ -1165,7 +1167,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
         // Distance to target
         Vector2 directionToAlusOikeasti = (alusPosition - shooterPosition).normalized;
 
-        Vector2 directionToAlusOikeasti2 = ( shooterPosition- alusPosition).normalized;
+        Vector2 directionToAlusOikeasti2 = (shooterPosition - alusPosition).normalized;
 
 
         Vector2 directionToAlus = (shooterPosition - piipuntoinenpaa).normalized;
@@ -1305,31 +1307,31 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     /// <summary>
     /// Explodes a LineRenderer worm into physics fragments that match the material texture.
     /// </summary>
-    public void ShatterWorm(LineRenderer worm, GameObject expl, float lifetime=2.0f,float prosenttiosuus=1.0f)
+    public void ShatterWorm(LineRenderer worm, GameObject expl, float lifetime = 2.0f, float prosenttiosuus = 1.0f)
     {
         int points = worm.positionCount;
 
-        int pointsprossat = (int)( points * prosenttiosuus);
+        int pointsprossat = (int)(points * prosenttiosuus);
 
 
         int steppi = points / pointsprossat;
 
-        for (int i = 0; i < points; i+=steppi)
+        for (int i = 0; i < points; i += steppi)
         {
             Vector3 pos = worm.GetPosition(i);
 
             //GameObject piece=Instantiate(expl, pos, Quaternion.identity);
-            GameObject piece=
-            ObjectPoolManager.Instance.GetFromPool(expl,pos, Quaternion.identity);
+            GameObject piece =
+            ObjectPoolManager.Instance.GetFromPool(expl, pos, Quaternion.identity);
 
 
             // Cleanup
             //Destroy(piece, lifetime);
-            ObjectPoolManager.Instance.ReturnToPool( piece, lifetime);
+            ObjectPoolManager.Instance.ReturnToPool(piece, lifetime);
         }
 
         // Destroy the original worm
-       
+
     }
 
 
@@ -1338,7 +1340,7 @@ public class BaseController : MonoBehaviour, ReturnToPoolAble
     {
         HitCounter hc = GetComponent<HitCounter>();
 
-        if (GetComponent<LineRenderer>() != null & hc != null && hc.rajaytaSpritenExplosion!=null)
+        if (GetComponent<LineRenderer>() != null & hc != null && hc.rajaytaSpritenExplosion != null)
 
         {
 
@@ -1368,7 +1370,7 @@ float scalefactor = 100.0f // percentage of original size
  rows,
  columns,
  explosionForce,
- aliveTime,true,
+ aliveTime, true,
  fadeexplosion,
  fadeDuration,
  gameObjectjostalasketaanPosition,
@@ -1379,22 +1381,22 @@ float scalefactor = 100.0f // percentage of original size
 
     }
 
-        public void RajaytaSpriteUusiMonimutkaisin(
-    GameObject parenttigameobjekti,
-    int rows,
-    int columns,
-    float explosionForce,
-    float aliveTime,
-     bool destroy,
-    GameObject fadeexplosion = null
-      ,
-    float fadeDuration = 0.5f,
-    GameObject gameObjectjostalasketaanPosition = null,
-    int maksimimaara = 36,
-    bool teerigidbody = true,
-    float gravityscale = 0.5f,
-    float scalefactor = 100.0f // percentage of original size
-          )
+    public void RajaytaSpriteUusiMonimutkaisin(
+GameObject parenttigameobjekti,
+int rows,
+int columns,
+float explosionForce,
+float aliveTime,
+ bool destroy,
+GameObject fadeexplosion = null
+  ,
+float fadeDuration = 0.5f,
+GameObject gameObjectjostalasketaanPosition = null,
+int maksimimaara = 36,
+bool teerigidbody = true,
+float gravityscale = 0.5f,
+float scalefactor = 100.0f // percentage of original size
+      )
     {
         if (IsGoingToBeDestroyed())
             return;
@@ -1410,7 +1412,7 @@ float scalefactor = 100.0f // percentage of original size
         if (originalSR == null)
         {
             //Debug.Log("ei spriterendereria " + name);
-            Shatterwormi( );
+            Shatterwormi();
             BaseDestroy();
             return;
         }
@@ -1419,7 +1421,7 @@ float scalefactor = 100.0f // percentage of original size
 
         if (originalSR.sprite == null)
         {
-           // Debug.Log("ei spritea " + name);
+            // Debug.Log("ei spritea " + name);
             Shatterwormi();
             BaseDestroy();
 
@@ -1452,10 +1454,10 @@ float scalefactor = 100.0f // percentage of original size
         bool massaoli = false;
         Rigidbody2D r = GetComponent<Rigidbody2D>();
         float massa = 0.0f;
-        if (r!=null)
+        if (r != null)
         {
             massa = r.mass;
-            if (massa> sirpaleenmassanlimitti)
+            if (massa > sirpaleenmassanlimitti)
             {
                 massa = sirpaleenmassanlimitti;
             }
@@ -1516,13 +1518,13 @@ float scalefactor = 100.0f // percentage of original size
                     originalSprite.pixelsPerUnit
                 );
 
-                
+
 
                 GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
                 SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
                 //flippi ei toimi
-               // sr.flipX = originalSR.flipX;
-               // sr.flipY = originalSR.flipY;
+                // sr.flipX = originalSR.flipX;
+                // sr.flipY = originalSR.flipY;
 
                 sr.sprite = newSprite;
                 sr.sortingLayerID = originalSR.sortingLayerID;
@@ -1585,7 +1587,7 @@ thisSliceHeight / originalSprite.pixelsPerUnit
 
                 pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
                 pieceRigidbody.excludeLayers = LayerMask.GetMask("AlusLayer", "AlusammusLayer", "AmmusLayer", "Default");
-               
+
                 sliceObject.layer = LayerMask.NameToLayer("Tiililayer");
 
                 // Placement uses ORIGINAL grid size → keeps fragments together
@@ -1605,7 +1607,7 @@ thisSliceHeight / originalSprite.pixelsPerUnit
 
                 sliceObject.transform.localScale = originellilokaaliskale * scale;
 
-              //  Debug.Log( $"scale={scale}  {sliceObject.name} scale after assignment: {sliceObject.transform.localScale}, parent scale: {sliceObject.transform.parent?.localScale}");
+                //  Debug.Log( $"scale={scale}  {sliceObject.name} scale after assignment: {sliceObject.transform.localScale}, parent scale: {sliceObject.transform.parent?.localScale}");
 
                 // Explosion
                 if (pieceRigidbody != null)
@@ -1621,9 +1623,9 @@ thisSliceHeight / originalSprite.pixelsPerUnit
             }
         }
 
-       // Debug.Log($"Created {slicemaara} slices ({rows}x{columns}, scale {scalefactor}%) from {go.name}");
-       if (destroy)
-        BaseDestroy();
+        // Debug.Log($"Created {slicemaara} slices ({rows}x{columns}, scale {scalefactor}%) from {go.name}");
+        if (destroy)
+            BaseDestroy();
     }
 
 
@@ -3531,7 +3533,7 @@ true,
     }
     */
 
-    public bool TuhoaAmmukset( GameObject go, float hengissaolonraja = 100.0f, float liikkeenmininopeus = 1.0f)
+    public bool TuhoaAmmukset(GameObject go, float hengissaolonraja = 100.0f, float liikkeenmininopeus = 1.0f)
     {
 
         hengissaoloaika += Time.deltaTime;
@@ -3588,10 +3590,10 @@ true,
             {
                 //Destroy(go);
                 hengissaoloaika = 0.0f;
-                
-                    BaseDestroy();
-                    return true;
-                
+
+                BaseDestroy();
+                return true;
+
             }
 
             bool liianylhaalla = OnkoKameranYlaPuolella(go, 5.0f);
@@ -3603,7 +3605,8 @@ true,
                 return true;
 
             }
-            if (rigidbodycache==null) {
+            if (rigidbodycache == null)
+            {
                 rigidbodycache = go.GetComponent<Rigidbody2D>();
             }
             if (rigidbodycache != null)
@@ -3611,10 +3614,10 @@ true,
                 float speed = rigidbodycache.velocity.magnitude;
                 if (speed <= nopeudenalaraja)
                 {
-                    
-                        BaseDestroy();
-                        return true;
-                    
+
+                    BaseDestroy();
+                    return true;
+
 
                 }
             }
@@ -3682,7 +3685,7 @@ true,
 
         bool tuhoajosliiankauanhengissa = true;
         float hengissaolonraja = 6000f;//tarkista
-        float tarkistussykli =0f;//MJMVAIHDATAKAS 1.5F
+        float tarkistussykli = 0f;//MJMVAIHDATAKAS 1.5F
         bool tuhoajosoikeallakameraanVerrattuna = false;
 
         TuhoaReal(go, tuhoajosliianhidas, nopeusJonkaAlletuhotaan, tuhoaJosKameranVasemmallaPuolella, offsettijokasallitaanvasemmallakavaisyyn,
@@ -3771,7 +3774,7 @@ true,
     }
 
 
-    public bool IsRendererVisibleWithMargin2DEIIIITOIMI(GameObject go,  float margin = 0.5f)
+    public bool IsRendererVisibleWithMargin2DEIIIITOIMI(GameObject go, float margin = 0.5f)
     {
         Camera cam = PalautaMainCam();
         if (cam == null || go == null) return false;
@@ -3931,14 +3934,14 @@ true,
         */
         SpriteRenderer s = go.GetComponent<SpriteRenderer>();
         bool nakyvilla;
-        if (s==null)
+        if (s == null)
         {
             nakyvilla = false;
-            SpriteRenderer[] ss= go.GetComponentsInChildren<SpriteRenderer>();
+            SpriteRenderer[] ss = go.GetComponentsInChildren<SpriteRenderer>();
 
 
-            
-            foreach(SpriteRenderer m in ss)
+
+            foreach (SpriteRenderer m in ss)
             {
                 bool tmp = IsVisibleFrom(m, mainCam);
                 if (tmp)
@@ -3964,17 +3967,17 @@ true,
                         }
                     }
                 }
-            
+
             }
 
-            
+
             if (!nakyvilla)
             {
                 nakyvilla = IsVisibleUseMargin(go);
 
                 if (!nakyvilla)
                 {
-                    nakyvilla=IsRendererVisibleWithMargin2D(go);
+                    nakyvilla = IsRendererVisibleWithMargin2D(go);
                 }
 
 
@@ -3983,16 +3986,16 @@ true,
 
                 if (nakyvilla)
                 {
-                   // Debug.Log("marginaalilla");
+                    // Debug.Log("marginaalilla");
                 }
                 else
                 {
-                 //   Debug.Log("mEiilla");
+                    //   Debug.Log("mEiilla");
                 }
             }
 
 
-            
+
         }
         else
         {
@@ -4003,7 +4006,7 @@ true,
 
         if (!nakyvilla)
         {
-            if (rigidbodycache==null)
+            if (rigidbodycache == null)
             {
                 rigidbodycache = go.GetComponent<Rigidbody2D>();
             }
@@ -4043,10 +4046,10 @@ true,
 
     private bool IsVisibleFromVanhatoimiva(SpriteRenderer renderer, Camera camera)
     {
-      //  if (!renderer || !camera)
+        //  if (!renderer || !camera)
         //    return false;
 
-        if (renderer==null || camera==null)
+        if (renderer == null || camera == null)
             return false;
 
         // Get the world bounds of the sprite
@@ -4542,17 +4545,17 @@ true,
             */
             if (tuhoajosliiankauanhengissa && hengissaoloaika >= hengissaolonraja)
             {
-                
-                    BaseDestroy();
-                    return;
-                
+
+                BaseDestroy();
+                return;
+
             }
 
             if (tuhoajosliianhidas)
             {
-                if (rigidbodycache==null)
+                if (rigidbodycache == null)
                 {
-                    rigidbodycache= go.GetComponent<Rigidbody2D>(); 
+                    rigidbodycache = go.GetComponent<Rigidbody2D>();
                 }
 
                 //Rigidbody2D r = go.GetComponent<Rigidbody2D>();
@@ -4561,10 +4564,10 @@ true,
                     float speed = rigidbodycache.velocity.magnitude;
                     if (speed <= nopeusJonkaAlletuhotaan)
                     {
-                      
-                            BaseDestroy();
-                            return;
-                        
+
+                        BaseDestroy();
+                        return;
+
 
                     }
                 }
@@ -4579,7 +4582,7 @@ true,
                     if (prefap == null)
                     {
                         */
-                        BaseDestroy();
+                    BaseDestroy();
                     return;
                     /*
                         //Destroy(go);
@@ -4603,17 +4606,17 @@ true,
             {
                 if (OnkoKameranOikeallaPuolella(go))
                 {
-                        //Destroy(go);
-                        BaseDestroy();
-                        return;
-                    
+                    //Destroy(go);
+                    BaseDestroy();
+                    return;
+
                 }
             }
             if (tuhoaJosKameranAlapuolella)
             {
                 if (OnkoKameranAlaPuolella(go, offsettijokasallitaanAlhaallaKavaisyyn))
                 {
-                        BaseDestroy();
+                    BaseDestroy();
                     return;
 
                 }
@@ -4622,7 +4625,7 @@ true,
             {
                 if (OnkoKameranYlaPuolella(go, offsettijokasallitaanYlapuolellaKavaisyyn))
                 {
-                        BaseDestroy();
+                    BaseDestroy();
                     return;
 
                 }
@@ -4813,7 +4816,7 @@ true,
 
     public void BaseDestroy(GameObject go)
     {
-        
+
 
         BaseController bc = go.GetComponent<BaseController>();
         if (bc != null)
@@ -4824,7 +4827,7 @@ true,
 
         if (go.GetComponent<PooledObject>() != null && go.GetComponent<PoolNotAble>() == null)
         {
-            ObjectPoolManager.Instance.ReturnToPool( go);
+            ObjectPoolManager.Instance.ReturnToPool(go);
             return;
 
         }
@@ -4832,11 +4835,11 @@ true,
         {
             if (debugDestroyInfo)
             {
-                Debug.Log("BC destroy go.name=" + go.name+" script="+ GetType().Name);
+                Debug.Log("BC destroy go.name=" + go.name + " script=" + GetType().Name);
             }
             Destroy(go);
         }
-       
+
     }
 
 
@@ -4849,16 +4852,16 @@ true,
             bc.isGoingToBeDestroyed = true;
         }
 
-        if (go.GetComponent<PooledObject>() != null && go.GetComponent<PoolNotAble>()==null)
+        if (go.GetComponent<PooledObject>() != null && go.GetComponent<PoolNotAble>() == null)
         {
-            ObjectPoolManager.Instance.ReturnToPool(go,time);
+            ObjectPoolManager.Instance.ReturnToPool(go, time);
             return;
         }
         else
         {
             if (debugDestroyInfo)
             {
-                Debug.Log("BC destroy go.name=" + go.name + " script=" + GetType().Name+" delay="+time);
+                Debug.Log("BC destroy go.name=" + go.name + " script=" + GetType().Name + " delay=" + time);
             }
             Destroy(go, time);
         }
@@ -4896,7 +4899,7 @@ true,
 
         foreach (var kvp in _initialValues)
         {
-            if (kvp.Value!=null) 
+            if (kvp.Value != null)
                 kvp.Key.SetValue(this, kvp.Value);
         }
         poolistapalautusmaara = originellipoolistapalautusmaara;
@@ -4918,7 +4921,7 @@ true,
     void Awakevanha()
     {
         mainCam = Camera.main;
-   
+
     }
 
     // Käytetään Awake:ssa automaattisesti tallennukseen
@@ -4941,6 +4944,6 @@ true,
         {
             //FindObjectOfType<CameraObjectManager>().Register(gameObject);
         }
-      
+
     }
 }
