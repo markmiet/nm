@@ -1398,6 +1398,11 @@ float gravityscale = 0.5f,
 float scalefactor = 100.0f // percentage of original size
       )
     {
+
+
+
+
+
         if (IsGoingToBeDestroyed())
             return;
 
@@ -1607,6 +1612,9 @@ thisSliceHeight / originalSprite.pixelsPerUnit
 
                 sliceObject.transform.localScale = originellilokaaliskale * scale;
 
+//                sliceObject.transform.localScale = Vector3.one * scale/rows;
+
+
                 //  Debug.Log( $"scale={scale}  {sliceObject.name} scale after assignment: {sliceObject.transform.localScale}, parent scale: {sliceObject.transform.parent?.localScale}");
 
                 // Explosion
@@ -1629,34 +1637,43 @@ thisSliceHeight / originalSprite.pixelsPerUnit
     }
 
 
-    public void RajaytaSpriteUusiMonimutkaisinsdsdd(
-    GameObject go,
-    int rows,
-    int columns,
-    float explosionForce,
-    float aliveTime,
-    GameObject fadeexplosion = null,
-    float fadeDuration = 0.5f,
-    GameObject gameObjectjostalasketaanPosition = null,
-    int maksimimaara = 36,
-    bool teerigidbody = true,
-    float gravityscale = 0.5f
-)
+
+
+    /*
+
+    public void ExplodeSpriteComplex(
+        GameObject parentObject,
+        int rows,
+        int columns,
+        float explosionForce,
+        float lifetime,
+        bool destroyOriginal,
+        GameObject fadeExplosionPrefab = null,
+        float fadeDuration = 0.5f,
+        GameObject explosionOriginObject = null,
+        int maxFragments = 36,
+        bool addRigidbodies = true,
+        float gravityScale = 0.5f,
+        float scalePercent = 100.0f, // 100 = original size
+        float colliderScaleFactor = 0.5f, // 1 = exact fit, <1 = smaller collider
+        float torqueAmount = 0.2f,
+        float massLimit = 1.0f // prevents overly heavy pieces
+    )
     {
         if (IsGoingToBeDestroyed())
             return;
 
-        // 🔹 Clamp grid size to maximum allowed pieces
-        if (columns * rows > maksimimaara)
+        // Clamp fragment count
+        if (columns * rows > maxFragments)
         {
-            columns = Mathf.Max(2, (int)Mathf.Sqrt(maksimimaara));
-            rows = Mathf.Max(2, Mathf.CeilToInt(maksimimaara / (float)columns));
+            columns = Mathf.Max(2, Mathf.RoundToInt(Mathf.Sqrt(maxFragments)));
+            rows = Mathf.Max(2, Mathf.CeilToInt(maxFragments / (float)columns));
         }
 
         SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
-        if (originalSR == null)
+        if (originalSR == null || originalSR.sprite == null)
         {
-            Debug.Log("ei spriterendereria " + go.name);
+            Shatterwormi();  // custom fallback
             BaseDestroy();
             return;
         }
@@ -1664,41 +1681,61 @@ thisSliceHeight / originalSprite.pixelsPerUnit
         Sprite originalSprite = originalSR.sprite;
         Texture2D texture = originalSprite.texture;
 
-        int sliceWidth = texture.width / columns;
-        int sliceHeight = texture.height / rows;
+        // Pixel sizes
+        int sliceWidthPx = texture.width / columns;
+        int sliceHeightPx = texture.height / rows;
 
+        // World-unit sizes
         float spriteWidthUnits = originalSprite.bounds.size.x * transform.localScale.x;
         float spriteHeightUnits = originalSprite.bounds.size.y * transform.localScale.y;
-
         float pieceWidthUnits = spriteWidthUnits / columns;
         float pieceHeightUnits = spriteHeightUnits / rows;
 
-        // 🔹 Explosion center
-        Vector3 centerPos = gameObjectjostalasketaanPosition != null ?
-            gameObjectjostalasketaanPosition.transform.position : transform.position;
+        // Explosion center and rotation
+        Vector3 explosionCenter = explosionOriginObject ?
+            explosionOriginObject.transform.position : transform.position;
+        Quaternion rotation = explosionOriginObject ?
+            explosionOriginObject.transform.rotation : transform.rotation;
 
-        Quaternion rotation = gameObjectjostalasketaanPosition != null ?
-            gameObjectjostalasketaanPosition.transform.rotation : transform.rotation;
+        // Velocity inheritance
+        Vector2 inheritedVelocity = Vector2.zero;
+        Rigidbody2D parentRb = parentObject.GetComponent<Rigidbody2D>();
+        if (parentRb != null)
+            inheritedVelocity = parentRb.velocity;
 
-        Vector2 originalVelocity = Vector2.zero;
-        Rigidbody2D originalRB = go.GetComponent<Rigidbody2D>();
-        if (originalRB != null)
-            originalVelocity = originalRB.velocity;
+        // Copy mass from original if available
+        float pieceMass = 0.1f;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+            pieceMass = Mathf.Min(rb.mass, massLimit);
 
-        int slicemaara = 0;
+        float scaleFactor = scalePercent / 100f;
+        Vector3 originalScale = transform.localScale;
 
+        int fragmentCount = 0;
+
+        // Generate fragments
         for (int y = 0; y < rows; y++)
         {
             for (int x = 0; x < columns; x++)
             {
-                slicemaara++;
+                fragmentCount++;
 
-                // 🔹 adjust last slices if uneven
-                int thisSliceWidth = (x == columns - 1) ? texture.width - x * sliceWidth : sliceWidth;
-                int thisSliceHeight = (y == rows - 1) ? texture.height - y * sliceHeight : sliceHeight;
+                int sliceX = originalSR.flipX ? (columns - 1) - x : x;
+                int sliceY = originalSR.flipY ? (rows - 1) - y : y;
 
-                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, thisSliceWidth, thisSliceHeight);
+                // Handle uneven texture division
+                int thisSliceWidth = (sliceX == columns - 1) ? texture.width - sliceX * sliceWidthPx : sliceWidthPx;
+                int thisSliceHeight = (sliceY == rows - 1) ? texture.height - sliceY * sliceHeightPx : sliceHeightPx;
 
+                Rect sliceRect = new Rect(
+                    sliceX * sliceWidthPx,
+                    sliceY * sliceHeightPx,
+                    thisSliceWidth,
+                    thisSliceHeight
+                );
+
+                // Create new sprite
                 Sprite newSprite = Sprite.Create(
                     texture,
                     sliceRect,
@@ -1706,207 +1743,64 @@ thisSliceHeight / originalSprite.pixelsPerUnit
                     originalSprite.pixelsPerUnit
                 );
 
-                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
-                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
+                // Create fragment object
+                GameObject fragment = new GameObject($"Fragment_{x}_{y}");
+                SpriteRenderer sr = fragment.AddComponent<SpriteRenderer>();
                 sr.sprite = newSprite;
                 sr.sortingLayerID = originalSR.sortingLayerID;
                 sr.sortingOrder = originalSR.sortingOrder;
+                sr.color = originalSR.color;
+                sr.material = originalSR.material;
 
-                if (originalSR.material != null)
-                    sr.material = originalSR.material;
-
-                Rigidbody2D pieceRigidbody = null;
-
-                if (teerigidbody)
+                // Collider + Rigidbody
+                Rigidbody2D pieceRb = null;
+                if (addRigidbodies)
                 {
-                    // 🔹 collider
-                    BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
+                    BoxCollider2D collider = fragment.AddComponent<BoxCollider2D>();
                     collider.size = new Vector2(
                         thisSliceWidth / originalSprite.pixelsPerUnit,
                         thisSliceHeight / originalSprite.pixelsPerUnit
-                    );
+                    ) * scaleFactor * colliderScaleFactor;
 
+                    pieceRb = fragment.AddComponent<Rigidbody2D>();
+                    pieceRb.gravityScale = gravityScale;
+                    pieceRb.velocity = inheritedVelocity;
+                    pieceRb.mass = pieceMass;
 
+                    // Assign layer if needed
+                    fragment.layer = LayerMask.NameToLayer("Tiililayer");
+
+                    // Explosion impulse
+                    Vector2 direction = (fragment.transform.position - explosionCenter).normalized;
+                    float randomMult = Random.Range(0.9f, 1.1f);
+                    pieceRb.AddForce(direction * explosionForce * randomMult, ForceMode2D.Impulse);
+                    pieceRb.AddTorque(Random.Range(-torqueAmount, torqueAmount), ForceMode2D.Impulse);
                 }
-                // 🔹 rigidbody
-                pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
-                pieceRigidbody.gravityScale = gravityscale;
-                pieceRigidbody.velocity = originalVelocity;
 
-                // 🔹 Unity 2022+ collision filtering
-                pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
-                pieceRigidbody.excludeLayers = LayerMask.GetMask("AlusLayer", "AlusammusLayer", "AmmusLayer", "Default");
-
-                sliceObject.layer = LayerMask.NameToLayer("Tiililayer");
-                // 🔹 place slice
+                // Position and scale
                 Vector3 localOffset = new Vector3(
                     (-spriteWidthUnits / 2f) + pieceWidthUnits * (x + 0.5f),
                     (-spriteHeightUnits / 2f) + pieceHeightUnits * (y + 0.5f),
                     0
                 );
 
-                sliceObject.transform.position = centerPos + rotation * localOffset;
-                sliceObject.transform.rotation = rotation;
-                sliceObject.transform.localScale = Vector3.one;
+                fragment.transform.position = explosionCenter + rotation * localOffset;
+                fragment.transform.rotation = rotation;
+                fragment.transform.localScale = originalScale * scaleFactor;
 
-                // 🔹 explosion
-                if (pieceRigidbody != null)
-                {
-                    Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
-                    float randomMult = Random.Range(0.7f, 1.3f); // variation so not all fly equally
-                    pieceRigidbody.AddForce(dirFromCenter * explosionForce * randomMult, ForceMode2D.Impulse);
-                    pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
-                }
-
-                // 🔹 fade + destroy
-                sliceObject.AddComponent<FadeSlice>().Init(sr, aliveTime, fadeDuration, fadeexplosion);
+                // Fade behavior
+                var fade = fragment.AddComponent<FadeSlice>();
+                fade.Init(sr, lifetime, fadeDuration, fadeExplosionPrefab);
             }
         }
 
-        Debug.Log($"Created {slicemaara} slices ({rows}x{columns}) from {go.name}");
-        BaseDestroy();
-    }
-
-
-    public void RajaytaSpriteUusiMonimutkaisinds(
-    GameObject go,
-    int rows,
-    int columns,
-    float explosionForce,
-    float aliveTime,
-    GameObject fadeexplosion = null,
-    float fadeDuration = 0.5f,
-    GameObject gameObjectjostalasketaanPosition = null,
-    int maksimimaara = 36,
-    bool teerigidbody = true,
-    float gravityscale = 0.5f
-)
-    {
-        if (IsGoingToBeDestroyed())
-            return;
-
-        //  Clamp grid size to maximum allowed pieces
-        if (columns * rows > maksimimaara)
-        {
-            columns = Mathf.Max(2, (int)Mathf.Sqrt(maksimimaara));
-            rows = Mathf.Max(2, Mathf.CeilToInt(maksimimaara / (float)columns));
-        }
-
-        SpriteRenderer originalSR = GetComponent<SpriteRenderer>();
-        if (originalSR == null)
-        {
-            Debug.Log("ei spriterendereria " + go.name);
+        // Optionally destroy original
+        if (destroyOriginal)
             BaseDestroy();
-            return;
-        }
 
-        Sprite originalSprite = originalSR.sprite;
-        Texture2D texture = originalSprite.texture;
-
-        int sliceWidth = texture.width / columns;
-        int sliceHeight = texture.height / rows;
-
-        float spriteWidthUnits = originalSprite.bounds.size.x * transform.localScale.x;
-        float spriteHeightUnits = originalSprite.bounds.size.y * transform.localScale.y;
-
-        float pieceWidthUnits = spriteWidthUnits / columns;
-        float pieceHeightUnits = spriteHeightUnits / rows;
-
-        //  Explosion center
-        Vector3 centerPos = gameObjectjostalasketaanPosition != null ?
-            gameObjectjostalasketaanPosition.transform.position : transform.position;
-
-        Quaternion rotation = gameObjectjostalasketaanPosition != null ?
-            gameObjectjostalasketaanPosition.transform.rotation : transform.rotation;
-
-        Vector2 originalVelocity = Vector2.zero;
-        Rigidbody2D originalRB = go.GetComponent<Rigidbody2D>();
-        if (originalRB != null)
-            originalVelocity = originalRB.velocity;
-
-        int slicemaara = 0;
-
-        for (int y = 0; y < rows; y++)
-        {
-            for (int x = 0; x < columns; x++)
-            {
-                slicemaara++;
-
-                // allow last slices to fit
-                int thisSliceWidth = (x == columns - 1) ? texture.width - x * sliceWidth : sliceWidth;
-                int thisSliceHeight = (y == rows - 1) ? texture.height - y * sliceHeight : sliceHeight;
-
-                Rect sliceRect = new Rect(x * sliceWidth, y * sliceHeight, thisSliceWidth, thisSliceHeight);
-
-                Sprite newSprite = Sprite.Create(
-                    texture,
-                    sliceRect,
-                    new Vector2(0.5f, 0.5f),
-                    originalSprite.pixelsPerUnit
-                );
-
-                GameObject sliceObject = new GameObject($"Slice_{x}_{y}");
-                SpriteRenderer sr = sliceObject.AddComponent<SpriteRenderer>();
-                sr.sprite = newSprite;
-                sr.sortingLayerID = originalSR.sortingLayerID;
-                sr.sortingOrder = originalSR.sortingOrder;
-
-                // copy material if exists
-                if (originalSR.material != null)
-                    sr.material = originalSR.material;
-
-                Rigidbody2D pieceRigidbody = null;
-
-                if (teerigidbody)
-                {
-                    //  add collider & rigidbody
-                    BoxCollider2D collider = sliceObject.AddComponent<BoxCollider2D>();
-                    collider.size = new Vector2(
-                        thisSliceWidth / originalSprite.pixelsPerUnit,
-                        thisSliceHeight / originalSprite.pixelsPerUnit
-                    );
-
-
-                }
-                pieceRigidbody = sliceObject.AddComponent<Rigidbody2D>();
-                pieceRigidbody.gravityScale = gravityscale;
-                pieceRigidbody.velocity = originalVelocity;
-
-                //  Unity 2022+ filtering
-                pieceRigidbody.includeLayers = LayerMask.GetMask("Tiililayer");
-                pieceRigidbody.excludeLayers = LayerMask.GetMask("AlusLayer", "AlusammusLayer", "AmmusLayer", "Default");
-
-                sliceObject.layer = LayerMask.NameToLayer("Tiililayer");
-
-                //  place slice in world
-                Vector3 localOffset = new Vector3(
-                    (-spriteWidthUnits / 2f) + pieceWidthUnits * (x + 0.5f),
-                    (-spriteHeightUnits / 2f) + pieceHeightUnits * (y + 0.5f),
-                    0
-                );
-
-                sliceObject.transform.position = centerPos + rotation * localOffset;
-                sliceObject.transform.rotation = rotation;
-                sliceObject.transform.localScale = Vector3.one; // prevent double-scaling
-
-                //  apply explosion AFTER position is set
-                if (pieceRigidbody != null)
-                {
-                    Vector2 dirFromCenter = (sliceObject.transform.position - centerPos).normalized;
-                    pieceRigidbody.AddForce(dirFromCenter * explosionForce, ForceMode2D.Impulse);
-                    pieceRigidbody.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
-                }
-
-                //  fade behaviour
-                sliceObject.AddComponent<FadeSlice>().Init(sr, aliveTime, fadeDuration, fadeexplosion);
-            }
-        }
-
-        Debug.Log($"Created {slicemaara} slices ({rows}x{columns}) from {go.name}");
-        BaseDestroy();
+        Debug.Log($"Created {fragmentCount} fragments ({rows}x{columns}) from {name}");
     }
-
-
+*/
 
 
 

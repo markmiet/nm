@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7567060280802878834}
   - component: {fileID: 6003270815734393891}
   - component: {fileID: 8368387815278382124}
+  - component: {fileID: 2193311984610366914}
   m_Layer: 17
   m_Name: KivirunkoCollidereillaJaSpriteRenderer
   m_TagString: makitavihollinenexplodetag
@@ -100,11 +101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f57598abc396174b9eb1c497d2ae775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   explosion: {fileID: 0}
   osumanSavu: {fileID: 0}
   osumanSavunKesto: 2
@@ -190,20 +194,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8563e62fc0544d4f8bccc5060282315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDestroyInfo: 0
   fragmentPixelSize: 16
+  sirpaleenmassanlimitti: 10
   hengissaoloaika: 0
   uusirajaytyscolumns: 8
   uusirajaytysrows: 8
   poolistapalautusmaara: 0
+  registeroiOnEnablessa: 0
   maintexuusi: {fileID: 0}
   dissolveamount: 0.44
   dissolveScale: 113
   verficaldissolve: 0
   spiralStrength: 0
   rotationAngle: 0
+  sykli: 0.5
   maksimiDissolveAmount: 0
   maaritaDissolveAmountRelativeToAlus: 0
   distancemin: 0
   distancemax: 5
   outlineColor: {r: 0, g: 0, b: 0, a: 0}
   asetaoutlinecolor: 0
+--- !u!114 &2193311984610366914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6676257131771723051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b946548ae6386a241b69437bcd42fe07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

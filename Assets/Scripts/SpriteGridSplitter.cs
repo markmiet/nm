@@ -23,7 +23,21 @@ public class SpriteGridSplitter : MonoBehaviour
     public float gravityscale = 0.0f;
 
     public int hitcount = 5;
+    public bool teerajaytasprite = false;
+    public bool teerajaytaspriteuusiversio = false;
 
+    public int uusirajaytyscolumns = 2;
+    public int uusirajaytysrows = 2;
+    public float rajaytaspritenScaleFactorProsentti = 10f;
+    public float alivetime = 0.1f;
+
+    //todoo tämä siihen matomaailmaan....
+    //hitcounter pieneksi ja paljon....
+    public GameObject explosion;//joku buff räjähdys peittämään 
+
+    //tämä myös käyttöön siihen kun kk ampuu alhaalta seiniin niin ne hajoaakin alta pois..
+    //mutta ei liikaa
+    
 
     [ContextMenu("Split Now")]
     public void SplitIntoGrid()
@@ -132,8 +146,17 @@ public class SpriteGridSplitter : MonoBehaviour
                 HitCounter hc =
                 piece.AddComponent<HitCounter>();
                 hc.hitThreshold = hitcount;
-                hc.teerajaytasprite = false;
-                hc.teerajaytaspriteuusiversio = false;
+                hc.teerajaytasprite = teerajaytasprite;
+                hc.teerajaytaspriteuusiversio = teerajaytaspriteuusiversio;
+                hc.uusirajaytyscolumns = uusirajaytyscolumns;
+                hc.uusirajaytysrows = uusirajaytysrows;
+                hc.gravityscale = gravityscale;
+                hc.alivetime = alivetime;
+                hc.rajaytaspritenScaleFactorProsentti = rajaytaspritenScaleFactorProsentti;
+                hc.rajaytaSpritenExplosion = explosion;
+                //            public int uusirajaytyscolumns = 2;
+                //public int uusirajaytysrows = 2;
+
 
                 SpriteRenderer psr = piece.AddComponent<SpriteRenderer>();
                 psr.sprite = subSprite;

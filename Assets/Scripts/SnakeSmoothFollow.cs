@@ -615,6 +615,15 @@ public class SnakeSmootFollow : BaseController
         }
     }
 
+    private bool stoppi = false;
+    private float stoppilaskuri = 0.0f;
+    public float tiilistoptime = 1.0f;
+    public void Stoppaa() { 
+        stoppi = true;
+        stoppilaskuri = 0.0f;
+    }
+
+
     void FixedUpdate()
     {
         if (IsGoingToBeDestroyed())
@@ -625,6 +634,18 @@ public class SnakeSmootFollow : BaseController
         if (!OnkoOkToimiaUusi(gameObject))
         {
             return;
+        }
+
+        if (stoppi)
+        {
+            stoppilaskuri += Time.fixedDeltaTime;
+           
+            if (stoppilaskuri<= tiilistoptime)
+            {
+                return;
+            }
+            stoppilaskuri = 0;
+            stoppi = false;
         }
 
         if (firsttime || nahdaanStable)
